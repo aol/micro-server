@@ -50,11 +50,11 @@ public class PropertyFileConfig {
 		Optional<Resource> resource = Optional.empty();
 
 		if (new File("./application.properties").exists()) {
-			resource = Optional.of(new FileSystemResource(new File("./lana.properties")));
+			resource = Optional.of(new FileSystemResource(new File("./application.properties")));
 			logger.info("./application.properties added");
 		}
 
-		URL urlResource = getClass().getClassLoader().getResource("lana.properties");
+		URL urlResource = getClass().getClassLoader().getResource("application.properties");
 		if (urlResource != null) {
 			resource = Optional.of(new UrlResource(urlResource));
 			logger.info("application.properties added");

@@ -29,7 +29,7 @@ import com.aol.micro.server.servers.model.ServerData;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-public class GrizzlyServerStartup {
+public class MicroServerStartup {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final List<Module> modules;
 	private final List<Class> classes = Lists.newArrayList(PropertyFileConfig.class,ComponentScanConfig.class,
@@ -38,7 +38,7 @@ public class GrizzlyServerStartup {
 	@Getter
 	private final AnnotationConfigWebApplicationContext springContext;
 
-	public GrizzlyServerStartup(Class<? extends SchedulingConfiguration> c, Module... modules) {
+	public MicroServerStartup(Class<? extends SchedulingConfiguration> c, Module... modules) {
 		classes.add(c);
 		this.modules = Lists.newArrayList(modules);
 		springContext = createSpringContext();
@@ -46,13 +46,13 @@ public class GrizzlyServerStartup {
 	}
 
 	
-	public GrizzlyServerStartup(Module... modules) {
+	public MicroServerStartup(Module... modules) {
 		classes.add(ScheduleAndAsyncConfig.class);
 		this.modules = Lists.newArrayList(modules);
 		springContext = createSpringContext();
 	}
 
-	public GrizzlyServerStartup(List<Class> additionalClasses, Module... modules) {
+	public MicroServerStartup(List<Class> additionalClasses, Module... modules) {
 		this.modules = Lists.newArrayList(modules);
 		classes.addAll(additionalClasses);
 		springContext = createSpringContext();
