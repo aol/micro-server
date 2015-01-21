@@ -90,6 +90,7 @@ public class MicroServerStartup {
 
 		Environment environment = rootContext.getBean(Environment.class);
 
+		environment.assureModule(module);
 		String fullRestResource = "/" + module.getContext() + "/*";
 
 		List<FilterData> filterDataList = environment.getModuleBean(module).getMapping().isPresent() ? createFilteredDataList(rootContext,
