@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import lombok.Getter;
 import nonautoscan.com.aol.micro.server.AopConfig;
-import nonautoscan.com.aol.micro.server.ComponentScanConfig;
 import nonautoscan.com.aol.micro.server.HibernateConfig;
 import nonautoscan.com.aol.micro.server.MiscellaneousConfig;
 import nonautoscan.com.aol.micro.server.PropertyFileConfig;
@@ -32,8 +31,8 @@ import com.google.common.collect.Lists;
 public class MicroServerStartup {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final List<Module> modules;
-	private final List<Class> classes = Lists.newArrayList(PropertyFileConfig.class,ComponentScanConfig.class,
-			MiscellaneousConfig.class, AopConfig.class);
+	private final List<Class> classes = Lists.newArrayList(PropertyFileConfig.class,
+			MiscellaneousConfig.class, AopConfig.class); //ComponentScanConfig.class,
 
 	@Getter
 	private final AnnotationConfigWebApplicationContext springContext;
@@ -58,18 +57,24 @@ public class MicroServerStartup {
 		springContext = createSpringContext();
 	}
 
+	public MicroServerStartup(Class class1, Module module) {
+		this(Lists.newArrayList(class1),module);
+	}
+
+
 	public void start() {
 
 		List<ServerApplication> apps = modules.stream().map(module -> 
 						createApp(springContext, module)).collect(Collectors.toList());
 
-		Optional<ApplicationRegister> register = Optional.empty();
+		ServerRunner runner;
 		try{
-			register = Optional.of(springContext.getBean(ApplicationRegister.class));
-		}catch(BeansException e){
 			
+			runner = new ServerRunner(springContext.getBean(ApplicationRegister.class), apps);
+		}catch(BeansException e){
+			runner = new ServerRunner(apps);
 		}
-		ServerRunner runner = new ServerRunner(register, apps);
+		
 		runner.run();
 	}
 

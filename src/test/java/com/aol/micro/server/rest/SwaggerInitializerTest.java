@@ -2,7 +2,8 @@ package com.aol.micro.server.rest;
 
 import org.junit.Test;
 
-import com.aol.micro.server.app.StatusResource;
+import app.com.aol.micro.server.StatusResource;
+
 import com.aol.micro.server.servers.model.ServerData;
 import com.google.common.collect.Lists;
 

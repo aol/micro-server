@@ -1,11 +1,13 @@
 package com.aol.micro.server.rest;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertThat;
+
 import org.junit.Test;
 
-import com.aol.micro.server.app.StatusResource;
+import app.com.aol.micro.server.StatusResource;
+
 import com.google.common.collect.Lists;
+
 import static org.hamcrest.CoreMatchers.is;
 public class RestApplicationTest {
 

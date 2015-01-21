@@ -13,7 +13,7 @@ public class AccessLogLocationBean {
 	private final String accessLogLocation;
 
 	@Autowired
-	public AccessLogLocationBean(@Value("${lana.access.log.output:/data/servers/logs/}") String accessLogLocation) {
+	public AccessLogLocationBean(@Value("${access.log.output:/data/servers/logs/}") String accessLogLocation) {
 		this.accessLogLocation = accessLogLocation;
 	}
 

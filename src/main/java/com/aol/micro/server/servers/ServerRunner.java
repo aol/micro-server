@@ -16,9 +16,13 @@ public class ServerRunner {
 	private final ImmutableList<ServerApplication> apps;
 	private final Optional<ApplicationRegister> register;
 
-	public ServerRunner(Optional<ApplicationRegister> register, List<ServerApplication> apps) {
+	public ServerRunner(ApplicationRegister register, List<ServerApplication> apps) {
 		this.apps = ImmutableList.copyOf(apps);
-		this.register = register;
+		this.register = Optional.of(register);
+	}
+	public ServerRunner(List<ServerApplication> apps) {
+		this.apps = ImmutableList.copyOf(apps);
+		this.register = Optional.empty();
 	}
 
 	public void run() {

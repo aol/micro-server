@@ -1,4 +1,4 @@
-package com.aol.micro.server.app;
+package app.com.aol.micro.server;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -1,12 +1,10 @@
 package com.aol.micro.server;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
-
-import javax.inject.Qualifier;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,24 +12,24 @@ import org.springframework.stereotype.Component;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
-@Component
+//@Component
 public class Environment {
 
 	private volatile Map<String, ModuleBean> modulePort;
 	private final Properties properties;
 
-	@Autowired(required=false)
-	public Environment(Properties propertyFactory,List<ModuleBean> modules) {
+	//@Autowired(required=false)
+	public Environment(Properties propertyFactory,Collection<ModuleBean> modules) {
 		modulePort = modules.stream().collect(Collectors.toMap(key -> key.getModule().getContext(), value -> value));
 		this.properties = propertyFactory;
 	}
-	@Autowired(required=false)
+//	@Autowired(required=false)
 	public Environment(Properties propertyFactory) {
 		modulePort = ImmutableMap.of();
 		this.properties = propertyFactory;
 
 	}
-
+	
 	public ModuleBean getModuleBean(Module module) {
 		return modulePort.get(module.getContext());
 	}

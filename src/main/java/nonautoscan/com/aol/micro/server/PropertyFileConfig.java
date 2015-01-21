@@ -32,7 +32,6 @@ public class PropertyFileConfig {
 		PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
 		Properties props = propertyFactory();
 		configurer.setProperties(props);
-		//configurer.setLocations(resources.toArray(new Resource[resources.size()]));
 		configurer.setSystemPropertiesMode(PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE);
 		return configurer;
 	}
@@ -48,7 +47,7 @@ public class PropertyFileConfig {
 
 	private List<Resource> loadPropertyResource() {
 		List<Resource> resources = Lists.newArrayList();
-		loadLanaProperties().ifPresent(it -> resources.add(it));
+		loadProperties().ifPresent(it -> resources.add(it));
 
 		URL instanceResource = getClass().getClassLoader().getResource("instance.properties");
 		if (instanceResource != null) {
@@ -60,7 +59,7 @@ public class PropertyFileConfig {
 		return resources;
 	}
 
-	private Optional<Resource> loadLanaProperties() {
+	private Optional<Resource> loadProperties() {
 		Optional<Resource> resource = Optional.empty();
 
 		if (new File("./application.properties").exists()) {

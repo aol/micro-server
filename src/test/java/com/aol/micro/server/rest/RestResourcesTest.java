@@ -5,7 +5,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import com.aol.micro.server.app.StatusResource;
+import app.com.aol.micro.server.StatusResource;
+
 import com.google.common.collect.Lists;
 
 public class RestResourcesTest {

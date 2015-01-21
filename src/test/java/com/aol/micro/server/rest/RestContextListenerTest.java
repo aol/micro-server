@@ -6,8 +6,9 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
+import app.com.aol.micro.server.StatusResource;
+
 import com.aol.micro.server.Module;
-import com.aol.micro.server.app.StatusResource;
 import com.aol.micro.server.servers.model.ServerData;
 import com.google.common.collect.Lists;
 

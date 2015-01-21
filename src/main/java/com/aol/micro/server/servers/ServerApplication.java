@@ -74,7 +74,10 @@ public class ServerApplication {
 			builder.rotationPattern("yyyy-MM-dd");
 			builder.instrument(httpServer.getServerConfiguration());
 		} catch (Exception e) {
-			logger.error(ErrorCode.SERVER_STARTUP_FAILED_TO_CREATE_ACCESS_LOG.toString() + ": " + e.getMessage(), e);
+			logger.error(ErrorCode.SERVER_STARTUP_FAILED_TO_CREATE_ACCESS_LOG.toString() + ": " + e.getMessage());
+			if(e.getCause()!=null)
+				logger.error("CAUSED BY: " + ErrorCode.SERVER_STARTUP_FAILED_TO_CREATE_ACCESS_LOG.toString() + ": " + e.getCause().getMessage());
+			
 		}
 
 	}
