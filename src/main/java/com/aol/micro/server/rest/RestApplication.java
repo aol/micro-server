@@ -13,6 +13,9 @@ public class RestApplication extends ResourceConfig {
 
 	@Getter
 	private static volatile ConcurrentMap<String, List<RestResource>> resourcesMap = Maps.newConcurrentMap();
+	
+	@Getter
+	private static volatile ConcurrentMap<String, String> packages = Maps.newConcurrentMap();
 
 	public RestApplication() {
 		this(resourcesMap.get(Thread.currentThread().getName()));
@@ -25,7 +28,8 @@ public class RestApplication extends ResourceConfig {
 
 			}
 		}
-		packages("org.glassfish.jersey.examples.jackson", "com.aol.advertising.lana.common.exception.mapper");
+		packages.entrySet().stream().forEach( e -> packages(e.getKey(),e.getValue()));
+		
 
 		register(JacksonFeature.class);
 

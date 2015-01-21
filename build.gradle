@@ -1,5 +1,7 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
+plugins {
+  id 'java' // or 'groovy' Must be explicitly applied
+  id 'com.github.johnrengelman.shadow' version '1.2.0'
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -74,7 +76,7 @@ dependencies {
 		exclude(module: 'jackson-mapper-asl')
 	}
 	compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version:'2.0'
-	compile group: 'org.springframework', name: 'spring-aspects', version:'4.0.0.RELEASE'
+//	compile group: 'org.springframework', name: 'spring-aspects', version:'4.0.0.RELEASE'
 	compile group: 'org.aspectj', name: 'aspectjrt', version:'1.5.4'
 	compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.5.4'
 /**	compile group: 'javax.validation', name: 'validation-api', version:'1.0.0.GA'
