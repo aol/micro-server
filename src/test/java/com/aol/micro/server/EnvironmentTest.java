@@ -14,7 +14,7 @@ public class EnvironmentTest {
 	@Test
 	public void testGetModuleBean() {
 		Environment environment = new Environment(new Properties(),
-				Lists.newArrayList(new ModuleBean(8081, "host1", () -> "test", null)));
+				Lists.newArrayList(new ModuleBean(8081, "host1", () -> "test")));
 		assertThat(environment.getModuleBean(()-> "test").getPort(), is(8081));
 	}
 	@Test

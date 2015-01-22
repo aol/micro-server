@@ -24,6 +24,7 @@ import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
 
 public class ServerApplication {
+	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Getter
@@ -59,9 +60,12 @@ public class ServerApplication {
 			while (true) {
 				Thread.sleep(2000L);
 			}
-		} catch (IOException | InterruptedException e) {
+		} catch (IOException e) {
 			throw new RuntimeException(e);
-		} finally {
+		} catch(InterruptedException e){
+			Thread.currentThread().interrupt();
+			throw new RuntimeException(e);
+		}finally {
 			httpServer.stop();
 		}
 	}
@@ -85,8 +89,8 @@ public class ServerApplication {
 	private void addServlet(WebappContext webappContext) {
 		ServletContainer container = new ServletContainer();
 		ServletRegistration servletRegistration = webappContext.addServlet("Jersey Spring Web Application", container);
-		servletRegistration.setInitParameter("javax.ws.rs.Application", "com.aol.micro.server.rest.RestApplication");
-		servletRegistration.setInitParameter("jersey.config.server.provider.packages", "com.aol.micro.server.rest.providers");
+		servletRegistration.setInitParameter("javax.ws.rs.Application",this.serverData.getModule().getJaxWsRsApplication());
+		servletRegistration.setInitParameter("jersey.config.server.provider.packages", this.serverData.getModule().getProviders());
 		servletRegistration.setLoadOnStartup(1);
 		servletRegistration.addMapping(serverData.getBaseUrlPattern());
 	}

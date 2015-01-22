@@ -1,12 +1,13 @@
 package com.aol.micro.server;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import javax.servlet.Filter;
 
 import lombok.Getter;
 import nonautoscan.com.aol.micro.server.AopConfig;
-import nonautoscan.com.aol.micro.server.HibernateConfig;
 import nonautoscan.com.aol.micro.server.MiscellaneousConfig;
 import nonautoscan.com.aol.micro.server.PropertyFileConfig;
 import nonautoscan.com.aol.micro.server.ScheduleAndAsyncConfig;
@@ -37,7 +38,7 @@ public class MicroServerStartup {
 	@Getter
 	private final AnnotationConfigWebApplicationContext springContext;
 
-	public MicroServerStartup(Class<? extends SchedulingConfiguration> c, Module... modules) {
+	public MicroServerStartup(Class c, Module... modules) {
 		classes.add(c);
 		this.modules = Lists.newArrayList(modules);
 		springContext = createSpringContext();
@@ -57,9 +58,7 @@ public class MicroServerStartup {
 		springContext = createSpringContext();
 	}
 
-	public MicroServerStartup(Class class1, Module module) {
-		this(Lists.newArrayList(class1),module);
-	}
+	
 
 
 	public void start() {
@@ -83,8 +82,7 @@ public class MicroServerStartup {
 			AnnotationConfigWebApplicationContext springContext = SpringApplicationCreator.createSpringApp(classes.toArray(new Class[0]));
 			return springContext;
 		} catch (Exception e) {
-//			logger.error( ErrorCode.STARTUP_FAILED_SPRING_INITIALISATION,e,e.getMessage());
-//			throw new InvalidStateException( ErrorCode.STARTUP_FAILED_SPRING_INITIALISATION,e);
+			logger.error( ErrorCode.STARTUP_FAILED_SPRING_INITIALISATION.toString(),e.getMessage());
 			throw new RuntimeException(e);
 		}
 		
@@ -98,18 +96,17 @@ public class MicroServerStartup {
 		environment.assureModule(module);
 		String fullRestResource = "/" + module.getContext() + "/*";
 
-		List<FilterData> filterDataList = environment.getModuleBean(module).getMapping().isPresent() ? createFilteredDataList(rootContext,
-				environment.getModuleBean(module).getMapping().get()) : null;
+		List<FilterData> filterDataList = createFilteredDataList ( module.getFilters() );
 
-		ServerApplication app = new ServerApplication(new ServerData(environment.getModuleBean(module).getPort(), filterDataList, resources,
+		ServerApplication app = new ServerApplication(new ServerData(environment.getModuleBean(module).getPort(), 
+				filterDataList, resources,
 				rootContext, fullRestResource, module));
 		return app;
 	}
 
-	private List<FilterData> createFilteredDataList(AnnotationConfigWebApplicationContext rootContext, String fullRestQuery) {
-		List<FilterData> filterDataList;
-		filterDataList = Lists.newArrayList(new FilterData(fullRestQuery, "queryIPRetriever", new DelegatingFilterProxy(rootContext
-				.getBean(QueryIPRetriever.class))));
-		return filterDataList;
+	private List<FilterData> createFilteredDataList(Map<String,Filter> filterMap) {
+		return filterMap.entrySet().stream().map( e -> { 
+			return new FilterData(e.getKey(), e.getValue().getClass().getName(), new DelegatingFilterProxy(e.getValue()));
+		}).collect(Collectors.toList());
 	}
 }

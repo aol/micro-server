@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
+import lombok.Setter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -24,6 +26,9 @@ public class PropertyFileConfig {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Setter
+	private volatile String applicationPropertyFileName = "application.properties";
+	
 	@Bean
 	public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {
 
@@ -62,22 +67,23 @@ public class PropertyFileConfig {
 	private Optional<Resource> loadProperties() {
 		Optional<Resource> resource = Optional.empty();
 
-		if (new File("./application.properties").exists()) {
-			resource = Optional.of(new FileSystemResource(new File("./application.properties")));
-			logger.info("./application.properties added");
+		if (new File("./"+applicationPropertyFileName).exists()) {
+			resource = Optional.of(new FileSystemResource(new File("./"+applicationPropertyFileName)));
+			logger.info("./"+applicationPropertyFileName+" added");
 		}
 
-		URL urlResource = getClass().getClassLoader().getResource("application.properties");
+		URL urlResource = getClass().getClassLoader().getResource(applicationPropertyFileName);
 		if (urlResource != null) {
 			resource = Optional.of(new UrlResource(urlResource));
-			logger.info("application.properties added");
+			logger.info(applicationPropertyFileName +" added");
 		}
 
 		if (System.getProperty("application.env") != null) {
-			URL envResource = getClass().getClassLoader().getResource("application-" + System.getProperty("application.env") + ".properties");
+			URL envResource = getClass().getClassLoader()
+										.getResource(createEnvBasedPropertyFileName());
 			if (envResource != null) {
 				resource = Optional.of(new UrlResource(envResource));
-				logger.info("application-" + System.getProperty("application.env") + ".properties added");
+				logger.info(createEnvBasedPropertyFileName() +" added");
 			}
 
 		}
@@ -87,5 +93,10 @@ public class PropertyFileConfig {
 
 		}
 		return resource;
+	}
+
+	private String createEnvBasedPropertyFileName() {
+		return applicationPropertyFileName.substring(0,applicationPropertyFileName.indexOf("."))+"-" 
+								+ System.getProperty("application.env") + ".properties";
 	}
 }

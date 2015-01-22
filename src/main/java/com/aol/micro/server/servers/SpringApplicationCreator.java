@@ -71,7 +71,7 @@ public class SpringApplicationCreator {
 
 
 	public static ImmutableList<RestResource> createJerseyApp(AnnotationConfigWebApplicationContext rootContext,Module type){
-		return ImmutableList.copyOf(rootContext.getBeansOfType(RestResource.class).values().stream()
-				.filter((next) ->  next.getModule().orElse(type).equals(type) ).collect(Collectors.toSet()));
+		
+		return ImmutableList.copyOf(rootContext.getBeansOfType(type.getRestResourceClass()).values());
 	}
 }

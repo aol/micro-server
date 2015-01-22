@@ -17,13 +17,14 @@ public class Environment {
 
 	private volatile Map<String, ModuleBean> modulePort;
 	private final Properties properties;
+	private volatile int nextPort = 8080;
 
-	//@Autowired(required=false)
+	
 	public Environment(Properties propertyFactory,Collection<ModuleBean> modules) {
 		modulePort = modules.stream().collect(Collectors.toMap(key -> key.getModule().getContext(), value -> value));
 		this.properties = propertyFactory;
 	}
-//	@Autowired(required=false)
+
 	public Environment(Properties propertyFactory) {
 		modulePort = ImmutableMap.of();
 		this.properties = propertyFactory;
@@ -47,6 +48,6 @@ public class Environment {
 		
 		return Integer.valueOf(Optional.ofNullable(
 				properties.get(module.getContext()+".port"))
-				.orElse("8080").toString());
+				.orElse(nextPort++).toString());
 	}
 }

@@ -10,7 +10,7 @@ import com.aol.micro.server.MicroServerStartup;
 @ComponentScan(basePackages = { "app.com.aol.micro.server" })
 public class AppRunnerTest {
 
-		@SuppressWarnings("unchecked")
+		
 		public static void main(String[] args) throws InterruptedException {
 			new MicroServerStartup( AppRunnerTest.class, () -> "test-app")
 					.start();

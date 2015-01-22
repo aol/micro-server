@@ -11,17 +11,19 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.Getter;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-@Component(value = "queryIPRetriever")
+
 public class QueryIPRetriever implements Filter {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	ThreadLocal<String> ipAddress = new ThreadLocal<String>();
+	@Getter
+	private static final ThreadLocal<String> ipAddress = new ThreadLocal<String>();
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
