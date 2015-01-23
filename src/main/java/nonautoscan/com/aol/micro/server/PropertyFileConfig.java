@@ -22,12 +22,12 @@ import org.springframework.core.io.UrlResource;
 import com.google.common.collect.Lists;
 
 @Configuration
-public class PropertyFileConfig {
+public class  PropertyFileConfig {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Setter
-	private volatile String applicationPropertyFileName = "application.properties";
+	private volatile static String applicationPropertyFileName = "application.properties";
 	
 	@Bean
 	public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {

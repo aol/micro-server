@@ -42,9 +42,7 @@ public class QueryIPRetriever implements Filter {
 		}
 	}
 
-	public String getIpAddress() {
-		return ipAddress.get();
-	}
+	
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {

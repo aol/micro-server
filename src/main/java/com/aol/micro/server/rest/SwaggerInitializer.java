@@ -40,8 +40,8 @@ public class SwaggerInitializer implements ServletContextListener {
 		};
 		beanConfig.setVersion("1.0.2");
 		beanConfig.setBasePath(this.serverData.getBaseUrlPattern());
-		beanConfig.setDescription("LANA RESTful resources");
-		beanConfig.setTitle("LANA RESTful API");
+		beanConfig.setDescription("RESTful resources");
+		beanConfig.setTitle("RESTful API");
 		beanConfig.setScan(true);
 	}
 
