@@ -25,8 +25,8 @@ public class ServerRunnerTest {
 		serverApplication1 = mock(ServerApplication.class);
 		serverApplication2 = mock(ServerApplication.class);
 
-		ServerData data1 = new ServerData(8080, Lists.newArrayList(), Lists.newArrayList(), null, "url1", () -> "app-context");
-		ServerData data2 = new ServerData(8081, Lists.newArrayList(), Lists.newArrayList(), null, "url2", () -> "test-context");
+		ServerData data1 = new ServerData(8080, Lists.newArrayList(), Lists.newArrayList(),Lists.newArrayList(), null, "url1", () -> "app-context");
+		ServerData data2 = new ServerData(8081, Lists.newArrayList(),Lists.newArrayList(), Lists.newArrayList(), null, "url2", () -> "test-context");
 
 		when(serverApplication1.getServerData()).thenReturn(data1);
 		when(serverApplication2.getServerData()).thenReturn(data2);

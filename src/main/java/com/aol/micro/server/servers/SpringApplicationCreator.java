@@ -22,14 +22,9 @@ import com.google.common.collect.Lists;
 public class SpringApplicationCreator {
 	
 	public static AnnotationConfigWebApplicationContext createSpringApp(Class...classes)  {
-		//Stream.of(classes).filter( clazz -> clazz.isAnnotationPresent(ComponentScan.class))
-			//	.map(clazz -> extractPackages(clazz.getAnnotation(ComponentScan.class) ));
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 		rootContext.setAllowCircularReferences(false);
-		List<Class> toUse = Lists.newArrayList(classes);
-		Class[] array = {RestResources.class,AccessLogLocationBean.class, QueryIPRetriever.class, Environment.class};
-		Stream.of(array).forEach ( next -> toUse.add(next));
-		
+			
 		rootContext.register(classes);
 		rootContext.refresh();
 		ConfigurableListableBeanFactory beanFactory = ((ConfigurableApplicationContext) rootContext).getBeanFactory();
@@ -52,7 +47,7 @@ public class SpringApplicationCreator {
 	private static AccessLogLocationBean createAccessLogLocationBean(
 			AnnotationConfigWebApplicationContext rootContext) {
 		Properties props = (Properties)rootContext.getBean("propertyFactory");
-		String location = Optional.ofNullable((String)props.get("access.log.output")).orElse("/data/servers/logs/");
+		String location = Optional.ofNullable((String)props.get("access.log.output")).orElse("./logs/");
 		return new AccessLogLocationBean(location);
 	}
 

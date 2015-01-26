@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.EnumSet;
 
 import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
+import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 
 import lombok.Getter;
@@ -22,6 +24,9 @@ import com.aol.micro.server.ErrorCode;
 import com.aol.micro.server.rest.RestContextListener;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
+import com.aol.micro.server.servers.model.ServletData;
+import com.aol.micro.server.web.FilterConfiguration;
+import com.aol.micro.server.web.ServletConfiguration;
 
 public class ServerApplication {
 	
@@ -95,11 +100,63 @@ public class ServerApplication {
 		servletRegistration.addMapping(serverData.getBaseUrlPattern());
 	}
 
+	
 	private void addFilters(WebappContext webappContext) {
+		
 		for (FilterData filterData : serverData.getFilterDataList()) {
 			FilterRegistration filterReg = webappContext.addFilter(filterData.getFilterName(), filterData.getFilter());
 			filterReg.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), filterData.getMapping());
 		}
+		serverData.getRootContext().getBeansOfType(FilterConfiguration.class).values()
+			.forEach(filter -> setInitParameters(webappContext.addFilter(getName(filter),getClass(filter)),filter)
+					.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), filter.getMapping()));
+		
+	}
+	private Class<? extends Filter> getClass(FilterConfiguration filter) {
+		if(filter.getClass()!=null)
+			return filter.getFilter();
+		return (Class<? extends Filter>) filter.getClass();
+	}
+
+	private FilterRegistration setInitParameters(FilterRegistration addFilter,
+			FilterConfiguration filter) {
+		addFilter.setInitParameters(filter.getInitParameters());
+		return addFilter;
+	}
+
+	private String getName(FilterConfiguration filter) {
+		if(filter.getName()!=null)
+			return filter.getName();
+		return filter.getClass().getName();
+	}
+
+	private void addServlets(WebappContext webappContext) {
+		for (ServletData servletData : serverData.getServletDataList()) {
+			ServletRegistration filterReg = webappContext.addServlet(servletData.getServletName(), servletData.getServlet());
+			filterReg.addMapping(servletData.getMapping());
+		}
+		serverData.getRootContext().getBeansOfType(ServletConfiguration.class).values()
+							.forEach(servlet -> setInitParameters(webappContext.addServlet(getName(servlet),getServlet(servlet)),servlet)
+									.addMapping(servlet.getMapping()));
+	}
+	
+	private Class<? extends Servlet> getServlet(ServletConfiguration servlet) {
+		if(servlet.getServlet()!=null)
+			return servlet.getServlet();
+		return (Class<? extends Servlet>)servlet.getClass();
+	}
+
+	private ServletRegistration setInitParameters(ServletRegistration addServlet, ServletConfiguration servlet) {
+		addServlet.setInitParameters(servlet.getInitParameters());
+		return addServlet;
+	}
+
+	
+
+	private String getName(ServletConfiguration servlet) {
+		if(servlet.getName()!=null)
+			return servlet.getName();
+		return servlet.getClass().getName();
 	}
 
 	private void addListeners(WebappContext webappContext) {

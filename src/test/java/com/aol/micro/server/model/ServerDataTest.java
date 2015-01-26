@@ -26,7 +26,7 @@ public class ServerDataTest {
 	@Before
 	public void setUp() {
 		rootContext = mock(AnnotationConfigWebApplicationContext.class);
-		serverData = new ServerData(8080, null, Lists.newArrayList(new StatusResource()), rootContext, "url", 
+		serverData = new ServerData(8080, null, null, Lists.newArrayList(new StatusResource()), rootContext, "url", 
 				()->"context");
 	}
 

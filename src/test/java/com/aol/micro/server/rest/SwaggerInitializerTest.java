@@ -12,7 +12,7 @@ public class SwaggerInitializerTest {
 	@Test
 	public void testContextInitialized() {
 		SwaggerInitializer initializer = new SwaggerInitializer(Lists.newArrayList(new StatusResource()));
-		ServerData serverData = new ServerData(8080, null, Lists.newArrayList(new StatusResource()), null, "url", () -> "context");
+		ServerData serverData = new ServerData(8080, null, null, Lists.newArrayList(new StatusResource()), null, "url", () -> "context");
 		initializer.setServerData(serverData);
 		initializer.contextInitialized(null);
 	}

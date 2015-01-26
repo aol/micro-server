@@ -20,7 +20,7 @@ public class RestContextListenerTest {
 	@Before
 	public void setUp() {
 		statsResource = new StatusResource();
-		ServerData serverData = new ServerData(8080, null, Lists.newArrayList(statsResource), null, "baseUrl", () -> "test");
+		ServerData serverData = new ServerData(8080, null, null, Lists.newArrayList(statsResource), null, "baseUrl", () -> "test");
 		restContextListener = new RestContextListener(serverData);
 	}
 

@@ -3,6 +3,7 @@ package com.aol.micro.server;
 import java.util.Map;
 
 import javax.servlet.Filter;
+import javax.servlet.Servlet;
 
 import com.aol.micro.server.rest.RestResource;
 import com.aol.micro.server.servers.QueryIPRetriever;
@@ -16,6 +17,9 @@ public interface Module {
 	
 	default Map<String,Filter> getFilters() {
 		return ImmutableMap.of("/*",new QueryIPRetriever());
+	}
+	default Map<String,Servlet> getServlets() {
+		return ImmutableMap.of();
 	}
 	
 	default  String getJaxWsRsApplication(){
