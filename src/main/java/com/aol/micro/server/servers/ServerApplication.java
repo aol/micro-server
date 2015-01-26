@@ -44,6 +44,8 @@ public class ServerApplication {
 		WebappContext webappContext = new WebappContext("WebappContext", "");
 
 		addServlet(webappContext);
+		
+		addServlets(webappContext);
 
 		addFilters(webappContext);
 
@@ -136,11 +138,16 @@ public class ServerApplication {
 			filterReg.addMapping(servletData.getMapping());
 		}
 		serverData.getRootContext().getBeansOfType(ServletConfiguration.class).values()
-							.forEach(servlet -> setInitParameters(webappContext.addServlet(getName(servlet),getServlet(servlet)),servlet)
-									.addMapping(servlet.getMapping()));
+							.forEach(servlet -> { setInitParameters(webappContext.addServlet(getName(servlet),getServlet(servlet)),servlet)
+									.addMapping(servlet.getMapping());
+									logServlet(servlet);
+							});
 	}
 	
-	private Class<? extends Servlet> getServlet(ServletConfiguration servlet) {
+	private void logServlet(ServletConfiguration servlet) {
+		logger.info("Registering servlet on " + servlet.getMapping()[0]);;
+	}
+private Class<? extends Servlet> getServlet(ServletConfiguration servlet) {
 		if(servlet.getServlet()!=null)
 			return servlet.getServlet();
 		return (Class<? extends Servlet>)servlet.getClass();
