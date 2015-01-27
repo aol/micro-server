@@ -7,9 +7,9 @@ import lombok.Getter;
 
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-import com.aol.micro.server.Module;
-import com.aol.micro.server.rest.RestResource;
-import com.aol.micro.server.rest.SwaggerInitializer;
+import com.aol.micro.server.auto.discovery.RestResource;
+import com.aol.micro.server.module.Module;
+import com.aol.micro.server.rest.swagger.SwaggerInitializer;
 import com.aol.micro.server.utility.UsefulStaticMethods;
 import com.google.common.collect.ImmutableList;
 

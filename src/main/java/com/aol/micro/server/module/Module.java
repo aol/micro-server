@@ -1,12 +1,12 @@
-package com.aol.micro.server;
+package com.aol.micro.server.module;
 
 import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 
-import com.aol.micro.server.rest.RestResource;
-import com.aol.micro.server.servers.QueryIPRetriever;
+import com.aol.micro.server.auto.discovery.RestResource;
+import com.aol.micro.server.web.filter.QueryIPRetriever;
 import com.google.common.collect.ImmutableMap;
 
 public interface Module {

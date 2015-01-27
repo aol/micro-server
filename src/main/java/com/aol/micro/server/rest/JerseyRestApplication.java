@@ -7,9 +7,11 @@ import lombok.Getter;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
+import com.aol.micro.server.auto.discovery.RestResource;
+import com.aol.micro.server.servers.ServerThreadLocalVariables;
 import com.google.common.collect.Maps;
 
-public class RestApplication extends ResourceConfig {
+public class JerseyRestApplication extends ResourceConfig {
 
 	@Getter
 	private static volatile ConcurrentMap<String, List<RestResource>> resourcesMap = Maps.newConcurrentMap();
@@ -17,11 +19,11 @@ public class RestApplication extends ResourceConfig {
 	@Getter
 	private static volatile ConcurrentMap<String, String> packages = Maps.newConcurrentMap();
 
-	public RestApplication() {
-		this(resourcesMap.get(Thread.currentThread().getName()));
+	public JerseyRestApplication() {
+		this(resourcesMap.get(ServerThreadLocalVariables.getContext().get()));
 	}
 
-	public RestApplication(List<RestResource> allResources) {
+	public JerseyRestApplication(List<RestResource> allResources) {
 		if (allResources != null) {
 			for (RestResource next : allResources) {
 				register(next);

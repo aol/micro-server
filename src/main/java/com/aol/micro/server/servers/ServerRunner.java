@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.micro.server.Module;
+import com.aol.micro.server.module.Module;
 import com.aol.micro.server.servers.model.ServerData;
 import com.google.common.collect.ImmutableList;
 
@@ -39,7 +39,11 @@ public class ServerRunner {
 	}
 
 	private Thread start(ServerApplication next, Module module) {
-		Thread t = new Thread(() -> next.run());
+		Thread t = new Thread(() -> { 
+			ServerThreadLocalVariables.getContext().set(module.getContext());
+			next.run(); 
+		});
+		
 		t.setName(module.getContext());
 		t.start();
 		return t;

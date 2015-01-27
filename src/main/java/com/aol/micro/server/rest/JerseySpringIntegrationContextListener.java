@@ -5,11 +5,11 @@ import javax.servlet.ServletContextListener;
 
 import com.aol.micro.server.servers.model.ServerData;
 
-public class RestContextListener implements ServletContextListener {
+public class JerseySpringIntegrationContextListener implements ServletContextListener {
 
 	private final ServerData serverData;
 
-	public RestContextListener(ServerData serverData) {
+	public JerseySpringIntegrationContextListener(ServerData serverData) {
 		this.serverData = serverData;
 	}
 
@@ -20,7 +20,7 @@ public class RestContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		RestApplication.getResourcesMap().put(serverData.getModule().getContext(), serverData.getResources());
+		JerseyRestApplication.getResourcesMap().put(serverData.getModule().getContext(), serverData.getResources());
 	}
 
 }

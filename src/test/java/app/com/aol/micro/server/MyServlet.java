@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.web.ServletConfiguration;
+import com.aol.micro.server.auto.discovery.ServletConfiguration;
 
 @Component
 public class MyServlet extends HttpServlet implements ServletConfiguration {

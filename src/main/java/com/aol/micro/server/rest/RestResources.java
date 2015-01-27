@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.aol.micro.server.auto.discovery.RestResource;
 import com.google.common.collect.ImmutableList;
 
 

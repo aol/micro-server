@@ -7,6 +7,8 @@ import java.util.Properties;
 
 import org.junit.Test;
 
+import com.aol.micro.server.module.Environment;
+import com.aol.micro.server.module.ModuleBean;
 import com.google.common.collect.Lists;
 
 public class EnvironmentTest {

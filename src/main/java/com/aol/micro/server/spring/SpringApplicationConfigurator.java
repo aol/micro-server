@@ -1,4 +1,4 @@
-package com.aol.micro.server.servers;
+package com.aol.micro.server.spring;
 
 import java.util.List;
 import java.util.Map;
@@ -11,15 +11,16 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-import com.aol.micro.server.Environment;
-import com.aol.micro.server.Module;
-import com.aol.micro.server.ModuleBean;
-import com.aol.micro.server.rest.RestResource;
+import com.aol.micro.server.auto.discovery.RestResource;
+import com.aol.micro.server.module.Environment;
+import com.aol.micro.server.module.Module;
+import com.aol.micro.server.module.ModuleBean;
 import com.aol.micro.server.rest.RestResources;
+import com.aol.micro.server.servers.AccessLogLocationBean;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-public class SpringApplicationCreator {
+class SpringApplicationConfigurator {
 	
 	public static AnnotationConfigWebApplicationContext createSpringApp(Class...classes)  {
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
@@ -65,8 +66,5 @@ public class SpringApplicationCreator {
 
 
 
-	public static ImmutableList<RestResource> createJerseyApp(AnnotationConfigWebApplicationContext rootContext,Module type){
-		
-		return ImmutableList.copyOf(rootContext.getBeansOfType(type.getRestResourceClass()).values());
-	}
+	
 }

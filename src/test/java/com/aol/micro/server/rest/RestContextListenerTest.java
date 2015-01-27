@@ -8,26 +8,26 @@ import org.junit.Test;
 
 import app.com.aol.micro.server.StatusResource;
 
-import com.aol.micro.server.Module;
+import com.aol.micro.server.module.Module;
 import com.aol.micro.server.servers.model.ServerData;
 import com.google.common.collect.Lists;
 
 public class RestContextListenerTest {
 
-	private RestContextListener restContextListener;
+	private JerseySpringIntegrationContextListener restContextListener;
 	private StatusResource statsResource;
 
 	@Before
 	public void setUp() {
 		statsResource = new StatusResource();
 		ServerData serverData = new ServerData(8080, null, null, Lists.newArrayList(statsResource), null, "baseUrl", () -> "test");
-		restContextListener = new RestContextListener(serverData);
+		restContextListener = new JerseySpringIntegrationContextListener(serverData);
 	}
 
 	@Test
 	public void testContextInitialized() {
 		restContextListener.contextInitialized(null);
-		assertThat(RestApplication.getResourcesMap().get("test").get(0), is(statsResource));
+		assertThat(JerseyRestApplication.getResourcesMap().get("test").get(0), is(statsResource));
 	}
 
 	@Test

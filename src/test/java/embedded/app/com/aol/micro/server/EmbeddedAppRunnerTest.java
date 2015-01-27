@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 import app.com.aol.micro.server.AppRunnerTest;
 
-import com.aol.micro.server.EmbeddedModule;
 import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.module.EmbeddedModule;
 
 @Configuration
 @ComponentScan(basePackages = { "embedded.app.com.aol.micro.server" })

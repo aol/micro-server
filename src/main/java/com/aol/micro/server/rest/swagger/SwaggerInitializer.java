@@ -1,4 +1,4 @@
-package com.aol.micro.server.rest;
+package com.aol.micro.server.rest.swagger;
 
 import java.util.stream.Collectors;
 
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import scala.collection.JavaConversions;
 import scala.collection.immutable.List;
 
+import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.servers.model.ServerData;
 import com.wordnik.swagger.jaxrs.config.BeanConfig;
 

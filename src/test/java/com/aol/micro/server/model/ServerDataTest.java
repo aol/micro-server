@@ -13,8 +13,8 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import app.com.aol.micro.server.StatusResource;
 
-import com.aol.micro.server.Module;
-import com.aol.micro.server.rest.SwaggerInitializer;
+import com.aol.micro.server.module.Module;
+import com.aol.micro.server.rest.swagger.SwaggerInitializer;
 import com.aol.micro.server.servers.model.ServerData;
 import com.google.common.collect.Lists;
 

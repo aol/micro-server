@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Test;
 
+import com.aol.micro.server.web.filter.QueryIPRetriever;
+
 public class QueryIPRetrieverTest {
 
 	private class MyFilterChain implements FilterChain {

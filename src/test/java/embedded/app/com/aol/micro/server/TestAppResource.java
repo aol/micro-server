@@ -6,7 +6,7 @@ import javax.ws.rs.Produces;
 
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.rest.RestResource;
+import com.aol.micro.server.auto.discovery.RestResource;
 @Component
 @Path("/test-status")
 public class TestAppResource implements TestAppRestResource {
