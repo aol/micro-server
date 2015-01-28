@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import app.com.aol.micro.server.StatusResource;
+import app.servlet.com.aol.micro.server.ServletStatusResource;
 
 import com.aol.micro.server.servers.ServerThreadLocalVariables;
 import com.google.common.collect.Lists;
@@ -17,9 +17,9 @@ public class RestApplicationTest {
 		@Test
 		public void testDefaultConstructor() {
 			ServerThreadLocalVariables.getContext().set(Thread.currentThread().getName());
-			JerseyRestApplication.getResourcesMap().put(Thread.currentThread().getName(), Lists.newArrayList(new StatusResource()));
+			JerseyRestApplication.getResourcesMap().put(Thread.currentThread().getName(), Lists.newArrayList(new ServletStatusResource()));
 			JerseyRestApplication app = new JerseyRestApplication();
-			assertTrue(app.isRegistered(StatusResource.class));
+			assertTrue(app.isRegistered(ServletStatusResource.class));
 			
 			assertThat(app.getApplication().getClasses().iterator().next().getName(),is("com.aol.micro.server.rest.JacksonFeature"));
 			
@@ -31,16 +31,16 @@ public class RestApplicationTest {
 			ServerThreadLocalVariables.getContext().set(Thread.currentThread().getName());
 			JerseyRestApplication app = new JerseyRestApplication();
 			assertThat(app.getApplication().getClasses().iterator().next().getName(),is("com.aol.micro.server.rest.JacksonFeature"));
-			assertFalse(app.isRegistered(StatusResource.class));
+			assertFalse(app.isRegistered(ServletStatusResource.class));
 			
 		}
 
 		@Test
 		public void testConstructor() {
 			JerseyRestApplication.getResourcesMap().clear();
-			JerseyRestApplication app = new JerseyRestApplication(Lists.newArrayList(new StatusResource()));
+			JerseyRestApplication app = new JerseyRestApplication(Lists.newArrayList(new ServletStatusResource()));
 			assertThat(app.getApplication().getClasses().size(),is(1));
-			assertTrue(app.isRegistered(StatusResource.class));
+			assertTrue(app.isRegistered(ServletStatusResource.class));
 		}
 		
 	

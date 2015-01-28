@@ -20,7 +20,7 @@ public class JacksonFeature implements Feature {
         
         context.register(JacksonJaxbJsonProvider.class, MessageBodyReader.class, MessageBodyWriter.class);
         JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
-    		provider.setMapper(JacksonUtil.getMapper());
+     		provider.setMapper(JacksonUtil.getMapper());
             context.register(provider);
      
         return true;

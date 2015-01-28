@@ -6,7 +6,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-import app.com.aol.micro.server.StatusResource;
+import app.servlet.com.aol.micro.server.ServletStatusResource;
 
 import com.aol.micro.server.module.Module;
 import com.aol.micro.server.servers.model.ServerData;
@@ -15,11 +15,11 @@ import com.google.common.collect.Lists;
 public class RestContextListenerTest {
 
 	private JerseySpringIntegrationContextListener restContextListener;
-	private StatusResource statsResource;
+	private ServletStatusResource statsResource;
 
 	@Before
 	public void setUp() {
-		statsResource = new StatusResource();
+		statsResource = new ServletStatusResource();
 		ServerData serverData = new ServerData(8080, null, null, Lists.newArrayList(statsResource), null, "baseUrl", () -> "test");
 		restContextListener = new JerseySpringIntegrationContextListener(serverData);
 	}

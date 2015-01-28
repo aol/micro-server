@@ -3,7 +3,7 @@ package app.filter.com.aol.micro.server;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import app.com.aol.micro.server.AppRunnerLocalMain;
+import app.servlet.com.aol.micro.server.AppRunnerLocalMain;
 
 import com.aol.micro.server.MicroServerStartup;
 @Configuration

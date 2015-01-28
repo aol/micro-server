@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
 public final class JacksonUtil {
@@ -30,6 +31,7 @@ public final class JacksonUtil {
 			mapper.registerModule(module);
 
 			mapper.registerModule(new GuavaModule());
+			mapper.registerModule(new Jdk8Module());
 
 		}
 		return mapper;

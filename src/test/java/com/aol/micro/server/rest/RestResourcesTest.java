@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import app.com.aol.micro.server.StatusResource;
+import app.servlet.com.aol.micro.server.ServletStatusResource;
 
 import com.google.common.collect.Lists;
 
@@ -14,7 +14,7 @@ public class RestResourcesTest {
 	@Test
 	public void testConstructors() {
 		assertThat(new RestResources().getAllResources().size(), is(0));
-		assertThat(new RestResources(Lists.newArrayList(new StatusResource())).getAllResources().size(), is(1));
+		assertThat(new RestResources(Lists.newArrayList(new ServletStatusResource())).getAllResources().size(), is(1));
 
 	}
 

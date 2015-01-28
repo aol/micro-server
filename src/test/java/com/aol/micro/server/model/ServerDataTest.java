@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-import app.com.aol.micro.server.StatusResource;
+import app.servlet.com.aol.micro.server.ServletStatusResource;
 
 import com.aol.micro.server.module.Module;
 import com.aol.micro.server.rest.swagger.SwaggerInitializer;
@@ -26,7 +26,7 @@ public class ServerDataTest {
 	@Before
 	public void setUp() {
 		rootContext = mock(AnnotationConfigWebApplicationContext.class);
-		serverData = new ServerData(8080, null, null, Lists.newArrayList(new StatusResource()), rootContext, "url", 
+		serverData = new ServerData(8080, null, null, Lists.newArrayList(new ServletStatusResource()), rootContext, "url", 
 				()->"context");
 	}
 

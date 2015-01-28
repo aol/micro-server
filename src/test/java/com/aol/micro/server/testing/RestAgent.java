@@ -36,5 +36,6 @@ public class RestAgent {
 
 		return request.post(Entity.entity(JacksonUtil.serializeToJson(payload),MediaType.APPLICATION_JSON), type);
 	}
+	
 
 }
