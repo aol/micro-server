@@ -155,7 +155,7 @@ public class GrizzlyApplication  implements ServerApplication {
 	}
 
 	private Class<? extends Filter> getClass(FilterConfiguration filter) {
-		if (filter.getClass() != null)
+		if (filter.getFilter() != null)
 			return filter.getFilter();
 		return (Class<? extends Filter>) filter.getClass();
 	}

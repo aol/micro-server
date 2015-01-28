@@ -21,7 +21,9 @@ import com.google.common.collect.ImmutableList;
 public class EmbeddedAppTest {
 	
 	RestAgent rest = new RestAgent();
+	
 	MicroServerStartup server;
+	
 	@Before
 	public void startServer(){
 		server = new MicroServerStartup(EmbeddedAppLocalMain.class, 

@@ -11,12 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroServerStartup;
-import com.aol.micro.server.module.EmbeddedModule;
 import com.aol.micro.server.testing.RestAgent;
-
-import embedded.app.com.aol.micro.server.AltAppRestResource;
-import embedded.app.com.aol.micro.server.EmbeddedAppLocalMain;
-import embedded.app.com.aol.micro.server.TestAppRestResource;
 
 public class AppRunnerTest {
 
