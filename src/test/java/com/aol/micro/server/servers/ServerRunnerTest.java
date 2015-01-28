@@ -5,10 +5,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.concurrent.CompletableFuture;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.module.Module;
 import com.aol.micro.server.servers.grizzly.GrizzlyApplication;
 import com.aol.micro.server.servers.model.ServerData;
 import com.google.common.collect.Lists;
@@ -39,7 +40,7 @@ public class ServerRunnerTest {
 
 	@Test
 	public void testRun() {
-		serverRunner.run();
+		serverRunner.run(new CompletableFuture());
 		verify(serverApplication1, times(1)).run();
 		verify(serverApplication2, times(1)).run();
 	}

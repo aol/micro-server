@@ -2,6 +2,7 @@ package com.aol.micro.server.servers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class ServerRunner {
 		this.register = Optional.empty();
 	}
 
-	public void run() {
+	public void run(CompletableFuture f) {
 
 		register.ifPresent( reg -> 
 			reg.register(
@@ -33,7 +34,9 @@ public class ServerRunner {
 					.collect(Collectors.toList())
 					.toArray(new ServerData[0])));
 
-		apps.stream().map(app -> start(app, app.getServerData().getModule())).collect(Collectors.toList()).forEach(thread -> join(thread));
+		List<Thread> threads =apps.stream().map(app -> start(app, app.getServerData().getModule())).collect(Collectors.toList());
+		f.complete(true);
+		threads.forEach(thread -> join(thread));
 
 		logger.info("{} Rest applications started ", apps.size());
 	}

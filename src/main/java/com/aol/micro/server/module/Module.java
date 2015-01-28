@@ -6,6 +6,7 @@ import javax.servlet.Filter;
 import javax.servlet.Servlet;
 
 import com.aol.micro.server.auto.discovery.RestResource;
+import com.aol.micro.server.rest.JerseyRestApplication;
 import com.aol.micro.server.web.filter.QueryIPRetriever;
 import com.google.common.collect.ImmutableMap;
 
@@ -23,7 +24,7 @@ public interface Module {
 	}
 	
 	default  String getJaxWsRsApplication(){
-		return "com.aol.micro.server.rest.RestApplication";
+		return JerseyRestApplication.class.getCanonicalName();
 	}
 	default String getProviders(){
 		return "com.aol.micro.server.rest.providers";

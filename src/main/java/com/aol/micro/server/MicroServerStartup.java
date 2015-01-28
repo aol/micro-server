@@ -1,6 +1,7 @@
 package com.aol.micro.server;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import lombok.Getter;
@@ -41,10 +42,12 @@ public class MicroServerStartup {
 		springContext = new SpringContextFactory(additionalClasses).createSpringContext();
 	}
 
-	
-
-
 	public void start() {
+		start(new CompletableFuture());
+	}
+
+
+	public void start(CompletableFuture f) {
 
 		List<ServerApplication> apps = modules.stream().map(module -> 
 						new GrizzlyApplicationFactory(springContext,module).createApp()).collect(Collectors.toList());
@@ -57,7 +60,7 @@ public class MicroServerStartup {
 			runner = new ServerRunner(apps);
 		}
 		
-		runner.run();
+		runner.run(f);
 	}
 
 	

@@ -3,7 +3,7 @@ package embedded.app.com.aol.micro.server;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import app.com.aol.micro.server.AppRunnerTest;
+import app.com.aol.micro.server.AppRunnerLocalMain;
 
 import com.aol.micro.server.MicroServerStartup;
 import com.aol.micro.server.module.EmbeddedModule;
