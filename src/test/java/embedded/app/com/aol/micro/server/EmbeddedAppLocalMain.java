@@ -10,10 +10,10 @@ import com.aol.micro.server.module.EmbeddedModule;
 
 @Configuration
 @ComponentScan(basePackages = { "embedded.app.com.aol.micro.server" })
-public class EmbeddedAppRunnerTest {
+public class EmbeddedAppLocalMain {
 
 	public static void main(String[] args) throws InterruptedException {
-		new MicroServerStartup(EmbeddedAppRunnerTest.class, 
+		new MicroServerStartup(EmbeddedAppLocalMain.class, 
 				new EmbeddedModule(TestAppRestResource.class,"test-app"),
 				new EmbeddedModule(AltAppRestResource.class,"alternative-app")).start();
 

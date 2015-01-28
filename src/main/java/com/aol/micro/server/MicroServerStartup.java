@@ -24,7 +24,7 @@ public class MicroServerStartup {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final List<Module> modules;
-	
+	private final CompletableFuture end = new CompletableFuture();
 
 	@Getter
 	private final AnnotationConfigWebApplicationContext springContext;
@@ -42,12 +42,15 @@ public class MicroServerStartup {
 		springContext = new SpringContextFactory(additionalClasses).createSpringContext();
 	}
 
-	public void start() {
-		start(new CompletableFuture());
+	public void stop(){
+		end.complete(true);
+	}
+	public void run() {
+		start().forEach(thread -> join(thread));
 	}
 
 
-	public void start(CompletableFuture f) {
+	public List<Thread> start() {
 
 		List<ServerApplication> apps = modules.stream().map(module -> 
 						new GrizzlyApplicationFactory(springContext,module).createApp()).collect(Collectors.toList());
@@ -55,14 +58,21 @@ public class MicroServerStartup {
 		ServerRunner runner;
 		try{
 			
-			runner = new ServerRunner(springContext.getBean(ApplicationRegister.class), apps);
+			runner = new ServerRunner(springContext.getBean(ApplicationRegister.class), apps,end);
 		}catch(BeansException e){
-			runner = new ServerRunner(apps);
+			runner = new ServerRunner(apps,end);
 		}
 		
-		runner.run(f);
+		return runner.run();
 	}
-
+	private void join(Thread thread) {
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new RuntimeException(e);
+		}
+	}
 	
 
 

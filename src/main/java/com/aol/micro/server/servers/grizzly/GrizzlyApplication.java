@@ -2,6 +2,8 @@ package com.aol.micro.server.servers.grizzly;
 
 import java.io.IOException;
 import java.util.EnumSet;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -41,7 +43,7 @@ public class GrizzlyApplication  implements ServerApplication {
 		this.serverData = serverData;
 	}
 
-	public void run() {
+	public void run(CompletableFuture start,CompletableFuture end) {
 
 		WebappContext webappContext = new WebappContext("WebappContext", "");
 
@@ -58,10 +60,10 @@ public class GrizzlyApplication  implements ServerApplication {
 
 		addAccessLog(httpServer);
 
-		startServer(webappContext, httpServer);
+		startServer(webappContext, httpServer,start,end);
 	}
 
-	private void startServer(WebappContext webappContext, HttpServer httpServer) {
+	private void startServer(WebappContext webappContext, HttpServer httpServer, CompletableFuture start, CompletableFuture end)  {
 		webappContext.deploy(httpServer);
 		try {
 			logger.info("Starting application {} on port {}", serverData
@@ -69,11 +71,14 @@ public class GrizzlyApplication  implements ServerApplication {
 			logger.info("Browse to http://localhost:{}/{}/application.wadl",
 					serverData.getPort(), serverData.getModule().getContext());
 			httpServer.start();
-			while (true) {
-				Thread.sleep(2000L);
-			}
+			start.complete(true);
+			end.get();
+			
 		} catch (IOException e) {
 			throw new RuntimeException(e);
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 			throw new RuntimeException(e);

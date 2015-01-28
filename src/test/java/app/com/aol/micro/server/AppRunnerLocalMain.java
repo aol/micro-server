@@ -15,7 +15,7 @@ public class AppRunnerLocalMain {
 		public static void main(String[] args) throws InterruptedException {
 			
 			new MicroServerStartup( AppRunnerLocalMain.class, () -> "test-app")
-					.start();
+					.run();
 		}
 
 }
