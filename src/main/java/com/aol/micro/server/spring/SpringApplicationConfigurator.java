@@ -32,7 +32,7 @@ class SpringApplicationConfigurator {
 		beanFactory.registerSingleton(Environment.class.getCanonicalName(), createEnvironment( rootContext));
 		beanFactory.registerSingleton(AccessLogLocationBean.class.getCanonicalName(), createAccessLogLocationBean( rootContext));
 		beanFactory.registerSingleton(RestResources.class.getCanonicalName(), createRestResources( rootContext));
-	
+		
 		return rootContext;
 	}
 	

@@ -4,7 +4,9 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.NotFoundException;
@@ -12,10 +14,15 @@ import javax.ws.rs.NotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.client.HttpComponentsAsyncClientHttpRequestFactory;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
+import org.springframework.web.client.AsyncRestTemplate;
 
 import com.aol.micro.server.MicroServerStartup;
 import com.aol.micro.server.module.EmbeddedModule;
 import com.aol.micro.server.testing.RestAgent;
+import com.aol.simple.react.SimpleReact;
 import com.google.common.collect.ImmutableList;
 
 public class EmbeddedAppTest {
@@ -40,6 +47,15 @@ public class EmbeddedAppTest {
 	@Test
 	public void confirmExpectedUrlsPresentTest() throws InterruptedException, ExecutionException{
 		
+		
+			
+		
+		
+		
+		
+		
+		
+		
 		assertThat(rest.get("http://localhost:8080/test-app/test-status/ping"),is("test!"));
 		
 		
@@ -47,6 +63,41 @@ public class EmbeddedAppTest {
 				hasItem("hello"));
 	
 	}
+	
+	
+	@Test
+	public void nonBlockingRestClientTest(){
+		assertThat(rest.get("http://localhost:8080/test-app/test-status/rest-calls"),is("-*test!-*test!"));
+	}
+	
+	<T> CompletableFuture<T> toCompletableFuture(
+			final ListenableFuture<T> listenableFuture
+		) {
+	        //create an instance of CompletableFuture
+	        CompletableFuture<T> completable = new CompletableFuture<T>() {
+	            @Override
+	            public boolean cancel(boolean mayInterruptIfRunning) {
+	                // propagate cancel to the listenable future
+	                boolean result = listenableFuture.cancel(mayInterruptIfRunning);
+	                super.cancel(mayInterruptIfRunning);
+	                return result;
+	            }
+	        };
+
+	        // add callback
+	        listenableFuture.addCallback(new ListenableFutureCallback<T>() {
+	            @Override
+	            public void onSuccess(T result) {
+	                completable.complete(result);
+	            }
+
+	            @Override
+	            public void onFailure(Throwable t) {
+	                completable.completeExceptionally(t);
+	            }
+	        });
+	        return completable;
+	    }
 	
 	@Test(expected=NotFoundException.class)
 	public void confirmAltAppCantUseTestAppResources(){
