@@ -1,5 +1,6 @@
 package com.aol.micro.server.rest.client;
 
+import static net.javacrumbs.futureconverter.springjava.FutureConverter.*;
 import java.net.URI;
 import java.util.Map;
 import java.util.Set;
@@ -58,33 +59,7 @@ public class NIORestTemplate {
 		return toCompletableFuture(template.headForHeaders(url, uriVariables));
 	}
 
-	<T> CompletableFuture<T> toCompletableFuture(
-			final ListenableFuture<T> listenableFuture) {
-		// create an instance of CompletableFuture
-		CompletableFuture<T> completable = new CompletableFuture<T>() {
-			@Override
-			public boolean cancel(boolean mayInterruptIfRunning) {
-				// propagate cancel to the listenable future
-				boolean result = listenableFuture.cancel(mayInterruptIfRunning);
-				super.cancel(mayInterruptIfRunning);
-				return result;
-			}
-		};
-
-		// add callback
-		listenableFuture.addCallback(new ListenableFutureCallback<T>() {
-			@Override
-			public void onSuccess(T result) {
-				completable.complete(result);
-			}
-
-			@Override
-			public void onFailure(Throwable t) {
-				completable.completeExceptionally(t);
-			}
-		});
-		return completable;
-	}
+	
 
 	public CompletableFuture<HttpHeaders> headForHeaders(String url,
 			Map<String, ?> uriVariables) throws RestClientException {

@@ -47,15 +47,6 @@ public class EmbeddedAppTest {
 	@Test
 	public void confirmExpectedUrlsPresentTest() throws InterruptedException, ExecutionException{
 		
-		
-			
-		
-		
-		
-		
-		
-		
-		
 		assertThat(rest.get("http://localhost:8080/test-app/test-status/ping"),is("test!"));
 		
 		

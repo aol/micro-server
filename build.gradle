@@ -1,6 +1,15 @@
-plugins {
-  id 'java' // or 'groovy' Must be explicitly applied
-  id 'com.github.johnrengelman.shadow' version '1.2.0'
+apply plugin:'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'com.bmuschko.nexus'
+buildscript {
+	repositories {
+		jcenter()
+	}
+
+	dependencies {
+		classpath 'com.bmuschko:gradle-nexus-plugin:2.2'
+		classpath 'com.github.jengelman.gradle.plugins:shadow:1.1.1'
+	}
 }
 
 sourceCompatibility = 1.8
@@ -12,6 +21,8 @@ jar {
     }
 }
 
+
+
 repositories {
     mavenCentral()
 	maven { url "http://repo.maven.apache.org/maven2" }
@@ -21,6 +32,7 @@ repositories {
 dependencies {
 
 	
+	compile 'net.javacrumbs.future-converter:future-converter-spring-java8:0.1.0'
 	compile group: 'com.aol.simplereact', name:'simple-react', version:'0.1'
 	compile group: 'org.apache.httpcomponents', name:'httpclient', version:'4.4'
 	compile group: 'org.apache.httpcomponents', name:'httpasyncclient', version:'4.1-beta1'
@@ -80,5 +92,55 @@ dependencies {
 test {
     systemProperties 'property': 'value'
 }
+
+modifyPom {
+	project {
+		name 'Microserver'
+		description 'Zero config REST webserver'
+		url 'http://advertising.com'
+		inceptionYear '2015'
+
+		groupId 'com.aol.advertising.microservices'
+		artifactId 'microserver'
+		version '0.1'
+		
+		scm {
+			url 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'
+			connection 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'
+			developerConnection 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'
+		}
+
+		licenses {
+			license {
+				name 'The Apache Software License, Version 2.0'
+				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+				distribution 'repo'
+			}
+		}
+
+		developers {
+			developer {
+				id 'johnmcclean-aol'
+				name 'John McClean'
+				email 'john.mcclean@teamaol.com'
+			}
+		}
+	}
+}
+
+extraArchive {
+	sources = false
+	tests = false
+	javadoc = false
+}
+
+nexus {
+	sign = false
+	repositoryUrl = 'http://cmmaven.cm.aol.com:8081/nexus/content/repositories/aol-advertising'
+	snapshotRepositoryUrl = 'http://cmmaven.cm.aol.com:8081/nexus/content/groups/public'
+	
+}
+
+
 
 
