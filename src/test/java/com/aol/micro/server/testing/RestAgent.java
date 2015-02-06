@@ -13,6 +13,20 @@ import com.aol.micro.server.rest.JacksonUtil;
 
 public class RestAgent {
 
+	
+	public String getJson(String url) {
+
+		Client client = ClientBuilder.newClient();
+
+		WebTarget resource = client.target(url);
+
+		Builder request = resource.request();
+		request.accept(MediaType.APPLICATION_JSON);
+
+		return request.get(String.class);
+
+	}
+	
 	public String get(String url) {
 
 		Client client = ClientBuilder.newClient();

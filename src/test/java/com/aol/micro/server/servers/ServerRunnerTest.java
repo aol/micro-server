@@ -1,9 +1,6 @@
 package com.aol.micro.server.servers;
 
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
@@ -13,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.servers.grizzly.GrizzlyApplication;
+import com.aol.micro.server.servers.model.AllData;
 import com.aol.micro.server.servers.model.ServerData;
 import com.google.common.collect.Lists;
 
@@ -32,16 +30,16 @@ public class ServerRunnerTest {
 		server1Count =0;
 		server2Count =0;
 
-		ServerData data1 = new ServerData(8080, Lists.newArrayList(), Lists.newArrayList(),Lists.newArrayList(), null, "url1", () -> "app-context");
-		ServerData data2 = new ServerData(8081, Lists.newArrayList(),Lists.newArrayList(), Lists.newArrayList(), null, "url2", () -> "test-context");
+		ServerData data1 = new ServerData(8080,Lists.newArrayList(), null, "url1", () -> "app-context");
+		ServerData data2 = new ServerData(8081, Lists.newArrayList(), null, "url2", () -> "test-context");
 
-		serverApplication1 = new GrizzlyApplication(data1){
+		serverApplication1 = new GrizzlyApplication(AllData.builder().serverData(data1).build()){
 			public void run(CompletableFuture start,CompletableFuture end) {
 				start.complete(true);
 				server1Count++;
 			}
 		};
-		serverApplication2 =  new GrizzlyApplication(data2){
+		serverApplication2 =  new GrizzlyApplication(AllData.builder().serverData(data2).build()){
 			public void run(CompletableFuture start,CompletableFuture end) {
 				start.complete(true);
 				server2Count++;

@@ -26,27 +26,18 @@ public class ServerDataTest {
 	@Before
 	public void setUp() {
 		rootContext = mock(AnnotationConfigWebApplicationContext.class);
-		serverData = new ServerData(8080, null, null, Lists.newArrayList(new ServletStatusResource()), rootContext, "url", 
+		serverData = new ServerData(8080,  Lists.newArrayList(new ServletStatusResource()), rootContext, "url", 
 				()->"context");
 	}
 
 	@Test
 	public void testGetters() {
 		assertThat(serverData.getBaseUrlPattern(), is("url"));
-		assertThat(serverData.getFilterDataList().size(), is(0));
 		assertThat(serverData.getResources().size(), is(1));
 		assertThat(serverData.getRootContext(), is(rootContext));
 		assertThat(serverData.getModule().getContext(), is("context"));
 		assertThat(serverData.getPort(), is(8080));
 	}
 
-	@Test
-	public void testInit() {
-
-		SwaggerInitializer swaggerInitializer = mock(SwaggerInitializer.class);
-		when(rootContext.getBean(SwaggerInitializer.class)).thenReturn(swaggerInitializer);
-		serverData.init();
-		verify(swaggerInitializer, times(1)).setServerData(serverData);
-
-	}
+	
 }

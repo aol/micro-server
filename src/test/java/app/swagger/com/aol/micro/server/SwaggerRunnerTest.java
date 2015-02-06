@@ -1,7 +1,6 @@
-package app.simple.com.aol.micro.server;
+package app.swagger.com.aol.micro.server;
 
-
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 import java.util.concurrent.CompletableFuture;
@@ -24,8 +23,9 @@ import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.SimpleReact;
 
 @Configuration
-@ComponentScan(basePackages = { "app.simple.com.aol.micro.server" })
-public class SimpleRunnerTest {
+@ComponentScan(basePackages = { "app.swagger.com.aol.micro.server" })
+public class SwaggerRunnerTest {
+
 
 	RestAgent rest = new RestAgent();
 	
@@ -33,7 +33,7 @@ public class SimpleRunnerTest {
 	@Before
 	public void startServer(){
 		
-		server = new MicroServerStartup( SimpleRunnerTest.class, ()-> "simple-app");
+		server = new MicroServerStartup( SwaggerRunnerTest.class, ()-> "swagger-app");
 		server.start();
 
 	}
@@ -48,7 +48,7 @@ public class SimpleRunnerTest {
 		
 		
 		
-		assertThat(rest.get("http://localhost:8080/simple-app/status/ping"),is("ok"));
+		assertThat(rest.getJson("http://localhost:8080/api-docs/stats"),containsString("Make a ping call"));
 	
 	}
 	

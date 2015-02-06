@@ -1,31 +1,30 @@
-package app.simple.com.aol.micro.server;
-
+package app.single.com.aol.micro.server;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Stream;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsAsyncClientHttpRequestFactory;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
-import org.springframework.web.client.AsyncRestTemplate;
+import org.springframework.stereotype.Component;
+
+import app.simple.com.aol.micro.server.SimpleRunnerTest;
 
 import com.aol.micro.server.MicroServerStartup;
 import com.aol.micro.server.testing.RestAgent;
-import com.aol.simple.react.SimpleReact;
-
 @Configuration
 @ComponentScan(basePackages = { "app.simple.com.aol.micro.server" })
-public class SimpleRunnerTest {
+@Component
+@Path("/status")
+public class SingleClassTest {
 
 	RestAgent rest = new RestAgent();
 	
@@ -33,7 +32,7 @@ public class SimpleRunnerTest {
 	@Before
 	public void startServer(){
 		
-		server = new MicroServerStartup( SimpleRunnerTest.class, ()-> "simple-app");
+		server = new MicroServerStartup( SingleClassTest.class, ()-> "simple-app");
 		server.start();
 
 	}
@@ -51,7 +50,13 @@ public class SimpleRunnerTest {
 		assertThat(rest.get("http://localhost:8080/simple-app/status/ping"),is("ok"));
 	
 	}
-	
+
+	@GET
+	@Produces("text/plain")
+	@Path("/ping")
+	public String ping() {
+		return "ok";
+	}
 	
 	
 }

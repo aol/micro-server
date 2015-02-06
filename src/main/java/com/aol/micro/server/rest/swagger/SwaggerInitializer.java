@@ -18,18 +18,17 @@ import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.servers.model.ServerData;
 import com.wordnik.swagger.jaxrs.config.BeanConfig;
 
-//@Component
 public class SwaggerInitializer implements ServletContextListener {
 
 	private final List<Class<?>> resourceClasses;
+	private final String baseUrlPattern;
+	
 
-	@Setter
-	private volatile ServerData serverData;
-
-	@Autowired
-	public SwaggerInitializer(java.util.List<RestResource> resources) {
+	
+	public SwaggerInitializer(ServerData serverData) {
 		this.resourceClasses = JavaConversions.asScalaBuffer(
-				resources.stream().map(resource -> resource.getClass()).collect(Collectors.<Class<?>> toList())).toList();
+				serverData.getResources().stream().map(resource -> resource.getClass()).collect(Collectors.<Class<?>> toList())).toList();
+		this.baseUrlPattern = serverData.getBaseUrlPattern();
 	}
 
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -40,7 +39,7 @@ public class SwaggerInitializer implements ServletContextListener {
 			}
 		};
 		beanConfig.setVersion("1.0.2");
-		beanConfig.setBasePath(this.serverData.getBaseUrlPattern());
+		beanConfig.setBasePath(baseUrlPattern);
 		beanConfig.setDescription("RESTful resources");
 		beanConfig.setTitle("RESTful API");
 		beanConfig.setScan(true);

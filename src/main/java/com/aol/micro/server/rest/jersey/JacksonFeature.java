@@ -1,4 +1,4 @@
-package com.aol.micro.server.rest;
+package com.aol.micro.server.rest.jersey;
 
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
@@ -7,6 +7,7 @@ import javax.ws.rs.ext.MessageBodyWriter;
 
 import org.glassfish.jersey.CommonProperties;
 
+import com.aol.micro.server.rest.JacksonUtil;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 

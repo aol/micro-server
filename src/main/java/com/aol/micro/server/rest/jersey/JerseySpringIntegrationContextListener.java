@@ -1,4 +1,4 @@
-package com.aol.micro.server.rest;
+package com.aol.micro.server.rest.jersey;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

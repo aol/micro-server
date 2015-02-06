@@ -1,4 +1,4 @@
-package com.aol.micro.server.servers.grizzly;
+package com.aol.micro.server.servers.model;
 
 import java.util.List;
 
@@ -11,9 +11,7 @@ import com.aol.micro.server.module.Environment;
 import com.aol.micro.server.module.Module;
 import com.aol.micro.server.module.ModuleDataExtractor;
 import com.aol.micro.server.servers.ServerApplication;
-import com.aol.micro.server.servers.model.FilterData;
-import com.aol.micro.server.servers.model.ServerData;
-import com.aol.micro.server.servers.model.ServletData;
+import com.aol.micro.server.servers.grizzly.GrizzlyApplication;
 import com.google.common.collect.ImmutableList;
 
 @AllArgsConstructor
@@ -33,12 +31,14 @@ public class GrizzlyApplicationFactory {
 		environment.assureModule(module);
 		String fullRestResource = "/" + module.getContext() + "/*";
 
-		List<FilterData> filterDataList = extractor.createFilteredDataList();
-		List<ServletData> servletDataList = extractor.createServletDataList();
+		ServerData serverData = new ServerData(environment.getModuleBean(module).getPort(), 
+				resources,
+				rootContext, fullRestResource, module);
+		List<FilterData> filterDataList = extractor.createFilteredDataList(serverData);
+		List<ServletData> servletDataList = extractor.createServletDataList(serverData);
 
-		GrizzlyApplication app = new GrizzlyApplication(new ServerData(environment.getModuleBean(module).getPort(), 
-				filterDataList, servletDataList,resources,
-				rootContext, fullRestResource, module));
+		GrizzlyApplication app = new GrizzlyApplication(new AllData(serverData,
+				filterDataList, servletDataList,module.getListeners(serverData)));
 		return app;
 	}
 }
