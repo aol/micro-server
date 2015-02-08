@@ -81,8 +81,7 @@ public class GrizzlyApplication  implements ServerApplication {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 			throw new RuntimeException(e);
