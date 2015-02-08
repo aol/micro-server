@@ -102,7 +102,7 @@ modifyPom {
 
 		groupId 'com.aol.advertising.microservices'
 		artifactId 'microserver'
-		version '0.1'
+		version '0.2'
 		
 		scm {
 			url 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'

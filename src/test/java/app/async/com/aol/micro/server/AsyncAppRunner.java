@@ -42,7 +42,7 @@ public class AsyncAppRunner {
 		
 		
 		
-		assertThat(rest.get("http://localhost:8080/async-app/async/expensive"),is("test!;test!;test!;test!"));
+		assertThat(rest.get("http://localhost:8080/async-app/async/expensive"),is(";test!;test!;test!"));
 	
 	}
 	

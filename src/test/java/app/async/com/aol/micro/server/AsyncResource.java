@@ -21,7 +21,7 @@ import com.google.common.collect.ImmutableList;
 @Component
 public class AsyncResource implements RestResource{
 
-	private final ImmutableList<String> urls = ImmutableList.of("http://localhost:8080/async-app/async/ping",
+	private final ImmutableList<String> urls = ImmutableList.of("http://localhost:8080/async-app/async/ping2",
 			"http://localhost:8080/async-app/async/ping",
 			"http://localhost:8080/async-app/async/ping",
 			"http://localhost:8080/async-app/async/ping");
