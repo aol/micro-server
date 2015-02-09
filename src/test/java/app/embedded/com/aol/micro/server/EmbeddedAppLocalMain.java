@@ -7,9 +7,9 @@ import app.servlet.com.aol.micro.server.AppRunnerLocalMain;
 
 import com.aol.micro.server.MicroServerStartup;
 import com.aol.micro.server.module.EmbeddedModule;
+import com.aol.micro.server.spring.annotations.Microserver;
 
-@Configuration
-@ComponentScan(basePackages = {    "app.embedded.com.aol.micro.server" })
+@Microserver(basePackages = {    "app.embedded.com.aol.micro.server" })
 public class EmbeddedAppLocalMain {
 
 	

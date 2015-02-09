@@ -1,10 +1,8 @@
 package com.aol.micro.server.spring;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -13,20 +11,32 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.module.Environment;
-import com.aol.micro.server.module.Module;
 import com.aol.micro.server.module.ModuleBean;
 import com.aol.micro.server.rest.RestResources;
 import com.aol.micro.server.servers.AccessLogLocationBean;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
+import com.aol.micro.server.spring.annotations.Microserver;
+import com.aol.micro.server.utility.UsefulStaticMethods;
 
 class SpringApplicationConfigurator {
 	
 	public static AnnotationConfigWebApplicationContext createSpringApp(Class...classes)  {
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 		rootContext.setAllowCircularReferences(false);
-			
 		rootContext.register(classes);
+		
+		Optional<Package> basePackage = Stream.of(classes)
+				.filter(cl -> cl.getAnnotation(Microserver.class)!=null)
+				.map(cl -> cl.getPackage()).findAny();
+		basePackage.ifPresent( base->
+		rootContext.scan(Stream.of(classes)
+				.map(cl -> cl.getAnnotation(Microserver.class))
+				.filter(ano -> ano!=null)
+				.map(ano -> ((Microserver)ano).basePackages())
+				.map(packages -> UsefulStaticMethods.eitherArray(packages,new String[]{base.getName()}))
+				.findFirst().get()));
+			
+
+		
 		rootContext.refresh();
 		ConfigurableListableBeanFactory beanFactory = ((ConfigurableApplicationContext) rootContext).getBeanFactory();
 		beanFactory.registerSingleton(Environment.class.getCanonicalName(), createEnvironment( rootContext));

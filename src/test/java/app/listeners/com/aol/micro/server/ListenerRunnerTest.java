@@ -14,16 +14,15 @@ import nonautoscan.com.aol.micro.server.ConfiguredListener;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 import com.aol.micro.server.MicroServerStartup;
 import com.aol.micro.server.module.ConfigurableModule;
+import com.aol.micro.server.spring.annotations.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 import com.google.common.collect.ImmutableList;
 
-@Configuration
-@ComponentScan(basePackages = { "app.listeners.com.aol.micro.server" })
+
+@Microserver
 public class ListenerRunnerTest {
 
 	RestAgent rest = new RestAgent();

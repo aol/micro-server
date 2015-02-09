@@ -1,7 +1,7 @@
 package app.single.com.aol.micro.server;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 import java.util.concurrent.ExecutionException;
 
@@ -12,19 +12,15 @@ import javax.ws.rs.Produces;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-
-import app.simple.com.aol.micro.server.SimpleRunnerTest;
 
 import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.auto.discovery.RestResource;
+import com.aol.micro.server.spring.annotations.Microserver;
 import com.aol.micro.server.testing.RestAgent;
-@Configuration
-@ComponentScan(basePackages = { "app.simple.com.aol.micro.server" })
-@Component
+
+@Microserver
 @Path("/status")
-public class SingleClassTest {
+public class SingleClassTest implements RestResource{
 
 	RestAgent rest = new RestAgent();
 	

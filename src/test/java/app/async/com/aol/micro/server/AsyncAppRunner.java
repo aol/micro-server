@@ -14,10 +14,10 @@ import org.springframework.context.annotation.Configuration;
 import app.simple.com.aol.micro.server.SimpleRunnerTest;
 
 import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.spring.annotations.Microserver;
 import com.aol.micro.server.testing.RestAgent;
-@Configuration
-@ComponentScan(basePackages = { "app.async.com.aol.micro.server" })
 
+@Microserver(basePackages = { "app.async.com.aol.micro.server" })
 public class AsyncAppRunner {
 
 

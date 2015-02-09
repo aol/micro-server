@@ -1,6 +1,7 @@
 package app.guava.com.aol.micro.server;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
@@ -10,11 +11,10 @@ import java.util.concurrent.ExecutionException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 import com.aol.micro.server.MicroServerStartup;
 import com.aol.micro.server.rest.JacksonUtil;
+import com.aol.micro.server.spring.annotations.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.SimpleReact;
 import com.aol.simple.react.Stage;
@@ -23,8 +23,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 
-@Configuration
-@ComponentScan(basePackages = { "app.guava.com.aol.micro.server" })
+
+@Microserver(basePackages = { "app.guava.com.aol.micro.server" })
 public class GuavaAppTest {
 	
 	RestAgent rest = new RestAgent();
