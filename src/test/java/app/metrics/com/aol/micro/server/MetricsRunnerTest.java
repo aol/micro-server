@@ -1,4 +1,4 @@
-package app.simple.com.aol.micro.server;
+package app.metrics.com.aol.micro.server;
 
 
 import static org.hamcrest.CoreMatchers.is;
@@ -24,8 +24,8 @@ import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.SimpleReact;
 
 @Configuration
-@ComponentScan(basePackages = { "app.simple.com.aol.micro.server" })
-public class SimpleRunnerTest {
+@ComponentScan(basePackages = { "app.metrics.com.aol.micro.server" })
+public class MetricsRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
@@ -33,7 +33,7 @@ public class SimpleRunnerTest {
 	@Before
 	public void startServer(){
 		
-		server = new MicroServerStartup( SimpleRunnerTest.class, ()-> "simple-app");
+		server = new MicroServerStartup( MetricsRunnerTest.class, ()-> "simple-app");
 		server.start();
 
 	}

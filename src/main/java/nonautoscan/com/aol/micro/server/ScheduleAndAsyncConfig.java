@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 
 import lombok.Getter;
 
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -57,5 +58,11 @@ public class ScheduleAndAsyncConfig implements SchedulingConfiguration {
 	public Executor taskExecutor() {
 		return MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(executorThreadPoolSize));
 	
+	}
+
+	@Override
+	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

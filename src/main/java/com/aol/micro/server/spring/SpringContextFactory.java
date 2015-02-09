@@ -11,12 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.ErrorCode;
+import com.aol.micro.server.spring.metrics.CodahaleMetricsConfigurer;
 import com.google.common.collect.Lists;
 
 public class SpringContextFactory {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final List<Class> classes = Lists.newArrayList(PropertyFileConfig.class,
-			MiscellaneousConfig.class, AopConfig.class);
+			MiscellaneousConfig.class, AopConfig.class, CodahaleMetricsConfigurer.class);
 	
 	public SpringContextFactory(Class c){
 		classes.add(c);
