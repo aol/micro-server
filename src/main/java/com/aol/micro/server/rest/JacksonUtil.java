@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -60,6 +61,18 @@ public final class JacksonUtil {
 	public static <T> T convertFromJson(final String jsonString, final Class<T> type) {
 		try {
 
+			
+			return getMapper().readValue(jsonString, type);
+
+		} catch (final Exception ex) {
+			throw new RuntimeException(ex.getMessage(), ex);
+		}
+
+	}
+	public static <T> T convertFromJson(final String jsonString, final JavaType type) {
+		try {
+
+			
 			return getMapper().readValue(jsonString, type);
 
 		} catch (final Exception ex) {

@@ -1,5 +1,6 @@
 package com.aol.micro.server.rest.client;
 
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 import javax.ws.rs.client.Client;
@@ -18,6 +19,8 @@ import org.glassfish.jersey.client.ClientProperties;
 
 import com.aol.micro.server.rest.JacksonUtil;
 import com.aol.micro.server.rest.jersey.JacksonFeature;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 @Wither
@@ -25,22 +28,23 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 @AllArgsConstructor
 public class JaxRsNIOClient<T> {
 
-	
-
-	
 	private final Client client;
 	private final String contentType;
 	private final String accept;
 	private final Class<T> response;
-	
+	private final JavaType genericResponse;
 
-	public JaxRsNIOClient(int readTimeout,int connectTimeout) {
-		
-		this.client =  initClient(readTimeout,connectTimeout);
-		contentType= MediaType.APPLICATION_JSON;
+	public JaxRsNIOClient(int readTimeout, int connectTimeout) {
+
+		this.client = initClient(readTimeout, connectTimeout);
+		contentType = MediaType.APPLICATION_JSON;
 		accept = MediaType.APPLICATION_JSON;
-		response = (Class<T>)String.class;
-		
+		response = (Class<T>) String.class;
+		genericResponse = null;
+	}
+
+	public <R> JaxRsNIOClient<R> withResponse(Class<R> response) {
+		return new JaxRsNIOClient<R>(client, contentType, accept, response,null);
 	}
 
 	protected Client initClient(int rt, int ct) {
@@ -58,47 +62,136 @@ public class JaxRsNIOClient<T> {
 		return client;
 
 	}
-	
+
 	public CompletableFuture<T> get(final String url) {
 		CompletableFuture<T> result = new CompletableFuture();
-		 client.target(url).request(accept).accept(accept)
-				.async().get(new InvocationCallback<String>() {
-                    @Override
-                    public void completed(String complete) {
-                    	if(String.class.equals(response))
-                    		result.complete((T)complete);
-                    	else
-                    		result.complete((T)JacksonUtil.convertFromJson(complete, response));
-                    }
+		client.target(url).request(accept).accept(accept).async()
+				.get(new InvocationCallback<String>() {
+					@Override
+					public void completed(String complete) {
+						buildResponse(result, complete);
+					}
 
-                    @Override
-                    public void failed(Throwable ex) {
-                       result.completeExceptionally(ex);
-                    }
-                });
-		 return result;
+					
+
+					@Override
+					public void failed(Throwable ex) {
+						result.completeExceptionally(ex);
+					}
+				});
+		return result;
+
+	}
+	private void buildResponse(CompletableFuture<T> result,
+			String complete) {
+		if(normalNotGenericResponseType()){
+			if (shouldJustReturnString()){
+				thenJustReturnString(result, complete);
+			}
+			else{
+				convertToStandardEntity(result, complete);
+			}
+		} else
+			convertToGenericEntity(result, complete);
+	}
+
+	private void convertToGenericEntity(CompletableFuture<T> result,
+			String complete) {
+		result.complete((T) JacksonUtil.convertFromJson(
+				complete, genericResponse));
+	}
+
+	private void convertToStandardEntity(CompletableFuture<T> result,
+			String complete) {
+		result.complete((T) JacksonUtil.convertFromJson(
+				complete, response));
+	}
+
+	private void thenJustReturnString(CompletableFuture<T> result,
+			String complete) {
+		result.complete((T) complete);
+	}
+
+	private boolean shouldJustReturnString() {
+		return String.class.equals(response);
+	}
+
+	private boolean normalNotGenericResponseType() {
+		return this.genericResponse==null;
+	}
+
+	public <V> CompletableFuture<T> post(final String queryResourceUrl,
+			final V request) {
+	
+		CompletableFuture<T> result = new CompletableFuture();
+		final WebTarget webResource = client.target(queryResourceUrl);
+
+		webResource
+				.request(accept)
+				.accept(accept)
+				.async()
+				.post(Entity.entity(request, contentType),
+						new InvocationCallback<String>() {
+							@Override
+							public void completed(String complete) {
+								buildResponse(result,complete);
+							
+							}
+
+							@Override
+							public void failed(Throwable ex) {
+								result.completeExceptionally(ex);
+							}
+						});
+		return result;
 
 	}
 
-	public <T,V> CompletableFuture<T> post(final String queryResourceUrl, final V request) {
+	public <V> CompletableFuture<T> put(final String queryResourceUrl,
+			final V request) {
 
-		
-		CompletableFuture<T> result = new CompletableFuture();
+		CompletableFuture<T> result = new CompletableFuture<>();
 		final WebTarget webResource = client.target(queryResourceUrl);
-		
-		
-		 webResource.request(accept).accept(accept).async()
-				.post(Entity.entity(request, contentType),new InvocationCallback<String>() {
-                    @Override
-                    public void completed(String complete) {
-                       result.complete((T)JacksonUtil.convertFromJson(complete, response));
-                    }
 
-                    @Override
-                    public void failed(Throwable ex) {
-                       result.completeExceptionally(ex);
-                    }
-                });
+		webResource
+				.request(accept)
+				.accept(accept)
+				.async()
+				.put(Entity.entity(request, contentType),
+						new InvocationCallback<String>() {
+							@Override
+							public void completed(String complete) {
+								buildResponse(result,complete);
+							}
+
+							@Override
+							public void failed(Throwable ex) {
+								result.completeExceptionally(ex);
+							}
+						});
+		return result;
+
+	}
+	public CompletableFuture<T> delete(final String queryResourceUrl) {
+
+		CompletableFuture<T> result = new CompletableFuture<>();
+		final WebTarget webResource = client.target(queryResourceUrl);
+
+		webResource
+				.request(accept)
+				.accept(accept)
+				.async()
+				.delete(new InvocationCallback<String>() {
+							@Override
+							public void completed(String complete) {
+								buildResponse(result,complete);
+							}
+
+							@Override
+							public void failed(Throwable ex) {
+								result.completeExceptionally(ex);
+							}
+						});
 		return result;
 
 	}
