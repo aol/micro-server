@@ -154,3 +154,27 @@ plugins {
 }
 
 Maven users can use Shade plugin or equivalent (Maven assembly plugin).
+
+#Release notes
+
+v0.1 : Initial release
+Grizzly NIO Java EE Server
+Jersey for REST
+Spring 4
+Guava for Immutable Collections
+Jackson configured for Guava and Java 8
+SimpleReact
+Filters and Servlets
+IP Capturing Filter
+Embedded  Microservices
+
+v0.2 :
+1. Full Swagger integration
+2. Spring NIO Rest clients that return completablefutures
+3. Autodiscovery and declartive config for ServletListeners
+4. Sample App showing how take full advantage of Grizzly's NIO server capabilities from within Jersey (using AsyncResponse - take a look at AsyncResource if interested).
+
+v0.3 :
+1. @Microservice configuring annotation
+2. JaxRS NIO Rest Client
+3. Codahale Metrics

@@ -14,7 +14,7 @@ buildscript {
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-version = '1.0'
+version = '0.3'
 jar {
     manifest {
         attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
@@ -103,7 +103,7 @@ modifyPom {
 
 		groupId 'com.aol.advertising.microservices'
 		artifactId 'microserver'
-		version '0.2'
+		version '$version'
 		
 		scm {
 			url 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'

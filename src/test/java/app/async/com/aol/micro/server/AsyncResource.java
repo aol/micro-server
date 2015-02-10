@@ -8,7 +8,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
-import javax.ws.rs.core.MediaType;
 
 import org.springframework.stereotype.Component;
 
@@ -34,13 +33,13 @@ public class AsyncResource implements RestResource{
         public void expensive(@Suspended AsyncResponse asyncResponse){
         	
         	new SimpleReact().fromStream(urls.stream()
-					.<CompletableFuture<String>>map(it ->  client.<String>get(it)))
+					.<CompletableFuture<String>>map(it ->  client.get(it)))
 					.onFail(it -> "")
 					.peek(it -> 
 					System.out.println(it))
-					.allOf((List<String> data) -> {
+					.<String,Boolean>allOf(data -> {
 						System.out.println(data);
-							return asyncResponse.resume(String.join(";", data)); });
+							return asyncResponse.resume(String.join(";", (List<String>)data)); });
         	
         }
         

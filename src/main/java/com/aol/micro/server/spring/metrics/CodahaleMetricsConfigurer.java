@@ -26,7 +26,7 @@ public class CodahaleMetricsConfigurer extends MetricsConfigurerAdapter {
 		 ConsoleReporter
          .forRegistry(metricRegistry)
          .build()
-         .start(1, TimeUnit.MINUTES);
+         .start(1, TimeUnit.HOURS);
 	};
 	
 	public static void switchOff(){
