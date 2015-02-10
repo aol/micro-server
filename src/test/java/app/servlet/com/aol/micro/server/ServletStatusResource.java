@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.aol.micro.server.auto.discovery.RestResource;
 
 @Component
-@Path("/status")
+@Path("/servlet")
 public class ServletStatusResource implements RestResource {
 
 	@GET

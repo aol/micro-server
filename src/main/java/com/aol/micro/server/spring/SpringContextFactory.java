@@ -1,30 +1,31 @@
 package com.aol.micro.server.spring;
 
 import java.util.List;
-
-import nonautoscan.com.aol.micro.server.AopConfig;
-import nonautoscan.com.aol.micro.server.MiscellaneousConfig;
-import nonautoscan.com.aol.micro.server.PropertyFileConfig;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.ErrorCode;
-import com.aol.micro.server.spring.metrics.CodahaleMetricsConfigurer;
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 
 public class SpringContextFactory {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final List<Class> classes = Lists.newArrayList(PropertyFileConfig.class,
-			MiscellaneousConfig.class, AopConfig.class, CodahaleMetricsConfigurer.class);
+
+	private final ImmutableSet<Class> classes;
 	
-	public SpringContextFactory(Class c){
-		classes.add(c);
+	public SpringContextFactory(Class c, Set<Class> classes){
+		Set s = Sets.newHashSet(classes);
+		s.add(c);
+		this.classes = ImmutableSet.copyOf(s);
 	}
 	
-	public SpringContextFactory(List<Class> additionalClasses) {
-		classes.addAll(additionalClasses);
+	public SpringContextFactory(List<Class> additionalClasses,Set<Class> classes) {
+		Set s = Sets.newHashSet(classes);
+		s.addAll(additionalClasses);
+		this.classes = ImmutableSet.copyOf(s);
 	}
 
 	public AnnotationConfigWebApplicationContext createSpringContext() {

@@ -17,12 +17,12 @@ public class ServerData {
 
 	private final int port;
 
-	private final ImmutableList<RestResource> resources;
+	private final ImmutableList<Object> resources;
 	private final AnnotationConfigWebApplicationContext rootContext;
 	private final String baseUrlPattern;
 	private final Module module;
 
-	public ServerData(int port, List<RestResource> resources, 
+	public ServerData(int port, List resources, 
 			AnnotationConfigWebApplicationContext rootContext,
 			String baseUrlPattern, Module module) {
 

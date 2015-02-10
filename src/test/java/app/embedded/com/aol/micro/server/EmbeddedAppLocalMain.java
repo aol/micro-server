@@ -1,9 +1,6 @@
 package app.embedded.com.aol.micro.server;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-
-import app.servlet.com.aol.micro.server.AppRunnerLocalMain;
+import java.util.Arrays;
 
 import com.aol.micro.server.MicroServerStartup;
 import com.aol.micro.server.module.EmbeddedModule;
@@ -16,8 +13,8 @@ public class EmbeddedAppLocalMain {
 	public static void main(String[] args) throws InterruptedException {
 		
 		new MicroServerStartup(EmbeddedAppLocalMain.class, 
-				new EmbeddedModule(TestAppRestResource.class,"test-app"),
-				new EmbeddedModule(AltAppRestResource.class,"alternative-app")).start();
+				new EmbeddedModule(Arrays.asList(TestAppRestResource.class),"test-app"),
+				new EmbeddedModule(Arrays.asList(AltAppRestResource.class),"alternative-app")).start();
 
 		
 

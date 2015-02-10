@@ -12,8 +12,8 @@ import app.metrics.com.aol.micro.server.TimedResource;
 import com.aol.micro.server.auto.discovery.RestResource;
 
 @Component
-@Path("/status")
-public class ServletStatusResource implements RestResource {
+@Path("/metrics")
+public class MetricsStatusResource implements RestResource {
 
 	@Autowired
 	TimedResource timed;

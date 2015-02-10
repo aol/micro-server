@@ -33,6 +33,7 @@ class SpringApplicationConfigurator {
 				.filter(ano -> ano!=null)
 				.map(ano -> ((Microserver)ano).basePackages())
 				.map(packages -> UsefulStaticMethods.eitherArray(packages,new String[]{base.getName()}))
+				.peek(packages -> Stream.of(packages).forEach(it->System.out.println(it)) )
 				.findFirst().get()));
 			
 

@@ -27,7 +27,10 @@ public class SwaggerInitializer implements ServletContextListener {
 	
 	public SwaggerInitializer(ServerData serverData) {
 		this.resourceClasses = JavaConversions.asScalaBuffer(
-				serverData.getResources().stream().map(resource -> resource.getClass()).collect(Collectors.<Class<?>> toList())).toList();
+				serverData.getResources()
+				.stream()
+				.map(resource -> resource.getClass())
+				.collect(Collectors.<Class<?>> toList())).toList();
 		this.baseUrlPattern = serverData.getBaseUrlPattern();
 	}
 

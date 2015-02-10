@@ -1,4 +1,4 @@
-package com.aol.micro.server.rest;
+package com.aol.micro.server.rest.swagger;
 
 import org.junit.Test;
 

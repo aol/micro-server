@@ -19,7 +19,7 @@ import com.aol.micro.server.spring.annotations.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver
-@Path("/status")
+@Path("/single")
 public class SingleClassTest implements RestResource{
 
 	RestAgent rest = new RestAgent();
@@ -43,7 +43,7 @@ public class SingleClassTest implements RestResource{
 		
 		
 		
-		assertThat(rest.get("http://localhost:8080/simple-app/status/ping"),is("ok"));
+		assertThat(rest.get("http://localhost:8080/simple-app/single/ping"),is("ok"));
 	
 	}
 

@@ -12,9 +12,11 @@ import org.springframework.beans.BeansException;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.module.Module;
+import com.aol.micro.server.rest.jersey.JerseyRestApplication;
 import com.aol.micro.server.servers.ApplicationRegister;
 import com.aol.micro.server.servers.ServerApplication;
 import com.aol.micro.server.servers.ServerRunner;
+import com.aol.micro.server.servers.ServerThreadLocalVariables;
 import com.aol.micro.server.servers.model.GrizzlyApplicationFactory;
 import com.aol.micro.server.spring.SpringContextFactory;
 import com.google.common.collect.Lists;
@@ -32,18 +34,22 @@ public class MicroServerStartup {
 	public MicroServerStartup(Class c, Module... modules) {
 		
 		this.modules = Lists.newArrayList(modules);
-		springContext = new SpringContextFactory(c).createSpringContext();
+		springContext = new SpringContextFactory(c,modules[0].getSpringConfigurationClasses()).createSpringContext();
 
 	}
 
 	public MicroServerStartup(List<Class> additionalClasses, Module... modules) {
 		this.modules = Lists.newArrayList(modules);
 		
-		springContext = new SpringContextFactory(additionalClasses).createSpringContext();
+		springContext = new SpringContextFactory(additionalClasses,
+				modules[0].getSpringConfigurationClasses()).createSpringContext();
 	}
 
 	public void stop(){
+		
 		end.complete(true);
+		JerseyRestApplication.clear();
+		
 	}
 	public void run() {
 		start().forEach(thread -> join(thread));
@@ -51,7 +57,7 @@ public class MicroServerStartup {
 
 
 	public List<Thread> start() {
-
+		JerseyRestApplication.clear();
 		List<ServerApplication> apps = modules.stream().map(module -> 
 						new GrizzlyApplicationFactory(springContext,module).createApp()).collect(Collectors.toList());
 

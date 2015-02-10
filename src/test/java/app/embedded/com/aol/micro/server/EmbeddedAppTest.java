@@ -14,15 +14,12 @@ import javax.ws.rs.NotFoundException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.http.client.HttpComponentsAsyncClientHttpRequestFactory;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
-import org.springframework.web.client.AsyncRestTemplate;
 
 import com.aol.micro.server.MicroServerStartup;
 import com.aol.micro.server.module.EmbeddedModule;
 import com.aol.micro.server.testing.RestAgent;
-import com.aol.simple.react.SimpleReact;
 import com.google.common.collect.ImmutableList;
 
 public class EmbeddedAppTest {
@@ -34,8 +31,8 @@ public class EmbeddedAppTest {
 	@Before
 	public void startServer(){
 		server = new MicroServerStartup(EmbeddedAppLocalMain.class, 
-				new EmbeddedModule(TestAppRestResource.class,"test-app"),
-				new EmbeddedModule(AltAppRestResource.class,"alternative-app"));
+				new EmbeddedModule(Arrays.asList(TestAppRestResource.class),"test-app"),
+				new EmbeddedModule(Arrays.asList(AltAppRestResource.class),"alternative-app"));
 		server.start();
 	}
 	

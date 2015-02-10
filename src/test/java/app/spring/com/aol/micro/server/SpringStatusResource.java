@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.aol.micro.server.auto.discovery.RestResource;
 
 @Component
-@Path("/status")
+@Path("/spring")
 public class SpringStatusResource implements RestResource {
 
 	@Autowired

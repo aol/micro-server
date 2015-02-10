@@ -17,6 +17,7 @@ import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 @AllArgsConstructor
 public class ModuleDataExtractor {
@@ -24,8 +25,10 @@ public class ModuleDataExtractor {
 	private final Module module;
 	
 	public  ImmutableList<RestResource> getRestResources( AnnotationConfigWebApplicationContext rootContext){
-		
-			return ImmutableList.copyOf(rootContext.getBeansOfType(module.getRestResourceClass()).values());
+			List resources = Lists.newArrayList();
+			module.getRestResourceClasses().forEach(it -> resources.addAll(rootContext.getBeansOfType(it).values()));
+			module.getDefaultResources().forEach(it -> resources.addAll(rootContext.getBeansOfType(it).values()));
+			return ImmutableList.copyOf(resources);
 		
 	}
 	

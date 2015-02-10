@@ -40,7 +40,7 @@ public class ServletRunnerTest {
 	@Test
 	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
 		
-		assertThat(rest.get("http://localhost:8080/test-app/status/ping"),is("ok"));
+		assertThat(rest.get("http://localhost:8080/test-app/servlet/ping"),is("ok"));
 	
 	}
 	

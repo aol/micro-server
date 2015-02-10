@@ -5,12 +5,12 @@ Microserver is a zero configuration, standards based, battle hardened library to
 
 ##Goal
 
-To make developing, debuging and deploying Java microservers simple.
+To make developing, debuging and deploying Java microservices simple.
 
 
 ##Tech Stack
 
-Microserver seemless integrates Jersey 2, Spring 4, Guava and Grizzly into a standalone REST server that can be leveraged as a simple library within a Java app. Jersey 2, Spring 4, Google Guava are all part of the core LANA tech stack.
+Microserver seemless integrates Jersey 2, Spring 4, Guava, Codahale Metrics, Swagger and Grizzly into a standalone REST server that can be leveraged as a simple library within a Java app. Jersey 2, Spring 4, Google Guava are all part of the core LANA tech stack.
 
 ##Zero Configuration
 
@@ -20,8 +20,7 @@ Example working application :-
 
 The main class :-
 <pre>
-@Configuration
-@ComponentScan(basePackages = { "app.com.aol.micro.server" })
+@Microserver
 public class AppRunnerTest {
 
 		

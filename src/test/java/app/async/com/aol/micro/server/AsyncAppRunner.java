@@ -8,10 +8,6 @@ import java.util.concurrent.ExecutionException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-
-import app.simple.com.aol.micro.server.SimpleRunnerTest;
 
 import com.aol.micro.server.MicroServerStartup;
 import com.aol.micro.server.spring.annotations.Microserver;
@@ -40,7 +36,7 @@ public class AsyncAppRunner {
 	@Test
 	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
 		
-		
+		Thread.sleep(2000);
 		
 		assertThat(rest.get("http://localhost:8080/async-app/async/expensive"),is(";test!;test!;test!"));
 	

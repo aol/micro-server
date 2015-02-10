@@ -2,6 +2,7 @@ package com.aol.micro.server.module;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -20,20 +21,29 @@ import com.aol.micro.server.servers.model.ServerData;
 @Wither
 public class ConfigurableModule implements Module{
 	
-	private final RestResource resource;
+	private final List<Class<? extends RestResource>> resourceClasses;
+	private final List<Class> defaultResources;
 	private final List<ServletContextListener> listeners;
 	private final Map<String, Filter> filters;
 	private final Map<String, Servlet> servlets;
 	private final String jaxWsRsApplication;
 	private final String providers;
 	private final String context;
+	private final Set<Class> springConfigurationClasses;
 	
 	@Override
-	public Class<? extends RestResource> getRestResourceClass() {
-		if(resource!=null)
-			return resource.getClass();
+	public List<Class<? extends RestResource>> getRestResourceClasses() {
+		if(resourceClasses!=null)
+			return resourceClasses;
 		
-		return Module.super.getRestResourceClass();
+		return Module.super.getRestResourceClasses();
+	}
+	
+	@Override
+	public List<Class> getDefaultResources() {
+		if(this.defaultResources!=null)
+			return this.defaultResources;
+		return Module.super.getDefaultResources();
 	}
 
 	@Override
@@ -76,6 +86,15 @@ public class ConfigurableModule implements Module{
 		
 		return context;
 	}
+
+	@Override
+	public Set<Class> getSpringConfigurationClasses() {
+		if(this.springConfigurationClasses!=null)
+			return this.springConfigurationClasses;
+		return Module.super.getSpringConfigurationClasses();
+	}
+
+	
 
 	
 }
