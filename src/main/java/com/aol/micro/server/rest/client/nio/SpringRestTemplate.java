@@ -1,29 +1,29 @@
-package com.aol.micro.server.rest.client;
+package com.aol.micro.server.rest.client.nio;
 
-import static net.javacrumbs.futureconverter.springjava.FutureConverter.*;
+import static net.javacrumbs.futureconverter.springjava.FutureConverter.toCompletableFuture;
+
 import java.net.URI;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.AsyncRequestCallback;
 import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 
-@AllArgsConstructor
-public class NIORestTemplate {
+import com.aol.micro.server.rest.JacksonUtil;
+
+
+public class SpringRestTemplate {
 
 	@Getter
 	private final AsyncRestTemplate template;
@@ -223,6 +223,15 @@ public class NIORestTemplate {
 			ResponseExtractor<T> responseExtractor) throws RestClientException {
 		return toCompletableFuture(template.execute(url, method,
 				requestCallback, responseExtractor));
+	}
+
+	public SpringRestTemplate(AsyncRestTemplate template) {
+		super();
+		
+		this.template = template;
+		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+		converter.setObjectMapper(JacksonUtil.getMapper());
+		template.getMessageConverters().add(converter);
 	}
 
 }

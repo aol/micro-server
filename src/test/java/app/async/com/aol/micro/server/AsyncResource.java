@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.rest.client.JaxRsNIOClient;
+import com.aol.micro.server.rest.client.nio.RestClient;
 import com.aol.simple.react.SimpleReact;
 import com.google.common.collect.ImmutableList;
 
@@ -26,7 +26,7 @@ public class AsyncResource implements RestResource{
 			"http://localhost:8080/async-app/async/ping",
 			"http://localhost:8080/async-app/async/ping");
     
-    	private final JaxRsNIOClient client = new JaxRsNIOClient(100,100).withAccept("text/plain");
+    	private final RestClient client = new RestClient(100,100).withAccept("text/plain");
     	
         @GET
         @Path("/expensive")

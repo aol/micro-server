@@ -1,4 +1,4 @@
-package com.aol.micro.server.rest.client;
+package com.aol.micro.server.rest.client.nio;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
@@ -26,7 +26,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 @Wither
 @Builder
 @AllArgsConstructor
-public class JaxRsNIOClient<T> {
+public class RestClient<T> {
 
 	private final Client client;
 	private final String contentType;
@@ -34,7 +34,7 @@ public class JaxRsNIOClient<T> {
 	private final Class<T> response;
 	private final JavaType genericResponse;
 
-	public JaxRsNIOClient(int readTimeout, int connectTimeout) {
+	public RestClient(int readTimeout, int connectTimeout) {
 
 		this.client = initClient(readTimeout, connectTimeout);
 		contentType = MediaType.APPLICATION_JSON;
@@ -43,8 +43,11 @@ public class JaxRsNIOClient<T> {
 		genericResponse = null;
 	}
 
-	public <R> JaxRsNIOClient<R> withResponse(Class<R> response) {
-		return new JaxRsNIOClient<R>(client, contentType, accept, response,null);
+	public <R> RestClient<R> withResponse(Class<R> response) {
+		return new RestClient<R>(client, contentType, accept, response,null);
+	}
+	public <R> RestClient<R> withGenericResponse(Class<R> responseClass, Class... genericResponse) {
+		return new RestClient<R>(client, contentType, accept, null,JacksonUtil.getMapper().getTypeFactory().constructParametricType(responseClass,genericResponse));
 	}
 
 	protected Client initClient(int rt, int ct) {
