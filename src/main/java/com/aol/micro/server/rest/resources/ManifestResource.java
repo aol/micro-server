@@ -16,9 +16,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.aol.micro.server.auto.discovery.CommonRestResource;
+
 @Path("/manifest")
 @Component
-public class ManifestResource {
+public class ManifestResource implements CommonRestResource{
 
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());

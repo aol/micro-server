@@ -21,7 +21,7 @@ import com.aol.micro.server.servers.model.ServerData;
 @Wither
 public class ConfigurableModule implements Module{
 	
-	private final List<Class<? extends RestResource>> resourceClasses;
+	private final List<Class> restResourceClasses;
 	private final List<Class> defaultResources;
 	private final List<ServletContextListener> listeners;
 	private final Map<String, Filter> filters;
@@ -32,9 +32,9 @@ public class ConfigurableModule implements Module{
 	private final Set<Class> springConfigurationClasses;
 	
 	@Override
-	public List<Class<? extends RestResource>> getRestResourceClasses() {
-		if(resourceClasses!=null)
-			return resourceClasses;
+	public List<Class> getRestResourceClasses() {
+		if(restResourceClasses!=null)
+			return restResourceClasses;
 		
 		return Module.super.getRestResourceClasses();
 	}

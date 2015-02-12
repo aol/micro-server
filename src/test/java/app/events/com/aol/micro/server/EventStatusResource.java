@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.events.RequestsBeingExecuted;
+import com.aol.micro.server.events.RequestEvents;
 import com.google.common.eventbus.EventBus;
 
 @Component
@@ -29,11 +29,11 @@ public class EventStatusResource implements RestResource {
 	@Produces("text/plain")
 	@Path("/ping")
 	public String ping() {
-		bus.post(RequestsBeingExecuted.start("get", 1l));
+		bus.post(RequestEvents.start("get", 1l));
 		try{
 			return "ok";
 		}finally{
-			bus.post(RequestsBeingExecuted.finish("get",1l));
+			bus.post(RequestEvents.finish("get",1l));
 		}
 	}
 

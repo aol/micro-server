@@ -10,6 +10,6 @@ import com.aol.micro.server.auto.discovery.RestResource;
 @AllArgsConstructor
 public class EmbeddedModule implements Module {
 
-	private final List<Class<? extends RestResource>> restResourceClasses;
+	private final List<Class> restResourceClasses;
 	private final String context;
 }

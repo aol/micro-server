@@ -63,22 +63,7 @@ public class RequestsBeingExecuted<T> {
 		}
 		
 	}
-	public static <T> AddQuery start(T query, long correlationId){
-		return start(query, correlationId,"default",null);
-	}
-	public static <T> AddQuery start(T query, long correlationId, String type, Object additionalData){
-		
-		return new AddQuery(RequestData.builder().query(query).correlationId(correlationId)
-		.type(type).additionalData(additionalData).build());
-	}
-	public static <T> RemoveQuery finish(T query, long correlationId){
-		return finish(query,correlationId,"default");
-	}
-	public static <T> RemoveQuery finish(T query, long correlationId, String type){
-		
-		return new RemoveQuery(RequestData.builder().query(query).correlationId(correlationId)
-		.type(type).build());
-	}
+	
 
 	private String buildId(RequestData data) {
 		String id =  data.correlationId+ "-"+data.getProcessingThread();

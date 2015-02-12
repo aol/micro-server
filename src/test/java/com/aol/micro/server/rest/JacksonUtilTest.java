@@ -1,8 +1,9 @@
 package com.aol.micro.server.rest;
 
 
-import static junit.framework.Assert.assertTrue;
-
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.is;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,20 @@ import lombok.Setter;
 
 import org.junit.Test;
 
+import app.rest.client.com.aol.micro.server.MyEntity;
+
+import com.google.common.collect.ImmutableList;
+
 
 public class JacksonUtilTest {
+	
+	@Test
+	public void testGenerics(){
+		String s = JacksonUtil.serializeToJson(ImmutableList.of(new MyEntity()));
+		ImmutableList<MyEntity> list = JacksonUtil.convertFromJson(s, JacksonUtil.getMapper().getTypeFactory().constructParametricType(ImmutableList.class,MyEntity.class));
+		assertThat(list.get(0),is(new MyEntity()));
+		
+	}
 	@Test
 	public void generateSampleRequest() {
 

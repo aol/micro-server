@@ -16,13 +16,13 @@ import nonautoscan.com.aol.micro.server.ScheduleAndAsyncConfig;
 
 import org.springframework.web.context.ContextLoaderListener;
 
+import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.events.ConfigureActiveJobsAspect;
+import com.aol.micro.server.rest.jersey.JacksonFeature;
 import com.aol.micro.server.rest.jersey.JerseyRestApplication;
 import com.aol.micro.server.rest.jersey.JerseySpringIntegrationContextListener;
-import com.aol.micro.server.rest.resources.ActiveResource;
 import com.aol.micro.server.rest.resources.ConfigureResources;
-import com.aol.micro.server.rest.resources.ManifestResource;
 import com.aol.micro.server.rest.swagger.SwaggerInitializer;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.spring.metrics.CodahaleMetricsConfigurer;
@@ -30,6 +30,9 @@ import com.aol.micro.server.web.filter.QueryIPRetriever;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
+import com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON;
+import com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider;
+import com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider;
 
 public interface Module {
 
@@ -39,12 +42,20 @@ public interface Module {
 				MiscellaneousConfig.class, AopConfig.class, CodahaleMetricsConfigurer.class,
 				ConfigureActiveJobsAspect.class, ScheduleAndAsyncConfig.class,ConfigureResources.class);
 	}
-	default List<Class<? extends RestResource>> getRestResourceClasses() {
+	default List<Class> getRestResourceClasses() {
 		return Arrays.asList(RestResource.class);
 	}
 	
+	default List<String> getDefaultJaxRsPackages(){
+		return Arrays.asList("com.wordnik.swagger.sample.resource",
+				"com.wordnik.swagger.sample.util"	);
+	}
+	
 	default List<Class> getDefaultResources(){
-		return Arrays.asList(ActiveResource.class, ManifestResource.class);
+		return Arrays.asList(JacksonFeature.class, 
+				//SWAGGER CLASSES
+				ApiListingResourceJSON.class,JerseyApiDeclarationProvider.class,
+				JerseyResourceListingProvider.class);
 	}
 	
 	default List<ServletContextListener> getListeners(ServerData data){

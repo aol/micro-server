@@ -6,7 +6,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Map;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -15,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.events.JobsBeingExecuted;
+import com.aol.micro.server.events.RequestEvents;
 import com.aol.micro.server.events.RequestsBeingExecuted;
 import com.aol.micro.server.events.ScheduledJob;
 import com.aol.micro.server.rest.JacksonUtil;
@@ -40,23 +40,23 @@ public class ActiveResourceTest {
 
 	@Test
 	public void testactiveRequests() {
-		bus.post(RequestsBeingExecuted.start("query",1l));
-		bus.post(RequestsBeingExecuted.start("query",2l,"partition",ImmutableMap.of()));
+		bus.post(RequestEvents.start("query",1l));
+		bus.post(RequestEvents.start("query",2l,"partition",ImmutableMap.of()));
 		assertThat( convert( active.activeRequests(null)).get("events"),is( 1));
 		assertThat( convert( active.activeRequests("partition")).get("events"), is( 1 ));
 	}
 
 	@Test
 	public void whenQueriesWithTheSameIdToDifferentTypesEventsIs1ForBoth(){
-		bus.post(RequestsBeingExecuted.start("query",1l));
-		bus.post(RequestsBeingExecuted.start("query",1l,"partition",ImmutableMap.of()));
+		bus.post(RequestEvents.start("query",1l));
+		bus.post(RequestEvents.start("query",1l,"partition",ImmutableMap.of()));
 		assertThat( convert( active.activeRequests(null)).get("events"),is( 1));
 		assertThat( convert( active.activeRequests("partition")).get("events"), is( 1 ));
 	}
 	@Test
 	public void whenQueriesWithTheSameIdButSameTypesEventsIs2ButSizeIs1(){
-		bus.post(RequestsBeingExecuted.start("query",1l));
-		bus.post(RequestsBeingExecuted.start("query",1l));
+		bus.post(RequestEvents.start("query",1l));
+		bus.post(RequestEvents.start("query",1l));
 		assertThat( convert( active.activeRequests(null)).get("events"),is( 2));
 		Map map = convert( active.activeRequests(null));
 		assertThat( ((Map)map.get("active") ).size() , is( 1 ));

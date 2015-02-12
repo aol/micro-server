@@ -48,7 +48,7 @@ public class MicroServerStartup {
 	public void stop(){
 		
 		end.complete(true);
-		JerseyRestApplication.clear();
+		
 		
 	}
 	public void run() {
@@ -57,7 +57,7 @@ public class MicroServerStartup {
 
 
 	public List<Thread> start() {
-		JerseyRestApplication.clear();
+	
 		List<ServerApplication> apps = modules.stream().map(module -> 
 						new GrizzlyApplicationFactory(springContext,module).createApp()).collect(Collectors.toList());
 

@@ -9,16 +9,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.auto.discovery.RestResource;
+import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.events.JobsBeingExecuted;
 import com.aol.micro.server.events.RequestsBeingExecuted;
 import com.google.common.collect.Maps;
 
 
 @Path("/active")
-public class ActiveResource {
+public class ActiveResource implements CommonRestResource{
 
 	private final Map<String,RequestsBeingExecuted> activeQueries;
 	private final JobsBeingExecuted activeJobs;

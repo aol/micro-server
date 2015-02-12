@@ -9,9 +9,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 import com.aol.micro.server.servers.ServerThreadLocalVariables;
 import com.google.common.collect.Maps;
-import com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON;
-import com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider;
-import com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider;
 
 public class JerseyRestApplication extends ResourceConfig {
 
@@ -19,23 +16,28 @@ public class JerseyRestApplication extends ResourceConfig {
 	private static volatile ConcurrentMap<String, List<Object>> resourcesMap = Maps.newConcurrentMap();
 	
 	@Getter
-	private static volatile ConcurrentMap<String, String> packages = Maps.newConcurrentMap();
+	private static volatile ConcurrentMap<String, List<String>> packages = Maps.newConcurrentMap();
+	
+	@Getter
+	private static volatile ConcurrentMap<String, List<Class>> resourcesClasses = Maps.newConcurrentMap();
 
 	public JerseyRestApplication() {
-		this(resourcesMap.get(ServerThreadLocalVariables.getContext().get()));
+		this(resourcesMap.get(ServerThreadLocalVariables.getContext().get()),
+				packages.get(ServerThreadLocalVariables.getContext().get()),
+				resourcesClasses.get(ServerThreadLocalVariables.getContext().get()));
 		
 	}
 
-	public JerseyRestApplication(List<Object> allResources) {
+	public JerseyRestApplication(List<Object> allResources,List<String> packages, List<Class> resources) {
 		if (allResources != null) {
 			for (Object next : allResources) {
 				register(next);
 
 			}
 		}
-		packages.entrySet().stream().forEach( e -> packages(e.getKey(),e.getValue()));
-		
-
+		packages.stream().forEach( e -> packages(e));
+		resources.stream().forEach( e -> register(e));
+/**
 		register(JacksonFeature.class);
 
 
@@ -44,7 +46,7 @@ public class JerseyRestApplication extends ResourceConfig {
 			.register(ApiListingResourceJSON.class)
 			.register(JerseyApiDeclarationProvider.class)
 			.register(JerseyResourceListingProvider.class);
-				
+				**/
 	}
 
 	public static void clear() {

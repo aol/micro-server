@@ -30,7 +30,7 @@ public class SpringContextFactory {
 
 	public AnnotationConfigWebApplicationContext createSpringContext() {
 		try {
-			AnnotationConfigWebApplicationContext springContext = SpringApplicationConfigurator.createSpringApp(classes.toArray(new Class[0]));
+			AnnotationConfigWebApplicationContext springContext = new SpringApplicationConfigurator().createSpringApp(classes.toArray(new Class[0]));
 			return springContext;
 		} catch (Exception e) {
 			logger.error( ErrorCode.STARTUP_FAILED_SPRING_INITIALISATION.toString(),e.getMessage());
