@@ -1,4 +1,4 @@
-package nonautoscan.com.aol.micro.server;
+package com.aol.micro.server.spring.hibernate;
 
 import java.util.List;
 import java.util.Properties;
@@ -6,14 +6,18 @@ import java.util.Properties;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.hibernate3.HibernateTransactionManager;
-import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.google.common.collect.Lists;
@@ -24,6 +28,8 @@ public class HibernateConfig {
 
 	private final Logger logger = LoggerFactory.getLogger( getClass());
 
+	@Setter @Getter(AccessLevel.PACKAGE)
+	private static volatile List<String> packages = Lists.newArrayList();
 	@Resource
 	private JdbcConfig env;
 
@@ -34,11 +40,12 @@ public class HibernateConfig {
 
 	@Bean(name = "sessionFactory")
 	public SessionFactory sessionFactory() {
-		AnnotationSessionFactoryBean sessionFactoryBean = new AnnotationSessionFactoryBean();
+		
+		LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
 
 		sessionFactoryBean.setDataSource(dataSource());
 
-		List<String> packagesToScan = addPackagesToScan();
+		List<String> packagesToScan = packages;
 		sessionFactoryBean.setPackagesToScan(packagesToScan
 				.toArray(new String[packagesToScan.size()]));
 
@@ -58,22 +65,18 @@ public class HibernateConfig {
 		try {
 			sessionFactoryBean.afterPropertiesSet();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		return sessionFactoryBean.getObject();
+		
+		try{
+			return sessionFactoryBean.getObject();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 
-	private List<String> addPackagesToScan() {
-		List<String> packagesToScan = Lists.newArrayList();
-		packagesToScan.add("com.aol.advertising.lana.entity");
-		packagesToScan.add("com.aol.advertising.lana.repository");
-		packagesToScan.add("com.aol.advertising.mdms.entity");
-		packagesToScan.add("com.aol.advertising.mdms.repository");
-		packagesToScan.add("com.aol.advertising.lana.common.cluster.entity");
-		packagesToScan.add("com.aol.advertising.lana.prioritization");
-		return packagesToScan;
-	}
-
+	
 	
 	
 

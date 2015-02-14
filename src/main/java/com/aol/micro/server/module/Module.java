@@ -11,7 +11,6 @@ import javax.servlet.ServletContextListener;
 
 import nonautoscan.com.aol.micro.server.AopConfig;
 import nonautoscan.com.aol.micro.server.MiscellaneousConfig;
-import nonautoscan.com.aol.micro.server.PropertyFileConfig;
 import nonautoscan.com.aol.micro.server.ScheduleAndAsyncConfig;
 
 import org.springframework.web.context.ContextLoaderListener;
@@ -26,9 +25,11 @@ import com.aol.micro.server.rest.resources.ConfigureResources;
 import com.aol.micro.server.rest.swagger.SwaggerInitializer;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.spring.metrics.CodahaleMetricsConfigurer;
+import com.aol.micro.server.spring.properties.PropertyFileConfig;
 import com.aol.micro.server.web.filter.QueryIPRetriever;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON;
 import com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider;
@@ -37,6 +38,9 @@ import com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider;
 public interface Module {
 
 	
+	default Map<String,String> getPropertyOverrides(){
+		return Maps.newHashMap();
+	}
 	default Set<Class> getSpringConfigurationClasses(){
 		return Sets.newHashSet(PropertyFileConfig.class,
 				MiscellaneousConfig.class, AopConfig.class, CodahaleMetricsConfigurer.class,

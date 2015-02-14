@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.aol.micro.server.spring.properties.PropertyFileConfig;
 public class PropertyFileConfigTest {
 
 	

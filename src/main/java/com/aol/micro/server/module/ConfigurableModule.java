@@ -30,6 +30,7 @@ public class ConfigurableModule implements Module{
 	private final String providers;
 	private final String context;
 	private final Set<Class> springConfigurationClasses;
+	private final Map<String,String> propertyOverrides;
 	
 	@Override
 	public List<Class> getRestResourceClasses() {

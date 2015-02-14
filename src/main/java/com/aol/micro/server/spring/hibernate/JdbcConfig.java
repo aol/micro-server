@@ -1,4 +1,4 @@
-package nonautoscan.com.aol.micro.server;
+package com.aol.micro.server.spring.hibernate;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,12 +21,12 @@ public class JdbcConfig  {
 	String ddlAuto;
 
 	@Autowired
-	public JdbcConfig(@Value("${mdms.connection.driver:com.mysql.jdbc.Driver}") String driverClassName,
+	public JdbcConfig(@Value("${mdms.connection.driver:}") String driverClassName,
 			@Value("${mdms.connection.url:}") String url,
 			@Value("${mdms.connection.username:}") String username,
 			@Value("${mdms.connection.password:}") String password,
 			@Value("${mdms.connection.hibernate.showsql:false}") String showSql,
-			@Value("${mdms.connection.dialect:org.hibernate.dialect.MySQLDialect}") String dialect,
+			@Value("${mdms.connection.dialect:}") String dialect,
 			@Value("${mdms.connection.ddl.auto:#null}") String ddlAuto) {
 		this.driverClassName = driverClassName;
 		this.url = url;

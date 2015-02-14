@@ -32,6 +32,9 @@ repositories {
 dependencies {
 
 	
+	compile 'com.googlecode.genericdao:dao-hibernate:1.2.0'
+	compile group: 'org.hibernate', name:'hibernate-validator', version:'4.3.8.Final'
+	compile group: 'org.hibernate', name: 'hibernate-core', version:'4.3.8.Final'
 	compile 'com.ryantenney.metrics:metrics-spring:3.0.3'
 	compile 'net.javacrumbs.future-converter:future-converter-spring-java8:0.1.0'
 	compile group: 'com.aol.simplereact', name:'simple-react', version:'0.2'
@@ -50,7 +53,7 @@ dependencies {
 	compile group: 'org.apache.commons', name: 'commons-io', version:'1.3.2'
 	compile group: 'org.apache.commons', name: 'commons-compress', version:'1.1'
 	compile group: 'commons-dbcp', name: 'commons-dbcp', version:'1.4'
-	compile group: 'org.hibernate', name: 'hibernate-core', version:'3.6.0.Final'
+	
 	compile group: 'org.springframework', name: 'spring-jdbc', version:'4.1.0.RELEASE'
 	compile group: 'org.springframework', name: 'spring-orm', version:'4.1.0.RELEASE'
 
@@ -83,6 +86,8 @@ dependencies {
 	testCompile group: 'junit', name: 'junit', version:'4.10'
 	testCompile group: 'org.mockito', name: 'mockito-all', version:'1.9.5'
 	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:'1.1'
+	testCompile group: 'org.hsqldb', name:'hsqldb', version:'2.0.0'
+	
 	compile(group: 'org.projectlombok', name: 'lombok', version:'1.14.2') {
 		/* This dependency was originally in the Maven provided scope, but the project was not of type war.
 		 This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.

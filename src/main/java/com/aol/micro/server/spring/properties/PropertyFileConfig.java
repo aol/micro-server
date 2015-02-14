@@ -1,9 +1,10 @@
-package nonautoscan.com.aol.micro.server;
+package com.aol.micro.server.spring.properties;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -20,6 +21,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 @Configuration
 public class  PropertyFileConfig {
@@ -28,6 +30,9 @@ public class  PropertyFileConfig {
 
 	@Setter
 	private volatile static String applicationPropertyFileName = "application.properties";
+	@Setter
+	private volatile static Map<String,String> properties = Maps.newHashMap();
+	
 	
 	@Bean
 	public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {
@@ -36,6 +41,8 @@ public class  PropertyFileConfig {
 
 		PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
 		Properties props = propertyFactory();
+		props.putAll(properties);
+		
 		configurer.setProperties(props);
 		configurer.setSystemPropertiesMode(PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE);
 		return configurer;
@@ -99,4 +106,6 @@ public class  PropertyFileConfig {
 		return applicationPropertyFileName.substring(0,applicationPropertyFileName.indexOf("."))+"-" 
 								+ System.getProperty("application.env") + ".properties";
 	}
+
+	
 }

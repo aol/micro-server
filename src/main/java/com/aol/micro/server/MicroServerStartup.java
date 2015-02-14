@@ -12,13 +12,12 @@ import org.springframework.beans.BeansException;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.module.Module;
-import com.aol.micro.server.rest.jersey.JerseyRestApplication;
 import com.aol.micro.server.servers.ApplicationRegister;
 import com.aol.micro.server.servers.ServerApplication;
 import com.aol.micro.server.servers.ServerRunner;
-import com.aol.micro.server.servers.ServerThreadLocalVariables;
 import com.aol.micro.server.servers.model.GrizzlyApplicationFactory;
 import com.aol.micro.server.spring.SpringContextFactory;
+import com.aol.micro.server.spring.properties.PropertyFileConfig;
 import com.google.common.collect.Lists;
 
 public class MicroServerStartup {
@@ -43,6 +42,15 @@ public class MicroServerStartup {
 		
 		springContext = new SpringContextFactory(additionalClasses,
 				modules[0].getSpringConfigurationClasses()).createSpringContext();
+	}
+	public MicroServerStartup(Config config, Module... modules) {
+		this(getClassesAndSetProperties(config),modules);
+		
+	}
+
+	private static List<Class> getClassesAndSetProperties(Config config) {
+		PropertyFileConfig.setProperties(config.getProperties());
+		return config.getClasses();
 	}
 
 	public void stop(){
