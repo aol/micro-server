@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.spring.hibernate.DAOProvider;
-import com.aol.micro.server.spring.hibernate.TransactionalDAO;
+import com.aol.micro.server.spring.datasource.hibernate.DAOProvider;
+import com.aol.micro.server.spring.datasource.hibernate.TransactionalDAO;
 import com.googlecode.genericdao.search.Search;
 
 @Component

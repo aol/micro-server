@@ -6,14 +6,14 @@ import static org.hamcrest.CoreMatchers.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.spring.hibernate.JdbcConfig;
+import com.aol.micro.server.spring.datasource.JdbcConfig;
 
 public class JdbcConfigTest {
 
 	JdbcConfig config;
 	@Before
 	public void setUp() throws Exception {
-		config = new JdbcConfig("driverClassName", "url", "username", "password", "showSql", "mysql", "none");
+		config = new JdbcConfig("driverClassName", "url", "username", "password", "showSql", "mysql", "none",null,null);
 	}
 
 	@Test

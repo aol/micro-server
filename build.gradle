@@ -26,12 +26,14 @@ jar {
 repositories {
     mavenCentral()
 	maven { url "http://repo.maven.apache.org/maven2" }
+	maven { url 'https://github.com/serkan-ozal/maven-repository/raw/master/' }
 	jcenter()
 }
 
 dependencies {
 
-	
+	compile 'org.springframework:spring-jdbc-roma:1.0.0-RELEASE'
+	//compile 'org.jooq:jool:0.9.6'
 	compile 'com.googlecode.genericdao:dao-hibernate:1.2.0'
 	compile group: 'org.hibernate', name:'hibernate-validator', version:'4.3.8.Final'
 	compile group: 'org.hibernate', name: 'hibernate-core', version:'4.3.8.Final'

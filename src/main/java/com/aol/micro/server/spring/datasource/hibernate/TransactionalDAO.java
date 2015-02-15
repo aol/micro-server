@@ -1,4 +1,4 @@
-package com.aol.micro.server.spring.hibernate;
+package com.aol.micro.server.spring.datasource.hibernate;
 
 import java.io.Serializable;
 
@@ -10,6 +10,7 @@ import lombok.experimental.Delegate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -25,10 +26,17 @@ public class TransactionalDAO<T, ID extends Serializable> implements GenericDAO<
 	@Getter(AccessLevel.PACKAGE)
 	private final GenericDAOImpl<T, ID> genericDao;
 	
+	
 	@Autowired
-	public TransactionalDAO(GenericDAOImpl<T, ID> generalDaa){
-		this.genericDao = generalDaa;
+	public TransactionalDAO(ApplicationContext context){
+		
+			this.genericDao =extractValue(context);
+		
+		
 	}
 	
+	private GenericDAOImpl<T,ID> extractValue(ApplicationContext context){
+		return context.getBean(GenericDAOImpl.class);
+	}
 
 }

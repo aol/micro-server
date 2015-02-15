@@ -33,25 +33,22 @@ public class MicroServerStartup {
 	public MicroServerStartup(Class c, Module... modules) {
 		
 		this.modules = Lists.newArrayList(modules);
-		springContext = new SpringContextFactory(c,modules[0].getSpringConfigurationClasses()).createSpringContext();
+		springContext = new SpringContextFactory(Config.builder().build(),c,modules[0].getSpringConfigurationClasses()).createSpringContext();
 
 	}
 
-	public MicroServerStartup(List<Class> additionalClasses, Module... modules) {
-		this.modules = Lists.newArrayList(modules);
-		
-		springContext = new SpringContextFactory(additionalClasses,
-				modules[0].getSpringConfigurationClasses()).createSpringContext();
-	}
+	
 	public MicroServerStartup(Config config, Module... modules) {
-		this(getClassesAndSetProperties(config),modules);
 		
+	this.modules = Lists.newArrayList(modules);
+	PropertyFileConfig.setProperties(config.getProperties());
+	config.set();
+		springContext = new SpringContextFactory(config,config.getClasses(),
+				modules[0].getSpringConfigurationClasses()).createSpringContext();
+	
 	}
 
-	private static List<Class> getClassesAndSetProperties(Config config) {
-		PropertyFileConfig.setProperties(config.getProperties());
-		return config.getClasses();
-	}
+	
 
 	public void stop(){
 		
