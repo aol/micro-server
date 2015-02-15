@@ -36,7 +36,7 @@ public class PersistentResource implements RestResource {
 	@Produces("application/json")
 	@Path("/get")
 	public JdbcEntity get() {
-		return dao.<JdbcEntity>queryForObject("select * from t_table",new BeanPropertyRowMapper());
+		return dao.<JdbcEntity>queryForObject("select * from t_table",new BeanPropertyRowMapper(JdbcEntity.class));
 	}
 
 }
