@@ -20,10 +20,10 @@ public class DAOProvider<T,ID extends Serializable> {
 		this.applicationContext = applicationContext
 	}
 	
-	public TransactionalDAO<T,ID> get(Class<T> targetType){
-		return setTargetType(applicationContext.getBean(TransactionalDAO.class),targetType);
+	public GenericHibernateService<T,ID> get(Class<T> targetType){
+		return setTargetType(applicationContext.getBean(GenericHibernateService.class),targetType);
 	}
-	private  TransactionalDAO<T, ID> setTargetType(TransactionalDAO bean,Class<T> targetType) {
+	private  GenericHibernateService<T, ID> setTargetType(GenericHibernateService bean,Class<T> targetType) {
 		bean.genericDao.@persistentClass =targetType;
 		return bean;
 	}

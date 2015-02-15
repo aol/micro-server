@@ -18,7 +18,6 @@ import com.googlecode.genericdao.dao.hibernate.GenericDAOImpl;
 
 @Configuration
 @EnableTransactionManagement
-@ImportResource("classpath*:roma-context.xml")
 public class HibernateConfig {
 
 	@Autowired
@@ -36,7 +35,8 @@ public class HibernateConfig {
 	@Bean
 	public SessionFactory sessionFactory(){
 		return HibernateSessionBuilder.builder()
-				.packages(Config.get().getDataSourcePackages().get("db"))
+				.packages(Config.get().getDataSources().get(Config.get()
+									.getDefaultDataSourceName()))
 				.env(env)
 				.dataSource(dataSource)
 				.build().sessionFactory();
@@ -47,7 +47,8 @@ public class HibernateConfig {
 		dao.setSessionFactory(sessionFactory());
 		return dao;
 	}
-
+	
+	
 	
 
 }

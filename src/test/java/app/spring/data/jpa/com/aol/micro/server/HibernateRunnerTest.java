@@ -1,4 +1,4 @@
-package app.hibernate.com.aol.micro.server;
+package app.spring.data.jpa.com.aol.micro.server;
 
 
 import static org.hamcrest.CoreMatchers.is;
@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.aol.micro.server.Config;
 import com.aol.micro.server.MicroServerStartup;
@@ -20,6 +21,7 @@ import com.aol.micro.server.testing.RestAgent;
 import com.google.common.collect.ImmutableMap;
 
 @Microserver
+@EnableJpaRepositories
 public class HibernateRunnerTest {
 
   	private final RestClient<List<HibernateEntity>> listClient = new RestClient(1000,1000).withGenericResponse(List.class, HibernateEntity.class);
@@ -32,7 +34,7 @@ public class HibernateRunnerTest {
 	public void startServer(){
 		
 		
-		server = new MicroServerStartup( Config.get().withEntityScan("app.hibernate.com.aol.micro.server")
+		server = new MicroServerStartup( Config.get().withEntityScan("app.spring.data.jpa.com.aol.micro.server")
 												.withHibernateClasses(HibernateRunnerTest.class)
 												.withProperties(
 																			ImmutableMap.of("db.connection.driver","org.hsqldb.jdbcDriver",

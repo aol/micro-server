@@ -20,7 +20,7 @@ import com.googlecode.genericdao.dao.hibernate.GenericDAOImpl;
 @Component
 @Transactional
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class TransactionalDAO<T, ID extends Serializable> implements GenericDAO<T, ID> {
+public class GenericHibernateService<T, ID extends Serializable> implements GenericDAO<T, ID> {
 	
 	@Delegate
 	@Getter(AccessLevel.PACKAGE)
@@ -28,7 +28,7 @@ public class TransactionalDAO<T, ID extends Serializable> implements GenericDAO<
 	
 	
 	@Autowired
-	public TransactionalDAO(ApplicationContext context){
+	public GenericHibernateService(ApplicationContext context){
 		
 			this.genericDao =extractValue(context);
 		

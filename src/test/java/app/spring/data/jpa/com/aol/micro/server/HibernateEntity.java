@@ -1,4 +1,4 @@
-package app.jdbc.roma.com.aol.micro.server;
+package app.spring.data.jpa.com.aol.micro.server;
 
 import static javax.persistence.GenerationType.IDENTITY;
 

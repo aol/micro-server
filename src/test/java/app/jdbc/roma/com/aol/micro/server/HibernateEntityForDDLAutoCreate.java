@@ -1,4 +1,4 @@
-package app.jdbc.com.aol.micro.server;
+package app.jdbc.roma.com.aol.micro.server;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -22,7 +22,7 @@ import lombok.experimental.Builder;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class HibernateEntity implements java.io.Serializable {
+public class HibernateEntityForDDLAutoCreate implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 

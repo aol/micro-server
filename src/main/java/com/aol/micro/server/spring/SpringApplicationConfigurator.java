@@ -52,14 +52,13 @@ class SpringApplicationConfigurator {
 		beanFactory.registerSingleton(Environment.class.getCanonicalName(), createEnvironment( rootContext));
 		beanFactory.registerSingleton(AccessLogLocationBean.class.getCanonicalName(), createAccessLogLocationBean( rootContext));
 		
-		config.getDataSourcePackages().keySet().stream().filter(it -> !"db".equals(it)).forEach(name -> {
+		config.getDataSources().keySet().stream().filter(it -> !Config.get().getDefaultDataSourceName().equals(it)).forEach(name -> {
 			JdbcConfig jdbc = buildJdbcProperties(rootContext, name);
 			DataSource dataSource = buildDataSource(name,jdbc);
 			SessionFactory sessionFactory = buildSession(name,config,dataSource,jdbc);
 			beanFactory.registerSingleton(name+"DataSource", dataSource);
 			beanFactory.registerSingleton(name+"SessionFactory",sessionFactory);
 			beanFactory.registerSingleton(name+"HibernateTransactionManager", buildTransactionManager(name,config, dataSource,jdbc));
-			beanFactory.registerSingleton(name+"GenericDAO", buildGenericDAO(rootContext, sessionFactory));
 			beanFactory.registerSingleton(name+"DAOProvider", buildDAOProvider(rootContext, sessionFactory));
 			
 		});
@@ -78,22 +77,17 @@ class SpringApplicationConfigurator {
 
 
 
-	private GenericDAOImpl buildGenericDAO(
-			AnnotationConfigWebApplicationContext rootContext,
-			SessionFactory sessionFactory) {
-		
-		return DAOBuilder.builder().applicationContext(rootContext).factory(sessionFactory).build().dao();
-	}
+	
 
 
 
 	private HibernateTransactionManager buildTransactionManager(String name,Config config,DataSource dataSource, JdbcConfig jdbc) {
-		return HibernateSessionBuilder.builder().packages(config.getDataSourcePackages().get(name)).dataSource(dataSource).env(jdbc).build().transactionManager();
+		return HibernateSessionBuilder.builder().packages(config.getDataSources().get(name)).dataSource(dataSource).env(jdbc).build().transactionManager();
 	}
 
 	private SessionFactory buildSession(String name, Config config,DataSource dataSource, JdbcConfig jdbc) {
 		
-		return HibernateSessionBuilder.builder().packages(config.getDataSourcePackages().get(name)).dataSource(dataSource).env(jdbc).build().sessionFactory();
+		return HibernateSessionBuilder.builder().packages(config.getDataSources().get(name)).dataSource(dataSource).env(jdbc).build().sessionFactory();
 	}
 
 	private DataSource buildDataSource(String name, JdbcConfig jdbc) {

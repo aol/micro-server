@@ -20,6 +20,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
+import com.aol.micro.server.Config;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -28,10 +29,9 @@ public class  PropertyFileConfig {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Setter
-	private volatile static String applicationPropertyFileName = "application.properties";
-	@Setter
-	private volatile static Map<String,String> properties = Maps.newHashMap();
+
+//	@Setter
+//	private volatile static Map<String,String> properties = Maps.newHashMap();
 	
 	
 	@Bean
@@ -41,7 +41,7 @@ public class  PropertyFileConfig {
 
 		PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
 		Properties props = propertyFactory();
-		props.putAll(properties);
+		props.putAll(Config.get().getProperties());
 		
 		configurer.setProperties(props);
 		configurer.setSystemPropertiesMode(PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE);
@@ -72,6 +72,9 @@ public class  PropertyFileConfig {
 	}
 
 	private Optional<Resource> loadProperties() {
+		
+		String applicationPropertyFileName= Config.get().getPropertiesName();
+		
 		Optional<Resource> resource = Optional.empty();
 
 		if (new File("./"+applicationPropertyFileName).exists()) {
@@ -87,10 +90,10 @@ public class  PropertyFileConfig {
 
 		if (System.getProperty("application.env") != null) {
 			URL envResource = getClass().getClassLoader()
-										.getResource(createEnvBasedPropertyFileName());
+										.getResource(createEnvBasedPropertyFileName(applicationPropertyFileName));
 			if (envResource != null) {
 				resource = Optional.of(new UrlResource(envResource));
-				logger.info(createEnvBasedPropertyFileName() +" added");
+				logger.info(createEnvBasedPropertyFileName(applicationPropertyFileName) +" added");
 			}
 
 		}
@@ -102,8 +105,8 @@ public class  PropertyFileConfig {
 		return resource;
 	}
 
-	private String createEnvBasedPropertyFileName() {
-		return applicationPropertyFileName.substring(0,applicationPropertyFileName.indexOf("."))+"-" 
+	private String createEnvBasedPropertyFileName(String applicationPropertyFileName) {
+		return applicationPropertyFileName.substring(0,applicationPropertyFileName.lastIndexOf("."))+"-" 
 								+ System.getProperty("application.env") + ".properties";
 	}
 

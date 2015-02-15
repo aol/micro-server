@@ -1,4 +1,4 @@
-package app.hibernate.com.aol.micro.server;
+package app.spring.data.jpa.com.aol.micro.server;
 
 import java.util.List;
 
@@ -20,12 +20,12 @@ import com.googlecode.genericdao.search.Search;
 public class PersistentResource implements RestResource {
 
 	
-	private final GenericHibernateService<HibernateEntity,Long> dao;
+	private final HibernateEntityRepository dao;
 	
 	@Autowired
-	public PersistentResource(DAOProvider<HibernateEntity,Long> daoProvider) {
+	public PersistentResource(HibernateEntityRepository dao) {
 	
-		dao = daoProvider.get(HibernateEntity.class);
+		this.dao = dao;
 	}
 	
 	@GET
@@ -41,11 +41,10 @@ public class PersistentResource implements RestResource {
 	@GET
 	@Produces("application/json")
 	@Path("/get")
-	public List<HibernateEntity> get(){
-		return dao.<HibernateEntity>search(new Search()
-						.addFilter(dao.getFilterFromExample(HibernateEntity.builder()
-							.name("test")
-							.build())));
+	public Iterable<HibernateEntity> get(){
+		
+		return dao.findAll();
+		
 		
 	}
 

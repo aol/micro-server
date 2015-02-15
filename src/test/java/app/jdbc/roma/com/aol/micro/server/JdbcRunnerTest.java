@@ -31,8 +31,8 @@ public class JdbcRunnerTest {
 	public void startServer(){
 		
 		
-		server = new MicroServerStartup( Config.builder().dataSourcePackages(ImmutableMap.of("db",Arrays.asList("app.jdbc.roma.com.aol.micro.server"))).build()
-												.withDAOClasses(JdbcRunnerTest.class)
+		server = new MicroServerStartup( Config.get().withEntityScan("app.jdbc.roma.com.aol.micro.server")
+												.withJdbcClasses(JdbcRunnerTest.class)
 												.withProperties(
 																			ImmutableMap.of("db.connection.driver","org.hsqldb.jdbcDriver",
 																						    "db.connection.url","jdbc:hsqldb:mem:aname",
