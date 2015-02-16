@@ -6,14 +6,16 @@ import lombok.Getter;
 import lombok.experimental.Builder;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.aol.micro.server.config.Config;
 import com.aol.micro.server.utility.UsefulStaticMethods;
 
 @Getter
 @Builder
-@Component
+@Component("mainEnv")
 public class JdbcConfig  {
 
 	private final String driverClassName;
@@ -26,14 +28,14 @@ public class JdbcConfig  {
 
 	private final Properties properties;
 	private final String name;
-	@Autowired
+	
 	public JdbcConfig(@Value("${db.connection.driver:}") String driverClassName,
 			@Value("${db.connection.url:}") String url,
 			@Value("${db.connection.username:}") String username,
 			@Value("${db.connection.password:}") String password,
 			@Value("${db.connection.hibernate.showsql:false}") String showSql,
 			@Value("${db.connection.dialect:}") String dialect,
-			@Value("${db.connection.ddl.auto:#null}") String ddlAuto) {
+			@Value("${db.connection.ddl.auto:#{null}}") String ddlAuto) {
 		this(driverClassName, url,
 		username,
 			 password,
@@ -42,16 +44,17 @@ public class JdbcConfig  {
 			ddlAuto,new Properties(),"db");
 
 	}
-	
+	@Autowired
 	public JdbcConfig(@Value("${db.connection.driver:}") String driverClassName,
 			@Value("${db.connection.url:}") String url,
 			@Value("${db.connection.username:}") String username,
 			@Value("${db.connection.password:}") String password,
 			@Value("${db.connection.hibernate.showsql:false}") String showSql,
 			@Value("${db.connection.dialect:}") String dialect,
-			@Value("${db.connection.ddl.auto:#null}") String ddlAuto, Properties properties, String name) {
+			@Value("${db.connection.ddl.auto:#{null}}") String ddlAuto,   @Qualifier("propertyFactory") Properties properties,
+			@Value("${internal.not.use.microserver:#{null}}")String name) {
 		this.properties=  properties;
-		this.name =UsefulStaticMethods.either(name,"db");
+		this.name =UsefulStaticMethods.either(name,Config.get().getDefaultDataSourceName());
 		this.driverClassName = UsefulStaticMethods.either(driverClassName,extract("connection.driver"));
 		this.url = UsefulStaticMethods.either(url,extract("connection.url"));
 		this.username =  UsefulStaticMethods.either(username,extract("connection.username"));

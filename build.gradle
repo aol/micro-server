@@ -32,7 +32,7 @@ repositories {
 
 dependencies {
 	
-	
+	compile 'com.nurkiewicz.lazyseq:lazyseq:0.0.1'
 	compile 'org.springframework.data:spring-data-jpa:1.7.2.RELEASE'
 	//compile 'org.jooq:jool:0.9.6'
 	compile 'com.googlecode.genericdao:dao-hibernate:1.2.0'

@@ -16,11 +16,12 @@ import org.springframework.context.annotation.Configuration;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DataSourceBuilder {
-	@Resource
+	
+	@Resource(name="mainEnv")
 	private JdbcConfig env;
 
-	@Bean(destroyMethod = "close", name = "dataSource")
-	public DataSource dataSource() {
+	@Bean(destroyMethod = "close", name = "mainDataSource")
+	public DataSource mainDataSource() {
 		return getDataSource();
 	}
 	private DataSource getDataSource() {

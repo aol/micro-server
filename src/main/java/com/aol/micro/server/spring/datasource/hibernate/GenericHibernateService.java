@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.aol.micro.server.config.Config;
 import com.googlecode.genericdao.dao.hibernate.GenericDAO;
 import com.googlecode.genericdao.dao.hibernate.GenericDAOImpl;
 
@@ -36,7 +37,7 @@ public class GenericHibernateService<T, ID extends Serializable> implements Gene
 	}
 	
 	private GenericDAOImpl<T,ID> extractValue(ApplicationContext context){
-		return context.getBean(GenericDAOImpl.class);
+		return (GenericDAOImpl<T,ID>)context.getBean("genericDAOImpl");
 	}
 
 }

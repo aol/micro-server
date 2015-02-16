@@ -17,6 +17,7 @@ import org.springframework.web.context.ContextLoaderListener;
 
 import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.auto.discovery.RestResource;
+import com.aol.micro.server.config.Classes;
 import com.aol.micro.server.events.ConfigureActiveJobsAspect;
 import com.aol.micro.server.rest.jersey.JacksonFeature;
 import com.aol.micro.server.rest.jersey.JerseyRestApplication;
@@ -42,9 +43,7 @@ public interface Module {
 		return Maps.newHashMap();
 	}
 	default Set<Class> getSpringConfigurationClasses(){
-		return Sets.newHashSet(PropertyFileConfig.class,
-				MiscellaneousConfig.class, AopConfig.class, CodahaleMetricsConfigurer.class,
-				ConfigureActiveJobsAspect.class, ScheduleAndAsyncConfig.class,ConfigureResources.class);
+		return Sets.newHashSet(Classes.CORE_CLASSES.getClasses());
 	}
 	default List<Class> getRestResourceClasses() {
 		return Arrays.asList(RestResource.class);

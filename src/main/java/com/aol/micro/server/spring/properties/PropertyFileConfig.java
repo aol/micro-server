@@ -20,7 +20,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
-import com.aol.micro.server.Config;
+import com.aol.micro.server.config.Config;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -41,7 +41,7 @@ public class  PropertyFileConfig {
 
 		PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
 		Properties props = propertyFactory();
-		props.putAll(Config.get().getProperties());
+		
 		
 		configurer.setProperties(props);
 		configurer.setSystemPropertiesMode(PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE);
@@ -54,7 +54,10 @@ public class  PropertyFileConfig {
 		PropertiesFactoryBean factory = new PropertiesFactoryBean();
 		factory.setLocations(resources.toArray(new Resource[resources.size()]));
 		factory.afterPropertiesSet();
-		return factory.getObject();
+		Properties props =factory.getObject();
+		Config config = Config.get();
+		props.putAll(Config.get().getProperties());
+		return props;
 	}
 
 	private List<Resource> loadPropertyResource() {

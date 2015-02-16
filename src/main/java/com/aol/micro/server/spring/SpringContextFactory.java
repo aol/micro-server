@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-import com.aol.micro.server.Config;
 import com.aol.micro.server.ErrorCode;
+import com.aol.micro.server.config.Config;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
@@ -21,6 +21,7 @@ public class SpringContextFactory {
 	public SpringContextFactory(Config config, Class c, Set<Class> classes){
 		Set s = Sets.newHashSet(classes);
 		s.add(c);
+		s.addAll(config.getClasses());
 		this.classes = ImmutableSet.copyOf(s);
 		this.config = config;
 	}

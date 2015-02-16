@@ -22,10 +22,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientException;
 
 import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.JacksonUtil;
 import com.aol.micro.server.rest.client.nio.RestClient;
 import com.aol.micro.server.rest.client.nio.SpringRestTemplate;
-import com.aol.micro.server.spring.annotations.Microserver;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;

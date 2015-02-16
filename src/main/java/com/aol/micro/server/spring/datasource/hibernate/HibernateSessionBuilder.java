@@ -16,21 +16,19 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 import com.aol.micro.server.spring.datasource.JdbcConfig;
+import com.aol.simple.react.exceptions.ExceptionSoftener;
 
 @Builder
 @AllArgsConstructor
 public class HibernateSessionBuilder {
 	private final Logger logger = LoggerFactory.getLogger( getClass());
-
+	ExceptionSoftener softener = ExceptionSoftener.singleton.factory.getInstance();
 	
 	
 	private final JdbcConfig env;
 	private final DataSource dataSource;
 	private final List<String> packages;
-
 	
-
-	@Bean(name = "sessionFactory")
 	public SessionFactory sessionFactory() {
 		
 		LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
@@ -58,13 +56,15 @@ public class HibernateSessionBuilder {
 		try {
 			sessionFactoryBean.afterPropertiesSet();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(),e);
+			softener.throwSoftenedException(e);
 		}
 		
 		try{
 			return sessionFactoryBean.getObject();
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error(e.getMessage(),e);
+			softener.throwSoftenedException(e);
 		}
 		return null;
 	}
@@ -72,13 +72,6 @@ public class HibernateSessionBuilder {
 	
 	
 	
-
-
-
-	
-	
-
-	@Bean
 	public HibernateTransactionManager transactionManager() {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory(sessionFactory());

@@ -1,11 +1,10 @@
-package com.aol.micro.server.spring.annotations;
+package com.aol.micro.server.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Retention(RetentionPolicy.RUNTIME)
@@ -13,5 +12,11 @@ import org.springframework.stereotype.Component;
 @Component
 public @interface Microserver {
 
+	
 	String[] basePackages() default {};
+	Class[] classes() default {};
+	Classes[] springClasses() default {};
+	String propertiesName() default "application.properties";
+	String[] entityScan() default {};
+	String[] properties() default {};
 }

@@ -12,9 +12,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.events.JobsBeingExecuted;
 import com.aol.micro.server.rest.client.nio.RestClient;
-import com.aol.micro.server.spring.annotations.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver

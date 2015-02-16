@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroServerStartup;
-import com.aol.micro.server.spring.annotations.Microserver;
+import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver(basePackages = { "app.async.com.aol.micro.server" })

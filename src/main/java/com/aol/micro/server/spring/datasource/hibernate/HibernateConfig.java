@@ -2,17 +2,16 @@ package com.aol.micro.server.spring.datasource.hibernate;
 
 import java.io.Serializable;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.aol.micro.server.Config;
+import com.aol.micro.server.config.Config;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.googlecode.genericdao.dao.hibernate.GenericDAOImpl;
 
@@ -20,9 +19,9 @@ import com.googlecode.genericdao.dao.hibernate.GenericDAOImpl;
 @EnableTransactionManagement
 public class HibernateConfig {
 
-	@Autowired
+	@Resource(name="mainEnv")
 	private JdbcConfig env;
-	@Autowired
+	@Resource(name="mainDataSource")
 	private DataSource dataSource;
 	
 	@Bean
@@ -42,7 +41,7 @@ public class HibernateConfig {
 				.build().sessionFactory();
 	}
 	@Bean
-	public<T,ID extends Serializable> GenericDAOImpl<T,ID> dao(){
+	public<T,ID extends Serializable> GenericDAOImpl<T,ID> genericDAOImpl(){
 		GenericDAOImpl<T,ID> dao = new GenericDAOImpl<T,ID>();
 		dao.setSessionFactory(sessionFactory());
 		return dao;
