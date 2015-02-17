@@ -16,7 +16,7 @@ import lombok.Setter;
 import lombok.experimental.Builder;
 
 @Entity
-@Table(name = "t_table", uniqueConstraints = @UniqueConstraint(columnNames = {
+@Table(name = "t_roma", uniqueConstraints = @UniqueConstraint(columnNames = {
 		"name", "value" }))
 @Setter
 @Builder

@@ -4,7 +4,6 @@ package app.spring.data.jpa.com.aol.micro.server;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -33,15 +32,15 @@ public class HibernateRunnerTest {
 	@Before
 	public void startServer(){
 		
-		
-		server = new MicroServerStartup( Config.get().withEntityScan("app.spring.data.jpa.com.aol.micro.server")
+		Config.reset();
+		server = new MicroServerStartup( Config.instance().withEntityScan("app.spring.data.jpa.com.aol.micro.server")
 												.withHibernateClasses(HibernateRunnerTest.class)
 												.withProperties(
 																			ImmutableMap.of("db.connection.driver","org.hsqldb.jdbcDriver",
 																						    "db.connection.url","jdbc:hsqldb:mem:aname",
 																						    "db.connection.username", "sa",
 																						    "db.connection.dialect","org.hibernate.dialect.HSQLDialect",
-																						    "db.connection.ddl.auto","create"))
+																						    "db.connection.ddl.auto","create-drop"))
 																				,()->"hibernate-app");
 		server.start();
 

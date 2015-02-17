@@ -33,9 +33,10 @@ public class PersistentResource implements RestResource {
 	@Path("/create")
 	public String createEntity() {
 		
-		dao.save(HibernateEntity.builder()
+		HibernateEntity saved =	dao.save(HibernateEntity.builder()
 								.name("test")
 								.value("value").build());
+		
 		return "ok";
 	}
 	@GET

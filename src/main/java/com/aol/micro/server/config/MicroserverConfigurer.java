@@ -7,9 +7,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
+import com.google.common.collect.ImmutableSet;
 import com.nurkiewicz.lazyseq.LazySeq;
 
 public class MicroserverConfigurer {
@@ -20,7 +19,7 @@ public class MicroserverConfigurer {
 		
 		Map<String, String> properties = buildProperties(microserver);
 		
-		return Config.get().withEntityScan(microserver.entityScan()).withClasses(ImmutableList.copyOf(classes))
+		return Config.instance().withEntityScan(microserver.entityScan()).withClasses(ImmutableSet.copyOf(classes))
 				.withPropertiesName(microserver.propertiesName()).withProperties(ImmutableMap.copyOf(properties)).set();
 	}
 

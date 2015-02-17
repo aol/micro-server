@@ -21,6 +21,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
 import com.aol.micro.server.config.Config;
+import com.aol.micro.server.config.ConfigAccessor;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -30,9 +31,6 @@ public class  PropertyFileConfig {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 
-//	@Setter
-//	private volatile static Map<String,String> properties = Maps.newHashMap();
-	
 	
 	@Bean
 	public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {
@@ -55,8 +53,8 @@ public class  PropertyFileConfig {
 		factory.setLocations(resources.toArray(new Resource[resources.size()]));
 		factory.afterPropertiesSet();
 		Properties props =factory.getObject();
-		Config config = Config.get();
-		props.putAll(Config.get().getProperties());
+		
+		props.putAll(new ConfigAccessor().get().getProperties());
 		return props;
 	}
 
@@ -76,7 +74,7 @@ public class  PropertyFileConfig {
 
 	private Optional<Resource> loadProperties() {
 		
-		String applicationPropertyFileName= Config.get().getPropertiesName();
+		String applicationPropertyFileName= new ConfigAccessor().get().getPropertiesName();
 		
 		Optional<Resource> resource = Optional.empty();
 

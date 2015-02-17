@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.config.Config;
+import com.aol.micro.server.config.ConfigAccessor;
 import com.aol.micro.server.utility.UsefulStaticMethods;
 
 @Getter
@@ -54,7 +54,7 @@ public class JdbcConfig  {
 			@Value("${db.connection.ddl.auto:#{null}}") String ddlAuto,   @Qualifier("propertyFactory") Properties properties,
 			@Value("${internal.not.use.microserver:#{null}}")String name) {
 		this.properties=  properties;
-		this.name =UsefulStaticMethods.either(name,Config.get().getDefaultDataSourceName());
+		this.name =UsefulStaticMethods.either(name,new ConfigAccessor().get().getDefaultDataSourceName());
 		this.driverClassName = UsefulStaticMethods.either(driverClassName,extract("connection.driver"));
 		this.url = UsefulStaticMethods.either(url,extract("connection.url"));
 		this.username =  UsefulStaticMethods.either(username,extract("connection.username"));

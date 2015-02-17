@@ -16,6 +16,7 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.config.Config;
+import com.aol.micro.server.config.ConfigAccessor;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.module.Environment;
 import com.aol.micro.server.module.ModuleBean;
@@ -58,7 +59,7 @@ class SpringApplicationConfigurator {
 		beanFactory.registerSingleton(Environment.class.getCanonicalName(), createEnvironment( rootContext));
 		beanFactory.registerSingleton(AccessLogLocationBean.class.getCanonicalName(), createAccessLogLocationBean( rootContext));
 		
-		config.getDataSources().keySet().stream().filter(it -> !Config.get().getDefaultDataSourceName().equals(it)).forEach(name -> {
+		config.getDataSources().keySet().stream().filter(it -> !new ConfigAccessor().get().getDefaultDataSourceName().equals(it)).forEach(name -> {
 			JdbcConfig jdbc = buildJdbcProperties(rootContext, name);
 			DataSource dataSource = buildDataSource(name,jdbc);
 			SessionFactory sessionFactory = buildSession(name,config,dataSource,jdbc);

@@ -1,11 +1,15 @@
 package nonautoscan.com.aol.micro.server;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.*;
+
+import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.aol.micro.server.config.Config;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 
 public class JdbcConfigTest {
@@ -13,7 +17,9 @@ public class JdbcConfigTest {
 	JdbcConfig config;
 	@Before
 	public void setUp() throws Exception {
-		config = new JdbcConfig("driverClassName", "url", "username", "password", "showSql", "mysql", "none",null,null);
+		Config.instance();
+		config = new JdbcConfig("driverClassName", "url", "username", "password", "showSql", "mysql", "none",new Properties(),null);
+		
 	}
 
 	@Test

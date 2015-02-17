@@ -26,9 +26,9 @@ public class SpringContextFactory {
 		this.config = config;
 	}
 	
-	public SpringContextFactory(Config config, List<Class> additionalClasses,Set<Class> classes) {
+	public SpringContextFactory(Config config, Set<Class> classes) {
 		Set s = Sets.newHashSet(classes);
-		s.addAll(additionalClasses);
+		s.addAll(config.getClasses());
 		this.classes = ImmutableSet.copyOf(s);
 		this.config=config;
 	}

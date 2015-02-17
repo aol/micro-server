@@ -12,7 +12,7 @@ public class EmbeddedAppLocalMain {
 	
 	public static void main(String[] args) throws InterruptedException {
 		
-		new MicroServerStartup(EmbeddedAppLocalMain.class, 
+		new MicroServerStartup(
 				new EmbeddedModule(Arrays.asList(TestAppRestResource.class),"test-app"),
 				new EmbeddedModule(Arrays.asList(AltAppRestResource.class),"alternative-app")).start();
 

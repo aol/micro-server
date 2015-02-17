@@ -1,6 +1,5 @@
 package com.aol.micro.server.spring.datasource.hibernate;
 
-import groovy.transform.CompileStatic;
 
 import java.io.Serializable;
 
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import com.googlecode.genericdao.dao.hibernate.GenericDAOAccessor;
 
-@CompileStatic
 @Component
 public class DAOProvider<T,ID extends Serializable> {
 

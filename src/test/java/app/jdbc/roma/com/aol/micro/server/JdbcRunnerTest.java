@@ -31,14 +31,14 @@ public class JdbcRunnerTest {
 	public void startServer(){
 		
 		
-		server = new MicroServerStartup( Config.get().withEntityScan("app.jdbc.roma.com.aol.micro.server")
+		server = new MicroServerStartup( Config.instance().withEntityScan("app.jdbc.roma.com.aol.micro.server")
 												.withJdbcClasses(JdbcRunnerTest.class)
 												.withProperties(
 																			ImmutableMap.of("db.connection.driver","org.hsqldb.jdbcDriver",
 																						    "db.connection.url","jdbc:hsqldb:mem:aname",
 																						    "db.connection.username", "sa",
 																						    "db.connection.dialect","org.hibernate.dialect.HSQLDialect",
-																						    "db.connection.ddl.auto","create"))
+																						    "db.connection.ddl.auto","create-drop"))
 																				,()->"jdbc-roma-app");
 		server.start();
 

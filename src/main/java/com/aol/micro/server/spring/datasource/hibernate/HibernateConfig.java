@@ -12,6 +12,7 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.aol.micro.server.config.Config;
+import com.aol.micro.server.config.ConfigAccessor;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.googlecode.genericdao.dao.hibernate.GenericDAOImpl;
 
@@ -34,7 +35,7 @@ public class HibernateConfig {
 	@Bean
 	public SessionFactory sessionFactory(){
 		return HibernateSessionBuilder.builder()
-				.packages(Config.get().getDataSources().get(Config.get()
+				.packages(new ConfigAccessor().get().getDataSources().get(new ConfigAccessor().get()
 									.getDefaultDataSourceName()))
 				.env(env)
 				.dataSource(dataSource)

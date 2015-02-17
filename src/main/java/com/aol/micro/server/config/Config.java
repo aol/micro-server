@@ -13,6 +13,7 @@ import lombok.experimental.Wither;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -24,7 +25,7 @@ import com.google.common.collect.Sets;
 public class Config {
 	
 	private final String defaultDataSourceName;
-	private final ImmutableList<Class> classes;
+	private final ImmutableSet<Class> classes;
 	private final ImmutableMap<String,String> properties;
 	
 	private final String propertiesName;
@@ -33,23 +34,30 @@ public class Config {
 	
 	
 	public Config() {
-		classes = null;
+		classes = ImmutableSet.of();
 		properties=  ImmutableMap.of();
 		dataSources = ImmutableMap.of();
 		defaultDataSourceName="db";
 		propertiesName = "application.properties";
 	}
 
-	private static ThreadLocal<Config> instance= new ThreadLocal<>();
+	private static volatile Config instance = null;
 	
 	public Config set(){
-		instance.set(this);
+		instance = this;
 		return this;
 	}
-	public static Config get(){
-		if(instance.get() ==null)
-			new Config().set();
-		return instance.get();
+	public static Config instance(){
+		instance = new Config();
+		return instance;
+	}
+	static Config get(){
+		return instance;
+		
+	}
+	public static void reset() {
+		instance =null;
+		
 	}
 	
 	public Config withEntityScanDataSource(String dataSource,String... packages){
@@ -69,16 +77,17 @@ public class Config {
 		 if(classes!=null)
 			 result.addAll(classes);
 		 Stream.of(c).forEach(next -> result.add(next));
-		 return this.withClasses(ImmutableList.copyOf(result));
+		 return this.withClasses(ImmutableSet.copyOf(result));
 	}
 
 	
 	public Config withJdbcClasses(Class... c){
 		 List<Class> result = Lists.newArrayList(Classes.JDBC_CLASSES.getClasses());
+		 result.addAll(Arrays.asList(Classes.SPRING_DATA_CLASSES.getClasses()));
 		 if(classes!=null)
 			 result.addAll(classes);
 		 Stream.of(c).forEach(next -> result.add(next));
-		 return this.withClasses(ImmutableList.copyOf(result));
+		 return this.withClasses(ImmutableSet.copyOf(result));
 	}
 	
 	public Config withHibernateClasses(Class... c){
@@ -87,6 +96,7 @@ public class Config {
 		 if(classes!=null)
 			 result.addAll(classes);
 		 Stream.of(c).forEach(next -> result.add(next));
-		 return this.withClasses(ImmutableList.copyOf(result));
+		 return this.withClasses(ImmutableSet.copyOf(result));
 	}
+	
 }

@@ -3,7 +3,6 @@ package app.jdbc.roma.spring.data.com.aol.micro.server;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 import org.junit.After;
@@ -16,19 +15,13 @@ import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.client.nio.RestClient;
 import com.aol.micro.server.testing.RestAgent;
-import com.google.common.collect.ImmutableMap;
 
-@Microserver(springClasses={
-				Classes.JDBC_CLASSES, 
-				Classes.SPRING_DATA_CLASSES
-		},
-		entityScan = "app.jdbc.roma.spring.data.com.aol.micro.server", 
-		properties = {
+@Microserver(springClasses = { Classes.JDBC_CLASSES,
+		Classes.SPRING_DATA_CLASSES }, entityScan = "app.jdbc.roma.spring.data.com.aol.micro.server", properties = {
 		"db.connection.driver", "org.hsqldb.jdbcDriver", "db.connection.url",
 		"jdbc:hsqldb:mem:aname", "db.connection.username", "sa",
 		"db.connection.dialect", "org.hibernate.dialect.HSQLDialect",
-		"db.connection.ddl.auto", "create" 
-		})
+		"db.connection.ddl.auto", "create-drop" })
 public class JdbcRunnerTest {
 
 	private final RestClient<JdbcEntity> listClient = new RestClient(1000, 1000)
@@ -40,7 +33,8 @@ public class JdbcRunnerTest {
 
 	@Before
 	public void startServer() {
-		
+
+		Config.reset();
 		server = new MicroServerStartup(() -> "jdbc-app");
 		server.start();
 
@@ -55,6 +49,7 @@ public class JdbcRunnerTest {
 	public void runAppAndBasicTest() throws InterruptedException,
 			ExecutionException {
 
+		
 		assertThat(
 				rest.get("http://localhost:8080/jdbc-app/persistence/create"),
 				is("ok"));

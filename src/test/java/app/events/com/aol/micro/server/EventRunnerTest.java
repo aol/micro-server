@@ -28,7 +28,7 @@ public class EventRunnerTest {
 	@Before
 	public void startServer(){
 		
-		server = new MicroServerStartup( EventRunnerTest.class, ()-> "event-app");
+		server = new MicroServerStartup(()-> "event-app");
 		server.start();
 
 	}

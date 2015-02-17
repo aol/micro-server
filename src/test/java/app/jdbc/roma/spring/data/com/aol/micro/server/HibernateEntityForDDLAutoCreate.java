@@ -18,7 +18,7 @@ import lombok.experimental.Builder;
 //class is here only for ddl auto-creation
 
 @Entity
-@Table(name = "t_table", uniqueConstraints = @UniqueConstraint(columnNames = {
+@Table(name = "t_jdbc_repo", uniqueConstraints = @UniqueConstraint(columnNames = {
 		"name", "value" }))
 @Setter
 @Builder

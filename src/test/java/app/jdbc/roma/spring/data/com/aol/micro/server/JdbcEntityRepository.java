@@ -17,7 +17,7 @@ public class JdbcEntityRepository extends JdbcRepository<JdbcEntity, Long> {
 	
 	@Autowired 
 	public JdbcEntityRepository(RowMapperService service) {
-        super(service.getRowMapper(JdbcEntity.class),unmapper, "t_table");
+        super(service.getRowMapper(JdbcEntity.class),unmapper, "t_jdbc_repo");
       
     }
 	

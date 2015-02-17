@@ -61,7 +61,7 @@ public class MicroServerStartup {
 	public MicroServerStartup(Class c, Module... modules) {
 		
 		this.modules = Lists.newArrayList(modules);
-		springContext = new SpringContextFactory(Config.get(),c,modules[0].getSpringConfigurationClasses()).createSpringContext();
+		springContext = new SpringContextFactory(Config.instance(),c,modules[0].getSpringConfigurationClasses()).createSpringContext();
 
 	}
 
@@ -70,7 +70,7 @@ public class MicroServerStartup {
 		
 	this.modules = Lists.newArrayList(modules);
 	config.set();
-		springContext = new SpringContextFactory(config,config.getClasses(),
+		springContext = new SpringContextFactory(config,
 				modules[0].getSpringConfigurationClasses()).createSpringContext();
 	
 	}
@@ -80,7 +80,7 @@ public class MicroServerStartup {
 	public void stop(){
 		
 		end.complete(true);
-		
+		Config.reset();
 		
 	}
 	public void run() {

@@ -32,7 +32,7 @@ public class PersistentResource implements RestResource {
 	@Produces("text/plain")
 	@Path("/create")
 	public String createEntity() {
-		dao.update("insert into t_table VALUES (1,'hello','world',1)");
+		dao.update("insert into t_roma VALUES (1,'hello','world',1)");
 	
 		return "ok";
 	}
@@ -41,9 +41,8 @@ public class PersistentResource implements RestResource {
 	@Produces("application/json")
 	@Path("/get")
 	public JdbcEntity get() {
-		//return dao.<JdbcEntity>queryForObject("select * from t_table",new BeanPropertyRowMapper(JdbcEntity.class));
 		
-		return  dao.<JdbcEntity>queryForObject("select * from t_table",rowMapper);
+		return  dao.<JdbcEntity>queryForObject("select * from t_roma",rowMapper);
 	}
 
 }
