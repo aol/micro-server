@@ -24,7 +24,7 @@ public class GrizzlyApplicationFactory {
 	
 	public ServerApplication createApp() {
 		 ModuleDataExtractor extractor = new ModuleDataExtractor(module);
-		ImmutableList<RestResource> resources = extractor.getRestResources(rootContext);
+		ImmutableList resources = extractor.getRestResources(rootContext);
 
 		Environment environment = rootContext.getBean(Environment.class);
 

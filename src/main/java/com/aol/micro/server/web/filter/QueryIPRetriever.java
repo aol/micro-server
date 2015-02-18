@@ -11,8 +11,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import lombok.Getter;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +20,13 @@ public class QueryIPRetriever implements Filter {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@Getter
+	
 	private static final ThreadLocal<String> ipAddress = new ThreadLocal<String>();
 
+	public static String getIpAddress(){
+		return ipAddress.get();
+	}
+	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		try {

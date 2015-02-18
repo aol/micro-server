@@ -14,7 +14,7 @@ import com.googlecode.genericdao.dao.hibernate.GenericDAOImpl;
 
 @Component
 @Path("/status")
-public class ServletStatusResource implements RestResource {
+public class SimpleStatusResource implements RestResource {
 
 	
 	

@@ -61,7 +61,7 @@ public class MicroServerStartup {
 	public MicroServerStartup(Class c, Module... modules) {
 		
 		this.modules = Lists.newArrayList(modules);
-		springContext = new SpringContextFactory(Config.instance(),c,modules[0].getSpringConfigurationClasses()).createSpringContext();
+		springContext = new SpringContextFactory(new MicroserverConfigurer().buildConfig(c),c,modules[0].getSpringConfigurationClasses()).createSpringContext();
 
 	}
 

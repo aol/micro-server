@@ -18,7 +18,7 @@ public class EventStatusResource implements RestResource {
 
 	
 	
-	EventBus bus;
+	private final EventBus bus;
 	
 	@Autowired
 	public EventStatusResource(EventBus bus ){

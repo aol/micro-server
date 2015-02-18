@@ -24,9 +24,11 @@ public class ModuleDataExtractor {
 
 	private final Module module;
 	
-	public  ImmutableList<RestResource> getRestResources( AnnotationConfigWebApplicationContext rootContext){
+	public  ImmutableList getRestResources( AnnotationConfigWebApplicationContext rootContext){
+		
 			List resources = Lists.newArrayList();
 			module.getRestResourceClasses().forEach(it -> resources.addAll(rootContext.getBeansOfType(it).values()));
+			module.getRestAnnotationClasses().forEach(it -> resources.addAll(rootContext.getBeansWithAnnotation(it).values()));
 			return ImmutableList.copyOf(resources);
 		
 	}

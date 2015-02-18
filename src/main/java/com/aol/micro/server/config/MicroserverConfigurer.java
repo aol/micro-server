@@ -15,6 +15,8 @@ public class MicroserverConfigurer {
 
 	public Config buildConfig(Class class1) {
 		Microserver microserver = (Microserver)class1.getAnnotation(Microserver.class);
+		if(microserver==null)
+			return Config.instance();
 		List<Class> classes = buildClasses(class1, microserver);
 		
 		Map<String, String> properties = buildProperties(microserver);

@@ -32,7 +32,7 @@ public class QueryIPRetrieverTest {
 		public void doFilter(ServletRequest request, ServletResponse response)
 				throws IOException, ServletException {
 			
-			setIpAddress(QueryIPRetriever.getIpAddress().get());
+			setIpAddress(QueryIPRetriever.getIpAddress());
 
 		}
 
@@ -66,7 +66,7 @@ public class QueryIPRetrieverTest {
 		queryIPRetriever.doFilter(request, response, myFilterChain);
 
 		assertEquals("IP address not equal", "10.10.11.11",	myFilterChain.getIpAddress());
-		assertNull(QueryIPRetriever.getIpAddress().get());
+		assertNull(QueryIPRetriever.getIpAddress());
 
 	}
 	
@@ -87,7 +87,7 @@ public class QueryIPRetrieverTest {
 		queryIPRetriever.doFilter(request, response, myFilterChain);
 
 		assertEquals("IP address not equal", "10.10.11.12",	myFilterChain.getIpAddress());
-		assertNull(QueryIPRetriever.getIpAddress().get());
+		assertNull(QueryIPRetriever.getIpAddress());
 
 	}
 	
@@ -108,7 +108,7 @@ public class QueryIPRetrieverTest {
 		queryIPRetriever.doFilter(request, response, myFilterChain);
 
 		assertEquals("IP address not equal", "10.10.11.11",	myFilterChain.getIpAddress());
-		assertNull(QueryIPRetriever.getIpAddress().get());
+		assertNull(QueryIPRetriever.getIpAddress());
 
 	}
 	
@@ -129,7 +129,7 @@ public class QueryIPRetrieverTest {
 		queryIPRetriever.doFilter(request, response, myFilterChain);
 
 		assertEquals("IP address not equal", "10.10.11.11",	myFilterChain.getIpAddress());
-		assertNull(QueryIPRetriever.getIpAddress().get());
+		assertNull(QueryIPRetriever.getIpAddress());
 
 	}
 	
@@ -150,7 +150,7 @@ public class QueryIPRetrieverTest {
 		queryIPRetriever.doFilter(request, response, myFilterChain);
 
 		assertEquals("IP address not equal", "10.10.11.13",	myFilterChain.getIpAddress());
-		assertNull(QueryIPRetriever.getIpAddress().get());
+		assertNull(QueryIPRetriever.getIpAddress());
 
 	}
 	
@@ -171,7 +171,7 @@ public class QueryIPRetrieverTest {
 		queryIPRetriever.doFilter(request, response, myFilterChain);
 
 		assertEquals("IP address not equal", "10.10.11.11",	myFilterChain.getIpAddress());
-		assertNull(QueryIPRetriever.getIpAddress().get());
+		assertNull(QueryIPRetriever.getIpAddress());
 
 	}
 	
@@ -192,7 +192,7 @@ public class QueryIPRetrieverTest {
 		queryIPRetriever.doFilter(request, response, myFilterChain);
 
 		assertEquals("IP address not equal", "10.10.11.11",	myFilterChain.getIpAddress());
-		assertNull(QueryIPRetriever.getIpAddress().get());
+		assertNull(QueryIPRetriever.getIpAddress());
 
 	}
 

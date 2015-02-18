@@ -24,7 +24,7 @@ public enum Classes {
 				MiscellaneousConfig.class, AopConfig.class, CodahaleMetricsConfigurer.class,
 				ConfigureActiveJobsAspect.class, ScheduleAndAsyncConfig.class,ConfigureResources.class),
 	JDBC_CLASSES(JdbcConfig.class ,
-	 DAOProvider.class,DataSourceBuilder.class,SQL.class,JdbcTemplateConfig.class),
+	 DAOProvider.class,DataSourceBuilder.class,SQL.class,JdbcTemplateConfig.class,SpringDataConfig.class),
 	 HIBERNATE_CLASSES(HibernateConfig.class,JdbcConfig.class ,
 				 GenericHibernateService.class,DAOProvider.class,DataSourceBuilder.class,SQL.class),
 	SPRING_DATA_CLASSES(SpringDataConfig.class),
