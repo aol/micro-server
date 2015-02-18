@@ -14,7 +14,7 @@ buildscript {
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-version = '0.4'
+version = '0.41'
 jar {
     manifest {
         attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
@@ -90,7 +90,7 @@ dependencies {
 	compile group: 'org.glassfish.grizzly', name: 'grizzly-http-all', version:'2.3.12'
 	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-http', version:'2.3'
 	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-servlet', version:'2.3'
-	compile ('org.springframework:spring-jdbc-roma:1.0.0-RELEASE'){
+	testCompile ('org.springframework:spring-jdbc-roma:1.0.0-RELEASE'){
 		exclude(module: 'javassist')
 		exclude(module: 'org.springframework')
 	}
@@ -125,7 +125,7 @@ modifyPom {
 
 		groupId 'com.aol.advertising.microservices'
 		artifactId 'microserver'
-		version '0.4'
+		version '0.41'
 		
 		scm {
 			url 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'

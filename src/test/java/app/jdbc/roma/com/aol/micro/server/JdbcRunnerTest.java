@@ -15,6 +15,7 @@ import com.aol.micro.server.MicroServerStartup;
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.client.nio.RestClient;
+import com.aol.micro.server.spring.datasource.jdbc.RomaRowMapperConfig;
 import com.aol.micro.server.testing.RestAgent;
 import com.google.common.collect.ImmutableMap;
 
@@ -32,7 +33,7 @@ public class JdbcRunnerTest {
 		
 		
 		server = new MicroServerStartup( Config.instance().withEntityScan("app.jdbc.roma.com.aol.micro.server")
-												.withJdbcClasses(JdbcRunnerTest.class)
+												.withJdbcClasses(JdbcRunnerTest.class, RomaRowMapperConfig.class)
 												.withProperties(
 																			ImmutableMap.of("db.connection.driver","org.hsqldb.jdbcDriver",
 																						    "db.connection.url","jdbc:hsqldb:mem:aname",

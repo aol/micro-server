@@ -15,10 +15,11 @@ import com.aol.micro.server.config.Classes;
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.client.nio.RestClient;
+import com.aol.micro.server.spring.datasource.jdbc.RomaRowMapperConfig;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver(springClasses = { Classes.JDBC_CLASSES,
-		Classes.SPRING_DATA_CLASSES }, entityScan = "app.jdbc.roma.spring.data.com.aol.micro.server", properties = {
+		Classes.SPRING_DATA_CLASSES,  Classes.ROMA_ROW_MAPPER }, entityScan = "app.jdbc.roma.spring.data.com.aol.micro.server", properties = {
 		"db.connection.driver", "org.hsqldb.jdbcDriver", "db.connection.url",
 		"jdbc:hsqldb:mem:aname", "db.connection.username", "sa",
 		"db.connection.dialect", "org.hibernate.dialect.HSQLDialect",
