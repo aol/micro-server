@@ -11,6 +11,7 @@ import javax.servlet.Filter;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroServerStartup;
@@ -18,6 +19,7 @@ import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.testing.RestAgent;
 import com.google.common.collect.ImmutableMap;
 
+@Ignore
 public class FilterRunnerTest {
 
 	RestAgent rest = new RestAgent();
