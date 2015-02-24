@@ -9,11 +9,13 @@ To make developing, debuging and deploying Java microservices simple.
 
 ##Info
 
+[wiki](https://github.com/aol/micro-server/wiki)
 [Google Group](https://groups.google.com/forum/#!forum/micro-server)
+[Example Apps](https://github.com/aol/micro-server/tree/master/src/test/java/app)
 
 ##Tech Stack
 
-Microserver seemless integrates Jersey 2, Spring 4, Guava, Codahale Metrics, Swagger, SimpleReact and Grizzly into a standalone REST server that can be leveraged as a simple library within a Java app.
+Microserver seamlessly integrates Jersey 2, Spring 4, Guava, Codahale Metrics, Swagger, SimpleReact and Grizzly into a standalone REST server that can be leveraged as a simple library within a Java app.
 
 ##Zero Configuration
 
@@ -126,10 +128,8 @@ This example will start two different Rest end points - one on context "test-app
 "test-app" will automagically wire in any Jersey end points that implement TestAppRestResource.
 "alternative-app" will automagically wire in any Jersey end points that implement AltAppRestResource.
 
-<pre>
-@Configuration
-@ComponentScan(basePackages = { "embedded.app.com.aol.micro.server" })
-public class EmbeddedAppRunnerTest {
+    @Microserver
+    public class EmbeddedAppRunnerTest {
 
 	public static void main(String[] args) throws InterruptedException {
 		new MicroServerStartup(EmbeddedAppRunnerTest.class, 
@@ -141,8 +141,8 @@ public class EmbeddedAppRunnerTest {
 	}
 
 	
-}
-</pre>
+  }
+
 
 
 
@@ -225,16 +225,18 @@ Capture active and recently completed scheduled jobs
 Rest calls to view recent events & recent jobs
 
 Microserver annotation configuration
-public @interface Microserver {
+
+    public @interface Microserver {
 
     
-    String[] basePackages() default {};
-    Class[] classes() default {};
-    Classes[] springClasses() default {};
-    String propertiesName() default "application.properties";
-    String[] entityScan() default {};
-    String[] properties() default {};
-}
+       String[] basePackages() default {};
+       Class[] classes() default {};
+       Classes[] springClasses() default {};
+       String propertiesName() default "application.properties";
+       String[] entityScan() default {};
+       String[] properties() default {};
+    }
+   
 v0.45
 
 Rest end points can use the annotation @Rest instead of both @Component (Spring) and implementing RestResource. Users can specify their own tag annotations also.
