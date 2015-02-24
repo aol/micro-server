@@ -1,7 +1,7 @@
 
 #Microserver
 
-Microserver is a zero configuration, standards based, battle hardened library to run Java Rest Webservices via a standard Java main class. It has been used in production in LANA since July 2014.
+Microserver is a zero configuration, standards based, battle hardened library to run Java Rest Webservices via a standard Java main class. It has been used in production in AOL since July 2014.
 
 ##Goal
 
@@ -177,3 +177,64 @@ v0.3 :
 1. @Microservice configuring annotation
 2. JaxRS NIO Rest Client
 3. Codahale Metrics
+
+v0.4
+Simpler & more powerful configuration (annotation, Configuration class and module level).
+Relational db integration (Datasources, hibernate, JDBC, Generic DAOs (Hibernate / JDBC / Spring Data).
+Events and Scheduled job monitoring and REST end points
+
+Examples :
+
+Startup
+
+@Microserver annotation on class and then
+
+new Microserver( ()-> "context");
+
+is all you need. (Will automatically identify calling class and search for annotations)
+
+
+.Datasource configuration
+Configure multiple datasources
+Hibernate entity manager
+Spring transaction manager automatically
+
+Artefacts automatically configured for *main* data source
+
+.Jdbc
+Spring JDBC template bean available
+ROMA - object mapping for Spring JDBC integrated
+Spring data JDBCRepo integrated
+
+
+
+.Hibernate integration
+GenericHibernateDAO created per data source 
+GenericService (Transactional created) (main only)
+
+.Spring Data Integration
+Spring data 'automagic' repos configured
+
+. Events
+Capture active and recently completed requests
+. Running jobs
+Capture active and recently completed scheduled jobs
+Rest calls to view recent events & recent jobs
+
+Microserver annotation configuration
+public @interface Microserver {
+
+    
+    String[] basePackages() default {};
+    Class[] classes() default {};
+    Classes[] springClasses() default {};
+    String propertiesName() default "application.properties";
+    String[] entityScan() default {};
+    String[] properties() default {};
+}
+v0.45
+
+Rest end points can use the annotation @Rest instead of both @Component (Spring) and implementing RestResource. Users can specify their own tag annotations also.
+
+ROMA - Spring Row Mapper has been made an optional dependency. It's only available on a minor Repo no-one really uses, so it caused problems building Microserver apps externally.
+
