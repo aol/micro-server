@@ -10,7 +10,9 @@ To make developing, debuging and deploying Java microservices simple.
 ##Info
 
 [wiki](https://github.com/aol/micro-server/wiki)
+
 [Google Group](https://groups.google.com/forum/#!forum/micro-server)
+
 [Example Apps](https://github.com/aol/micro-server/tree/master/src/test/java/app)
 
 ##Tech Stack
