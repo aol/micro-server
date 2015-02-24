@@ -116,7 +116,7 @@ The default file name application.properties can be configured by exception (use
 
 Microserver application properties loading is configured by the class PropertyFileConfig. You can replace this with your own Spring configuration file to load property files by a different set of rules (by passing in your class to the constructor of Microserver).
 
-##Embeded and colocation Microservices
+##Embed and colocate Microservices
 
 Microserver supports the embedding of multiple microservices within a single Microserver. All Microservices will share a single Spring context, so some care needs to be taken when authoring such Microservices to avoid conflicts. This does mean that they can share resources (such as database connections) where it makes sense to do so.
 
@@ -124,7 +124,7 @@ Embedded microservices should be collated at '''runtime only'''. There should be
 
 Embedding microservices is an optimisation that allows better performance, enhanced robustness and reliability and easier management  of microservices - while still maintaining the advantages of horizontal scalability offered by the microservices approach.
 
-###Embbed Microservices example
+###Embeded Microservices example
 
 This example will start two different Rest end points - one on context "test-app" and another on context "alternative-app".
 "test-app" will automagically wire in any Jersey end points that implement TestAppRestResource.
