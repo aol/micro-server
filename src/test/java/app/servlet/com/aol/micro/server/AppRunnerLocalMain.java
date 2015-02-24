@@ -5,7 +5,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import com.aol.micro.server.MicroServerStartup;
-import com.aol.simple.react.SimpleReact;
 
 @Configuration
 @ComponentScan(basePackages = { "app.servlet.com.aol.micro.server" })

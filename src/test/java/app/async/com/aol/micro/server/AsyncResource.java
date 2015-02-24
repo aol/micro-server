@@ -13,13 +13,14 @@ import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.rest.client.nio.RestClient;
-import com.aol.simple.react.SimpleReact;
+import com.aol.simple.react.stream.simple.SimpleReact;
 import com.google.common.collect.ImmutableList;
 
 @Path("/async")
 @Component
 public class AsyncResource implements RestResource{
 
+	private final SimpleReact simpleReact =new SimpleReact();
 	private final ImmutableList<String> urls = ImmutableList.of("http://localhost:8080/async-app/async/ping2",
 			"http://localhost:8080/async-app/async/ping",
 			"http://localhost:8080/async-app/async/ping",
@@ -32,7 +33,7 @@ public class AsyncResource implements RestResource{
         @Produces("text/plain")
         public void expensive(@Suspended AsyncResponse asyncResponse){
         	
-        	new SimpleReact().fromStream(urls.stream()
+        	simpleReact.fromStream(urls.stream()
 					.<CompletableFuture<String>>map(it ->  client.get(it)))
 					.onFail(it -> "")
 					.peek(it -> 

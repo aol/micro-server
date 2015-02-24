@@ -16,75 +16,77 @@ import com.aol.micro.server.MicroServerStartup;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
-import com.aol.simple.react.SimpleReact;
-import com.aol.simple.react.Stage;
+import com.aol.simple.react.stream.simple.SimpleReact;
+import com.aol.simple.react.stream.traits.SimpleReactStream;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 
-
 @Microserver(basePackages = { "app.guava.com.aol.micro.server" })
 public class GuavaAppTest {
-	
+
 	RestAgent rest = new RestAgent();
-	
+
 	MicroServerStartup server;
-	
+
 	ImmutableGuavaEntity entity;
 	Jdk8Entity present;
 	Jdk8Entity absent;
-	
-	Stage  stage;
+
+	SimpleReact simpleReact = new SimpleReact();
+	SimpleReactStream stream;
+
 	@Before
-	public void startServer(){
-		 stage = new SimpleReact().react( () -> server = new MicroServerStartup(GuavaAppTest.class, 
-														()->"guava-app"))
-														.then(server -> server.start());
-		
+	public void startServer() {
+		stream = simpleReact.react(
+				() -> server = new MicroServerStartup(GuavaAppTest.class,
+						() -> "guava-app")).then(server -> server.start());
+
 		entity = ImmutableGuavaEntity.builder().value("value")
-					.list(ImmutableList.of("hello","world"))
-					.mapOfSets(ImmutableMap.of("key1",ImmutableSet.of(1,2,3)))
-					.multiMap(ImmutableMultimap.of("1",2,"1",2,"2",4))
-					.build();
-	
-		JacksonUtil.convertFromJson(JacksonUtil.serializeToJson(entity), ImmutableGuavaEntity.class);
-	
-		 present = Jdk8Entity.builder().name(Optional.of("test")).build();
-		 
-		 JacksonUtil.convertFromJson(JacksonUtil.serializeToJson(present), Optional.class);
-		 absent = Jdk8Entity.builder().name(Optional.empty()).build();
+				.list(ImmutableList.of("hello", "world"))
+				.mapOfSets(ImmutableMap.of("key1", ImmutableSet.of(1, 2, 3)))
+				.multiMap(ImmutableMultimap.of("1", 2, "1", 2, "2", 4)).build();
+
+		JacksonUtil.convertFromJson(JacksonUtil.serializeToJson(entity),
+				ImmutableGuavaEntity.class);
+
+		present = Jdk8Entity.builder().name(Optional.of("test")).build();
+
+		JacksonUtil.convertFromJson(JacksonUtil.serializeToJson(present),
+				Optional.class);
+		absent = Jdk8Entity.builder().name(Optional.empty()).build();
 	}
-	
-	
+
 	@After
-	public void stopServer(){
+	public void stopServer() {
 		server.stop();
 	}
-	
+
 	@Test
-	public void confirmExpectedUrlsPresentTest() throws InterruptedException, ExecutionException{
-		
-		
-		stage.block();
-		
-		assertThat((List<String>)rest.post("http://localhost:8080/guava-app/status/ping",entity ,List.class),
-				hasItem("hello"));
-	
+	public void confirmExpectedUrlsPresentTest() throws InterruptedException,
+			ExecutionException {
+
+		stream.block();
+
+		assertThat((List<String>) rest.post(
+				"http://localhost:8080/guava-app/status/ping", entity,
+				List.class), hasItem("hello"));
+
 	}
+
 	@Test
-	public void confirmOptionalConversionWorking() throws InterruptedException, ExecutionException{
-		
-		
-		stage.block();
-		
-		assertThat(rest.post("http://localhost:8080/guava-app/status/optional",present,String.class),
-				is("\"test\""));
-		
-		assertThat(rest.post("http://localhost:8080/guava-app/status/optional",absent,String.class),
-				is("null"));
-	
+	public void confirmOptionalConversionWorking() throws InterruptedException,
+			ExecutionException {
+
+		stream.block();
+
+		assertThat(rest.post("http://localhost:8080/guava-app/status/optional",
+				present, String.class), is("\"test\""));
+
+		assertThat(rest.post("http://localhost:8080/guava-app/status/optional",
+				absent, String.class), is("null"));
+
 	}
-	
-	
+
 }
