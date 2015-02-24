@@ -15,6 +15,15 @@ To make developing, debuging and deploying Java microservices simple.
 
 [Example Apps](https://github.com/aol/micro-server/tree/master/src/test/java/app)
 
+##Getting started
+
+[Tutorial](https://github.com/aol/micro-server/wiki/Getting-started-:-Tutorial) 
+
+###Quick start youtube video
+[![Getting started video](https://cloud.githubusercontent.com/assets/9964792/6361773/a943ad36-bc7d-11e4-8f3c-b6018025e14e.png)](https://www.youtube.com/watch?v=8I-8IQQxB1E)
+
+
+
 ##Tech Stack
 
 Microserver seamlessly integrates Jersey 2, Spring 4, Guava, Codahale Metrics, Swagger, SimpleReact and Grizzly into a standalone REST server that can be leveraged as a simple library within a Java app.
