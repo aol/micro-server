@@ -40,9 +40,9 @@ This will deploy a REST server on port 8080 (configurable by test-app.port in ap
 A rest end point 
 
 <pre>
-@Component
+@Rest
 @Path("/status")
-public class StatusResource implements RestResource {
+public class StatusResource {
 
 	@GET
 	@Produces("text/plain")
