@@ -35,18 +35,18 @@ No directory structure is imposed by the server and no XML is required. There is
 Example working application :-
 
 The main class :-
-<pre>
+
 @Microserver
 public class AppRunnerTest {
 
 		
 		public static void main(String[] args) throws InterruptedException {
-			new MicroServerStartup( AppRunnerTest.class, () -> "test-app")
-					.start();
+			new MicroServerStartup(() -> "test-app")
+					.run();
 		}
 
 }
-</pre>
+
 
 This will deploy a REST server on port 8080 (configurable by test-app.port in application.properties), it will also automagically capture any Rest end points (Spring & Jersey annotations) that implement the tag interface RestResource (see below for an example).
 
@@ -75,16 +75,15 @@ The configuration of your Rest end points can be managed via the Module interfac
 
 e.g. 
 
-<pre>
-new MicroServerStartup( AppRunnerTest.class, () -> "context")
+
+    new MicroServerStartup(() -> "context")
 					.start();
-</pre>
 
 ####Configurable Options
 
 Module provides the following default methods, that clients can override
 
-<pre>
+
       default Class<? extends RestResource> getRestResourceClass() {
 		return RestResource.class;
 	}
@@ -99,7 +98,7 @@ Module provides the following default methods, that clients can override
 	default String getProviders(){
 		return "com.aol.micro.server.rest.providers";
 	}
-</pre>
+
 
 RestResource class defines the tag interface used to identify Rest end points for this module.
 
