@@ -34,10 +34,10 @@ No directory structure is imposed by the server and no XML is required. There is
 
 Example working application :-
 
-The main class :-
+###The main class :-
 
-@Microserver
-public class AppRunnerTest {
+     @Microserver
+     public class AppRunnerTest {
 
 		
 		public static void main(String[] args) throws InterruptedException {
@@ -45,29 +45,39 @@ public class AppRunnerTest {
 					.run();
 		}
 
-}
+    }
 
 
 This will deploy a REST server on port 8080 (configurable by test-app.port in application.properties), it will also automagically capture any Rest end points (Spring & Jersey annotations) that implement the tag interface RestResource (see below for an example).
 
-A rest end point 
+###A rest end point 
 
-<pre>
-@Rest
-@Path("/status")
-public class StatusResource {
 
-	@GET
-	@Produces("text/plain")
-	@Path("/ping")
-	public String ping() {
-		return "ok";
-	}
+    @Rest 
+    @Path("/status")
+    public class StatusResource {
 
-}
-</pre>
+	  @GET 
+	  @Produces("text/plain")
+	  @Path("/ping")
+	  public String ping() {
+		 return "ok";
+	  }
+
+    }
 
 ###Application configuration
+
+The core of Microserver is a Spring 4.x Dependency Injection container which is used to store all the main classes of your Microservice (s). The Spring Dependency Injection container can be configured by the @Microservice Annotation on your main class, or by the Config object (optionally passed as a parameter to startup).
+
+Each Microservice is a Jersey REST Application. Multiple Microservices can run on the same server, by adding them to the classpath at runtime. They share a common Spring Dependency Injection container (as they are smaller services, we feel it makes sense to share resources such as ThreadPools, Datasources etc), but act as totally separate Rest applications. 
+
+When creating embedded Microservices (multiple services colocated on the same JVM and Spring container), development project should be independent, but the colocated instances should be tested as they will be depolyed in production. There will be more info to follow on the wiki, on how and why we have implemented and scaled this pattern (the goal is to achieve both the benefits of a full Microservice architecture, but minimise the costs as articulated by Robert (Uncle Bob) C. Martin and others - e.g. [here: Microservices and Jars](http://blog.cleancoder.com/uncle-bob/2014/09/19/MicroServicesAndJars.html) .
+
+Jersey REST Applications are configured by the Module interface (at least one of which must be specified on startup).
+
+![high level architecture](https://cloud.githubusercontent.com/assets/9964792/6375067/a6e4f65a-bd0c-11e4-85dc-82ae0d95d44b.png)
+
 
 ####Rest configuration
 
@@ -79,26 +89,58 @@ e.g.
     new MicroServerStartup(() -> "context")
 					.start();
 
+
+() -> "context"  is a Module!
+
+
 ####Configurable Options
 
 Module provides the following default methods, that clients can override
 
-
-      default Class<? extends RestResource> getRestResourceClass() {
-		return RestResource.class;
+    default Map<String,String> getPropertyOverrides(){
+		return Maps.newHashMap();
+	}
+	default Set<Class> getSpringConfigurationClasses(){
+		return Sets.newHashSet(Classes.CORE_CLASSES.getClasses());
+	}
+	default List<Class> getRestResourceClasses() {
+		return Arrays.asList(RestResource.class);
+	}
+	default List<Class> getRestAnnotationClasses() {
+		return Arrays.asList(Rest.class);
 	}
 	
-	default Map<String,Filter> getFilters() {
+	default List<String> getDefaultJaxRsPackages(){
+		return Arrays.asList("com.wordnik.swagger.sample.resource",
+				"com.wordnik.swagger.sample.util"	);
+	}
+	
+	default List<Class> getDefaultResources(){
+		return Arrays.asList(JacksonFeature.class, 
+				//SWAGGER CLASSES
+				ApiListingResourceJSON.class,JerseyApiDeclarationProvider.class,
+				JerseyResourceListingProvider.class);
+	}
+	
+	default List<ServletContextListener> getListeners(ServerData data){
+		return ImmutableList.of(new ContextLoaderListener(data
+				.getRootContext()),
+				new JerseySpringIntegrationContextListener(data),
+				new SwaggerInitializer(data));
+	}
+	default Map<String,Filter> getFilters(ServerData data) {
 		return ImmutableMap.of("/*",new QueryIPRetriever());
+	}
+	default Map<String,Servlet> getServlets(ServerData data) {
+		return ImmutableMap.of();
 	}
 	
 	default  String getJaxWsRsApplication(){
-		return "com.aol.micro.server.rest.RestApplication";
+		return JerseyRestApplication.class.getCanonicalName();
 	}
 	default String getProviders(){
 		return "com.aol.micro.server.rest.providers";
 	}
-
 
 RestResource class defines the tag interface used to identify Rest end points for this module.
 
