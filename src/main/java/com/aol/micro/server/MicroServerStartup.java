@@ -1,12 +1,8 @@
 package com.aol.micro.server;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import lombok.Getter;
 
@@ -16,7 +12,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.config.Config;
-import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.config.MicroserverConfigurer;
 import com.aol.micro.server.module.Module;
 import com.aol.micro.server.servers.ApplicationRegister;
@@ -24,11 +19,8 @@ import com.aol.micro.server.servers.ServerApplication;
 import com.aol.micro.server.servers.ServerRunner;
 import com.aol.micro.server.servers.model.GrizzlyApplicationFactory;
 import com.aol.micro.server.spring.SpringContextFactory;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import com.aol.simple.react.exceptions.ExceptionSoftener;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.nurkiewicz.lazyseq.LazySeq;
 
 public class MicroServerStartup {
 	
@@ -36,6 +28,7 @@ public class MicroServerStartup {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final List<Module> modules;
 	private final CompletableFuture end = new CompletableFuture();
+	private final ExceptionSoftener softener = ExceptionSoftener.singleton.factory.getInstance();
 
 	@Getter
 	private final AnnotationConfigWebApplicationContext springContext;
@@ -51,11 +44,9 @@ public class MicroServerStartup {
 		try {
 			return Class.forName(new Exception().getStackTrace()[2].getClassName());
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RuntimeException(e);
+			softener.throwSoftenedException(e);
 		}
-		
+		return null; //unreachable normally
 	}
 	
 	public MicroServerStartup(Class c, Module... modules) {

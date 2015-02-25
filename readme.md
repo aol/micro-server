@@ -26,7 +26,7 @@ To make developing, debuging and deploying Java microservices simple.
 
 ##Tech Stack
 
-Microserver seamlessly integrates Jersey 2, Spring 4, Guava, Codahale Metrics, Swagger, Spring Data / JDBC / Hibernat, SimpleReact and Grizzly into a standalone REST server that can be leveraged as a simple library within a Java app.
+Microserver seamlessly integrates Jersey 2, Spring 4, Guava, Codahale Metrics, Swagger, Spring Data / JDBC / Hibernate, SimpleReact and Grizzly into a standalone REST server that can be leveraged as a simple library within a Java app.
 
 It also includes features, and supports patterns we have found useful in scaling out our own Microservices infrastructure.
 
@@ -38,7 +38,7 @@ Example working application :-
 
 ###The main class :-
 
-     @Microserver
+     
      public class AppRunnerTest {
 
 		
