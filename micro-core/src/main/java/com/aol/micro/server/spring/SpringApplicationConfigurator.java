@@ -29,7 +29,7 @@ import com.aol.micro.server.spring.datasource.hibernate.DAOProvider;
 import com.aol.micro.server.spring.datasource.hibernate.HibernateSessionBuilder;
 import com.aol.micro.server.utility.UsefulStaticMethods;
 
-class SpringApplicationConfigurator {
+class SpringApplicationConfigurator implements SpringBuilder {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public ConfigurableApplicationContext createSpringApp(Config config, Class...classes)  {

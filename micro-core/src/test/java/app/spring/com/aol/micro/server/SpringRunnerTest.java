@@ -10,13 +10,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
-@Configuration
-@ComponentScan(basePackages = { "app.spring.com.aol.micro.server" })
+/**@Configuration
+@ComponentScan(basePackages = { "app.spring.com.aol.micro.server" })**/
+@Microserver
 public class SpringRunnerTest {
 
 	RestAgent rest = new RestAgent();

@@ -11,7 +11,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.nurkiewicz.lazyseq.LazySeq;
 
-public class MicroserverConfigurer {
+public class MicroserverConfigurer implements Configurer {
 
 	public Config buildConfig(Class class1) {
 		Microserver microserver = (Microserver)class1.getAnnotation(Microserver.class);

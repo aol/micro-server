@@ -9,11 +9,9 @@ import javax.servlet.Servlet;
 
 import lombok.AllArgsConstructor;
 
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
-import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
@@ -25,7 +23,7 @@ public class ModuleDataExtractor {
 
 	private final Module module;
 	
-	public  ImmutableList getRestResources( ConfigurableApplicationContext rootContext){
+	public  ImmutableList getRestResources( ApplicationContext rootContext){
 		
 			List resources = Lists.newArrayList();
 			module.getRestResourceClasses().forEach(it -> resources.addAll(rootContext.getBeansOfType(it).values()));

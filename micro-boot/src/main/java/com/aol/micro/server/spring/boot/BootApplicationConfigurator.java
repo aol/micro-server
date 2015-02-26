@@ -4,8 +4,6 @@ package com.aol.micro.server.spring.boot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +11,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.aol.micro.server.config.Config;
-import com.aol.micro.server.config.Microserver;
+import com.aol.micro.server.spring.SpringBuilder;
 
-class BootApplicationConfigurator {
+public class BootApplicationConfigurator implements SpringBuilder {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public ConfigurableApplicationContext createSpringApp(Config config, Class...classes)  {
@@ -25,7 +23,8 @@ class BootApplicationConfigurator {
 		classList.addAll(Arrays.asList(classes));
 		classList.add(JerseyApplication.class);
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(classList.toArray(new Class[0]));
-		new JerseyApplication().config(builder);
+		new JerseyApplication(classList).config(builder);
+		
 		return builder.application().run();
 	}
 	

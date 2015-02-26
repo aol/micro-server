@@ -17,7 +17,6 @@ import com.aol.micro.server.utility.UsefulStaticMethods;
 @Getter
 @Builder
 @Component("mainEnv")
-@PropertySource("classpath:spring-boot-microserver.properties")
 public class JdbcConfig  {
 
 	private final String driverClassName;
