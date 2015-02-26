@@ -1,0 +1,15 @@
+description = 'micro-boot'
+dependencies {
+	compile 'org.apache.tomcat.embed:tomcat-embed-core:8.0.20'
+	compile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.20'
+
+
+	compile 'org.springframework.boot:spring-boot-starters:1.2.1.RELEASE'
+	compile 'org.springframework.boot:spring-boot:1.2.1.RELEASE'
+	compile 'org.springframework.boot:spring-boot-autoconfigure:1.2.1.RELEASE'
+	//	compile 'org.springframework:spring-webmvc:4.1.0.RELEASE' //shouldn't need work around
+
+	compile project(':micro-core')
+}
+
+

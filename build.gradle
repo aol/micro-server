@@ -1,10 +1,7 @@
-apply plugin:'java'
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'com.bmuschko.nexus'
+def custom ={ "$rootDir/gradle/${it}.gradle"}
+
 buildscript {
-	repositories {
-		jcenter()
-	}
+	repositories { jcenter() }
 
 	dependencies {
 		classpath 'com.bmuschko:gradle-nexus-plugin:2.2'
@@ -12,168 +9,165 @@ buildscript {
 	}
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-version = '0.46'
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
-    }
+allprojects  {
+	apply plugin:'java'
+	apply plugin: 'com.github.johnrengelman.shadow'
+	apply plugin: 'com.bmuschko.nexus'
 }
 
-
-
-repositories {
-    mavenCentral()
-	maven { url "http://repo.maven.apache.org/maven2" }
-	maven { url 'https://github.com/serkan-ozal/maven-repository/raw/master/' }
-	jcenter()
-}
-
-dependencies {
-	
-	compile 'org.apache.tomcat.embed:tomcat-embed-core:8.0.20'
-	compile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.20'
-	
-	
-	compile 'org.springframework.boot:spring-boot-starters:1.2.1.RELEASE'
-	compile 'org.springframework.boot:spring-boot:1.2.1.RELEASE'
-//	compile 'org.springframework.boot:spring-boot-autoconfigure:1.2.1.RELEASE'
-//	compile 'org.springframework:spring-webmvc:4.1.0.RELEASE' //shouldn't need work around
-	compile 'com.nurkiewicz.lazyseq:lazyseq:0.0.1'
-	compile 'org.springframework.data:spring-data-jpa:1.7.2.RELEASE'
-	compile 'com.googlecode.genericdao:dao-hibernate:1.2.0'
-	compile 'javax.el:javax.el-api:2.2.4'
-	compile 'org.glassfish.web:javax.el:2.2.4'
-	compile group: 'org.hibernate', name:'hibernate-validator', version:'5.1.3.Final'
-	compile group: 'org.hibernate', name: 'hibernate-core', version:'4.3.8.Final'
-	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version:'4.3.8.Final'
-	
-	compile ('com.ryantenney.metrics:metrics-spring:3.0.3'){
-		exclude(module: 'org.springframework')
-	
-	}
-	compile 'net.javacrumbs.future-converter:future-converter-spring-java8:0.1.0'
-	compile group: 'com.aol.simplereact', name:'simple-react', version:'0.41'
-	compile group: 'org.apache.httpcomponents', name:'httpclient', version:'4.4'
-	compile group: 'org.apache.httpcomponents', name:'httpasyncclient', version:'4.1-beta1'
-	compile group: 'com.wordnik', name: 'swagger-jersey2-jaxrs_2.10', version:'1.3.10'
-	compile group: 'org.springframework', name: 'spring-web', version:'4.1.0.RELEASE'
-	compile group: 'org.springframework', name: 'spring-context', version:'4.1.0.RELEASE'
-	compile group: 'org.springframework', name: 'spring-context-support', version:'4.1.0.RELEASE'
-	compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.0.4'
-	compile group: 'ch.qos.logback', name: 'logback-core', version:'1.0.4'
-	compile group: 'org.slf4j', name: 'jcl-over-slf4j', version:'1.6.1'
-	compile group: 'org.apache.commons', name: 'commons-math', version:'2.2'
-	compile group: 'com.google.guava', name: 'guava', version:'18.0'
-	compile group: 'commons-lang', name: 'commons-lang', version:'2.6'
-	compile group: 'org.apache.commons', name: 'commons-io', version:'1.3.2'
-	compile group: 'org.apache.commons', name: 'commons-compress', version:'1.1'
-	compile group: 'commons-dbcp', name: 'commons-dbcp', version:'1.4'
-	
-	compile group: 'org.springframework', name: 'spring-jdbc', version:'4.1.0.RELEASE'
-	compile group: 'org.springframework', name: 'spring-orm', version:'4.1.0.RELEASE'
-
-	compile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.3.3'
-	compile group: 'commons-collections', name: 'commons-collections', version:'3.2.1'
-	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-guava', version:'2.4.0'
-	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version:'2.4.3'
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.2.3'
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.2.3'
-	compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version:'2.2.3'
-	compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-base', version:'2.2.3'
-	compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-providers', version:'2.2.3'
-	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version:'2.2.3'
-	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version:'2.5.1'
-	compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version:'2.5.1'
-	compile(group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version:'2.5.1') {
-		exclude(module: 'jackson-xc')
-		exclude(module: 'jackson-core-asl')
-		exclude(module: 'jackson-jaxrs')
-		exclude(module: 'jackson-mapper-asl')
-	}
-	compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version:'2.0'
-	compile group: 'org.aspectj', name: 'aspectjrt', version:'1.5.4'
-	compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.5.4'
-	compile group: 'org.glassfish.grizzly', name: 'grizzly-http-server', version:'2.3.12'
-	compile group: 'org.glassfish.grizzly', name: 'grizzly-http-all', version:'2.3.12'
-	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-http', version:'2.3'
-	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-servlet', version:'2.3'
-	compile 'org.glassfish.jersey.ext:jersey-spring3:2.3'
-	testCompile ('org.springframework:spring-jdbc-roma:1.0.0-RELEASE'){
-		exclude(module: 'javassist')
-		exclude(module: 'org.springframework')
-	}
-	compile ('com.nurkiewicz.jdbcrepository:jdbcrepository:0.4.1'){
-		exclude(module: 'org.springframework')
-	
-	}
-	compile 'commons-beanutils:commons-beanutils:1.9.2'
-	testCompile group: 'com.cyrusinnovation', name: 'mockito-groovy-support', version:'1.3'
-	testCompile group: 'junit', name: 'junit', version:'4.10'
-	testCompile group: 'org.mockito', name: 'mockito-all', version:'1.9.5'
-	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:'1.1'
-	testCompile group: 'org.hsqldb', name:'hsqldb', version:'2.0.0'
-	
-	compile(group: 'org.projectlombok', name: 'lombok', version:'1.14.2') {
-		/* This dependency was originally in the Maven provided scope, but the project was not of type war.
-		 This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
-		 Please review and delete this closure when resolved. */
-	}
-}
-
-test {
-    systemProperties 'property': 'value'
-}
-
-modifyPom {
-	project {
-		name 'Microserver'
-		description 'Zero config REST webserver'
-		url 'http://advertising.com'
-		inceptionYear '2015'
-
-		groupId 'com.aol.advertising.microservices'
-		artifactId 'microserver'
-		version '0.46'
-		
-		scm {
-			url 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'
-			connection 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'
-			developerConnection 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'
+subprojects {
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+	version = '0.46'
+	jar {
+		manifest {
+			attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
 		}
+	}
 
-		licenses {
-			license {
-				name 'The Apache Software License, Version 2.0'
-				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-				distribution 'repo'
+
+
+	repositories {
+		mavenCentral()
+		maven { url "http://repo.maven.apache.org/maven2" }
+		maven { url 'https://github.com/serkan-ozal/maven-repository/raw/master/' }
+		jcenter()
+	}
+
+	dependencies {
+
+		compile 'com.nurkiewicz.lazyseq:lazyseq:0.0.1'
+		compile 'org.springframework.data:spring-data-jpa:1.7.2.RELEASE'
+		compile 'com.googlecode.genericdao:dao-hibernate:1.2.0'
+		compile 'javax.el:javax.el-api:2.2.4'
+		compile 'org.glassfish.web:javax.el:2.2.4'
+		compile group: 'org.hibernate', name:'hibernate-validator', version:'5.1.3.Final'
+		compile group: 'org.hibernate', name: 'hibernate-core', version:'4.3.8.Final'
+		compile group: 'org.hibernate', name: 'hibernate-entitymanager', version:'4.3.8.Final'
+
+		compile ('com.ryantenney.metrics:metrics-spring:3.0.3'){
+			exclude(module: 'org.springframework')
+
+		}
+		compile 'net.javacrumbs.future-converter:future-converter-spring-java8:0.1.0'
+		compile group: 'com.aol.simplereact', name:'simple-react', version:'0.41'
+		compile group: 'org.apache.httpcomponents', name:'httpclient', version:'4.4'
+		compile group: 'org.apache.httpcomponents', name:'httpasyncclient', version:'4.1-beta1'
+		compile group: 'com.wordnik', name: 'swagger-jersey2-jaxrs_2.10', version:'1.3.10'
+		compile group: 'org.springframework', name: 'spring-web', version:'4.1.0.RELEASE'
+		compile group: 'org.springframework', name: 'spring-context', version:'4.1.0.RELEASE'
+		compile group: 'org.springframework', name: 'spring-context-support', version:'4.1.0.RELEASE'
+		compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.0.4'
+		compile group: 'ch.qos.logback', name: 'logback-core', version:'1.0.4'
+		compile group: 'org.slf4j', name: 'jcl-over-slf4j', version:'1.6.1'
+		compile group: 'org.apache.commons', name: 'commons-math', version:'2.2'
+		compile group: 'com.google.guava', name: 'guava', version:'18.0'
+		compile group: 'commons-lang', name: 'commons-lang', version:'2.6'
+		compile group: 'org.apache.commons', name: 'commons-io', version:'1.3.2'
+		compile group: 'org.apache.commons', name: 'commons-compress', version:'1.1'
+		compile group: 'commons-dbcp', name: 'commons-dbcp', version:'1.4'
+
+		compile group: 'org.springframework', name: 'spring-jdbc', version:'4.1.0.RELEASE'
+		compile group: 'org.springframework', name: 'spring-orm', version:'4.1.0.RELEASE'
+
+		compile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.3.3'
+		compile group: 'commons-collections', name: 'commons-collections', version:'3.2.1'
+		compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-guava', version:'2.4.0'
+		compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version:'2.4.3'
+		compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.2.3'
+		compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.2.3'
+		compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version:'2.2.3'
+		compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-base', version:'2.2.3'
+		compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-providers', version:'2.2.3'
+		compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version:'2.2.3'
+		compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version:'2.5.1'
+		compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version:'2.5.1'
+		compile(group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version:'2.5.1') {
+			exclude(module: 'jackson-xc')
+			exclude(module: 'jackson-core-asl')
+			exclude(module: 'jackson-jaxrs')
+			exclude(module: 'jackson-mapper-asl')
+		}
+		compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version:'2.0'
+		compile group: 'org.aspectj', name: 'aspectjrt', version:'1.5.4'
+		compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.5.4'
+		compile group: 'org.glassfish.grizzly', name: 'grizzly-http-server', version:'2.3.12'
+		compile group: 'org.glassfish.grizzly', name: 'grizzly-http-all', version:'2.3.12'
+		compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-http', version:'2.3'
+		compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-servlet', version:'2.3'
+		compile 'org.glassfish.jersey.ext:jersey-spring3:2.3'
+		testCompile ('org.springframework:spring-jdbc-roma:1.0.0-RELEASE'){
+			exclude(module: 'javassist')
+			exclude(module: 'org.springframework')
+		}
+		compile ('com.nurkiewicz.jdbcrepository:jdbcrepository:0.4.1'){
+			exclude(module: 'org.springframework')
+
+		}
+		compile 'commons-beanutils:commons-beanutils:1.9.2'
+		testCompile group: 'com.cyrusinnovation', name: 'mockito-groovy-support', version:'1.3'
+		testCompile group: 'junit', name: 'junit', version:'4.10'
+		testCompile group: 'org.mockito', name: 'mockito-all', version:'1.9.5'
+		testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:'1.1'
+		testCompile group: 'org.hsqldb', name:'hsqldb', version:'2.0.0'
+
+		compile(group: 'org.projectlombok', name: 'lombok', version:'1.14.2') {
+			/* This dependency was originally in the Maven provided scope, but the project was not of type war.
+			 This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+			 Please review and delete this closure when resolved. */
+		}
+	}
+
+	test { systemProperties 'property': 'value' }
+
+	modifyPom {
+		project {
+			name 'Microserver'
+			description 'Zero config REST webserver'
+			url 'http://advertising.com'
+			inceptionYear '2015'
+
+			groupId 'com.aol.advertising.microservices'
+			artifactId 'microserver'
+			version '0.46'
+
+			scm {
+				url 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'
+				connection 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'
+				developerConnection 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'
+			}
+
+			licenses {
+				license {
+					name 'The Apache Software License, Version 2.0'
+					url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					distribution 'repo'
+				}
+			}
+
+			developers {
+				developer {
+					id 'johnmcclean-aol'
+					name 'John McClean'
+					email 'john.mcclean@teamaol.com'
+				}
 			}
 		}
-
-		developers {
-			developer {
-				id 'johnmcclean-aol'
-				name 'John McClean'
-				email 'john.mcclean@teamaol.com'
-			}
-		}
 	}
+
+	extraArchive {
+		sources = false
+		tests = false
+		javadoc = false
+	}
+
+	nexus {
+		sign = false
+		repositoryUrl = 'http://cmmaven.cm.aol.com:8081/nexus/content/repositories/aol-advertising'
+		snapshotRepositoryUrl = 'http://cmmaven.cm.aol.com:8081/nexus/content/groups/public'
+
+	}
+
+
+
 }
-
-extraArchive {
-	sources = false
-	tests = false
-	javadoc = false
-}
-
-nexus {
-	sign = false
-	repositoryUrl = 'http://cmmaven.cm.aol.com:8081/nexus/content/repositories/aol-advertising'
-	snapshotRepositoryUrl = 'http://cmmaven.cm.aol.com:8081/nexus/content/groups/public'
-	
-}
-
-
-
-

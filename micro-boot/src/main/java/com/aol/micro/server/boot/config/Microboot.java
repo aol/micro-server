@@ -1,5 +1,7 @@
-package com.aol.micro.server.config;
+package com.aol.micro.server.boot.config;
 
+
+import java.io.Serializable;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -13,14 +15,15 @@ import org.springframework.stereotype.Component;
 @Target(ElementType.TYPE)
 @Component
 @SpringBootApplication(exclude = SpringDataWebAutoConfiguration.class)
-public @interface Microserver {
+public @interface Microboot{
 
 	
 	String[] basePackages() default {};
 	Class[] classes() default {};
-	Classes[] springClasses() default {};
+//	Classes[] springClasses() default {};
 	String propertiesName() default "application.properties";
 	String[] entityScan() default {};
 	String[] properties() default {};
 	boolean isSpringBoot() default false;
 }
+
