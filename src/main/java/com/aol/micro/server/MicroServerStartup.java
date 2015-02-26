@@ -9,6 +9,7 @@ import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.config.Config;
@@ -31,7 +32,7 @@ public class MicroServerStartup {
 	private final ExceptionSoftener softener = ExceptionSoftener.singleton.factory.getInstance();
 
 	@Getter
-	private final AnnotationConfigWebApplicationContext springContext;
+	private final ConfigurableApplicationContext springContext;
 
 	
 	public MicroServerStartup(Module...modules){

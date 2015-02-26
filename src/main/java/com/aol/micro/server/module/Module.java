@@ -57,8 +57,9 @@ public interface Module {
 	}
 	
 	default List<ServletContextListener> getListeners(ServerData data){
-		return ImmutableList.of(new ContextLoaderListener(data
-				.getRootContext()),
+		return ImmutableList.of(
+	//			new ContextLoaderListener(data
+	//			.getRootContext()),
 				new JerseySpringIntegrationContextListener(data),
 				new SwaggerInitializer(data));
 	}

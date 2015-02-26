@@ -9,6 +9,7 @@ import javax.servlet.Servlet;
 
 import lombok.AllArgsConstructor;
 
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
@@ -24,7 +25,7 @@ public class ModuleDataExtractor {
 
 	private final Module module;
 	
-	public  ImmutableList getRestResources( AnnotationConfigWebApplicationContext rootContext){
+	public  ImmutableList getRestResources( ConfigurableApplicationContext rootContext){
 		
 			List resources = Lists.newArrayList();
 			module.getRestResourceClasses().forEach(it -> resources.addAll(rootContext.getBeansOfType(it).values()));

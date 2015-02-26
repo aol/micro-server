@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.auto.discovery.RestResource;
@@ -17,7 +18,7 @@ import com.google.common.collect.ImmutableList;
 @AllArgsConstructor
 public class GrizzlyApplicationFactory {
 
-	private final AnnotationConfigWebApplicationContext rootContext;
+	private final ConfigurableApplicationContext rootContext;
 	private final Module module;
 	
 	

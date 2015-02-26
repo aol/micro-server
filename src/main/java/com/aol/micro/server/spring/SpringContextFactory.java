@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.ErrorCode;
@@ -33,9 +34,9 @@ public class SpringContextFactory {
 		this.config=config;
 	}
 
-	public AnnotationConfigWebApplicationContext createSpringContext() {
+	public ConfigurableApplicationContext createSpringContext() {
 		try {
-			AnnotationConfigWebApplicationContext springContext = new SpringApplicationConfigurator().createSpringApp(config,classes.toArray(new Class[0]));
+			ConfigurableApplicationContext springContext = new SpringApplicationConfigurator().createSpringApp(config,classes.toArray(new Class[0]));
 			return springContext;
 		} catch (Exception e) {
 			logger.error( ErrorCode.STARTUP_FAILED_SPRING_INITIALISATION.toString(),e.getMessage());
