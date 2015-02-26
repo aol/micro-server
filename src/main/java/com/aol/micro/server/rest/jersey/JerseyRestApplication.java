@@ -8,6 +8,8 @@ import lombok.Getter;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
+import com.aol.micro.server.auto.discovery.Rest;
+import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.rest.resources.ActiveResource;
 import com.aol.micro.server.rest.resources.ManifestResource;
 import com.aol.micro.server.servers.ServerThreadLocalVariables;
@@ -36,7 +38,7 @@ public class JerseyRestApplication extends ResourceConfig {
 		List<Class> singletons =Arrays.asList(ActiveResource.class, ManifestResource.class);
 		if (allResources != null) {
 			for (Object next : allResources) {
-				if(singletons.contains(next.getClass()))
+				if(isSingleton(next))
 					register(next);
 				else
 					register(next.getClass());
@@ -45,16 +47,16 @@ public class JerseyRestApplication extends ResourceConfig {
 		}
 		packages.stream().forEach( e -> packages(e));
 		resources.stream().forEach( e -> register(e));
-/**
-		register(JacksonFeature.class);
 
+	}
 
-			packages("com.wordnik.swagger.sample.resource")
-			.packages("com.wordnik.swagger.sample.util")
-			.register(ApiListingResourceJSON.class)
-			.register(JerseyApiDeclarationProvider.class)
-			.register(JerseyResourceListingProvider.class);
-				**/
+	private boolean isSingleton(Object next) {
+		if(next instanceof RestResource)
+			return ((RestResource)next).isSingleton();
+		Rest rest = next.getClass().getAnnotation(Rest.class);
+		if(rest == null)
+			return false;
+		return rest.isSingleton();
 	}
 
 	public static void clear() {

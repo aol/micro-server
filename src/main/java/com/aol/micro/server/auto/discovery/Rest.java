@@ -11,5 +11,5 @@ import org.springframework.stereotype.Component;
 @Target(ElementType.TYPE)
 @Component
 public @interface Rest {
-
+	boolean isSingleton() default false;
 }

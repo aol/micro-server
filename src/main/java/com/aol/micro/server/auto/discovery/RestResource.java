@@ -7,5 +7,8 @@ import com.aol.micro.server.module.Module;
 
 public interface RestResource {
 
+	default boolean isSingleton(){
+		return false;
+	}
 	
 }
