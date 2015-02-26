@@ -11,13 +11,15 @@ import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aol.micro.server.auto.discovery.CommonRestResource;
+import com.aol.micro.server.auto.discovery.SingletonRestResource;
 import com.aol.micro.server.events.JobsBeingExecuted;
 import com.aol.micro.server.events.RequestsBeingExecuted;
 import com.google.common.collect.Maps;
 
 
+
 @Path("/active")
-public class ActiveResource implements CommonRestResource{
+public class ActiveResource implements CommonRestResource, SingletonRestResource {
 
 	private final Map<String,RequestsBeingExecuted> activeQueries;
 	private final JobsBeingExecuted activeJobs;

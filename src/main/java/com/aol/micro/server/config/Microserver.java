@@ -22,4 +22,5 @@ public @interface Microserver {
 	String propertiesName() default "application.properties";
 	String[] entityScan() default {};
 	String[] properties() default {};
+	boolean isSpringBoot() default false;
 }

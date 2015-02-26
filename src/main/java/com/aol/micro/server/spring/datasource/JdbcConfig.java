@@ -8,6 +8,7 @@ import lombok.experimental.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.config.ConfigAccessor;
@@ -16,6 +17,7 @@ import com.aol.micro.server.utility.UsefulStaticMethods;
 @Getter
 @Builder
 @Component("mainEnv")
+@PropertySource("classpath:spring-boot-microserver.properties")
 public class JdbcConfig  {
 
 	private final String driverClassName;
