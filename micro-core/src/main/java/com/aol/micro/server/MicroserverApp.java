@@ -9,7 +9,7 @@ import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.ApplicationContext;
 
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Configurer;
@@ -23,7 +23,7 @@ import com.aol.micro.server.spring.SpringContextFactory;
 import com.aol.simple.react.exceptions.ExceptionSoftener;
 import com.google.common.collect.Lists;
 
-public class MicroServerStartup {
+public class MicroserverApp {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final List<Module> modules;
@@ -32,9 +32,9 @@ public class MicroServerStartup {
 			.getInstance();
 
 	@Getter
-	private final ConfigurableApplicationContext springContext;
+	private final ApplicationContext springContext;
 
-	public MicroServerStartup(Module... modules) {
+	public MicroserverApp(Module... modules) {
 		this.modules = Lists.newArrayList(modules);
 		springContext = new SpringContextFactory(getConfigurer().buildConfig(
 				extractClass()), extractClass(),
@@ -57,7 +57,7 @@ public class MicroServerStartup {
 		return null; // unreachable normally
 	}
 
-	public MicroServerStartup(Class c, Module... modules) {
+	public MicroserverApp(Class c, Module... modules) {
 
 		this.modules = Lists.newArrayList(modules);
 		springContext = new SpringContextFactory(
@@ -67,7 +67,7 @@ public class MicroServerStartup {
 
 	}
 
-	public MicroServerStartup(Config config, Module... modules) {
+	public MicroserverApp(Config config, Module... modules) {
 
 		this.modules = Lists.newArrayList(modules);
 		config.set();

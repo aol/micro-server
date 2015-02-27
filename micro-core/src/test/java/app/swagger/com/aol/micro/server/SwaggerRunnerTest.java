@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.testing.RestAgent;
 
 @Configuration
@@ -21,11 +21,11 @@ public class SwaggerRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicroServerStartup server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicroServerStartup( SwaggerRunnerTest.class, ()-> "swagger-app");
+		server = new MicroserverApp( SwaggerRunnerTest.class, ()-> "swagger-app");
 		server.start();
 
 	}

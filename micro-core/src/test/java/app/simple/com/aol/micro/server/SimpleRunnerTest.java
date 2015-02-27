@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 
@@ -19,11 +19,11 @@ public class SimpleRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicroServerStartup server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicroServerStartup( SimpleRunnerTest.class, ()-> "simple-app");
+		server = new MicroserverApp( SimpleRunnerTest.class, ()-> "simple-app");
 		server.start();
 
 	}

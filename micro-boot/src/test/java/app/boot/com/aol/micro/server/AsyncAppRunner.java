@@ -9,7 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.boot.config.MicroBootStartup;
+import com.aol.micro.server.boot.config.MicrobootApp;
 import com.aol.micro.server.boot.config.Microboot;
 import com.aol.micro.server.rest.client.nio.RestClient;
 import com.aol.micro.server.testing.RestAgent;
@@ -20,11 +20,11 @@ public class AsyncAppRunner {
 
 	RestClient rest = new RestClient(1000,1000).withAccept("text/plain");
 	
-	MicroBootStartup server;
+	MicrobootApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicroBootStartup( ()-> "async-app");
+		server = new MicrobootApp( ()-> "async-app");
 		server.start();
 		
 

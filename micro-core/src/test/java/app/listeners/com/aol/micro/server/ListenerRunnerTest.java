@@ -15,7 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.testing.RestAgent;
@@ -27,11 +27,11 @@ public class ListenerRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicroServerStartup server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		List<ServletContextListener> listeners = ImmutableList.of(new ConfiguredListener());
-		server = new MicroServerStartup( ListenerRunnerTest.class, ConfigurableModule.builder().context("listener-app").listeners(listeners ).build());
+		server = new MicroserverApp( ListenerRunnerTest.class, ConfigurableModule.builder().context("listener-app").listeners(listeners ).build());
 		server.start();
 
 	}

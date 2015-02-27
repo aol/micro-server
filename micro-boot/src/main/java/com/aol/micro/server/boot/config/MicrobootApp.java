@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 
 import lombok.Getter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.ApplicationContext;
 
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.module.Module;
@@ -21,35 +23,47 @@ import com.aol.simple.react.exceptions.ExceptionSoftener;
 import com.google.common.collect.Lists;
 
 
-public class MicroBootStartup {//extends MicroServerStartup{
-/**	
-	public MicroBootStartup(Module...modules){
-		super(modules);
-	}
-	
-	public Configurer getConfigurer() {
-		return new MicrobootConfigurator();
-	}
+public class MicrobootApp {
 
-	**/
 
 	
-//		private final Logger logger = LoggerFactory.getLogger(this.getClass());
+		private final Logger logger = LoggerFactory.getLogger(this.getClass());
 		private final List<Module> modules;
 		private final CompletableFuture end = new CompletableFuture();
 		private final ExceptionSoftener softener = ExceptionSoftener.singleton.factory.getInstance();
 
 		@Getter
-		private final ConfigurableApplicationContext springContext;
+		private final ApplicationContext springContext;
 
 		
-		public MicroBootStartup(Module...modules){
+		public MicrobootApp(Module...modules){
 			this.modules = Lists.newArrayList(modules);
 			springContext = new SpringContextFactory(new MicrobootConfigurator().buildConfig(extractClass()),extractClass(),
 					modules[0].getSpringConfigurationClasses()).withSpringBuilder(new BootApplicationConfigurator()).createSpringContext();
 			
 			
 		}
+
+		public MicrobootApp(Class c, Module... modules) {
+
+			this.modules = Lists.newArrayList(modules);
+			springContext =new SpringContextFactory(new MicrobootConfigurator().buildConfig(c),c,
+					modules[0].getSpringConfigurationClasses()).withSpringBuilder(new BootApplicationConfigurator()).createSpringContext();
+
+		}
+
+		public MicrobootApp(Config config, Module... modules) {
+
+			this.modules = Lists.newArrayList(modules);
+			config.set();
+			springContext = 
+					new SpringContextFactory(config,
+					modules[0].getSpringConfigurationClasses())
+					.withSpringBuilder(new BootApplicationConfigurator())
+					.createSpringContext();
+
+		}
+
 		
 		private Class extractClass() {
 			try {

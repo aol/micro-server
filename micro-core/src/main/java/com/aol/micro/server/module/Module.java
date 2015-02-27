@@ -1,5 +1,6 @@
 package com.aol.micro.server.module;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 
 import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
@@ -57,11 +59,14 @@ public interface Module {
 	}
 	
 	default List<ServletContextListener> getListeners(ServerData data){
-		return ImmutableList.of(
-	//			new ContextLoaderListener(data
-	//			.getRootContext()),
-				new JerseySpringIntegrationContextListener(data),
-				new SwaggerInitializer(data));
+		List<ServletContextListener> list= new ArrayList<>();
+		if(data.getRootContext() instanceof WebApplicationContext){
+			list.add(new ContextLoaderListener((WebApplicationContext)data
+					.getRootContext()));
+		}
+		list.add(new JerseySpringIntegrationContextListener(data));
+		list.add(new SwaggerInitializer(data));
+		return  ImmutableList.copyOf(list);
 	}
 	default Map<String,Filter> getFilters(ServerData data) {
 		return ImmutableMap.of("/*",new QueryIPRetriever());

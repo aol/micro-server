@@ -7,7 +7,7 @@ import lombok.experimental.Wither;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.ApplicationContext;
 
 import com.aol.micro.server.ErrorCode;
 import com.aol.micro.server.config.Config;
@@ -40,9 +40,9 @@ public class SpringContextFactory {
 		springBuilder =  new SpringApplicationConfigurator();
 	}
 
-	public ConfigurableApplicationContext createSpringContext() {
+	public ApplicationContext createSpringContext() {
 		try {
-			ConfigurableApplicationContext springContext = springBuilder.createSpringApp(config,classes.toArray(new Class[0]));
+			ApplicationContext springContext = springBuilder.createSpringApp(config,classes.toArray(new Class[0]));
 			return springContext;
 		} catch (Exception e) {
 			logger.error( ErrorCode.STARTUP_FAILED_SPRING_INITIALISATION.toString(),e.getMessage());

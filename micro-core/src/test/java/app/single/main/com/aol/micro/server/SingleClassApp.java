@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import app.simple.com.aol.micro.server.SimpleRunnerTest;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 
 @Configuration
 @ComponentScan(basePackages = { "app.simple.com.aol.micro.server" })
@@ -19,7 +19,7 @@ import com.aol.micro.server.MicroServerStartup;
 public class SingleClassApp {
 
 	public static void main(String[] args){
-		new MicroServerStartup( SingleClassApp.class, ()-> "simple-app");
+		new MicroserverApp( SingleClassApp.class, ()-> "simple-app");
 	}
 	@GET
 	@Produces("text/plain")

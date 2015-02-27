@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.events.JobsBeingExecuted;
 import com.aol.micro.server.rest.client.nio.RestClient;
@@ -22,13 +22,13 @@ public class EventRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	private final RestClient<String> client = new RestClient<String>(100,100).withAccept("application/json");
-	MicroServerStartup server;
+	MicroserverApp server;
 	
 	
 	@Before
 	public void startServer(){
 		
-		server = new MicroServerStartup(()-> "event-app");
+		server = new MicroserverApp(()-> "event-app");
 		server.start();
 
 	}

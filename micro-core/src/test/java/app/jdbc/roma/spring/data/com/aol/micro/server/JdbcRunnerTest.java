@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Classes;
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Microserver;
@@ -31,13 +31,13 @@ public class JdbcRunnerTest {
 
 	RestAgent rest = new RestAgent();
 
-	MicroServerStartup server;
+	MicroserverApp server;
 
 	@Before
 	public void startServer() {
 
 		Config.reset();
-		server = new MicroServerStartup(() -> "jdbc-app");
+		server = new MicroserverApp(() -> "jdbc-app");
 		server.start();
 
 	}

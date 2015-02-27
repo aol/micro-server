@@ -9,7 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 
@@ -19,11 +19,11 @@ public class AsyncAppRunner {
 
 	RestAgent rest = new RestAgent();
 	
-	MicroServerStartup server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicroServerStartup( ()-> "async-app");
+		server = new MicroserverApp( ()-> "async-app");
 		server.start();
 
 	}

@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.testing.RestAgent;
 import com.google.common.collect.ImmutableMap;
@@ -24,11 +24,11 @@ public class FilterRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicroServerStartup server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		Map<String, Filter> filters = ImmutableMap.of("/filter-app/status/ping2",new ConfiguredFilter());
-		server = new MicroServerStartup( FilterAppLocalMain.class, ConfigurableModule.builder().context("filter-app").filters(filters ).build());
+		server = new MicroserverApp( FilterAppLocalMain.class, ConfigurableModule.builder().context("filter-app").filters(filters ).build());
 		server.start();
 
 	}

@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.Bean;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 /**@Configuration
@@ -26,11 +26,11 @@ public class SpringRunnerTest {
 		return new MyBean();
 	}
 	
-	MicroServerStartup server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicroServerStartup( SpringRunnerTest.class, ()-> "spring-app");
+		server = new MicroserverApp( SpringRunnerTest.class, ()-> "spring-app");
 		server.start();
 
 	}

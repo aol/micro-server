@@ -13,7 +13,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.client.nio.RestClient;
@@ -28,13 +28,13 @@ public class HibernateRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicroServerStartup server;
+	MicroserverApp server;
 	
 	@Before
 	public void startServer(){
 		
 		Config.reset();
-		server = new MicroServerStartup( Config.instance().withEntityScan("app.spring.data.jpa.com.aol.micro.server")
+		server = new MicroserverApp( Config.instance().withEntityScan("app.spring.data.jpa.com.aol.micro.server")
 												.withHibernateClasses(HibernateRunnerTest.class)
 												.withProperties(
 																			ImmutableMap.of("db.connection.driver","org.hsqldb.jdbcDriver",

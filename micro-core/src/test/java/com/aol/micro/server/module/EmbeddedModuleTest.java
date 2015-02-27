@@ -18,12 +18,12 @@ public class EmbeddedModuleTest {
 	
 	@Test
 	public void testGetRestResourceClasses() {
-	 assertThat(module.getRestResourceClasses(),hasItem(EmbeddedModuleTest.class));
+	 assertThat(module.getRestAnnotationClasses(),hasItem(EmbeddedModuleTest.class));
 	}
 
 	@Test
 	public void testGetContext() {
-		 assertThat(module.getRestResourceClasses(),hasItem(EmbeddedModuleTest.class));
+		 assertThat(module.getRestAnnotationClasses(),hasItem(EmbeddedModuleTest.class));
 	}
 
 	

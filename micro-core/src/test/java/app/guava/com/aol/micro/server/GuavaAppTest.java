@@ -12,7 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
@@ -28,7 +28,7 @@ public class GuavaAppTest {
 
 	RestAgent rest = new RestAgent();
 
-	MicroServerStartup server;
+	MicroserverApp server;
 
 	ImmutableGuavaEntity entity;
 	Jdk8Entity present;
@@ -40,7 +40,7 @@ public class GuavaAppTest {
 	@Before
 	public void startServer() {
 		stream = simpleReact.react(
-				() -> server = new MicroServerStartup(GuavaAppTest.class,
+				() -> server = new MicroserverApp(GuavaAppTest.class,
 						() -> "guava-app")).then(server -> server.start());
 
 		entity = ImmutableGuavaEntity.builder().value("value")

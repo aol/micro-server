@@ -13,7 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
@@ -24,11 +24,11 @@ public class SingleClassTest implements RestResource{
 
 	RestAgent rest = new RestAgent();
 	
-	MicroServerStartup server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicroServerStartup( SingleClassTest.class, ()-> "simple-app");
+		server = new MicroserverApp( SingleClassTest.class, ()-> "simple-app");
 		server.start();
 
 	}

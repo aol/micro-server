@@ -21,7 +21,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientException;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.JacksonUtil;
 import com.aol.micro.server.rest.client.nio.RestClient;
@@ -40,11 +40,11 @@ public class RestClientTest {
 	private final SpringRestTemplate rest = new MiscellaneousConfig().restClient();
 																			
 
-	MicroServerStartup server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicroServerStartup( RestClientTest.class, ()-> "rest-app");
+		server = new MicroserverApp( RestClientTest.class, ()-> "rest-app");
 		server.start();
 
 	}

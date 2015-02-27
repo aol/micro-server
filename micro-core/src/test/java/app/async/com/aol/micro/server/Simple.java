@@ -1,10 +1,10 @@
 package app.async.com.aol.micro.server;
 
-import com.aol.micro.server.MicroServerStartup;
+import com.aol.micro.server.MicroserverApp;
 
 public class Simple {
 
 	public static void main(String[] args){
-		new MicroServerStartup(()->"test-app").run();
+		new MicroserverApp(()->"test-app").run();
 	}
 }
