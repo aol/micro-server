@@ -9,18 +9,20 @@ import javax.servlet.ServletContextListener;
 import lombok.Getter;
 
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.accesslog.AccessLogBuilder;
 import org.glassfish.grizzly.servlet.ServletRegistration;
 import org.glassfish.grizzly.servlet.WebappContext;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.ContextLoaderListener;
 
 import com.aol.micro.server.ErrorCode;
-import com.aol.micro.server.rest.jersey.JerseySpringIntegrationContextListener;
 import com.aol.micro.server.servers.AccessLogLocationBean;
 import com.aol.micro.server.servers.ServerApplication;
+import com.aol.micro.server.servers.grizzly.FilterConfigurer;
+import com.aol.micro.server.servers.grizzly.ServletConfigurer;
+import com.aol.micro.server.servers.grizzly.ServletContextListenerConfigurer;
 import com.aol.micro.server.servers.model.AllData;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
@@ -128,7 +130,19 @@ public class GrizzlyApplication  implements ServerApplication {
 
 
 
+	private NetworkListener createSSLListener(int port){
+		
+		
+		
 	
+		NetworkListener listener = new NetworkListener("grizzly", "0.0.0.0", Integer.valueOf(port));
+		listener.getFileCache().setEnabled(false);
+		
+			listener.setSecure(true);
+			listener.setSSLEngineConfig(sslConf);
+		
+		return listener;
+	}
 
 	private void addListeners(WebappContext webappContext) {
 		
