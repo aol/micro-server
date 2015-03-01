@@ -1,17 +1,15 @@
 package com.aol.micro.server.rest.jersey;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 import lombok.Getter;
 
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.ServerProperties;
 
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.rest.resources.ActiveResource;
-import com.aol.micro.server.rest.resources.ManifestResource;
 import com.aol.micro.server.servers.ServerThreadLocalVariables;
 import com.google.common.collect.Maps;
 
@@ -43,6 +41,7 @@ public class JerseyRestApplication extends ResourceConfig {
 
 			}
 		}
+		property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
 		packages.stream().forEach( e -> packages(e));
 		resources.stream().forEach( e -> register(e));
 

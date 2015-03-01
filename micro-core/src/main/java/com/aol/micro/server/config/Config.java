@@ -30,7 +30,7 @@ public class Config {
 	
 	private final String propertiesName;
 	private final ImmutableMap<String,List<String>> dataSources;
-	
+	private final SSLProperties sslProperties;
 	
 	
 	public Config() {
@@ -39,6 +39,7 @@ public class Config {
 		dataSources = ImmutableMap.of();
 		defaultDataSourceName="db";
 		propertiesName = "application.properties";
+		sslProperties = null;
 	}
 
 	private static volatile Config instance = null;

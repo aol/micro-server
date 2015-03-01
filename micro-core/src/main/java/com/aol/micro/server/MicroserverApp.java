@@ -92,8 +92,7 @@ public class MicroserverApp {
 
 		List<ServerApplication> apps = modules
 				.stream()
-				.map(module -> new GrizzlyApplicationFactory(springContext,
-						module).createApp()).collect(Collectors.toList());
+				.map(module -> createServer(module)).collect(Collectors.toList());
 
 		ServerRunner runner;
 		try {
@@ -105,6 +104,16 @@ public class MicroserverApp {
 		}
 
 		return runner.run();
+	}
+
+	private ServerApplication createServer(Module module) {
+		ServerApplication app = new GrizzlyApplicationFactory(springContext,
+				module).createApp();
+		
+		if(Config.instance().getSslProperties()!=null)
+			return app.withSSLProperties(Config.instance().getSslProperties());
+		else
+			return app;
 	}
 
 	private void join(Thread thread) {

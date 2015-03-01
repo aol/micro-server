@@ -6,7 +6,10 @@ import java.util.concurrent.ExecutionException;
 
 import javax.servlet.ServletContextListener;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.experimental.Wither;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.NetworkListener;
@@ -18,17 +21,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aol.micro.server.ErrorCode;
+import com.aol.micro.server.config.SSLProperties;
 import com.aol.micro.server.servers.AccessLogLocationBean;
 import com.aol.micro.server.servers.ServerApplication;
-import com.aol.micro.server.servers.grizzly.FilterConfigurer;
-import com.aol.micro.server.servers.grizzly.ServletConfigurer;
-import com.aol.micro.server.servers.grizzly.ServletContextListenerConfigurer;
 import com.aol.micro.server.servers.model.AllData;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
 import com.google.common.collect.ImmutableList;
 
+@AllArgsConstructor(access=AccessLevel.PRIVATE)
 public class GrizzlyApplication  implements ServerApplication {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -39,12 +41,15 @@ public class GrizzlyApplication  implements ServerApplication {
 	private final ImmutableList<FilterData> filterData;
 	private final ImmutableList<ServletData> servletData;
 	private final ImmutableList<ServletContextListener> servletContextListenerData;
+	@Wither
+	private final SSLProperties SSLProperties;
 	
 	public GrizzlyApplication(AllData serverData) {
 		this.serverData = serverData.getServerData();
 		this.filterData = serverData.getFilterDataList();
 		this.servletData = serverData.getServletDataList();
 		this.servletContextListenerData = serverData.getServletContextListeners();
+		this.SSLProperties = null;
 	}
 
 	public void run(CompletableFuture start,CompletableFuture end) {
@@ -65,6 +70,8 @@ public class GrizzlyApplication  implements ServerApplication {
 				serverData.getPort());
 
 		addAccessLog(httpServer);
+		if(SSLProperties!=null)
+			this.createSSLListener(serverData.getPort());
 
 		startServer(webappContext, httpServer,start,end);
 	}
@@ -134,12 +141,12 @@ public class GrizzlyApplication  implements ServerApplication {
 		
 		
 		
-	
+		SSLConfigurationBuilder sslBuilder = new SSLConfigurationBuilder();
 		NetworkListener listener = new NetworkListener("grizzly", "0.0.0.0", Integer.valueOf(port));
 		listener.getFileCache().setEnabled(false);
 		
 			listener.setSecure(true);
-			listener.setSSLEngineConfig(sslConf);
+			listener.setSSLEngineConfig(sslBuilder.build(SSLProperties));
 		
 		return listener;
 	}
