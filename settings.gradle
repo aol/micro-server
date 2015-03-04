@@ -1,3 +1,4 @@
 rootProject.name = 'micro-server'
 include ':micro-core'
 include ':micro-boot'
+include ':micro-tutorial'

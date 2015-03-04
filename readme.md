@@ -336,3 +336,4 @@ v0.5
 
 Spring Boot support is added with v0.5, so now you can launch a Spring Boot application that runs on a Grizzly Server with Jersey 2 and Microserver Jersey / Spring Integration. Your Spring Boot apps can also take advantage of Microserver optimisations and enhancements such as co-locating services with shared Spring resources (you might want to do this, to reduce consumption of scarce resources such as datasource connections to critical dbs).
 
+This version also includes validation via Jersey bean validation and hibernate validator.
