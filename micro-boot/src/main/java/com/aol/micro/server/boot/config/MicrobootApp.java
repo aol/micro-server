@@ -28,6 +28,7 @@ public class MicrobootApp {
 
 	
 		private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 		private final List<Module> modules;
 		private final CompletableFuture end = new CompletableFuture();
 		private final ExceptionSoftener softener = ExceptionSoftener.singleton.factory.getInstance();
@@ -112,7 +113,7 @@ public class MicrobootApp {
 				thread.join();
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
-				throw new RuntimeException(e);
+				softener.throwSoftenedException(e);
 			}
 		}
 

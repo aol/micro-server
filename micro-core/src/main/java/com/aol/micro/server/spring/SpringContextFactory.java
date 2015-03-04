@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.aol.micro.server.ErrorCode;
 import com.aol.micro.server.config.Config;
+import com.aol.simple.react.exceptions.ExceptionSoftener;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
@@ -18,6 +19,7 @@ import com.google.common.collect.Sets;
 public class SpringContextFactory {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	private final ExceptionSoftener softener = ExceptionSoftener.singleton.factory.getInstance();
 	private final ImmutableSet<Class> classes;
 	private final Config config;
 	@Wither
@@ -46,9 +48,9 @@ public class SpringContextFactory {
 			return springContext;
 		} catch (Exception e) {
 			logger.error( ErrorCode.STARTUP_FAILED_SPRING_INITIALISATION.toString(),e.getMessage());
-			throw new RuntimeException(e);
+			softener.throwSoftenedException(e);
 		}
-		
+		return null;
 	}
 	
 }

@@ -54,11 +54,9 @@ public class ServerRunner {
 		try {
 			future.get();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage(),e);
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage(),e);
 		}
 	}
 	private Thread start(ServerApplication next, Module module, CompletableFuture start) {

@@ -28,12 +28,14 @@ import com.aol.micro.server.servers.model.AllData;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
+import com.aol.simple.react.exceptions.ExceptionSoftener;
 import com.google.common.collect.ImmutableList;
 
 @AllArgsConstructor(access=AccessLevel.PRIVATE)
 public class GrizzlyApplication  implements ServerApplication {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final ExceptionSoftener softener = ExceptionSoftener.singleton.factory.getInstance();
 
 	@Getter
 	private final ServerData serverData;
@@ -88,12 +90,12 @@ public class GrizzlyApplication  implements ServerApplication {
 			end.get();
 			
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			softener.throwSoftenedException(e);
 		} catch (ExecutionException e) {
-			throw new RuntimeException(e);
+			softener.throwSoftenedException(e);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
-			throw new RuntimeException(e);
+			softener.throwSoftenedException(e);
 		} finally {
 			httpServer.stop();
 		}

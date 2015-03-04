@@ -121,7 +121,7 @@ public class MicroserverApp {
 			thread.join();
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
-			throw new RuntimeException(e);
+			softener.throwSoftenedException(e);
 		}
 	}
 

@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aol.simple.react.exceptions.ExceptionSoftener;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
 public final class JacksonUtil {
 
+	private final static ExceptionSoftener softener = ExceptionSoftener.singleton.factory.getInstance();
 	private static ObjectMapper mapper = null;
 
 	private static final Logger logger = LoggerFactory.getLogger(JacksonUtil.class);
@@ -53,7 +55,7 @@ public final class JacksonUtil {
 		try {
 			jsonString = getMapper().writeValueAsString(data);
 		} catch (final Exception ex) {
-			throw new RuntimeException(ex.getMessage(), ex);
+			softener.throwSoftenedException(ex);
 		}
 		return jsonString;
 	}
@@ -65,9 +67,9 @@ public final class JacksonUtil {
 			return getMapper().readValue(jsonString, type);
 
 		} catch (final Exception ex) {
-			throw new RuntimeException(ex.getMessage(), ex);
+			softener.throwSoftenedException(ex);
 		}
-
+		return null;
 	}
 	public static <T> T convertFromJson(final String jsonString, final JavaType type) {
 		try {
@@ -76,8 +78,9 @@ public final class JacksonUtil {
 			return getMapper().readValue(jsonString, type);
 
 		} catch (final Exception ex) {
-			throw new RuntimeException(ex.getMessage(), ex);
+			softener.throwSoftenedException(ex);
 		}
+		return null;
 
 	}
 
