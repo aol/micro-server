@@ -18,7 +18,7 @@ allprojects  {
 subprojects {
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
-	version = '0.46'
+	version = '0.5'
 	jar {
 		manifest {
 			attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
@@ -102,6 +102,9 @@ subprojects {
 			exclude(module: 'org.springframework')
 		}
 		compile 'commons-beanutils:commons-beanutils:1.9.2'
+		compile 'javax.interceptor:javax.interceptor-api:1.+'
+		compile 'javax.el:javax.el-api:2.2.4'
+		compile 'org.glassfish.web:javax.el:2.2.4'
 		testCompile group: 'com.cyrusinnovation', name: 'mockito-groovy-support', version:'1.3'
 		testCompile group: 'junit', name: 'junit', version:'4.10'
 		testCompile group: 'org.mockito', name: 'mockito-all', version:'1.9.5'
@@ -117,50 +120,5 @@ subprojects {
 
 	test { systemProperties 'property': 'value' }
 
-	modifyPom {
-		project {
-			name 'Microserver'
-			description 'Zero config REST webserver'
-			url 'http://advertising.com'
-			inceptionYear '2015'
-
-			groupId 'com.aol.advertising.microservices'
-			artifactId 'microserver'
-			version '0.46'
-
-			scm {
-				url 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'
-				connection 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'
-				developerConnection 'ssh://git@stash.ops.aol.com:2022/lana/micro-server.git'
-			}
-
-			licenses {
-				license {
-					name 'The Apache Software License, Version 2.0'
-					url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-					distribution 'repo'
-				}
-			}
-
-			developers {
-				developer {
-					id 'johnmcclean-aol'
-					name 'John McClean'
-					email 'john.mcclean@teamaol.com'
-				}
-			}
-		}
-	}
-
-	extraArchive {
-		sources = false
-		tests = false
-		javadoc = false
-	}
-
-	nexus {
-		sign = false
-		repositoryUrl = 'http://cmmaven.cm.aol.com:8081/nexus/content/repositories/aol-advertising'
-		snapshotRepositoryUrl = 'http://cmmaven.cm.aol.com:8081/nexus/content/groups/public'
-	}
+	
 }

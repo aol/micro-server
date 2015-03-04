@@ -29,10 +29,13 @@ import com.aol.micro.server.spring.properties.PropertyFileConfig;
 @Configuration
 @PropertySource("classpath:spring-boot-microserver.properties")
 public class JerseyApplication extends SpringBootServletInitializer {
+
+	List<Class> classes;
+
 	public JerseyApplication(){
 		classes = new ArrayList<>();
 	}
-	List<Class> classes;
+	
 	public JerseyApplication(List<Class> classes2) {
 		classes = new ArrayList<>();
 		classes.addAll(classes2);
@@ -83,27 +86,14 @@ public class JerseyApplication extends SpringBootServletInitializer {
 				.factory(sessionFactory).build().daoProvider();
 	}
 
-	/**
-	 * @Bean public RestApplication app(ApplicationContext context){
-	 *       RestApplication app = new RestApplication(context);
-	 *       app.init(module); return app; }
-	 **/
+	
 	@Bean
 	public EmbeddedServletContainerFactory servletContainer() {
 
 		return (initializers) -> {
 			return new Container();
 		};
-		/**
-		 * TomcatEmbeddedServletContainerFactory factory = new
-		 * TomcatEmbeddedServletContainerFactory(); factory.setPort(8080);
-		 * factory.setContextPath("/"+module.getContext());
-		 * factory.setSessionTimeout(10, TimeUnit.MINUTES);
-		 * //factory.addErrorPages(new ErrorPage(HttpStatus.404,
-		 * "/notfound.html"));
-		 * 
-		 * return factory;
-		 **/
+		
 
 	}
 
@@ -111,19 +101,18 @@ public class JerseyApplication extends SpringBootServletInitializer {
 
 		@Override
 		public void start() throws EmbeddedServletContainerException {
-			// TODO Auto-generated method stub
+		
 
 		}
 
 		@Override
 		public void stop() throws EmbeddedServletContainerException {
-			// TODO Auto-generated method stub
-
+		
 		}
 
 		@Override
 		public int getPort() {
-			// TODO Auto-generated method stub
+		
 			return 0;
 		}
 

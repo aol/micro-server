@@ -2,21 +2,57 @@ description = 'micro-boot'
 dependencies {
 	
 
-//	compile("org.springframework.boot:spring-boot-starter-web:1.2.1.RELEASE")
-//	compile("org.springframework.boot:spring-boot-starter-jersey:1.2.1.RELEASE")
-//	compile("org.springframework.boot:spring-boot-starter-data-jpa:1.2.1.RELEASE")
-
-//	compile 'org.springframework.boot:spring-boot-starters:1.2.1.RELEASE'
 	compile 'org.springframework.boot:spring-boot:1.2.1.RELEASE'
 	compile 'org.springframework.boot:spring-boot-autoconfigure:1.2.1.RELEASE'
-	//	compile 'org.springframework:spring-webmvc:4.1.0.RELEASE' //shouldn't need work around
-
-	compile 'javax.el:javax.el-api:2.2.4'
-	compile 'org.glassfish.web:javax.el:2.2.4'
 	compile project(':micro-core')
 	
-//	testCompile 'org.apache.tomcat.embed:tomcat-embed-core:8.0.20'
-//	testCompile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.20'
+
 }
 
+modifyPom {
+	project {
+		name 'Microserver-boot'
+		description 'Opinionated rest microservices with Spring Boot'
+		url 'https://github.com/aol/micro-server'
+		inceptionYear '2015'
+
+		groupId 'com.aol.microservices'
+		artifactId 'microserver-boot'
+		version '0.5'
+		
+		scm {
+			url 'scm:git@github.com:aol/micro-server.git'
+			connection 'scm:git@github.com:aol/micro-server.git'
+			developerConnection 'scm:git@github.com:aol/micro-server.git'
+		}
+
+		licenses {
+			license {
+				name 'The Apache Software License, Version 2.0'
+				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+				distribution 'repo'
+			}
+		}
+
+		developers {
+			developer {
+				id 'johnmcclean-aol'
+				name 'John McClean'
+				email 'john.mcclean@teamaol.com'
+			}
+		}
+	}
+}
+
+extraArchive {
+	sources = true
+	tests = true
+	javadoc = true
+}
+
+nexus {
+	sign = true
+	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+}
 

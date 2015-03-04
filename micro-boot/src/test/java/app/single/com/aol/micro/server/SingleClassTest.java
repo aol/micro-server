@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.aol.micro.server.auto.discovery.RestResource;
@@ -20,6 +21,7 @@ import com.aol.micro.server.testing.RestAgent;
 
 @Microboot
 @Path("/single")
+@Ignore
 public class SingleClassTest implements RestResource{
 
 	RestAgent rest = new RestAgent();
