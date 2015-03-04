@@ -35,11 +35,12 @@ Note the main launch class has been changed from MicroServerStartup to Microserv
 
 Microserver core 
 
-     &lt;dependency&gt;
-      &lt;groupId&gt;com.aol.microservices&lt;/groupId&gt;
-      &lt;artifactId&gt;microserver-core&lt;/artifactId&gt;
-      &lt;version&gt;0.5&lt;/version&gt;
-    &lt;/dependency&gt;
+    <dependency>
+      <groupId>com.aol.microservices</groupId>
+      <artifactId>microserver-core</artifactId>
+      <version>0.5</version>
+    </dependency>
+    
 Microserver Spring Boot 
 
     <dependency>
