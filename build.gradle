@@ -9,13 +9,11 @@ buildscript {
 	}
 }
 
-allprojects  {
+
+subprojects {
 	apply plugin:'java'
 	apply plugin: 'com.github.johnrengelman.shadow'
 	apply plugin: 'com.bmuschko.nexus'
-}
-
-subprojects {
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
 	version = '0.5'
@@ -102,7 +100,7 @@ subprojects {
 			exclude(module: 'org.springframework')
 		}
 		compile 'commons-beanutils:commons-beanutils:1.9.2'
-		compile 'javax.interceptor:javax.interceptor-api:1.+'
+		compile 'javax.interceptor:javax.interceptor-api:1.2-b04'
 		compile 'javax.el:javax.el-api:2.2.4'
 		compile 'org.glassfish.web:javax.el:2.2.4'
 		testCompile group: 'com.cyrusinnovation', name: 'mockito-groovy-support', version:'1.3'
