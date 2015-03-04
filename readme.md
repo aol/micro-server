@@ -13,7 +13,11 @@ To make developing, debuging and deploying Java microservices simple.
 
 [Google Group](https://groups.google.com/forum/#!forum/micro-server)
 
-[Example Apps](https://github.com/aol/micro-server/tree/master/src/test/java/app)
+[Example Apps : Microserver Core](https://github.com/aol/micro-server/tree/master/micro-core/src/test/java/app)
+[Example Apps : Microserver Boot](https://github.com/aol/micro-server/tree/master/micro-boot/src/test/java/app)
+
+[Java Doc : Microserver Core](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.5)
+[Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.5)
 
 ##Getting started
 
@@ -23,6 +27,37 @@ To make developing, debuging and deploying Java microservices simple.
 [![Getting started video](https://cloud.githubusercontent.com/assets/9964792/6361863/9991c50c-bc7e-11e4-8d28-746b0b87b1da.png)](https://www.youtube.com/watch?v=8I-8IQQxB1E)
 
 
+Note the main launch class has been changed from MicroServerStartup to MicroserverApp
+
+### Maven dependency
+
+Microserver core 
+
+   <dependency>
+      <groupId>com.aol.microservices</groupId>
+      <artifactId>microserver-core</artifactId>
+      <version>0.5</version>
+    </dependency>
+
+Microserver Spring Boot 
+
+   <dependency>
+      <groupId>com.aol.microservices</groupId>
+      <artifactId>microserver-boot</artifactId>
+      <version>0.5</version>
+    </dependency>
+
+
+
+### Gradle dependency
+
+Microserver core 
+	
+	 compile group: 'com.aol.microservices', name:'microserver-core', version:'0.5'
+	 
+Microserver Spring Boot 
+	 
+	  compile group: 'com.aol.microservices', name:'microserver-boot', version:'0.5'
 
 ##Tech Stack
 
@@ -43,8 +78,7 @@ Example working application :-
 
 		
 		public static void main(String[] args) throws InterruptedException {
-			new MicroServerStartup(() -> "test-app")
-					.run();
+			new MicroserverApp(() -> "test-app").run();
 		}
 
     }
@@ -88,8 +122,7 @@ The configuration of your Rest end points can be managed via the Module interfac
 e.g. 
 
 
-    new MicroServerStartup(() -> "context")
-					.start();
+    new MicroserverApp(() -> "context").start();
 
 
 () -> "context"  is a Module!
@@ -186,7 +219,7 @@ This example will start two different Rest end points - one on context "test-app
     public class EmbeddedAppRunnerTest {
 
 	public static void main(String[] args) throws InterruptedException {
-		new MicroServerStartup(EmbeddedAppRunnerTest.class, 
+		new MicroserverApp(EmbeddedAppRunnerTest.class, 
 				new EmbeddedModule(TestAppRestResource.class,"test-app"),
 				new EmbeddedModule(AltAppRestResource.class,"alternative-app")).start();
 
@@ -296,4 +329,8 @@ v0.45
 Rest end points can use the annotation @Rest instead of both @Component (Spring) and implementing RestResource. Users can specify their own tag annotations also.
 
 ROMA - Spring Row Mapper has been made an optional dependency. It's only available on a minor Repo no-one really uses, so it caused problems building Microserver apps externally.
+
+v0.5
+
+Spring Boot support is added with v0.5, so now you can launch a Spring Boot application that runs on a Grizzly Server with Jersey 2 and Microserver Jersey / Spring Integration. Your Spring Boot apps can also take advantage of Microserver optimisations and enhancements such as co-locating services with shared Spring resources (you might want to do this, to reduce consumption of scarce resources such as datasource connections to critical dbs).
 
