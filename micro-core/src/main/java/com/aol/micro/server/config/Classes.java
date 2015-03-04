@@ -18,8 +18,22 @@ import com.aol.micro.server.spring.datasource.jdbc.SQL;
 import com.aol.micro.server.spring.metrics.CodahaleMetricsConfigurer;
 import com.aol.micro.server.spring.properties.PropertyFileConfig;
 
+/**
+ * 
+ * Collections of Spring configuration classes (Classes annotated with @Configuration)
+ * that configure various useful pieces of functionality - such as property file loading,
+ * datasources, scheduling etc
+ * 
+ * @author johnmcclean
+ *
+ */
 public enum Classes {
 	
+	/**
+	 * CORE CLASSES are the Core Microserver Spring Configuration classes
+	 * Property support, Guava Event Bus, Spring AOP &amp; Scheduling
+	 * Codahale Metrics, Event tracking etc
+	 */
 	CORE_CLASSES(PropertyFileConfig.class,
 				MiscellaneousConfig.class, AopConfig.class, CodahaleMetricsConfigurer.class,
 				ConfigureActiveJobsAspect.class, ScheduleAndAsyncConfig.class,ConfigureResources.class),

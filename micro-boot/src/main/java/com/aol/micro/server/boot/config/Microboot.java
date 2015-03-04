@@ -19,12 +19,42 @@ import com.aol.micro.server.config.Classes;
 public @interface Microboot{
 
 	
+	/**
+	 * @return Spring auto-scan base packages
+	 */
 	String[] basePackages() default {};
+	
+	/**
+	 * @return Classes to be passed to initial Spring context
+	 * e.g. Classes that have Spring @Configuration or @Component annotation
+	 * 
+	 */
 	Class[] classes() default {};
+	
+	/**
+	 * @return Preconfigured collections of classes to be passed to initial Spring context
+	 * They  configure various useful pieces of functionality - such as property file loading,
+	 * datasources, scheduling etc
+	 */
 	Classes[] springClasses() default {};
+	
+	/**
+	 * @return Property file name 
+	 * default value is 'application.properties'
+	 */
 	String propertiesName() default "application.properties";
+	
+	/**
+	 * @return Hibernate entity scan packages
+	 */
 	String[] entityScan() default {};
+	
+	/**
+	 * @return Properties to be injected into spring format is 
+	 * key,value,key,value comma separated list
+	 */
 	String[] properties() default {};
-	boolean isSpringBoot() default false;
+	
+	
 }
 

@@ -23,6 +23,13 @@ import com.aol.micro.server.spring.SpringContextFactory;
 import com.aol.simple.react.exceptions.ExceptionSoftener;
 import com.google.common.collect.Lists;
 
+/**
+ * 
+ * Startup class for Microserver instance
+ * 
+ * @author johnmcclean
+ *
+ */
 public class MicroserverApp {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -34,18 +41,60 @@ public class MicroserverApp {
 	@Getter
 	private final ApplicationContext springContext;
 
+	/**
+	 * This will construct a Spring context for this Microserver instance.
+	 * The calling class will be used to determine the base package to auto-scan from for Spring Beans
+	 * It will attempt to pick up an @Microservice annotation first, if not present the package of the calling class
+	 * will be used.
+	 * 
+	 * @param modules Multiple Microservice end points that can be deployed within a single Spring context
+	 */
 	public MicroserverApp(Module... modules) {
 		this.modules = Lists.newArrayList(modules);
-		springContext = new SpringContextFactory(getConfigurer().buildConfig(
+		springContext = new SpringContextFactory(new MicroserverConfigurer().buildConfig(
 				extractClass()), extractClass(),
 				modules[0].getSpringConfigurationClasses())
 				.createSpringContext();
 
 	}
 
-	public Configurer getConfigurer() {
-		return new MicroserverConfigurer();
+	/**
+	 * This will construct a Spring context for this Microserver instance.
+	 * The provided class will be used to determine the base package to auto-scan from for Spring Beans
+	 * It will attempt to pick up an @Microservice annotation first, if not present the package of the provided class
+	 * will be used.
+	 * 
+	 * @param c Class used to configure Spring
+	 * @param modules Multiple Microservice end points that can be deployed within a single Spring context
+	 */
+	public MicroserverApp(Class c, Module... modules) {
+
+		this.modules = Lists.newArrayList(modules);
+		springContext = new SpringContextFactory(
+				new MicroserverConfigurer().buildConfig(c), c,
+				modules[0].getSpringConfigurationClasses())
+				.createSpringContext();
+
 	}
+
+	/**
+	 * This will construct a Spring context for this Microserver instance.
+	 * The provided Config object will be used to configure Spring
+	 * 
+	 * @param config Spring configuration
+	 * @param modules Multiple Microservice end points that can be deployed within a single Spring context
+	 */
+	public MicroserverApp(Config config, Module... modules) {
+
+		this.modules = Lists.newArrayList(modules);
+		config.set();
+		springContext = new SpringContextFactory(config,
+				modules[0].getSpringConfigurationClasses())
+				.createSpringContext();
+
+	}
+	
+	
 
 	private Class extractClass() {
 		try {
@@ -57,25 +106,7 @@ public class MicroserverApp {
 		return null; // unreachable normally
 	}
 
-	public MicroserverApp(Class c, Module... modules) {
-
-		this.modules = Lists.newArrayList(modules);
-		springContext = new SpringContextFactory(
-				new MicroserverConfigurer().buildConfig(c), c,
-				modules[0].getSpringConfigurationClasses())
-				.createSpringContext();
-
-	}
-
-	public MicroserverApp(Config config, Module... modules) {
-
-		this.modules = Lists.newArrayList(modules);
-		config.set();
-		springContext = new SpringContextFactory(config,
-				modules[0].getSpringConfigurationClasses())
-				.createSpringContext();
-
-	}
+	
 
 	public void stop() {
 

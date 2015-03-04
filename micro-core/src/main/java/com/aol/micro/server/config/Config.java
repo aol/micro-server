@@ -19,6 +19,13 @@ import com.google.common.collect.Sets;
 
 
 
+/**
+ * 
+ * Class for configuring a Spring Context for Microserver
+ * 
+ * @author johnmcclean
+ *
+ */
 @AllArgsConstructor
 @Getter
 @Wither
@@ -66,6 +73,13 @@ public class Config {
 		newMap.put(dataSource,Arrays.asList(packages));
 		return this.withDataSources(ImmutableMap.copyOf(newMap));
 	}
+	/**
+	 * Define the packages that hibernate should scan for Hibernate entities
+	 * Should be used in conjunction Microserver Spring Configuration classes @See Classes#HIBERNATE_CLASSES
+	 * 
+	 * @param packages Packages to scan for hibernate entities
+	 * @return New Config object, with configured packages
+	 */
 	public Config withEntityScan(String... packages){
 		Map<String,List<String>> newMap = new HashMap<>(dataSources);
 		newMap.put(defaultDataSourceName,Arrays.asList(packages));
@@ -73,6 +87,13 @@ public class Config {
 	}
 	
 	
+	/**
+	 * Add the provided Classes to initial Spring Context as well as
+	 *  @see Classes#DATASOURCE_CLASSES
+	 * 
+	 * @param c Array of additional Spring configuration classes
+	 * @return New Config object, with configured packages
+	 */
 	public Config withDefaultDataSource(Class... c){
 		 List<Class> result =Lists.newArrayList(Classes.DATASOURCE_CLASSES.getClasses());
 		 if(classes!=null)
@@ -82,6 +103,14 @@ public class Config {
 	}
 
 	
+	/**
+	 * 
+	 *  Add the provided Classes to initial Spring Context as well as
+	 *  @see Classes#JDBC_CLASSES
+	 * 
+	 * @param c Array of additional Spring configuration classes
+	 * @return New Config object, with configured packages
+	 */
 	public Config withJdbcClasses(Class... c){
 		 List<Class> result = Lists.newArrayList(Classes.JDBC_CLASSES.getClasses());
 		 result.addAll(Arrays.asList(Classes.SPRING_DATA_CLASSES.getClasses()));
@@ -91,6 +120,13 @@ public class Config {
 		 return this.withClasses(ImmutableSet.copyOf(result));
 	}
 	
+	/**
+	 * Add the provided Classes to initial Spring Context as well as
+	 *  @see Classes#SPRING_DATA_CLASSES
+	 * 
+	 * @param c Array of additional Spring configuration classes
+	 * @return New Config object, with configured packages
+	 */
 	public Config withHibernateClasses(Class... c){
 		 Set<Class> result = Sets.newHashSet(Classes.HIBERNATE_CLASSES.getClasses());
 		 result.addAll(Arrays.asList(Classes.SPRING_DATA_CLASSES.getClasses()));

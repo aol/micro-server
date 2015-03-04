@@ -36,7 +36,14 @@ public class MicrobootApp {
 		@Getter
 		private final ApplicationContext springContext;
 
-		
+		/**
+		 * This will construct a Spring context, using Spring Boot for this Microboot instance.
+		 * The calling class will be used to determine the base package to auto-scan from for Spring Beans
+		 * It will attempt to pick up an @Microservice annotation first, if not present the package of the calling class
+		 * will be used.
+		 * 
+		 * @param modules Multiple Microservice end points that can be deployed within a single Spring context
+		 */
 		public MicrobootApp(Module...modules){
 			this.modules = Lists.newArrayList(modules);
 			springContext = new SpringContextFactory(new MicrobootConfigurator().buildConfig(extractClass()),extractClass(),
@@ -45,6 +52,16 @@ public class MicrobootApp {
 			
 		}
 
+		
+		/**
+		 * This will construct a Spring context, using Spring Boot for this Microboot instance.
+		 * The provided class will be used to determine the base package to auto-scan from for Spring Beans
+		 * It will attempt to pick up an @Microservice annotation first, if not present the package of the provided class
+		 * will be used.
+		 * 
+		 * @param c Class used to configure Spring
+		 * @param modules Multiple Microservice end points that can be deployed within a single Spring context
+		 */
 		public MicrobootApp(Class c, Module... modules) {
 
 			this.modules = Lists.newArrayList(modules);
@@ -53,6 +70,13 @@ public class MicrobootApp {
 
 		}
 
+		/**
+		 *	This will construct a Spring context, using Spring Boot for this Microboot instance.
+		 * The provided Config object will be used to configure Spring
+		 * 
+		 * @param config Spring configuration
+		 * @param modules Multiple Microservice end points that can be deployed within a single Spring context
+		 */
 		public MicrobootApp(Config config, Module... modules) {
 
 			this.modules = Lists.newArrayList(modules);
