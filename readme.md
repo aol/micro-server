@@ -14,9 +14,11 @@ To make developing, debuging and deploying Java microservices simple.
 [Google Group](https://groups.google.com/forum/#!forum/micro-server)
 
 [Example Apps : Microserver Core](https://github.com/aol/micro-server/tree/master/micro-core/src/test/java/app)
+
 [Example Apps : Microserver Boot](https://github.com/aol/micro-server/tree/master/micro-boot/src/test/java/app)
 
 [Java Doc : Microserver Core](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.5)
+
 [Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.5)
 
 ##Getting started
@@ -33,15 +35,14 @@ Note the main launch class has been changed from MicroServerStartup to Microserv
 
 Microserver core 
 
-   <dependency>
-      <groupId>com.aol.microservices</groupId>
-      <artifactId>microserver-core</artifactId>
-      <version>0.5</version>
-    </dependency>
-
+     &lt;dependency&gt;
+      &lt;groupId&gt;com.aol.microservices&lt;/groupId&gt;
+      &lt;artifactId&gt;microserver-core&lt;/artifactId&gt;
+      &lt;version&gt;0.5&lt;/version&gt;
+    &lt;/dependency&gt;
 Microserver Spring Boot 
 
-   <dependency>
+    <dependency>
       <groupId>com.aol.microservices</groupId>
       <artifactId>microserver-boot</artifactId>
       <version>0.5</version>
