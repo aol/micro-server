@@ -21,7 +21,7 @@ public class PersistentResource implements RestResource {
 	private final RowMapper<JdbcEntity> rowMapper;
 
 	@Autowired
-	public PersistentResource(SQL dao,RowMapperService rowMapperService) {
+	public PersistentResource(SQL dao, RowMapperService rowMapperService) {
 
 		this.dao = dao;
 		this.rowMapperService = rowMapperService;
@@ -32,8 +32,8 @@ public class PersistentResource implements RestResource {
 	@Produces("text/plain")
 	@Path("/create")
 	public String createEntity() {
-		dao.update("insert into t_roma VALUES (1,'hello','world',1)");
-	
+		dao.getJdbc().update("insert into t_roma VALUES (1,'hello','world',1)");
+
 		return "ok";
 	}
 
@@ -41,8 +41,8 @@ public class PersistentResource implements RestResource {
 	@Produces("application/json")
 	@Path("/get")
 	public JdbcEntity get() {
-		
-		return  dao.<JdbcEntity>queryForObject("select * from t_roma",rowMapper);
+
+		return dao.getJdbc().<JdbcEntity> queryForObject("select * from t_roma", rowMapper);
 	}
 
 }

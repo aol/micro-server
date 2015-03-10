@@ -27,8 +27,8 @@ public class PersistentResource implements RestResource {
 	@Produces("text/plain")
 	@Path("/create")
 	public String createEntity() {
-		dao.update("insert into t_jdbc VALUES (1,'hello','world',1)");
-	
+		dao.getJdbc().update("insert into t_jdbc VALUES (1,'hello','world',1)");
+
 		return "ok";
 	}
 
@@ -36,7 +36,7 @@ public class PersistentResource implements RestResource {
 	@Produces("application/json")
 	@Path("/get")
 	public JdbcEntity get() {
-		return dao.<JdbcEntity>queryForObject("select * from t_jdbc",new BeanPropertyRowMapper(JdbcEntity.class));
+		return dao.getJdbc().<JdbcEntity> queryForObject("select * from t_jdbc", new BeanPropertyRowMapper(JdbcEntity.class));
 	}
 
 }
