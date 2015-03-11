@@ -4,22 +4,15 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-
-import app.simple.com.aol.micro.server.SimpleRunnerTest;
-
 import com.aol.micro.server.MicroserverApp;
+import com.aol.micro.server.auto.discovery.Rest;
 
-@Configuration
-@ComponentScan(basePackages = { "app.simple.com.aol.micro.server" })
-@Component
+@Rest
 @Path("/status")
 public class SingleClassApp {
 
 	public static void main(String[] args){
-		new MicroserverApp( SingleClassApp.class, ()-> "simple-app");
+		new MicroserverApp(()-> "simple-app").run();
 	}
 	@GET
 	@Produces("text/plain")

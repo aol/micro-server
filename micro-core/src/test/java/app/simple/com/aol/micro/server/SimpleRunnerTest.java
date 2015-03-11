@@ -23,7 +23,7 @@ public class SimpleRunnerTest {
 	@Before
 	public void startServer(){
 		
-		server = new MicroserverApp( SimpleRunnerTest.class, ()-> "simple-app");
+		server = new MicroserverApp(()-> "simple-app");
 		server.start();
 
 	}

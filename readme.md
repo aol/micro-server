@@ -28,7 +28,7 @@ To make developing, debuging and deploying Java microservices simple.
 [Tutoiral code](https://github.com/aol/micro-server/tree/master/micro-tutorial)
 
 ###Quick start youtube video
-[![Getting started video](https://cloud.githubusercontent.com/assets/9964792/6361863/9991c50c-bc7e-11e4-8d28-746b0b87b1da.png)](https://www.youtube.com/watch?v=8I-8IQQxB1E)
+[![Getting started video](https://cloud.githubusercontent.com/assets/9964792/6361863/9991c50c-bc7e-11e4-8d28-746b0b87b1da.png)](https://www.youtube.com/watch?v=McXy9oGRpfA&feature=youtu.be)
 
 
 Note the main launch class has been changed from MicroServerStartup to MicroserverApp
