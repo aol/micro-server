@@ -5,6 +5,9 @@ import java.util.Map;
 
 public class HashMapBuilder {
 
+	public static <K, V> Builder<K, V> from(Map<K,V> map) {
+		return new Builder<K, V>(map);
+	}
 	public static <K, V> Builder<K, V> of(K key, V value) {
 		return new Builder<K, V>(key, value);
 	}
@@ -24,6 +27,15 @@ public class HashMapBuilder {
 		public Builder(K key, V value) {
 			build = new HashMap<K, V>();
 			build.put(key, value);
+		}
+		public Builder(Map<K,V> map) {
+			build = new HashMap<K, V>();
+			build.putAll(map);
+		}
+		
+		public Builder<K, V> putAll(Map<K,V> map){
+			build.putAll(map);
+			return this;
 		}
 
 		public Builder<K, V> put(K key, V value) {

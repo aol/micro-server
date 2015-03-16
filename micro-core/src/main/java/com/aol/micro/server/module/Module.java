@@ -31,7 +31,10 @@ import com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider;
 import com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider;
 
 public interface Module {
-
+	
+	default List<String> getPackages(){
+		return ImmutableList.of();
+	}
 	
 	default Map<String,String> getPropertyOverrides(){
 		return Maps.newHashMap();

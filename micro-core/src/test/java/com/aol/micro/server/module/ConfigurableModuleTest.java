@@ -1,9 +1,11 @@
 package com.aol.micro.server.module;
 
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,7 +19,10 @@ import org.junit.Test;
 
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.servers.model.ServerData;
+import com.aol.micro.server.web.filter.QueryIPRetriever;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 
 public class ConfigurableModuleTest {
 
@@ -32,22 +37,26 @@ public class ConfigurableModuleTest {
 	private List<Class> resourceClasses;
 	private Map<String, Servlet> servlets;
 	private Set<Class> springConfigurationClasses;
+	private List<String> defaultJaxRsPackages;
 	
 	private Module m = () -> "module";
 	@Before
 	public void setup(){
 		
+		defaultJaxRsPackages = ImmutableList.of("hello world");
 		context="context";
-		defaultResources = mock(List.class);
-		filters = mock(Map.class);
+		defaultResources =  new ArrayList<>();
+		filters =   ImmutableMap.of("/*1",new QueryIPRetriever());
 		jaxWsRsApplication = "jaxRsApp2";
-		listeners = mock(List.class);
+		listeners = m.getListeners(ServerData.builder().resources(ImmutableList.of()).build());
 		providers = "providers2";
-		resourceClasses = mock(List.class);
-		servlets = mock(Map.class);
-		springConfigurationClasses = mock(Set.class);
+		Module m = () -> "hello";
+		resourceClasses =new ArrayList<>();
+		servlets = new HashMap<>();
+		springConfigurationClasses = ImmutableSet.of(this.getClass());
 		
 		module = ConfigurableModule.builder()
+									.defaultJaxRsPackages(defaultJaxRsPackages)
 									.context(context)
 									.defaultResources(defaultResources)
 									.filters(filters)
@@ -64,8 +73,12 @@ public class ConfigurableModuleTest {
 										.build();				
 	}
 	@Test
+	public void testGetRestResourceClassesResetAll() {
+		assertThat(module.withResetAll(true).getRestResourceClasses(),is(resourceClasses));
+	}
+	@Test
 	public void testGetRestResourceClasses() {
-		assertThat(module.getRestResourceClasses(),is(resourceClasses));
+		assertThat(module.getRestResourceClasses(),hasItem(RestResource.class));
 	}
 
 	@Test
@@ -74,8 +87,20 @@ public class ConfigurableModuleTest {
 	}
 
 	@Test
+	public void testGetDefaultResourcesReset() {
+		assertThat(module.withResetAll(true).getDefaultResources(),is(this.defaultResources));
+	}
+	@Test
 	public void testGetDefaultResources() {
-		assertThat(module.getDefaultResources(),is(this.defaultResources));
+		assertThat(module.getDefaultResources().size(),is(4));
+	}
+	@Test
+	public void testGetDefaultJaxRsPackagesReset() {
+		assertThat(module.withResetAll(true).getDefaultJaxRsPackages(),is(this.defaultJaxRsPackages));
+	}
+	@Test
+	public void testGetDefaultJaxRsPackagesResources() {
+		assertThat(module.getDefaultJaxRsPackages().size(),is(3));
 	}
 	@Test
 	public void testGetDefaultResourcesUnchanged() {
@@ -84,7 +109,12 @@ public class ConfigurableModuleTest {
 
 	@Test
 	public void testGetListeners() {
-		assertThat(module.getListeners(ServerData.builder().resources(ImmutableList.of()).build()),is(this.listeners));
+		assertThat(module.getListeners(ServerData.builder().resources(ImmutableList.of()).build()).size(),
+				is(m.getListeners(ServerData.builder().resources(ImmutableList.of()).build()).size()*2)); //doubled
+	}
+	@Test
+	public void testGetListenersReset() {
+		assertThat(module.withResetAll(true).getListeners(ServerData.builder().resources(ImmutableList.of()).build()),is(this.listeners));
 	}
 	@Test
 	public void testGetListenersUnchanged() {
@@ -94,8 +124,14 @@ public class ConfigurableModuleTest {
 
 	@Test
 	public void testGetFilters() {
-		assertThat(module.getFilters(ServerData.builder().resources(ImmutableList.of()).build()),is(this.filters));
+		assertThat(module.getFilters(ServerData.builder().resources(ImmutableList.of()).build()).size(),
+				is(2  ));
 	}
+	@Test
+	public void testGetFiltersReset() {
+		assertThat(module.withResetAll(true).getFilters(ServerData.builder().resources(ImmutableList.of()).build()),is(this.filters));
+	}
+	
 	@Test
 	public void testGetFiltersUnchanged() {
 		assertThat(unchanged.getFilters(ServerData.builder().resources(ImmutableList.of()).build()).get("/*"),
@@ -139,8 +175,12 @@ public class ConfigurableModuleTest {
 	}
 
 	@Test
+	public void testGetSpringConfigurationClassesReset() {
+		assertThat(module.withResetAll(true).getSpringConfigurationClasses(),is(this.springConfigurationClasses));
+	}
+	@Test
 	public void testGetSpringConfigurationClasses() {
-		assertThat(module.getSpringConfigurationClasses(),is(this.springConfigurationClasses));
+		assertThat(module.getSpringConfigurationClasses(),hasItem(this.getClass()));
 	}
 	@Test
 	public void testGetSpringConfigurationClassesUnchanged() {
@@ -161,20 +201,24 @@ public class ConfigurableModuleTest {
 		assertThat(unchanged.withDefaultResources(this.defaultResources).getDefaultResources(),is(module.getDefaultResources()));
 	}
 
+	
 	@Test
 	public void testWithListeners() {
-		assertThat(unchanged.withListeners(this.listeners).getListeners(ServerData.builder().resources(ImmutableList.of()).build()),is(module.getListeners(ServerData.builder().resources(ImmutableList.of()).build())));
+		assertThat(unchanged.withListeners(this.listeners).getListeners(ServerData.builder().resources(ImmutableList.of()).build()).size(),
+				is(module.getListeners(ServerData.builder().resources(ImmutableList.of()).build()).size()));
 	}
 
+	
 	@Test
 	public void testWithFilters() {
-		assertThat(unchanged.withFilters(this.filters).getFilters(ServerData.builder().resources(ImmutableList.of()).build()),is(module.getFilters(ServerData.builder().resources(ImmutableList.of()).build())));
+		assertThat(unchanged.withFilters(this.filters).getFilters(ServerData.builder().resources(ImmutableList.of()).build()).size(),
+				is(module.getFilters(ServerData.builder().resources(ImmutableList.of()).build()).size()));
 	}
 
 	@Test
 	public void testWithServlets() {
-		assertThat(unchanged.withServlets(this.servlets).getServlets(ServerData.builder().resources(ImmutableList.of()).build()),
-				is(m.getServlets(ServerData.builder().resources(ImmutableList.of()).build())));
+		assertThat(unchanged.withServlets(this.servlets).getServlets(ServerData.builder().resources(ImmutableList.of()).build()).size(),
+				is(m.getServlets(ServerData.builder().resources(ImmutableList.of()).build()).size()));
 
 	}
 
