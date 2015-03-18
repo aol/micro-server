@@ -1,10 +1,15 @@
 package com.aol.micro.server.servers.model;
 
+import static org.jooq.lambda.tuple.Tuple.tuple;
+
 import java.util.List;
+
+import javax.ws.rs.Path;
 
 import lombok.Getter;
 import lombok.experimental.Builder;
 
+import org.jooq.lambda.tuple.Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -36,10 +41,11 @@ public class ServerData {
 		this.baseUrlPattern = baseUrlPattern;
 	}
 
-	public void logResources() {
+	public void logResources(String url) {
 		
 		logger.info("Configured resource classes :-");
-		resources.stream().forEach(resource -> logger.info(resource.getClass().getName()));
+		resources.stream().map(resource -> tuple(resource.getClass().getName(), resource.getClass().getAnnotation(Path.class).value()))
+								.forEach(t -> logger.info(t.v1 + " : " + url  + t.v2 ));
 		
 
 	}

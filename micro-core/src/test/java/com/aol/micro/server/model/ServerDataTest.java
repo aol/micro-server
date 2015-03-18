@@ -37,11 +37,19 @@ public class ServerDataTest {
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void testLog(){
+	public void testLogNull(){
 		
 		serverData = new ServerData(8080,  Lists.newArrayList((Object)null), rootContext, "url", 
 				()->"context");
-		serverData.logResources();
+		serverData.logResources("url");
+		
+	}
+	
+	@Test
+	public void testLog(){
+		
+		
+		serverData.logResources("http://localhost:8080/hello");
 		
 	}
 
