@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Builder;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -39,7 +39,7 @@ public class DataSourceBuilder {
 		if (!"org.hibernate.dialect.HSQLDialect".equals(env.getDialect())) {
 			ds.setTestOnBorrow(true);
 			ds.setValidationQuery("SELECT 1");
-			ds.setMaxActive(maxActive);
+			ds.setMaxTotal(maxActive);
 			ds.setMinEvictableIdleTimeMillis(1800000);
 			ds.setTimeBetweenEvictionRunsMillis(1800000);
 			ds.setNumTestsPerEvictionRun(3);
