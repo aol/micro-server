@@ -5,7 +5,6 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +12,6 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import app.servlet.com.aol.micro.server.ServletStatusResource;
 
-import com.aol.micro.server.module.Module;
-import com.aol.micro.server.rest.swagger.SwaggerInitializer;
 import com.aol.micro.server.servers.model.ServerData;
 import com.google.common.collect.Lists;
 
@@ -37,6 +34,15 @@ public class ServerDataTest {
 		assertThat(serverData.getRootContext(), is(rootContext));
 		assertThat(serverData.getModule().getContext(), is("context"));
 		assertThat(serverData.getPort(), is(8080));
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void testLog(){
+		
+		serverData = new ServerData(8080,  Lists.newArrayList((Object)null), rootContext, "url", 
+				()->"context");
+		serverData.logResources();
+		
 	}
 
 	

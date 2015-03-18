@@ -5,6 +5,8 @@ import java.util.List;
 import lombok.Getter;
 import lombok.experimental.Builder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
 import com.aol.micro.server.module.Module;
@@ -13,6 +15,8 @@ import com.google.common.collect.ImmutableList;
 @Getter
 @Builder
 public class ServerData {
+	
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private final int port;
 
@@ -30,6 +34,14 @@ public class ServerData {
 		this.resources = ImmutableList.copyOf(resources);
 		this.rootContext = rootContext;
 		this.baseUrlPattern = baseUrlPattern;
+	}
+
+	public void logResources() {
+		
+		logger.info("Configured resource classes :-");
+		resources.stream().forEach(resource -> logger.info(resource.getClass().getName()));
+		
+
 	}
 
 	
