@@ -3,8 +3,8 @@ package com.aol.micro.server.model;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+
+import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,19 +37,26 @@ public class ServerDataTest {
 	}
 	
 	@Test(expected=NullPointerException.class)
-	public void testLogNull(){
+	public void testExtractNull(){
 		
 		serverData = new ServerData(8080,  Lists.newArrayList((Object)null), rootContext, "url", 
 				()->"context");
-		serverData.logResources("url");
+		serverData.extractResources();
 		
 	}
 	
 	@Test
-	public void testLog(){
+	public void testExtractResourceClassName(){
 		
 		
-		serverData.logResources("http://localhost:8080/hello");
+		assertThat(serverData.extractResources().collect(Collectors.toList()).get(0).v1,is(ServletStatusResource.class.getName()));
+		
+	}
+	@Test
+	public void testExtractResourcePath(){
+		
+		
+		assertThat(serverData.extractResources().collect(Collectors.toList()).get(0).v2,is("/servlet"));
 		
 	}
 
