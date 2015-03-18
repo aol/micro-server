@@ -77,7 +77,6 @@ subprojects {
 		compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version:'2.2.3'
 		compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version:'2.5.1'
 		compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version:'2.5.1'
-		compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version:'2.5.1'
 		compile(group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version:'2.5.1') {
 			exclude(module: 'jackson-xc')
 			exclude(module: 'jackson-core-asl')
