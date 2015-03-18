@@ -22,7 +22,9 @@ public class MicroserverConfigurer implements Configurer {
 		Map<String, String> properties = buildProperties(microserver);
 		
 		return Config.instance().withEntityScan(microserver.entityScan()).withClasses(ImmutableSet.copyOf(classes))
-				.withPropertiesName(microserver.propertiesName()).withProperties(ImmutableMap.copyOf(properties)).set();
+				.withPropertiesName(microserver.propertiesName())
+				.withAllowCircularReferences(microserver.allowCircularDependencies())
+				.withProperties(ImmutableMap.copyOf(properties)).set();
 	}
 
 	private Map<String, String> buildProperties(Microserver microserver) {

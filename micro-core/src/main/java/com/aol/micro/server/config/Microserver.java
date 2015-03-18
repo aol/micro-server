@@ -49,5 +49,10 @@ public @interface Microserver {
 	String[] properties() default {};
 	
 	
+	/**
+	 * @return true if the spring context should allow circular dependencies
+	 * We recommend not to allow circular dependencies
+	 */
+	boolean allowCircularDependencies() default false;
 	
 }
