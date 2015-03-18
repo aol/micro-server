@@ -62,7 +62,7 @@ public class MyRestEndPoint {
 	@Path("/create")
 	@ApiOperation(value = "Create db entity", response = String.class)
 	public String createEntity() {
-		dao.update("insert into t_jdbc VALUES (1,'hello','world',1)");
+		dao.getJdbc().update("insert into t_jdbc VALUES (1,'hello','world',1)");
 	
 		return "ok";
 	}
@@ -72,7 +72,7 @@ public class MyRestEndPoint {
 	@Path("/get")
 	@ApiOperation(value = "Query for single entity", response = Entity.class)
 	public Entity get() {
-		return dao.<Entity>queryForObject("select * from t_jdbc",new BeanPropertyRowMapper(Entity.class));
+		return dao.getJdbc().<Entity>queryForObject("select * from t_jdbc",new BeanPropertyRowMapper(Entity.class));
 	}
 	
 	@GET

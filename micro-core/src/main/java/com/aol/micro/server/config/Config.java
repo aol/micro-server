@@ -38,6 +38,7 @@ public class Config {
 	private final String propertiesName;
 	private final ImmutableMap<String,List<String>> dataSources;
 	private final SSLProperties sslProperties;
+	private final boolean allowCircularReferences;
 	
 	
 	public Config() {
@@ -47,6 +48,8 @@ public class Config {
 		defaultDataSourceName="db";
 		propertiesName = "application.properties";
 		sslProperties = null;
+		allowCircularReferences = false;
+
 	}
 
 	private static volatile Config instance = null;
