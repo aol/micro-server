@@ -29,8 +29,8 @@ public class HashMapBuilder {
 			build.put(key, value);
 		}
 		public Builder(Map<K,V> map) {
-			build = new HashMap<K, V>();
-			build.putAll(map);
+			build = new HashMap<K, V>(map);
+			
 		}
 		
 		public Builder<K, V> putAll(Map<K,V> map){
