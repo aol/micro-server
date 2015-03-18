@@ -49,7 +49,17 @@ public class MicroserverConfigurerTest {
 				hasItem(Integer.class));
 		
 	}
-	
+
+	@Test
+	public void circularReferences() {
+		Config config = configurer.buildConfig(MicroserverConfigurerTest.class);
+			assertFalse(config.isAllowCircularReferences());
+		config = configurer.buildConfig(MicroserverConfigurerTest.class)
+												.withAllowCircularReferences(true);
+
+		assertTrue(config.isAllowCircularReferences());
+
+	}
 	
 
 }

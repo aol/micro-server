@@ -36,7 +36,7 @@ class SpringApplicationConfigurator implements SpringBuilder {
 	
 		logger.debug("Configuring Spring");
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-		rootContext.setAllowCircularReferences(false);
+		rootContext.setAllowCircularReferences(config.isAllowCircularReferences());
 		rootContext.register(classes);
 		
 		Optional<Package> basePackage = Stream.of(classes)
