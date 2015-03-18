@@ -1,8 +1,10 @@
 package com.aol.micro.server.module;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -12,8 +14,12 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.Builder;
 import lombok.experimental.Wither;
 
-import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.servers.model.ServerData;
+import com.aol.micro.server.utility.HashMapBuilder;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 
 
 @Builder
@@ -31,11 +37,30 @@ public class ConfigurableModule implements Module{
 	private final String context;
 	private final Set<Class> springConfigurationClasses;
 	private final Map<String,String> propertyOverrides;
+	private final List<String> defaultJaxRsPackages;
+	private final boolean resetAll;
 	
+	@Override
+	public List<String> getDefaultJaxRsPackages() {
+		if(defaultJaxRsPackages!=null)
+			return ImmutableList.copyOf(Iterables.concat(defaultJaxRsPackages,extract(()->Module.super.getDefaultJaxRsPackages())));
+		
+		return Module.super.getDefaultJaxRsPackages();
+	}
+	private <T> Collection<T> extract(Supplier<Collection<T>> s) {
+		if(!resetAll)
+			return s.get();
+		return ImmutableList.of();
+	}
+	private <K,V> Map<K,V> extractMap(Supplier<Map<K,V>> s) {
+		if(!resetAll)
+			return s.get();
+		return ImmutableMap.of();
+	}
 	@Override
 	public List<Class> getRestResourceClasses() {
 		if(restResourceClasses!=null)
-			return restResourceClasses;
+			return  ImmutableList.copyOf(Iterables.concat(restResourceClasses,extract(()->Module.super.getRestResourceClasses())));
 		
 		return Module.super.getRestResourceClasses();
 	}
@@ -43,28 +68,32 @@ public class ConfigurableModule implements Module{
 	@Override
 	public List<Class> getDefaultResources() {
 		if(this.defaultResources!=null)
-			return this.defaultResources;
+			return  ImmutableList.copyOf(Iterables.concat(this.defaultResources, extract(()->Module.super.getDefaultResources())));
+			
 		return Module.super.getDefaultResources();
 	}
 
 	@Override
 	public List<ServletContextListener> getListeners(ServerData data) {
 		if(listeners!=null)
-			return listeners;
+			return  ImmutableList.copyOf(Iterables.concat(this.listeners, extract(()->Module.super.getListeners(data))));
+		
 		return Module.super.getListeners(data);
 	}
 	
 	@Override
 	public Map<String, Filter> getFilters(ServerData data) {
 		if(filters!=null)
-			return filters;
+			return  HashMapBuilder.from(filters).putAll(extractMap(()->Module.super.getFilters(data))).build();
+			
 		return Module.super.getFilters(data);
 	}
 
 	@Override
 	public Map<String, Servlet> getServlets(ServerData data) {
 		if(servlets!=null)
-			return servlets;
+			return  HashMapBuilder.from(servlets).putAll(extractMap(()->Module.super.getServlets(data))).build();
+			
 		return Module.super.getServlets(data);
 	}
 
@@ -91,7 +120,8 @@ public class ConfigurableModule implements Module{
 	@Override
 	public Set<Class> getSpringConfigurationClasses() {
 		if(this.springConfigurationClasses!=null)
-			return this.springConfigurationClasses;
+			return ImmutableSet.copyOf(Iterables.concat(this.springConfigurationClasses, extract(()->Module.super.getSpringConfigurationClasses())));
+			
 		return Module.super.getSpringConfigurationClasses();
 	}
 
