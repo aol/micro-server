@@ -16,7 +16,7 @@ subprojects {
 	apply plugin: 'com.bmuschko.nexus'
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
-	version = '0.5'
+	version = '0.51'
 	jar {
 		manifest {
 			attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
