@@ -16,6 +16,7 @@ import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.accesslog.AccessLogBuilder;
 import org.glassfish.grizzly.servlet.ServletRegistration;
 import org.glassfish.grizzly.servlet.WebappContext;
+import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,6 +86,10 @@ public class GrizzlyApplication  implements ServerApplication {
 					.getModule().getContext(), serverData.getPort());
 			logger.info("Browse to http://localhost:{}/{}/application.wadl",
 					serverData.getPort(), serverData.getModule().getContext());
+			logger.info("Configured resource classes :-");
+			serverData.extractResources()
+						.forEach(t -> logger.info(t.v1 + " : " + "http://localhost:"+serverData.getPort()
+													+"/"+serverData.getModule().getContext() + t.v2 ));;
 			httpServer.start();
 			start.complete(true);
 			end.get();
