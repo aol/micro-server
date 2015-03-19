@@ -27,7 +27,9 @@ public class ServletContextListenerConfigurer {
 		serverData.getRootContext()
 				.getBeansOfType(ServletContextListener.class)
 				.values()
+				
 				.stream()
+				
 				.peek(this::logListener)
 				.forEach(listener -> webappContext.addListener(listener));
 		listenerData.forEach(it -> webappContext.addListener(it));
