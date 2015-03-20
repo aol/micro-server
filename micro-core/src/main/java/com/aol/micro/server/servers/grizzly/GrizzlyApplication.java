@@ -106,8 +106,7 @@ public class GrizzlyApplication implements ServerApplication {
 		try {
 			String accessLogLocation = serverData.getRootContext().getBean(AccessLogLocationBean.class).getAccessLogLocation();
 
-			accessLogLocation = accessLogLocation
-					+ serverData.getModule().getContext().substring(0, serverData.getModule().getContext().indexOf("/")) + "-access.log";
+			accessLogLocation = accessLogLocation + replaceSlash(serverData.getModule().getContext()) + "-access.log";
 			final AccessLogBuilder builder = new AccessLogBuilder(accessLogLocation);
 
 			builder.rotatedDaily();
@@ -144,8 +143,14 @@ public class GrizzlyApplication implements ServerApplication {
 	}
 
 	private void addListeners(WebappContext webappContext) {
-
 		new ServletContextListenerConfigurer(serverData, servletContextListenerData).addListeners(webappContext);
+	}
+
+	private String replaceSlash(String context) {
+		if (context != null && context.contains("/")) {
+			return context.substring(0, context.indexOf("/"));
+		}
+		return context;
 	}
 
 }
