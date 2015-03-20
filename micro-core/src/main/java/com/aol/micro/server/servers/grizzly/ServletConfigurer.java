@@ -43,15 +43,20 @@ public class ServletConfigurer {
 
 	private void addExplicitlyDeclaredServlets(WebappContext webappContext) {
 		for (ServletData servletData : servletData) {
-			ServletRegistration filterReg = webappContext.addServlet(
+			ServletRegistration servletReg = webappContext.addServlet(
 					servletData.getServletName(), servletData.getServlet());
-			filterReg.addMapping(servletData.getMapping());
+			servletReg.addMapping(servletData.getMapping());
+			logServlet(servletData);
 		}
 	}
 
+	private void logServlet(ServletData servlet) {
+		logger.info("Registering {} servlet on {}",servlet.getServlet().getClass().getName(), servlet.getMapping());
+		
+	}
+
 	private void logServlet(ServletConfiguration servlet) {
-		logger.info("Registering servlet on " + servlet.getMapping()[0]);
-		;
+		logger.info("Registering {} servlet on {}",servlet.getClass().getName(), servlet.getMapping()[0]);
 	}
 
 	private Class<? extends Servlet> getServlet(ServletConfiguration servlet) {
