@@ -20,7 +20,7 @@ import com.aol.micro.server.testing.RestAgent;
 
 @Rest
 @Path("/single")
-public class MinimalClassTest implements RestResource{
+public class MinimalClassTest {
 
 	RestAgent rest = new RestAgent();
 	
