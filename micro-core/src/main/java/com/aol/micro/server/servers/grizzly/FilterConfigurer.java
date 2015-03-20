@@ -9,15 +9,19 @@ import lombok.AllArgsConstructor;
 
 import org.glassfish.grizzly.servlet.FilterRegistration;
 import org.glassfish.grizzly.servlet.WebappContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.aol.micro.server.auto.discovery.FilterConfiguration;
+import com.aol.micro.server.auto.discovery.ServletConfiguration;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
+import com.aol.micro.server.servers.model.ServletData;
 import com.google.common.collect.ImmutableList;
 
 @AllArgsConstructor
 public class FilterConfigurer {
-
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final ServerData serverData;
 	private final ImmutableList<FilterData> filterData;
 	
@@ -33,6 +37,8 @@ public class FilterConfigurer {
 				.getRootContext()
 				.getBeansOfType(FilterConfiguration.class)
 				.values()
+				.stream()
+				.peek(this::logFilter)
 				.forEach(
 						filter -> setInitParameters(
 								webappContext.addFilter(getName(filter),
@@ -49,7 +55,16 @@ public class FilterConfigurer {
 			filterReg.addMappingForUrlPatterns(
 					EnumSet.allOf(DispatcherType.class),
 					filterData.getMapping());
+			logFilter(filterData);
 		}
+	}
+	private void logFilter(FilterData filter) {
+		logger.info("Registering {} filter on {}",filter.getFilter().getClass().getName(), filter.getMapping());
+		
+	}
+
+	private void logFilter(FilterConfiguration filter) {
+		logger.info("Registering {} filter on {}",filter.getClass().getName(),filter.getMapping()[0]);
 	}
 
 	private Class<? extends Filter> getClass(FilterConfiguration filter) {
