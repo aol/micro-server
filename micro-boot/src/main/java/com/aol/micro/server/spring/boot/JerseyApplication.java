@@ -67,16 +67,7 @@ public class JerseyApplication extends SpringBootServletInitializer {
 		return new AccessLogLocationBean(location);
 	}
 
-	@Bean
-	public Environment createEnvironment(ApplicationContext rootContext) {
-		Properties props = (Properties) rootContext.getBean("propertyFactory");
-		Map<String, ModuleBean> moduleDefinitions = rootContext
-				.getBeansOfType(ModuleBean.class);
-		if (moduleDefinitions == null)
-			return new Environment(props);
-		return new Environment(props, moduleDefinitions.values());
 
-	}
 
 	public DAOProvider buildDAOProvider(
 			AnnotationConfigWebApplicationContext rootContext,
