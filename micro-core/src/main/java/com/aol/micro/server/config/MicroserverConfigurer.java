@@ -15,13 +15,23 @@ public class MicroserverConfigurer implements Configurer {
 
 	public Config buildConfig(Class class1) {
 		Microserver microserver = (Microserver) class1.getAnnotation(Microserver.class);
-		if (microserver == null)
-			return Config.instance();
+		
+		 
+		if (microserver == null){
+			microserver = Microserver.Instance.class.getAnnotation(Microserver.class);
+			
+		}
+		String[] basePackages=microserver.basePackages();
+		if(basePackages.length==0){
+			String[] basePackagesFromClass ={class1.getPackage().getName()};
+			basePackages = basePackagesFromClass;
+		}
+		
 		List<Class> classes = buildClasses(class1, microserver);
 
 		Map<String, String> properties = buildProperties(microserver);
 
-		return Config.instance().withEntityScan(microserver.entityScan()).withClasses(ImmutableSet.copyOf(classes))
+		return Config.instance().withBasePackages(basePackages).withEntityScan(microserver.entityScan()).withClasses(ImmutableSet.copyOf(classes))
 				.withPropertiesName(microserver.propertiesName()).withInstancePropertiesName(microserver.instancePropertiesName())
 				.withAllowCircularReferences(microserver.allowCircularDependencies()).withProperties(ImmutableMap.copyOf(properties)).set();
 	}

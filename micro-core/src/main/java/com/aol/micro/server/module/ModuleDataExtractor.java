@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
+import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
@@ -27,6 +28,8 @@ public class ModuleDataExtractor {
 		
 			List resources = Lists.newArrayList();
 			module.getRestResourceClasses().forEach(it -> resources.addAll(rootContext.getBeansOfType(it).values()));
+			System.out.println(module.getRestAnnotationClasses());
+			System.out.println("resources " + rootContext.getBeansWithAnnotation(Rest.class));
 			module.getRestAnnotationClasses().forEach(it -> resources.addAll(rootContext.getBeansWithAnnotation(it).values()));
 			return ImmutableList.copyOf(resources);
 		

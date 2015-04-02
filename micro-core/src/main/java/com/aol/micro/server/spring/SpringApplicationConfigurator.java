@@ -35,12 +35,8 @@ class SpringApplicationConfigurator implements SpringBuilder {
 		rootContext.setAllowCircularReferences(config.isAllowCircularReferences());
 		rootContext.register(classes);
 
-		Optional<Package> basePackage = Stream.of(classes).filter(cl -> cl.getAnnotation(Microserver.class) != null).map(cl -> cl.getPackage())
-				.findAny();
-		basePackage.ifPresent(base -> rootContext.scan(Stream.of(classes).map(cl -> cl.getAnnotation(Microserver.class)).filter(ano -> ano != null)
-				.map(ano -> ((Microserver) ano).basePackages())
-				.map(packages -> UsefulStaticMethods.eitherArray(packages, new String[] { base.getName() })).findFirst().get()));
-
+		
+		rootContext.scan(config.getBasePackages());
 		rootContext.refresh();
 		logger.debug("Configuring Additional Spring Beans");
 		ConfigurableListableBeanFactory beanFactory = ((ConfigurableApplicationContext) rootContext).getBeanFactory();

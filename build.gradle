@@ -15,7 +15,7 @@ buildscript {
 }
 
 
-String jerseyVersion  = '2.17' //2.5.1
+String jerseyVersion  = '2.17' 
 String grizzlyVersion  = '2.3.19'
 
 apply plugin: 'com.github.lkishalmi.bill-of-materials'
@@ -27,9 +27,8 @@ subprojects {
 	apply plugin: 'com.bmuschko.nexus'
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
-	version = '0.53.5'
+	version = '0.54'
 
-//	jerseyVersion = '2.17' //2.5.1
 	jar {
 		manifest {
 			attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
@@ -57,9 +56,7 @@ subprojects {
 		compile ('com.ryantenney.metrics:metrics-spring:3.0.3'){
 			exclude(module: 'org.springframework')
 		}
-		compile ('net.javacrumbs.future-converter:future-converter-spring-java8:0.1.0'){
-			exclude(module: 'org.springframework')
-		}
+	
 		compile group: 'com.aol.simplereact', name:'simple-react', version:'0.83'
 		compile group: 'org.apache.httpcomponents', name:'httpclient', version:'4.4'
 		compile group: 'org.apache.httpcomponents', name:'httpasyncclient', version:'4.1-beta1'
@@ -104,8 +101,8 @@ subprojects {
 		compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.5.4'
 		compile group: 'org.glassfish.grizzly', name: 'grizzly-http-server', version:"$grizzlyVersion"
 		compile group: 'org.glassfish.grizzly', name: 'grizzly-http-all', version:"$grizzlyVersion"
-		compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-http', version:'2.3'
-		compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-servlet', version:'2.3'
+		compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-http', version:"$jerseyVersion"
+		compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-servlet', version:"$jerseyVersion"
 		compile "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion"
 		compile "org.glassfish.jersey.ext:jersey-bean-validation:$jerseyVersion"
 	//	testCompile ('org.springframework:spring-jdbc-roma:1.0.0-RELEASE'){

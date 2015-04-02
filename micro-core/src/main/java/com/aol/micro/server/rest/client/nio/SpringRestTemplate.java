@@ -1,6 +1,5 @@
 package com.aol.micro.server.rest.client.nio;
 
-import static net.javacrumbs.futureconverter.springjava.FutureConverter.toCompletableFuture;
 
 import java.net.URI;
 import java.util.Map;
@@ -15,13 +14,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.client.AsyncRequestCallback;
 import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 
 import com.aol.micro.server.rest.JacksonUtil;
-
 
 public class SpringRestTemplate {
 
@@ -58,8 +58,6 @@ public class SpringRestTemplate {
 
 		return toCompletableFuture(template.headForHeaders(url, uriVariables));
 	}
-
-	
 
 	public CompletableFuture<HttpHeaders> headForHeaders(String url,
 			Map<String, ?> uriVariables) throws RestClientException {
@@ -227,11 +225,40 @@ public class SpringRestTemplate {
 
 	public SpringRestTemplate(AsyncRestTemplate template) {
 		super();
-		
+
 		this.template = template;
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
 		converter.setObjectMapper(JacksonUtil.getMapper());
 		template.getMessageConverters().add(converter);
 	}
+
+	<T> CompletableFuture<T> toCompletableFuture(
+			final ListenableFuture<T> listenableFuture) {
+		// create an instance of CompletableFuture
+		CompletableFuture<T> completable = new CompletableFuture<T>() {
+			@Override
+			public boolean cancel(boolean mayInterruptIfRunning) {
+				// propagate cancel to the listenable future
+				boolean result = listenableFuture.cancel(mayInterruptIfRunning);
+				super.cancel(mayInterruptIfRunning);
+				return result;
+			}
+		};
+
+		// add callback
+		listenableFuture.addCallback(new ListenableFutureCallback<T>() {
+			@Override
+			public void onSuccess(T result) {
+				completable.complete(result);
+			}
+
+			@Override
+			public void onFailure(Throwable t) {
+				completable.completeExceptionally(t);
+			}
+		});
+		return completable;
+	}
+
 
 }

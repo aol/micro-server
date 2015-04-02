@@ -18,7 +18,7 @@ import com.aol.micro.server.rest.client.nio.RestClient;
 import com.aol.micro.server.testing.RestAgent;
 import com.google.common.collect.ImmutableMap;
 
-@Microserver
+//@Microserver
 public class JdbcRunnerTest {
 
   	private final RestClient<JdbcEntity> listClient = new RestClient(1000,1000).withResponse(JdbcEntity.class);

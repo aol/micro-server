@@ -87,6 +87,10 @@ public class MicroserverApp {
 	public MicroserverApp(Config config, Module... modules) {
 
 		this.modules = Lists.newArrayList(modules);
+		if(config.getBasePackages().length==0){
+			String[] packages = {extractClass().getPackage().getName()};
+			config = config.withBasePackages(packages);
+		}
 		config.set();
 		springContext = new SpringContextFactory(config,
 				modules[0].getSpringConfigurationClasses())

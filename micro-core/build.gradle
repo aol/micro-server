@@ -12,7 +12,7 @@ modifyPom {
 
 		groupId 'com.aol.microservices'
 		artifactId 'microserver-core'
-		version '0.53.5'
+		version '0.54'
 		
 		dependencyManagement {
 			dependencies{

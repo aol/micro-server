@@ -37,6 +37,7 @@ public class Config {
 	private final ImmutableMap<String, List<String>> dataSources;
 	private final SSLProperties sslProperties;
 	private final boolean allowCircularReferences;
+	private final String[] basePackages;
 
 	public Config() {
 		classes = ImmutableSet.of();
@@ -47,6 +48,7 @@ public class Config {
 		instancePropertiesName = "instance.properties";
 		sslProperties = null;
 		allowCircularReferences = false;
+		basePackages=new String[0];
 
 	}
 

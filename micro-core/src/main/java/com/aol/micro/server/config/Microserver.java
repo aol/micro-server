@@ -58,4 +58,6 @@ public @interface Microserver {
 	 */
 	boolean allowCircularDependencies() default false;
 
+	@Microserver
+	static class Instance{}
 }
