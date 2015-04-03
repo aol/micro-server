@@ -3,6 +3,12 @@
 
 Microserver is a zero configuration, standards based, battle hardened library to run Java Rest Microservices via a standard Java main class. It has been used in production in AOL since July 2014.
 
+## Build status
+
+
+![Build health](https://travis-ci.org/aol/micro-server.svg)
+
+
 ##Goal
 
 To make developing, debuging and deploying Java microservices simple.
