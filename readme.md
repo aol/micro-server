@@ -8,7 +8,7 @@ Microserver is a zero configuration, standards based, battle hardened library to
 
 ![Build health](https://travis-ci.org/aol/micro-server.svg)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-core)
-[![Maven Central]](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-boot)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-boot)
 
 
 
