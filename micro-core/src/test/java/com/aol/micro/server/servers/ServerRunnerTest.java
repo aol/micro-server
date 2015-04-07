@@ -22,8 +22,8 @@ public class ServerRunnerTest {
 	private GrizzlyApplication serverApplication1;
 	private GrizzlyApplication serverApplication2;
 	private ServerData[] registered;
-	int server1Count =0;
-	int server2Count =0;
+	volatile int server1Count =0;
+	volatile int server2Count =0;
 	@Before
 	public void setUp() {
 		
@@ -35,14 +35,16 @@ public class ServerRunnerTest {
 
 		serverApplication1 = new GrizzlyApplication(AllData.builder().serverData(data1).build()){
 			public void run(CompletableFuture start,CompletableFuture end) {
-				start.complete(true);
 				server1Count++;
+				start.complete(true);
+				
 			}
 		};
 		serverApplication2 =  new GrizzlyApplication(AllData.builder().serverData(data2).build()){
 			public void run(CompletableFuture start,CompletableFuture end) {
-				start.complete(true);
 				server2Count++;
+				start.complete(true);
+				
 			}
 		};
 
