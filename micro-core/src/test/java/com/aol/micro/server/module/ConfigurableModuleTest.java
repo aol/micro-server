@@ -2,18 +2,20 @@ package com.aol.micro.server.module;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 
+import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,6 +42,7 @@ public class ConfigurableModuleTest {
 	private List<String> defaultJaxRsPackages;
 	
 	private Module m = () -> "module";
+	Consumer<HttpServer> serverConfigManager = server-> {};
 	@Before
 	public void setup(){
 		
@@ -55,7 +58,9 @@ public class ConfigurableModuleTest {
 		servlets = new HashMap<>();
 		springConfigurationClasses = ImmutableSet.of(this.getClass());
 		
+		
 		module = ConfigurableModule.builder()
+									.serverConfigManager(serverConfigManager )
 									.defaultJaxRsPackages(defaultJaxRsPackages)
 									.context(context)
 									.defaultResources(defaultResources)
@@ -71,6 +76,19 @@ public class ConfigurableModuleTest {
 		unchanged = ConfigurableModule.builder()
 										.context("unchanged")
 										.build();				
+	}
+	@Test
+	public void testGetServerConfigManager() {
+		assertThat(module.withResetAll(true).getServerConfigManager(),is(serverConfigManager));
+	}
+	@Test
+	public void testGetServerConfigManagerNull() {
+		try {
+		module.withServerConfigManager(null)
+							.getServerConfigManager().accept(null);
+		}catch(Exception e){
+			fail(e.getMessage());
+		}
 	}
 	@Test
 	public void testGetRestResourceClassesResetAll() {

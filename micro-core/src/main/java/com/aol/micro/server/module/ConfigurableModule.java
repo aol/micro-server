@@ -4,11 +4,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
+
+import org.glassfish.grizzly.http.server.HttpServer;
 
 import lombok.AllArgsConstructor;
 import lombok.experimental.Builder;
@@ -38,7 +41,16 @@ public class ConfigurableModule implements Module{
 	private final Set<Class> springConfigurationClasses;
 	private final Map<String,String> propertyOverrides;
 	private final List<String> defaultJaxRsPackages;
+	private final Consumer<HttpServer> serverConfigManager;
 	private final boolean resetAll;
+	
+	@Override
+	public Consumer<HttpServer> getServerConfigManager(){
+		if(serverConfigManager!=null)
+			return serverConfigManager;
+		
+		return Module.super.getServerConfigManager();
+	}
 	
 	@Override
 	public List<String> getDefaultJaxRsPackages() {

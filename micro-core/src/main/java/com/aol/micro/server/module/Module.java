@@ -5,11 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 
+import org.glassfish.grizzly.http.server.HttpServer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -32,6 +34,9 @@ import com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider;
 
 public interface Module {
 	
+	default Consumer<HttpServer> getServerConfigManager(){
+		return server->{};
+	}
 	default List<String> getPackages(){
 		return ImmutableList.of();
 	}
