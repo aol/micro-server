@@ -1,11 +1,15 @@
 package com.aol.micro.server.module;
 
+import java.net.InetAddress;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+import org.jooq.lambda.fi.util.function.CheckedSupplier;
+
+import com.aol.simple.react.exceptions.ExceptionSoftener;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
@@ -34,10 +38,19 @@ public class Environment {
 		if (!modulePort.containsKey(module.getContext())) {
 			Map<String, ModuleBean> builder = Maps.newHashMap();
 			builder.putAll(modulePort);
-			builder.put(module.getContext(), ModuleBean.builder().port(getPort(module)).build());
+			builder.put(module.getContext(), ModuleBean.builder().host(getHost(module)).port(getPort(module)).build());
 			modulePort = ImmutableMap.copyOf(builder);
 		}
 
+	}
+
+	private String getHost(Module module) {
+		CheckedSupplier<String> s = ()->InetAddress.getLocalHost().getHostName();
+		try{
+			return Optional.ofNullable(properties.get(module.getContext() + ".host")).orElse(s.get()).toString();
+		}catch(Throwable e){
+			 throw new RuntimeException(e);
+		}
 	}
 
 	private int getPort(Module module) {
