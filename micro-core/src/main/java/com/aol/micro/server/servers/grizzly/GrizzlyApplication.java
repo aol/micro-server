@@ -69,7 +69,7 @@ public class GrizzlyApplication implements ServerApplication {
 		addListeners(webappContext);
 
 		HttpServer httpServer = HttpServer.createSimpleServer(null, "0.0.0.0", serverData.getPort());
-
+		serverData.getModule().getServerConfigManager().accept(httpServer);
 		addAccessLog(httpServer);
 		if (SSLProperties != null)
 			this.createSSLListener(serverData.getPort());
