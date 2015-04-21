@@ -5,11 +5,8 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot:1.2.1.RELEASE'
 	compile 'org.springframework.boot:spring-boot-autoconfigure:1.2.1.RELEASE'
 	//compile project(':micro-core')
-<<<<<<< HEAD
 	 compile group: 'com.aol.microservices', name:'microserver-core', version:'0.55'
-=======
-	 compile group: 'com.aol.microservices', name:'microserver-core', version:'0.54'
->>>>>>> 3521be673c00ffe96533acc6ff62127cc80bc0a7
+
 
 }
 
