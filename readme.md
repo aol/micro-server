@@ -29,9 +29,9 @@ To make developing, debuging and deploying Java microservices simple.
 
 [Example Apps : Microserver Boot](https://github.com/aol/micro-server/tree/master/micro-boot/src/test/java/app)
 
-[Java Doc : Microserver Core](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.54)
+[Java Doc : Microserver Core](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.55)
 
-[Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.54)
+[Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.55)
 
 ##Getting started
 
@@ -52,7 +52,7 @@ Microserver core
     <dependency>
       <groupId>com.aol.microservices</groupId>
       <artifactId>microserver-core</artifactId>
-      <version>0.54</version>
+      <version>0.55</version>
     </dependency>
     
 Microserver Spring Boot 
@@ -60,7 +60,7 @@ Microserver Spring Boot
     <dependency>
       <groupId>com.aol.microservices</groupId>
       <artifactId>microserver-boot</artifactId>
-      <version>0.54</version>
+      <version>0.55</version>
     </dependency>
 
 
@@ -69,11 +69,11 @@ Microserver Spring Boot
 
 Microserver core 
 	
-	 compile group: 'com.aol.microservices', name:'microserver-core', version:'0.54'
+	 compile group: 'com.aol.microservices', name:'microserver-core', version:'0.55'
 	 
 Microserver Spring Boot 
 	 
-	  compile group: 'com.aol.microservices', name:'microserver-boot', version:'0.54'
+	  compile group: 'com.aol.microservices', name:'microserver-boot', version:'0.55'
 
 ##Tech Stack
 
