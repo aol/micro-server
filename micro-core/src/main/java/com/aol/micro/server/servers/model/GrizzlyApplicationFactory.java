@@ -36,8 +36,12 @@ public class GrizzlyApplicationFactory {
 		List<FilterData> filterDataList = extractor.createFilteredDataList(serverData);
 		List<ServletData> servletDataList = extractor.createServletDataList(serverData);
 
-		GrizzlyApplication app = new GrizzlyApplication(new AllData(serverData,
-				filterDataList, servletDataList,module.getListeners(serverData)));
+		GrizzlyApplication app = new GrizzlyApplication(
+				new AllData(serverData,
+							filterDataList,
+							servletDataList,
+							module.getListeners(serverData),
+							module.getRequestListeners(serverData)));
 		return app;
 	}
 }
