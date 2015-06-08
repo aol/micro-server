@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRequestListener;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 
@@ -33,6 +34,7 @@ public class ConfigurableModule implements Module{
 	private final List<Class> restResourceClasses;
 	private final List<Class> defaultResources;
 	private final List<ServletContextListener> listeners;
+	private final List<ServletRequestListener> requestListeners;
 	private final Map<String, Filter> filters;
 	private final Map<String, Servlet> servlets;
 	private final String jaxWsRsApplication;
@@ -72,7 +74,7 @@ public class ConfigurableModule implements Module{
 	@Override
 	public List<Class> getRestResourceClasses() {
 		if(restResourceClasses!=null)
-			return  ImmutableList.copyOf(Iterables.concat(restResourceClasses,extract(()->Module.super.getRestResourceClasses())));
+			return  ImmutableList.copyOf(Iterables.concat(restResourceClasses, extract(() -> Module.super.getRestResourceClasses())));
 		
 		return Module.super.getRestResourceClasses();
 	}
@@ -92,7 +94,16 @@ public class ConfigurableModule implements Module{
 		
 		return Module.super.getListeners(data);
 	}
-	
+
+	@Override
+	public List<ServletRequestListener> getRequestListeners(ServerData data) {
+		if(requestListeners!=null)
+			return  ImmutableList.copyOf(Iterables.concat(this.requestListeners,
+					                                      extract(()->Module.super.getRequestListeners(data))));
+
+		return Module.super.getRequestListeners(data);
+	}
+
 	@Override
 	public Map<String, Filter> getFilters(ServerData data) {
 		if(filters!=null)
