@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRequestListener;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.Before;
@@ -35,6 +36,7 @@ public class ConfigurableModuleTest {
 	private Map<String, Filter> filters;
 	private String jaxWsRsApplication;
 	private List<ServletContextListener> listeners;
+	private List<ServletRequestListener> requestListeners;
 	private String providers;
 	private List<Class> resourceClasses;
 	private Map<String, Servlet> servlets;
@@ -52,6 +54,7 @@ public class ConfigurableModuleTest {
 		filters =   ImmutableMap.of("/*1",new QueryIPRetriever());
 		jaxWsRsApplication = "jaxRsApp2";
 		listeners = m.getListeners(ServerData.builder().resources(ImmutableList.of()).build());
+		requestListeners = m.getRequestListeners(ServerData.builder().resources(ImmutableList.of()).build());
 		providers = "providers2";
 		Module m = () -> "hello";
 		resourceClasses =new ArrayList<>();
@@ -67,6 +70,7 @@ public class ConfigurableModuleTest {
 									.filters(filters)
 									.jaxWsRsApplication(jaxWsRsApplication)
 									.listeners(listeners)
+									.requestListeners(requestListeners)
 									.providers(providers)
 									.restResourceClasses(resourceClasses)
 									.servlets(servlets)
@@ -138,6 +142,20 @@ public class ConfigurableModuleTest {
 	public void testGetListenersUnchanged() {
 		assertThat(unchanged.getListeners(ServerData.builder().resources(ImmutableList.of()).build()).size() ,
 				is(m.getListeners(ServerData.builder().resources(ImmutableList.of()).build()).size()));
+	}
+	@Test
+	public void testGetRequestListeners() {
+		assertThat(module.getRequestListeners(ServerData.builder().resources(ImmutableList.of()).build()).size(),
+				is(m.getRequestListeners(ServerData.builder().resources(ImmutableList.of()).build()).size()*2)); //doubled
+	}
+	@Test
+	public void testGetRequestListenersReset() {
+		assertThat(module.withResetAll(true).getRequestListeners(ServerData.builder().resources(ImmutableList.of()).build()),is(this.requestListeners));
+	}
+	@Test
+	public void testGetRequestListenersUnchanged() {
+		assertThat(unchanged.getRequestListeners(ServerData.builder().resources(ImmutableList.of()).build()).size() ,
+				is(m.getRequestListeners(ServerData.builder().resources(ImmutableList.of()).build()).size()));
 	}
 
 	@Test

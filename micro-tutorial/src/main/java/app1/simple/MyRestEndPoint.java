@@ -18,7 +18,7 @@ import com.aol.micro.server.events.RequestEvents;
 import com.aol.micro.server.rest.JacksonUtil;
 import com.aol.micro.server.spring.datasource.jdbc.SQL;
 import com.aol.micro.server.web.filter.QueryIPRetriever;
-import com.aol.simple.react.stream.eager.EagerFutureStream;
+import com.aol.simple.react.stream.traits.EagerFutureStream;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
 import com.wordnik.swagger.annotations.Api;

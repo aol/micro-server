@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRequestListener;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -75,6 +76,9 @@ public interface Module {
 		list.add(new JerseySpringIntegrationContextListener(data));
 		list.add(new SwaggerInitializer(data));
 		return  ImmutableList.copyOf(list);
+	}
+	default List<ServletRequestListener> getRequestListeners(ServerData data){
+		return ImmutableList.of();
 	}
 	default Map<String,Filter> getFilters(ServerData data) {
 		return ImmutableMap.of("/*",new QueryIPRetriever());

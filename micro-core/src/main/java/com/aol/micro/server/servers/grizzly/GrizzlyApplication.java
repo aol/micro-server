@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRequestListener;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,7 @@ public class GrizzlyApplication implements ServerApplication {
 	private final ImmutableList<FilterData> filterData;
 	private final ImmutableList<ServletData> servletData;
 	private final ImmutableList<ServletContextListener> servletContextListenerData;
+	private final ImmutableList<ServletRequestListener> servletRequestListenerData;
 	@Wither
 	private final SSLProperties SSLProperties;
 
@@ -51,6 +53,7 @@ public class GrizzlyApplication implements ServerApplication {
 		this.filterData = serverData.getFilterDataList();
 		this.servletData = serverData.getServletDataList();
 		this.servletContextListenerData = serverData.getServletContextListeners();
+		this.servletRequestListenerData = serverData.getServletRequestListeners();
 		this.SSLProperties = null;
 	}
 
@@ -58,7 +61,7 @@ public class GrizzlyApplication implements ServerApplication {
 
 		WebappContext webappContext = new WebappContext("WebappContext", "");
 
-		new ServletContextListenerConfigurer(serverData, servletContextListenerData);
+		new ServletContextListenerConfigurer(serverData, servletContextListenerData,servletRequestListenerData);
 
 		addServlet(webappContext);
 
@@ -143,7 +146,7 @@ public class GrizzlyApplication implements ServerApplication {
 	}
 
 	private void addListeners(WebappContext webappContext) {
-		new ServletContextListenerConfigurer(serverData, servletContextListenerData).addListeners(webappContext);
+		new ServletContextListenerConfigurer(serverData, servletContextListenerData, servletRequestListenerData).addListeners(webappContext);
 	}
 
 	private String replaceSlash(String context) {
