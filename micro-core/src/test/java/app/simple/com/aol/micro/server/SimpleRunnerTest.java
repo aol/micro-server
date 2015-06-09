@@ -4,14 +4,17 @@ package app.simple.com.aol.micro.server;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
+import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver
@@ -22,8 +25,12 @@ public class SimpleRunnerTest {
 	MicroserverApp server;
 	@Before
 	public void startServer(){
-		
-		server = new MicroserverApp(()-> "simple-app");
+		server = new MicroserverApp(ConfigurableModule
+				.builder()
+				.context("simple-app")
+				.defaultResources(Arrays.asList(MultiPartFeature.class))
+				.build());
+	//	server = new MicroserverApp(()-> "simple-app");
 		server.start();
 
 	}

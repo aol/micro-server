@@ -27,7 +27,6 @@ subprojects {
 	apply plugin: 'com.bmuschko.nexus'
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
-	version = '0.56'
 
 	jar {
 		manifest {
@@ -103,6 +102,9 @@ subprojects {
 		compile group: 'org.glassfish.grizzly', name: 'grizzly-http-all', version:"$grizzlyVersion"
 		compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-http', version:"$jerseyVersion"
 		compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-servlet', version:"$jerseyVersion"
+		compile 'org.glassfish.jersey.media:jersey-media-multipart:2.17'
+		
+		//	compile 'org.glassfish.jersey:jax-rs-ri:2.0-rc1'
 		compile "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion"
 		compile "org.glassfish.jersey.ext:jersey-bean-validation:$jerseyVersion"
 	//	testCompile ('org.springframework:spring-jdbc-roma:1.0.0-RELEASE'){

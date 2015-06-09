@@ -19,7 +19,7 @@ modifyPom {
 
 		groupId 'com.aol.microservices'
 		artifactId 'microserver-boot'
-		version '0.56'
+		version "$version" 
 		
 		scm {
 			url 'scm:git@github.com:aol/micro-server.git'

@@ -1,4 +1,4 @@
-rootProject.name = 'micro-server'
+rootProject.name = 'com.aol.microservices.micro-server'
 include ':micro-core'
 include ':micro-boot'
 include ':micro-tutorial'
