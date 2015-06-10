@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.aol.micro.server.servers.AccessLogLocationBean;
-
 @Configuration
 public class AccessLogConfig {
 
-	@Value("${access.log.output:./logs/}")
+	@Value("${access.log.output:./logs}")
 	private String accessLogLocation;
 
 	@Bean
