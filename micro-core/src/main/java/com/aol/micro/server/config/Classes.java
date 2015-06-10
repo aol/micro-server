@@ -8,6 +8,7 @@ import nonautoscan.com.aol.micro.server.ScheduleAndAsyncConfig;
 import com.aol.micro.server.events.ConfigureActiveJobsAspect;
 import com.aol.micro.server.module.ConfigureEnviroment;
 import com.aol.micro.server.rest.resources.ConfigureResources;
+import com.aol.micro.server.servers.AccessLogConfig;
 import com.aol.micro.server.spring.datasource.DataSourceBuilder;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.aol.micro.server.spring.datasource.hibernate.DAOProvider;
@@ -36,7 +37,7 @@ public enum Classes {
 	 * Codahale Metrics, Event tracking etc
 	 */
 	CORE_CLASSES(PropertyFileConfig.class, MiscellaneousConfig.class, AopConfig.class, CodahaleMetricsConfigurer.class,
-			ConfigureActiveJobsAspect.class, ScheduleAndAsyncConfig.class, ConfigureResources.class, ConfigureEnviroment.class),
+			ConfigureActiveJobsAspect.class, ScheduleAndAsyncConfig.class, ConfigureResources.class, ConfigureEnviroment.class, AccessLogConfig.class),
 	JDBC_CLASSES(JdbcConfig.class, DAOProvider.class, DataSourceBuilder.class, SQL.class, SpringDataConfig.class),
 	ROMA_ROW_MAPPER(RomaRowMapperConfig.class),
 	HIBERNATE_CLASSES(HibernateConfig.class, JdbcConfig.class, GenericHibernateService.class, DAOProvider.class, DataSourceBuilder.class, SQL.class),
