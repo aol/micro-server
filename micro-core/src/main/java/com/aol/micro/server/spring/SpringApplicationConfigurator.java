@@ -1,8 +1,6 @@
 package com.aol.micro.server.spring;
 
-import java.util.Optional;
 import java.util.Properties;
-import java.util.stream.Stream;
 
 import javax.sql.DataSource;
 
@@ -16,14 +14,11 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.ConfigAccessor;
-import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.servers.AccessLogLocationBean;
 import com.aol.micro.server.spring.datasource.DataSourceBuilder;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.aol.micro.server.spring.datasource.hibernate.DAOBuilder;
 import com.aol.micro.server.spring.datasource.hibernate.DAOProvider;
 import com.aol.micro.server.spring.datasource.hibernate.HibernateSessionBuilder;
-import com.aol.micro.server.utility.UsefulStaticMethods;
 
 class SpringApplicationConfigurator implements SpringBuilder {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -35,13 +30,10 @@ class SpringApplicationConfigurator implements SpringBuilder {
 		rootContext.setAllowCircularReferences(config.isAllowCircularReferences());
 		rootContext.register(classes);
 
-		
 		rootContext.scan(config.getBasePackages());
 		rootContext.refresh();
 		logger.debug("Configuring Additional Spring Beans");
 		ConfigurableListableBeanFactory beanFactory = ((ConfigurableApplicationContext) rootContext).getBeanFactory();
-
-		beanFactory.registerSingleton(AccessLogLocationBean.class.getCanonicalName(), createAccessLogLocationBean(rootContext));
 
 		config.getDataSources().keySet().stream().filter(it -> !new ConfigAccessor().get().getDefaultDataSourceName().equals(it)).forEach(name -> {
 			JdbcConfig jdbc = buildJdbcProperties(rootContext, name);
@@ -82,9 +74,4 @@ class SpringApplicationConfigurator implements SpringBuilder {
 		return JdbcConfig.builder().properties((Properties) rootContext.getBean("propertyFactory")).name(name).build();
 	}
 
-	private AccessLogLocationBean createAccessLogLocationBean(AnnotationConfigWebApplicationContext rootContext) {
-		Properties props = (Properties) rootContext.getBean("propertyFactory");
-		String location = Optional.ofNullable((String) props.get("access.log.output")).orElse("./logs/");
-		return new AccessLogLocationBean(location);
-	}
 }
