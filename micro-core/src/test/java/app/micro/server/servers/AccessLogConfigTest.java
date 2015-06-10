@@ -22,13 +22,12 @@ public class AccessLogConfigTest {
 	@Before
 	public void startServer() {
 
-		logFile = new File(System.getProperty("java.io.tmpdir") + "access-log-app-access.log");
+		logFile = new File(System.getProperty("user.home") + "/access-log-app-access.log");
 		logFile.delete();
 
 		assertThat(logFile.exists(), is(false));
 
-		server = new MicroserverApp(Config.instance().withProperties(ImmutableMap.of("access.log.output", "${java.io.tmpdir}")),
-				() -> "access-log-app");
+		server = new MicroserverApp(Config.instance().withProperties(ImmutableMap.of("access.log.output", "${user.home}")), () -> "access-log-app");
 		server.start();
 
 	}
