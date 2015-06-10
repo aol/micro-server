@@ -27,7 +27,7 @@ public class AccessLogConfigTest {
 
 		assertThat(logFile.exists(), is(false));
 
-		server = new MicroserverApp(Config.instance().withProperties(ImmutableMap.of("access.log.output", System.getProperty("java.io.tmpdir"))),
+		server = new MicroserverApp(Config.instance().withProperties(ImmutableMap.of("access.log.output", "${java.io.tmpdir}")),
 				() -> "access-log-app");
 		server.start();
 
