@@ -32,6 +32,7 @@ public class JerseyRestApplication extends ResourceConfig {
 	}
 
 	public JerseyRestApplication(List<Object> allResources,List<String> packages, List<Class> resources) {
+
 		if (allResources != null) {
 			for (Object next : allResources) {
 				if(isSingleton(next))
@@ -42,7 +43,11 @@ public class JerseyRestApplication extends ResourceConfig {
 			}
 		}
 		property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
-		packages.stream().forEach( e -> packages(e));
+
+        //http://stackoverflow.com/questions/25755773/bean-validation-400-errors-are-returning-default-error-page-html-instead-of-re
+        property(ServerProperties.RESPONSE_SET_STATUS_OVER_SEND_ERROR, "true");
+
+        packages.stream().forEach( e -> packages(e));
 		resources.stream().forEach( e -> register(e));
 
 	}
