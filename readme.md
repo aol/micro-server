@@ -1,7 +1,9 @@
 
 #Microserver
 
-Microserver is a zero configuration, standards based, battle hardened library to run Java Rest Microservices via a standard Java main class. It has been used in production in AOL since July 2014.
+Choosing between Java EE or Spring? 
+
+Microserver is the best of both! Spring, Jersey and Grizzly working together harmoniously for your Microservices.
 
 ##Getting started
 
@@ -14,6 +16,11 @@ Microserver is a zero configuration, standards based, battle hardened library to
 
 
 Note the main launch class has been changed from MicroServerStartup to MicroserverApp
+
+## Blurb
+
+Microserver is a zero configuration, standards based, battle hardened library to run Java Rest Microservices via a standard Java main class. It has been used in production in AOL since July 2014.
+
 
 ## Get Microserver
 
