@@ -28,8 +28,6 @@ public class ModuleDataExtractor {
 		
 			List resources = Lists.newArrayList();
 			module.getRestResourceClasses().forEach(it -> resources.addAll(rootContext.getBeansOfType(it).values()));
-			System.out.println(module.getRestAnnotationClasses());
-			System.out.println("resources " + rootContext.getBeansWithAnnotation(Rest.class));
 			module.getRestAnnotationClasses().forEach(it -> resources.addAll(rootContext.getBeansWithAnnotation(it).values()));
 			return ImmutableList.copyOf(resources);
 		

@@ -2,6 +2,7 @@ package com.aol.micro.server.rest.jersey;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.Consumer;
 
 import lombok.Getter;
 
@@ -42,6 +43,7 @@ public class JerseyRestApplication extends ResourceConfig {
 
 			}
 		}
+		
 		property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
 
         //http://stackoverflow.com/questions/25755773/bean-validation-400-errors-are-returning-default-error-page-html-instead-of-re

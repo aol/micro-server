@@ -3,7 +3,19 @@
 
 Microserver is a zero configuration, standards based, battle hardened library to run Java Rest Microservices via a standard Java main class. It has been used in production in AOL since July 2014.
 
-## Build status
+##Getting started
+
+[Tutorial](https://github.com/aol/micro-server/wiki/Getting-started-:-Tutorial) 
+
+[Tutoiral code](https://github.com/aol/micro-server/tree/master/micro-tutorial)
+
+###Quick start youtube video
+[![Getting started video](https://cloud.githubusercontent.com/assets/9964792/6361863/9991c50c-bc7e-11e4-8d28-746b0b87b1da.png)](https://www.youtube.com/watch?v=McXy9oGRpfA&feature=youtu.be)
+
+
+Note the main launch class has been changed from MicroServerStartup to MicroserverApp
+
+## Get Microserver
 
 
 ![Build health](https://travis-ci.org/aol/micro-server.svg)
@@ -13,11 +25,6 @@ Microserver is a zero configuration, standards based, battle hardened library to
 * micro-boot 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-boot)
 
-
-
-##Goal
-
-To make developing, debuging and deploying Java microservices simple.
 
 ##Info
 
@@ -33,17 +40,7 @@ To make developing, debuging and deploying Java microservices simple.
 
 [Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.55)
 
-##Getting started
 
-[Tutorial](https://github.com/aol/micro-server/wiki/Getting-started-:-Tutorial) 
-
-[Tutoiral code](https://github.com/aol/micro-server/tree/master/micro-tutorial)
-
-###Quick start youtube video
-[![Getting started video](https://cloud.githubusercontent.com/assets/9964792/6361863/9991c50c-bc7e-11e4-8d28-746b0b87b1da.png)](https://www.youtube.com/watch?v=McXy9oGRpfA&feature=youtu.be)
-
-
-Note the main launch class has been changed from MicroServerStartup to MicroserverApp
 
 ### Maven dependency
 
