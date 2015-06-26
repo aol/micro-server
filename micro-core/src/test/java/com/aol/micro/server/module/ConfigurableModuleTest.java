@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.web.filter.QueryIPRetriever;
@@ -39,6 +41,7 @@ public class ConfigurableModuleTest {
 	private List<ServletRequestListener> requestListeners;
 	private String providers;
 	private List<Class> resourceClasses;
+	private List<Class> resourceAnnotationClasses;
 	private Map<String, Servlet> servlets;
 	private Set<Class> springConfigurationClasses;
 	private List<String> defaultJaxRsPackages;
@@ -58,6 +61,7 @@ public class ConfigurableModuleTest {
 		providers = "providers2";
 		Module m = () -> "hello";
 		resourceClasses =new ArrayList<>();
+		resourceAnnotationClasses = Arrays.asList(Rest.class);
 		servlets = new HashMap<>();
 		springConfigurationClasses = ImmutableSet.of(this.getClass());
 		
@@ -106,6 +110,19 @@ public class ConfigurableModuleTest {
 	@Test
 	public void testGetRestResourceClassesUnchanged() {
 		assertThat(unchanged.getRestResourceClasses(),is(m.getRestResourceClasses()));
+	}
+	@Test
+	public void testGetRestAnnotationClassesResetAll() {
+		assertThat(module.withResetAll(true).getRestAnnotationClasses(),is(resourceAnnotationClasses));
+	}
+	@Test
+	public void testGetRestAnnotationClasses() {
+		assertThat(module.getRestAnnotationClasses(),hasItem(Rest.class));
+	}
+
+	@Test
+	public void testGetRestAnnotationClassesUnchanged() {
+		assertThat(unchanged.getRestAnnotationClasses(),is(m.getRestAnnotationClasses()));
 	}
 
 	@Test
@@ -225,7 +242,10 @@ public class ConfigurableModuleTest {
 
 	
 
-	
+	@Test
+	public void testWithResourceAnnotationClasses() {
+		assertThat(unchanged.withRestAnnotationClasses(this.resourceClasses).getRestAnnotationClasses(),is(module.getRestAnnotationClasses()));
+	}
 
 	@Test
 	public void testWithResourceClasses() {

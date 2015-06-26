@@ -32,6 +32,7 @@ import com.google.common.collect.Iterables;
 public class ConfigurableModule implements Module{
 	
 	private final List<Class> restResourceClasses;
+	private final List<Class> restAnnotationClasses;
 	private final List<Class> defaultResources;
 	private final List<ServletContextListener> listeners;
 	private final List<ServletRequestListener> requestListeners;
@@ -77,6 +78,13 @@ public class ConfigurableModule implements Module{
 			return  ImmutableList.copyOf(Iterables.concat(restResourceClasses, extract(() -> Module.super.getRestResourceClasses())));
 		
 		return Module.super.getRestResourceClasses();
+	}
+	@Override
+	public List<Class> getRestAnnotationClasses() {
+		if(restAnnotationClasses!=null)
+			return  ImmutableList.copyOf(Iterables.concat(restAnnotationClasses, extract(() -> Module.super.getRestAnnotationClasses())));
+		
+		return Module.super.getRestAnnotationClasses();
 	}
 	
 	@Override
