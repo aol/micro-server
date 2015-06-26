@@ -10,9 +10,7 @@ import com.aol.micro.server.spring.properties.PropertyFileConfig;
 public class Simple {
 
 	public static void main(String[] args) throws IOException{
-		new Config().set() ;
-		 Properties props = new PropertyFileConfig().propertyFactory() ;
-		 System.out.println(props);
-	//	new MicroserverApp(()->"test-app").run();
+		
+		new MicroserverApp(()->"test-app").run();
 	}
 }
