@@ -17,6 +17,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
+import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.ConfigAccessor;
 import com.google.common.collect.Lists;
 
@@ -24,7 +25,13 @@ import com.google.common.collect.Lists;
 public class PropertyFileConfig {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
-
+	public PropertyFileConfig(){
+		
+	}
+	public PropertyFileConfig(boolean set){
+		if(set)
+			new Config().set(); //make sure config instance is set
+	}
 	@Bean
 	public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {
 
@@ -53,7 +60,7 @@ public class PropertyFileConfig {
 	private List<Resource> loadPropertyResource() {
 		List<Resource> resources = Lists.newArrayList();
 		loadProperties().ifPresent(it -> resources.add(it));
-
+		
 		String instancePropertyFileName = new ConfigAccessor().get().getInstancePropertiesName();
 
 		URL instanceResource = getClass().getClassLoader().getResource(instancePropertyFileName);
