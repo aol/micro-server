@@ -34,6 +34,7 @@ public class JerseyRestApplication extends ResourceConfig {
 
 	public JerseyRestApplication(List<Object> allResources,List<String> packages, List<Class> resources) {
 
+		
 		if (allResources != null) {
 			for (Object next : allResources) {
 				if(isSingleton(next))
