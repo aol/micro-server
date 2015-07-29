@@ -12,11 +12,12 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
-import org.glassfish.grizzly.http.server.HttpServer;
-
 import lombok.AllArgsConstructor;
 import lombok.experimental.Builder;
 import lombok.experimental.Wither;
+
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.server.ResourceConfig;
 
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.utility.HashMapBuilder;
@@ -45,6 +46,7 @@ public class ConfigurableModule implements Module{
 	private final Map<String,String> propertyOverrides;
 	private final List<String> defaultJaxRsPackages;
 	private final Consumer<HttpServer> serverConfigManager;
+	private final Consumer<ResourceConfig> resourceConfigManager;
 	private final boolean resetAll;
 	
 	@Override
@@ -53,6 +55,13 @@ public class ConfigurableModule implements Module{
 			return serverConfigManager;
 		
 		return Module.super.getServerConfigManager();
+	}
+	@Override
+	public Consumer<ResourceConfig> getResourceConfigManager(){
+		if(resourceConfigManager!=null)
+			return resourceConfigManager;
+		
+		return Module.super.getResourceConfigManager();
 	}
 	
 	@Override

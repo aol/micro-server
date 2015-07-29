@@ -13,6 +13,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -37,6 +38,9 @@ public interface Module {
 	
 	default Consumer<HttpServer> getServerConfigManager(){
 		return server->{};
+	}
+	default Consumer<ResourceConfig> getResourceConfigManager(){
+		return rc->{};
 	}
 	default List<String> getPackages(){
 		return ImmutableList.of();
