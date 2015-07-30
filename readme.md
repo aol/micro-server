@@ -1,6 +1,8 @@
 
 #Microserver
 
+[![Join the chat at https://gitter.im/aol/micro-server](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aol/micro-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Choosing between Java EE or Spring? 
 
 Microserver is the best of both! Spring, Jersey and Grizzly working together harmoniously for your Microservices.
