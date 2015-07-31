@@ -1,4 +1,4 @@
-package com.windriver.simpleserver;
+package com.aol.micro.server.simpleserver;
 
 
 import com.aol.micro.server.MicroserverApp;

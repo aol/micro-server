@@ -1,7 +1,13 @@
 package com.aol.micro.server.auto.discovery;
 
+import java.util.Optional;
 import java.util.function.Function;
 
+import com.aol.cyclops.trycatch.Failure;
+import com.aol.cyclops.trycatch.Success;
+import com.aol.cyclops.trycatch.Try;
+import com.aol.micro.server.reactive.Pipes;
+import com.aol.simple.react.async.Adapter;
 import com.aol.simple.react.stream.lazy.LazyReact;
 import com.aol.simple.react.stream.traits.LazyFutureStream;
 import com.aol.simple.react.threads.ParallelElasticPools;
@@ -24,8 +30,14 @@ public interface RestResource {
 	 * @param key : identifier for registered Queue
 	 * @param value : value to add to Queue
 	 */
-	default<K,V> void enqueue(K key,V value){
-		Pipes.get(key).offer(value);
+	default<K,V> Try<Boolean,MissingPipeException> enqueue(K key,V value){
+		Optional<Adapter<V>> queue = Pipes.get(key);
+		queue.map(adapter -> adapter.offer(value));
+	
+		return queue.isPresent() ? Success.of(true) : 
+						Failure.of(new MissingPipeException("Missing queue for key : " + key.toString()));
+		
+		
 	}
 	
 	
@@ -49,7 +61,7 @@ public interface RestResource {
 		 				 	
 	}
 	/**
-	 * Generate a parallely executing multi-threaded LazyFutureStream that executes all tasks via 
+	 * Generate a multi-threaded LazyFutureStream that executes all tasks via 
 	 *  a task executor between each stage (unless sync operator invoked). 
 	 * A preconfigured LazyReact builder that will be supplied as
 	 * input to the function supplied. The user Function should create a LazyFutureStream with any
@@ -67,6 +79,7 @@ public interface RestResource {
 					.peek(i->SequentialElasticPools.lazyReact.populate(r));
 		 	
 	}
+	
 	
 	/**
 	 * Convenience method that runs a LazyFutureStream without blocking the current thread

@@ -44,7 +44,7 @@ subprojects {
 	}
 
 	dependencies {
-
+		compile 'com.aol.cyclops:cyclops-all:5.1.0'
 		compile 'com.nurkiewicz.lazyseq:lazyseq:0.0.1'
 		compile 'org.springframework.data:spring-data-jpa:1.7.2.RELEASE'
 		compile 'com.googlecode.genericdao:dao-hibernate:1.2.0'

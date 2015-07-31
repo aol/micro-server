@@ -17,10 +17,10 @@ import javax.ws.rs.container.Suspended;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aol.micro.server.auto.discovery.CommonRestResource;
-import com.aol.micro.server.auto.discovery.Pipes;
 import com.aol.micro.server.auto.discovery.SingletonRestResource;
 import com.aol.micro.server.events.JobsBeingExecuted;
 import com.aol.micro.server.events.RequestsBeingExecuted;
+import com.aol.micro.server.reactive.Pipes;
 import com.aol.simple.react.async.QueueFactories;
 import com.aol.simple.react.stream.traits.LazyFutureStream;
 import com.aol.simple.react.stream.traits.SimpleReactStream;

@@ -1,6 +1,5 @@
 package com.aol.micro.server.rest.client.nio;
 
-import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 import javax.ws.rs.client.Client;
@@ -20,7 +19,6 @@ import org.glassfish.jersey.client.ClientProperties;
 import com.aol.micro.server.rest.JacksonUtil;
 import com.aol.micro.server.rest.jersey.JacksonFeature;
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 @Wither

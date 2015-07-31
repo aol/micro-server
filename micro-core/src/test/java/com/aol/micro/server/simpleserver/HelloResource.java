@@ -1,4 +1,4 @@
-package com.windriver.simpleserver;
+package com.aol.micro.server.simpleserver;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
