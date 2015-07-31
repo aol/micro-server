@@ -8,6 +8,8 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.Map;
 
+import javax.ws.rs.container.AsyncResponse;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.junit.Before;
@@ -42,23 +44,32 @@ public class ActiveResourceTest {
 	public void testactiveRequests() {
 		bus.post(RequestEvents.start("query",1l));
 		bus.post(RequestEvents.start("query",2l,"partition",ImmutableMap.of()));
-		assertThat( convert( active.activeRequests(null)).get("events"),is( 1));
-		assertThat( convert( active.activeRequests("partition")).get("events"), is( 1 ));
+		MockAsyncResponse<String> response = new MockAsyncResponse<>();
+		active.activeRequests(response,null);
+		assertThat( convert(response.response()).get("events"),is( 1));
+		active.activeRequests(response,"partition");
+		assertThat( convert( response.response()).get("events"), is( 1 ));
 	}
 
 	@Test
 	public void whenQueriesWithTheSameIdToDifferentTypesEventsIs1ForBoth(){
 		bus.post(RequestEvents.start("query",1l));
 		bus.post(RequestEvents.start("query",1l,"partition",ImmutableMap.of()));
-		assertThat( convert( active.activeRequests(null)).get("events"),is( 1));
-		assertThat( convert( active.activeRequests("partition")).get("events"), is( 1 ));
+		MockAsyncResponse<String> response = new MockAsyncResponse<>();
+		active.activeRequests(response,null);
+		assertThat( convert( response.response()).get("events"),is( 1));
+		active.activeRequests(response,"partition");
+		assertThat( convert(response.response() ).get("events"), is( 1 ));
 	}
 	@Test
 	public void whenQueriesWithTheSameIdButSameTypesEventsIs2ButSizeIs1(){
 		bus.post(RequestEvents.start("query",1l));
 		bus.post(RequestEvents.start("query",1l));
-		assertThat( convert( active.activeRequests(null)).get("events"),is( 2));
-		Map map = convert( active.activeRequests(null));
+		MockAsyncResponse<String> response = new MockAsyncResponse<>();
+		active.activeRequests(response,null);
+		assertThat( convert( response.response() ).get("events"),is( 2));
+		active.activeRequests(response,null);
+		Map map = convert( response.response());
 		assertThat( ((Map)map.get("active") ).size() , is( 1 ));
 	}
 
@@ -71,7 +82,9 @@ public class ActiveResourceTest {
 		when(pjp.getTarget()).thenReturn(this);
 		when(signature.getDeclaringType()).thenReturn(ScheduledJob.class);
 		jobs.aroundScheduledJob(pjp);
-		assertThat( convert( active.activeJobs()).get("events"),is( 1));
+		MockAsyncResponse<String> response = new MockAsyncResponse<>();
+		active.activeJobs(response);
+		assertThat( convert(response.response() ).get("events"),is( 1));
 		
 	}
 	

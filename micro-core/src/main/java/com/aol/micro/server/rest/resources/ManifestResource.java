@@ -10,6 +10,8 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
 
 import org.slf4j.Logger;
@@ -30,8 +32,14 @@ public class ManifestResource implements CommonRestResource, SingletonRestResour
 
 	@GET
 	@Produces("application/json")
-	public Map<String, String> mainfest(@Context ServletContext context) {
-		return getManifest(context.getResourceAsStream("/META-INF/MANIFEST.MF"));
+	public void mainfest(@Suspended AsyncResponse asyncResponse, @Context ServletContext context) {
+		
+		this.sync(lr -> lr.of("/META-INF/MANIFEST.MF")
+					.map(url->context.getResourceAsStream(url))
+					.map(this::getManifest)
+					.peek(result->asyncResponse.resume(result)))
+					.run();
+		
 	}
 
 	
