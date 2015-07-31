@@ -32,7 +32,7 @@ public class AsyncResource implements RestResource{
         @Path("/expensive")
         @Produces("text/plain")
         public void expensive(@Suspended AsyncResponse asyncResponse){
-        	
+  
         	simpleReact.fromStream(urls.stream()
 					.<CompletableFuture<String>>map(it ->  client.get(it)))
 					.onFail(it -> "")

@@ -25,7 +25,7 @@ public interface RestResource {
 	/**
 	 * Add a value to an simple-react Async.Queue
 	 * 
-	 * @see Pipes#register(Object, com.aol.simple.react.async.Queue)
+	 * @see Pipes#register(Object, com.aol.simple.react.async.Adapter)
 	 * 
 	 * @param key : identifier for registered Queue
 	 * @param value : value to add to Queue

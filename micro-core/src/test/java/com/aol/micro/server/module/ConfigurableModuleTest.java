@@ -2,7 +2,7 @@ package com.aol.micro.server.module;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -189,7 +189,7 @@ public class ConfigurableModuleTest {
 	@Test
 	public void testGetFiltersUnchanged() {
 		assertThat(unchanged.getFilters(ServerData.builder().resources(ImmutableList.of()).build()).get("/*"),
-				equalTo(m.getFilters( ServerData.builder().resources(ImmutableList.of()).build() ).get("/*").getClass()));
+				instanceOf(m.getFilters( ServerData.builder().resources(ImmutableList.of()).build() ).get("/*").getClass()));
 	}
 
 	

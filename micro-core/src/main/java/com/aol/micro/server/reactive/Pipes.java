@@ -48,5 +48,10 @@ public class Pipes {
 	public static <V> LazyFutureStream<V> stream(Object key){
 		return LazyFutureStream.of(((Adapter)registered.get(key)).stream());
 	}
+
+	public static void clear() {
+		 registered = Maps.newConcurrentMap();
+		
+	}
 	
 }
