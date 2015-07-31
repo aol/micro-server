@@ -87,6 +87,24 @@ public class ConfigurableModuleTest {
 										.build();				
 	}
 	@Test
+	public void resetAllIsFalse(){
+		ConfigurableModule m = ConfigurableModule.builder().build();
+		
+		assertFalse(m.resetAll);
+	}
+	@Test
+	public void defaultResourcesDefault(){
+		Module m = ConfigurableModule.builder().build();
+		
+		assertThat(m.getDefaultResources().size(),equalTo(4));
+	}
+	@Test
+	public void defaultResourcesNew(){
+		Module m = ConfigurableModule.builder().defaultResources(Arrays.asList(this.getClass())).build();
+		assertThat(m.getDefaultResources().size(),equalTo(5));
+		
+	}
+	@Test
 	public void testGetServerConfigManager() {
 		assertThat(module.withResetAll(true).getServerConfigManager(),is(serverConfigManager));
 	}
