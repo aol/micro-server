@@ -64,6 +64,7 @@ public class FilterConfigurer {
 	}
 
 	private void logFilter(FilterConfiguration filter) {
+		System.out.println(filter.getClass().getName());
 		logger.info("Registering {} filter on {}",filter.getClass().getName(),filter.getMapping()[0]);
 	}
 

@@ -1,5 +1,6 @@
 package com.aol.micro.server.module;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ public class ConfigurableModule implements Module{
 	private final List<String> defaultJaxRsPackages;
 	private final Consumer<HttpServer> serverConfigManager;
 	private final Consumer<ResourceConfig> resourceConfigManager;
-	private final boolean resetAll;
+	final boolean resetAll;
 	
 	@Override
 	public Consumer<HttpServer> getServerConfigManager(){
@@ -84,22 +85,29 @@ public class ConfigurableModule implements Module{
 	@Override
 	public List<Class> getRestResourceClasses() {
 		if(restResourceClasses!=null)
-			return  ImmutableList.copyOf(Iterables.concat(restResourceClasses, extract(() -> Module.super.getRestResourceClasses())));
+			return  ImmutableList.copyOf(concat(restResourceClasses, extract(() -> Module.super.getRestResourceClasses())));
 		
 		return Module.super.getRestResourceClasses();
+	}
+	private <T> List<T> concat(Collection<T> a,
+			Collection<T> b) {
+		List<T> result = new ArrayList<T>(a);
+		result.addAll(b);
+		return result;
 	}
 	@Override
 	public List<Class> getRestAnnotationClasses() {
 		if(restAnnotationClasses!=null)
-			return  ImmutableList.copyOf(Iterables.concat(restAnnotationClasses, extract(() -> Module.super.getRestAnnotationClasses())));
+			return  ImmutableList.copyOf(concat(restAnnotationClasses, extract(() -> Module.super.getRestAnnotationClasses())));
 		
 		return Module.super.getRestAnnotationClasses();
 	}
 	
 	@Override
 	public List<Class> getDefaultResources() {
-		if(this.defaultResources!=null)
-			return  ImmutableList.copyOf(Iterables.concat(this.defaultResources, extract(()->Module.super.getDefaultResources())));
+		if(this.defaultResources!=null){
+			return  ImmutableList.copyOf(concat(this.defaultResources,extract(()->Module.super.getDefaultResources())));
+		}
 			
 		return Module.super.getDefaultResources();
 	}
@@ -107,7 +115,7 @@ public class ConfigurableModule implements Module{
 	@Override
 	public List<ServletContextListener> getListeners(ServerData data) {
 		if(listeners!=null)
-			return  ImmutableList.copyOf(Iterables.concat(this.listeners, extract(()->Module.super.getListeners(data))));
+			return  ImmutableList.copyOf(concat(this.listeners, extract(()->Module.super.getListeners(data))));
 		
 		return Module.super.getListeners(data);
 	}
@@ -115,7 +123,7 @@ public class ConfigurableModule implements Module{
 	@Override
 	public List<ServletRequestListener> getRequestListeners(ServerData data) {
 		if(requestListeners!=null)
-			return  ImmutableList.copyOf(Iterables.concat(this.requestListeners,
+			return  ImmutableList.copyOf(concat(this.requestListeners,
 					                                      extract(()->Module.super.getRequestListeners(data))));
 
 		return Module.super.getRequestListeners(data);

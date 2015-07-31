@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ public class AutodiscoveredFilter  implements Filter, FilterConfiguration {
 	@Autowired
 	Bean bean;
 	@Getter
+	@Setter
 	private static volatile int called= 0;
 	
 	@Getter

@@ -18,11 +18,11 @@ public class ManifestResourceTest {
 	ManifestResource resource;
 
 	ServletContext context;
-
+	MockAsyncResponse<Map<String, String>> response;
 	@Before
 	public void setUp() throws Exception {
 		context = mock(ServletContext.class);
-
+		response = new MockAsyncResponse<>();
 		resource = new ManifestResource();
 
 	}
@@ -32,7 +32,8 @@ public class ManifestResourceTest {
 		when(context.getResourceAsStream(any(String.class))).thenReturn(
 				new ByteArrayInputStream(manifest
 						.getBytes()));
-		Map<String, String> manifest = resource.mainfest(context);
+		resource.mainfest(response,context);
+		Map<String, String> manifest =response.response() ;
 		assertThat(manifest.get("Implementation-Build"), is("281837"));
 
 	}

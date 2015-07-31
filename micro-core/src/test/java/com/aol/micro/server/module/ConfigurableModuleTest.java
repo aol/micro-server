@@ -1,7 +1,8 @@
 package com.aol.micro.server.module;
 
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -84,6 +85,24 @@ public class ConfigurableModuleTest {
 		unchanged = ConfigurableModule.builder()
 										.context("unchanged")
 										.build();				
+	}
+	@Test
+	public void resetAllIsFalse(){
+		ConfigurableModule m = ConfigurableModule.builder().build();
+		
+		assertFalse(m.resetAll);
+	}
+	@Test
+	public void defaultResourcesDefault(){
+		Module m = ConfigurableModule.builder().build();
+		
+		assertThat(m.getDefaultResources().size(),equalTo(4));
+	}
+	@Test
+	public void defaultResourcesNew(){
+		Module m = ConfigurableModule.builder().defaultResources(Arrays.asList(this.getClass())).build();
+		assertThat(m.getDefaultResources().size(),equalTo(5));
+		
 	}
 	@Test
 	public void testGetServerConfigManager() {
@@ -188,7 +207,7 @@ public class ConfigurableModuleTest {
 	@Test
 	public void testGetFiltersUnchanged() {
 		assertThat(unchanged.getFilters(ServerData.builder().resources(ImmutableList.of()).build()).get("/*"),
-				is(m.getFilters( ServerData.builder().resources(ImmutableList.of()).build() ).get("/*").getClass()));
+				instanceOf(m.getFilters( ServerData.builder().resources(ImmutableList.of()).build() ).get("/*").getClass()));
 	}
 
 	

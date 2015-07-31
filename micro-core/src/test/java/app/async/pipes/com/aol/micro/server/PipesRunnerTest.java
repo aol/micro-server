@@ -1,34 +1,38 @@
-package app.async.com.aol.micro.server;
+package app.async.pipes.com.aol.micro.server;
 
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.io.IOException;
-import java.util.Properties;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.spring.properties.PropertyFileConfig;
+import com.aol.micro.server.module.ConfigurableModule;
+import com.aol.micro.server.reactive.Pipes;
 import com.aol.micro.server.testing.RestAgent;
+import com.aol.simple.react.async.Queue;
 import com.aol.simple.react.stream.traits.LazyFutureStream;
 
 @Microserver
-public class AsyncAppRunner {
-
+public class PipesRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
 	MicroserverApp server;
+	LazyFutureStream<String> stream;
 	@Before
 	public void startServer(){
+		stream = Pipes.register("test", new Queue<String>());
 		
-		server = new MicroserverApp( ()-> "async-app");
+		server = new MicroserverApp(()->"simple-app");
+	
 		server.start();
 
 	}
@@ -41,17 +45,11 @@ public class AsyncAppRunner {
 	@Test
 	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
 		
-		Thread.sleep(2000);
 		
-		assertThat(rest.get("http://localhost:8080/async-app/async/expensive"),is(";test!;test!;test!"));
-	
-	}
-	
-	@Test
-	public void loadProperties() throws IOException{
 		
-		 Properties props = new PropertyFileConfig(true).propertyFactory() ;
-		assertThat(props.getProperty("test"),is("hello world"));
+		assertThat(rest.get("http://localhost:8080/simple-app/status/ping"),is("ok"));
+		assertThat(stream.limit(1).toList(),equalTo(Arrays.asList("ping : 0")));
+		
 	}
 	
 	

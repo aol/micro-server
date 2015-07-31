@@ -30,7 +30,7 @@ public class FilterRunnerTest {
 	@Before
 	public void startServer(){
 		Map<String, Filter> filters = ImmutableMap.of("/filter-app/status/ping2",new ConfiguredFilter());
-		server = new MicroserverApp( FilterAppLocalMain.class, ConfigurableModule.builder()
+		server = new MicroserverApp(ConfigurableModule.builder()
 													.context("filter-app")
 													.filters(filters )
 													.requestListeners(Arrays.asList(new org.springframework.web.context.request.RequestContextListener())).build());
@@ -45,8 +45,8 @@ public class FilterRunnerTest {
 	
 	@Test
 	public void testAutoDiscoveredFilter() throws InterruptedException, ExecutionException{
+		AutodiscoveredFilter.setCalled(0);
 		
-		assertThat(AutodiscoveredFilter.getCalled(),is(0));
 		assertThat(rest.get("http://localhost:8080/filter-app/status/ping"),is("ok"));
 		assertThat(AutodiscoveredFilter.getCalled(),is(1));
 		assertThat(AutodiscoveredFilter.isBeanSet(),is(true));
