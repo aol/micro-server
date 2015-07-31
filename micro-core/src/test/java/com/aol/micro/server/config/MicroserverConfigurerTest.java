@@ -1,7 +1,7 @@
 package com.aol.micro.server.config;
 
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -20,13 +20,13 @@ public class MicroserverConfigurerTest {
 
 	@Test
 	public void propertiesName() {
-		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getPropertiesName(), is("test!"));
+		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getPropertiesName(), equalTo("test!"));
 
 	}
 
 	@Test
 	public void instancPpropertiesName() {
-		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getInstancePropertiesName(), is("test2!"));
+		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getInstancePropertiesName(), equalTo("test2!"));
 
 	}
 

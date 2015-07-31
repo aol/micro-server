@@ -2,6 +2,7 @@ package com.aol.micro.server.config;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -95,50 +96,23 @@ public class Config {
 
 	/**
 	 * Add the provided Classes to initial Spring Context as well as
-	 *  @see Classes#DATASOURCE_CLASSES
+	 *  
 	 * 
 	 * @param c Array of additional Spring configuration classes
 	 * @return New Config object, with configured packages
 	 */
 	public Config withDefaultDataSource(Class... c) {
-		List<Class> result = Lists.newArrayList(Classes.DATASOURCE_CLASSES.getClasses());
+		List<Class> result = Lists.newArrayList(Classes.DATA_SOURCE_CLASSES.getClasses());
 		if (classes != null)
 			result.addAll(classes);
 		Stream.of(c).forEach(next -> result.add(next));
 		return this.withClasses(ImmutableSet.copyOf(result));
 	}
 
-	/**
-	 * 
-	 *  Add the provided Classes to initial Spring Context as well as
-	 *  @see Classes#JDBC_CLASSES
-	 * 
-	 * @param c Array of additional Spring configuration classes
-	 * @return New Config object, with configured packages
-	 */
-	public Config withJdbcClasses(Class... c) {
-		List<Class> result = Lists.newArrayList(Classes.JDBC_CLASSES.getClasses());
-		result.addAll(Arrays.asList(Classes.SPRING_DATA_CLASSES.getClasses()));
-		if (classes != null)
-			result.addAll(classes);
-		Stream.of(c).forEach(next -> result.add(next));
-		return this.withClasses(ImmutableSet.copyOf(result));
-	}
-
-	/**
-	 * Add the provided Classes to initial Spring Context as well as
-	 *  @see Classes#SPRING_DATA_CLASSES
-	 * 
-	 * @param c Array of additional Spring configuration classes
-	 * @return New Config object, with configured packages
-	 */
-	public Config withHibernateClasses(Class... c) {
-		Set<Class> result = Sets.newHashSet(Classes.HIBERNATE_CLASSES.getClasses());
-		result.addAll(Arrays.asList(Classes.SPRING_DATA_CLASSES.getClasses()));
-		if (classes != null)
-			result.addAll(classes);
-		Stream.of(c).forEach(next -> result.add(next));
-		return this.withClasses(ImmutableSet.copyOf(result));
+	public Config withClassesArray(Class... classes){
+		Set<Class> org = new HashSet<Class>(this.getClasses());
+		org.addAll(ImmutableSet.copyOf(classes));
+		return this.withClasses(ImmutableSet.copyOf(org));
 	}
 
 }
