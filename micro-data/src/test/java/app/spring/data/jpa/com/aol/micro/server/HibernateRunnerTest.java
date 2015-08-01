@@ -17,11 +17,13 @@ import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.client.nio.RestClient;
-import com.aol.micro.server.spring.DataClasses;
 import com.aol.micro.server.testing.RestAgent;
-import com.google.common.collect.ImmutableMap;
 
-@Microserver
+@Microserver(properties={"db.connection.driver","org.hsqldb.jdbcDriver",
+	    "db.connection.url","jdbc:hsqldb:mem:aname",
+	    "db.connection.username", "sa",
+	    "db.connection.dialect","org.hibernate.dialect.HSQLDialect",
+	    "db.connection.ddl.auto","create-drop"}, entityScan="app.spring.data.jpa.com.aol.micro.server")
 @EnableJpaRepositories
 public class HibernateRunnerTest {
 
@@ -35,16 +37,7 @@ public class HibernateRunnerTest {
 	public void startServer(){
 		
 		Config.reset();
-		server = new MicroserverApp( Config.instance().withEntityScan("app.spring.data.jpa.com.aol.micro.server")
-												.withClassesArray(DataClasses.HIBERNATE_CLASSES.getClasses())
-												.withClassesArray(HibernateRunnerTest.class)
-												.withProperties(
-																			ImmutableMap.of("db.connection.driver","org.hsqldb.jdbcDriver",
-																						    "db.connection.url","jdbc:hsqldb:mem:aname",
-																						    "db.connection.username", "sa",
-																						    "db.connection.dialect","org.hibernate.dialect.HSQLDialect",
-																						    "db.connection.ddl.auto","create-drop"))
-																				,()->"hibernate-app");
+		server = new MicroserverApp(()->"hibernate-app");
 		server.start();
 
 	}

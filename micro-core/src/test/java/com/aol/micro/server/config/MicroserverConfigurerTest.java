@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-@Microserver(propertiesName = "test!", instancePropertiesName = "test2!", properties = { "hello", "world" }, entityScan = { "packages" }, springClasses = { Classes.CORE_CLASSES }, classes = { Integer.class })
+@Microserver(propertiesName = "test!", instancePropertiesName = "test2!", properties = { "hello", "world" }, entityScan = { "packages" }, classes = { Integer.class })
 public class MicroserverConfigurerTest {
 	MicroserverConfigurer configurer = new MicroserverConfigurer();
 
@@ -40,7 +40,8 @@ public class MicroserverConfigurerTest {
 	@Test
 	public void springClasses() {
 		Config config = configurer.buildConfig(MicroserverConfigurerTest.class);
-		assertThat(config.getClasses(), hasItem(Classes.CORE_CLASSES.getClasses()[0]));
+		System.out.println(config.getClasses());
+		assertThat(config.getClasses(), hasItem(Integer.class));
 
 	}
 

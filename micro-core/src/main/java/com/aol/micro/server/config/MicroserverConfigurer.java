@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.micro.server.FunctionalModule;
+import com.aol.micro.server.FunctionalModuleLoader;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.nurkiewicz.lazyseq.LazySeq;
@@ -47,7 +50,10 @@ public class MicroserverConfigurer implements Configurer {
 		classes.add(class1);
 		if (microserver.classes() != null)
 			classes.addAll(Arrays.asList(microserver.classes()));
-		Stream.of(microserver.springClasses()).map(cl -> cl.getClasses()).forEach(array -> classes.addAll(Arrays.asList(array)));
+		List<FunctionalModule> modules = FunctionalModuleLoader.INSTANCE.functionalModules.get();
+		if(modules.size()>0)
+			classes.addAll(SequenceM.fromStream(modules.stream()).flatMap(module -> module.springClasses().stream()).toList());
+		
 		return classes;
 	}
 }

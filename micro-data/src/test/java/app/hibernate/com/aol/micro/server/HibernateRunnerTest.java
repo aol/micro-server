@@ -4,7 +4,6 @@ package app.hibernate.com.aol.micro.server;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -13,14 +12,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.client.nio.RestClient;
-import com.aol.micro.server.spring.DataClasses;
 import com.aol.micro.server.testing.RestAgent;
-import com.google.common.collect.ImmutableMap;
 
-@Microserver
+@Microserver(entityScan="app.hibernate.com.aol.micro.server",properties={"db.connection.driver","org.hsqldb.jdbcDriver",
+																						    "db.connection.url","jdbc:hsqldb:mem:aname",
+																						    "db.connection.username", "sa",
+																						    "db.connection.dialect","org.hibernate.dialect.HSQLDialect",
+																						    "db.connection.ddl.auto","create-drop"})
 public class HibernateRunnerTest {
 
   	private final RestClient<List<HibernateEntity>> listClient = new RestClient(1000,1000).withGenericResponse(List.class, HibernateEntity.class);
@@ -29,21 +29,12 @@ public class HibernateRunnerTest {
 	
 	MicroserverApp server;
 	
+	
 	@Before
 	public void startServer(){
 		
 		
-		server = new MicroserverApp( Config.instance().withEntityScan("app.hibernate.com.aol.micro.server")
-															.withClassesArray(DataClasses.HIBERNATE_CLASSES.getClasses())
-															.withClassesArray(DataClasses.JDBC_CLASSES.getClasses())
-															.withClassesArray(HibernateRunnerTest.class)
-															.withProperties(
-																			ImmutableMap.of("db.connection.driver","org.hsqldb.jdbcDriver",
-																						    "db.connection.url","jdbc:hsqldb:mem:aname",
-																						    "db.connection.username", "sa",
-																						    "db.connection.dialect","org.hibernate.dialect.HSQLDialect",
-																						    "db.connection.ddl.auto","create-drop"))
-																				,()->"hibernate-app");
+		server = new MicroserverApp( ()->"hibernate-app");
 		server.start();
 
 	}
