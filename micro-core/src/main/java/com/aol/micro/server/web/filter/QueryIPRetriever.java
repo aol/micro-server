@@ -11,9 +11,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 
 public class QueryIPRetriever implements Filter {
@@ -63,17 +63,28 @@ public class QueryIPRetriever implements Filter {
 
 			String xLbClientIP = httpServletRequest.getHeader("X-LB-Client-IP");
 			logger.debug( "X-LB-Client-IP: " + xLbClientIP);
-			if (!StringUtils.isBlank(xLbClientIP)) {
+			if (!isBlank(xLbClientIP)) {
 				return Optional.ofNullable(xLbClientIP);
 			}
 
 			String xForwardedFor = httpServletRequest.getHeader("X-Forwarded-For");
 			logger.debug( "X-Forwarded-For: " + xForwardedFor);
-			if (!StringUtils.isBlank(xForwardedFor)) {
+			if (!isBlank(xForwardedFor)) {
 				return Optional.ofNullable(xForwardedFor);
 			}
 		}
 		return Optional.empty();
+	}
+	
+	private boolean isBlank(final String str) {
+		if (StringUtils.isEmpty(str))
+			return true;
+		for (int i = 0; i < str.length(); i++) {
+			if (Character.isWhitespace(str.charAt(i)) == false) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

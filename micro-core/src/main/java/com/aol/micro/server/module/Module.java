@@ -17,22 +17,21 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.micro.server.FunctionalModule;
+import com.aol.micro.server.FunctionalModuleLoader;
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Classes;
 import com.aol.micro.server.rest.jersey.JacksonFeature;
 import com.aol.micro.server.rest.jersey.JerseyRestApplication;
 import com.aol.micro.server.rest.jersey.JerseySpringIntegrationContextListener;
-import com.aol.micro.server.rest.swagger.SwaggerInitializer;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.web.filter.QueryIPRetriever;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON;
-import com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider;
-import com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider;
 
 public interface Module {
 	
@@ -60,15 +59,23 @@ public interface Module {
 	}
 	
 	default List<String> getDefaultJaxRsPackages(){
-		return Arrays.asList("com.wordnik.swagger.sample.resource",
-				"com.wordnik.swagger.sample.util"	);
+		List list = new ArrayList<>();
+		list.addAll(SequenceM.fromStream(FunctionalModuleLoader.INSTANCE.functionalModules.get().stream())
+				.filter(module -> module.servletContextListeners()!=null)
+				.flatMapCollection(FunctionalModule::jaxRsPackages)
+				
+				.toList());
+		return list;
 	}
 	
 	default List<Class> getDefaultResources(){
-		return Arrays.asList(JacksonFeature.class, 
-				//SWAGGER CLASSES
-				ApiListingResourceJSON.class,JerseyApiDeclarationProvider.class,
-				JerseyResourceListingProvider.class);
+		List list = new ArrayList<>();
+		list.add(JacksonFeature.class);
+		list.addAll(SequenceM.fromStream(FunctionalModuleLoader.INSTANCE.functionalModules.get().stream())
+				.filter(module -> module.servletContextListeners()!=null)
+				.flatMapCollection(FunctionalModule::jaxRsResources)
+				.toList());
+		return list;
 	}
 	
 	default List<ServletContextListener> getListeners(ServerData data){
@@ -78,7 +85,14 @@ public interface Module {
 					.getRootContext()));
 		}
 		list.add(new JerseySpringIntegrationContextListener(data));
-		list.add(new SwaggerInitializer(data));
+		List<FunctionalModule> modules = FunctionalModuleLoader.INSTANCE.functionalModules.get();
+		
+		list.addAll(SequenceM.fromStream(modules.stream())
+				.filter(module -> module.servletContextListeners()!=null)
+				.flatMapCollection(FunctionalModule::servletContextListeners)
+				.map(fn->fn.apply(data))
+				.toList());
+		
 		return  ImmutableList.copyOf(list);
 	}
 	default List<ServletRequestListener> getRequestListeners(ServerData data){

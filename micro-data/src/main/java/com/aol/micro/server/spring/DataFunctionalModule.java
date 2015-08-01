@@ -3,8 +3,12 @@ package com.aol.micro.server.spring;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
+
+import javax.servlet.ServletContextListener;
 
 import com.aol.micro.server.FunctionalModule;
+import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.spring.datasource.DataSourceBuilder;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.aol.micro.server.spring.datasource.hibernate.HibernateConfig;
@@ -29,4 +33,22 @@ public class DataFunctionalModule implements FunctionalModule{
 						SpringDataConfig.class,
 						HibernateConfig.class));
 	}
+
+	@Override
+	public Set<Function<ServerData, ServletContextListener>> servletContextListeners() {
+		return null;
+	}
+
+	@Override
+	public Set<Class> jaxRsResources() {
+	
+		return null;
+	}
+
+	@Override
+	public Set<String> jaxRsPackages() {
+	
+		return null;
+	}
+
 }
