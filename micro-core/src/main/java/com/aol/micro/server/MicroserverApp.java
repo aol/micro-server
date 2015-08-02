@@ -77,27 +77,6 @@ public class MicroserverApp {
 
 	}
 
-	/**
-	 * This will construct a Spring context for this Microserver instance.
-	 * The provided Config object will be used to configure Spring
-	 * 
-	 * @param config Spring configuration
-	 * @param modules Multiple Microservice end points that can be deployed within a single Spring context
-	 */
-	public MicroserverApp(Config config, Module... modules) {
-
-		this.modules = Lists.newArrayList(modules);
-		if(config.getBasePackages().length==0){
-			String[] packages = {extractClass().getPackage().getName()};
-			config = config.withBasePackages(packages);
-		}
-		config.set();
-		springContext = new SpringContextFactory(config,
-				modules[0].getSpringConfigurationClasses())
-				.createSpringContext();
-
-	}
-	
 	
 
 	private Class extractClass() {

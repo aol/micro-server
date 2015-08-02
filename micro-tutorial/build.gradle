@@ -1,5 +1,5 @@
 description = 'micro-tutorial'
 dependencies {
-	compile project(':micro-core')
+	compile project(':micro-data')
 	
 }

@@ -78,27 +78,7 @@ public class MicrobootApp {
 
 	}
 
-	/**
-	 * This will construct a Spring context, using Spring Boot for this
-	 * Microboot instance. The provided Config object will be used to configure
-	 * Spring
-	 * 
-	 * @param config
-	 *            Spring configuration
-	 * @param modules
-	 *            Multiple Microservice end points that can be deployed within a
-	 *            single Spring context
-	 */
-	public MicrobootApp(Config config, Module... modules) {
-
-		this.modules = Lists.newArrayList(modules);
-		config.set();
-		springContext = new SpringContextFactory(config,
-				modules[0].getSpringConfigurationClasses()).withSpringBuilder(
-				new BootApplicationConfigurator()).createSpringContext();
-
-	}
-
+	
 	private Class extractClass() {
 		try {
 			return Class.forName(new Exception().getStackTrace()[2]

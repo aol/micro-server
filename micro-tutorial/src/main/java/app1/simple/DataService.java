@@ -2,29 +2,32 @@ package app1.simple;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.spring.datasource.hibernate.DAOProvider;
-import com.aol.micro.server.spring.datasource.hibernate.GenericHibernateService;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.ImmutableList;
-import com.googlecode.genericdao.search.Search;
 
 @Component
 public class DataService {
 
-	private final GenericHibernateService<Entity, Long> dao;
+	private final SessionFactory sf;
 
 	@Autowired
-	public DataService(DAOProvider<Entity, Long> daoProvider) {
+	public DataService(SessionFactory factory) {
 
-		dao = daoProvider.get(Entity.class);
+		sf = factory; 
 	}
 	@Timed
 	public void createEntity(String name, String value) {
 
-		dao.save(new Entity(name, value));
+		final Session session = sf.openSession();
+		session.save(new Entity(name, value));
+		session.flush();
 	}
 
 	@Timed
@@ -34,8 +37,13 @@ public class DataService {
 	}
 
 	private List<Entity> searchByName(String name) {
-		return dao.<Entity>search(new Search()
-				.addFilter(dao.getFilterFromExample(new Entity(name))));
+		final Session session = sf.openSession();
+		
+		Criteria criteria = session.createCriteria(Entity.class)
+								.add(Example.create(new Entity(name)));
+		
+		return criteria.list();
+		
 	}
 
 }

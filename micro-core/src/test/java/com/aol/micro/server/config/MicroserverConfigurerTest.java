@@ -1,14 +1,14 @@
 package com.aol.micro.server.config;
 
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-@Microserver(propertiesName = "test!", instancePropertiesName = "test2!", properties = { "hello", "world" }, entityScan = { "packages" }, springClasses = { Classes.CORE_CLASSES }, classes = { Integer.class })
+@Microserver(propertiesName = "test!", instancePropertiesName = "test2!", properties = { "hello", "world" }, entityScan = { "packages" }, classes = { Integer.class })
 public class MicroserverConfigurerTest {
 	MicroserverConfigurer configurer = new MicroserverConfigurer();
 
@@ -20,13 +20,13 @@ public class MicroserverConfigurerTest {
 
 	@Test
 	public void propertiesName() {
-		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getPropertiesName(), is("test!"));
+		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getPropertiesName(), equalTo("test!"));
 
 	}
 
 	@Test
 	public void instancPpropertiesName() {
-		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getInstancePropertiesName(), is("test2!"));
+		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getInstancePropertiesName(), equalTo("test2!"));
 
 	}
 
@@ -40,7 +40,8 @@ public class MicroserverConfigurerTest {
 	@Test
 	public void springClasses() {
 		Config config = configurer.buildConfig(MicroserverConfigurerTest.class);
-		assertThat(config.getClasses(), hasItem(Classes.CORE_CLASSES.getClasses()[0]));
+		System.out.println(config.getClasses());
+		assertThat(config.getClasses(), hasItem(Integer.class));
 
 	}
 

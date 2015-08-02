@@ -11,8 +11,10 @@ import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Config;
+import com.aol.micro.server.config.Microserver;
 import com.google.common.collect.ImmutableMap;
 
+@Microserver(properties={"access.log.output", "${user.home}"})
 public class AccessLogConfigTest {
 
 	MicroserverApp server;
@@ -27,7 +29,7 @@ public class AccessLogConfigTest {
 
 		assertThat(logFile.exists(), is(false));
 
-		server = new MicroserverApp(Config.instance().withProperties(ImmutableMap.of("access.log.output", "${user.home}")), () -> "access-log-app");
+		server = new MicroserverApp(() -> "access-log-app");
 		server.start();
 
 	}

@@ -31,12 +31,7 @@ public @interface Microboot{
 	 */
 	Class[] classes() default {};
 	
-	/**
-	 * @return Preconfigured collections of classes to be passed to initial Spring context
-	 * They  configure various useful pieces of functionality - such as property file loading,
-	 * datasources, scheduling etc
-	 */
-	Classes[] springClasses() default {};
+	
 	
 	/**
 	 * @return Property file name 
