@@ -14,7 +14,6 @@ import com.aol.micro.server.rest.resources.ConfigureResources;
 import com.aol.micro.server.servers.AccessLogConfig;
 import com.aol.micro.server.spring.datasource.DataSourceBuilder;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
-import com.aol.micro.server.spring.metrics.CodahaleMetricsConfigurer;
 import com.aol.micro.server.spring.properties.PropertyFileConfig;
 
 /**
@@ -33,7 +32,7 @@ public class Classes {
 	 * Property support, Guava Event Bus, Spring AOP &amp; Scheduling
 	 * Codahale Metrics, Event tracking etc
 	 */
-	public static final  Classes CORE_CLASSES = new Classes(PropertyFileConfig.class, MiscellaneousConfig.class, AopConfig.class, CodahaleMetricsConfigurer.class,
+	public static final  Classes CORE_CLASSES = new Classes(PropertyFileConfig.class, MiscellaneousConfig.class, AopConfig.class,
 			ConfigureActiveJobsAspect.class, ScheduleAndAsyncConfig.class, ConfigureResources.class, ConfigureEnviroment.class, AccessLogConfig.class);
 	public static final  Classes DATA_SOURCE_CLASSES = new Classes(JdbcConfig.class,DataSourceBuilder.class);
 	

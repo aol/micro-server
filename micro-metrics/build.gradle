@@ -1,29 +1,21 @@
-description = 'micro-data'
+description = 'micro-metrics'
 dependencies {
-	compile 'org.springframework.data:spring-data-jpa:1.7.2.RELEASE'
-	
-	compile group: 'org.hibernate', name:'hibernate-validator', version:'5.1.3.Final'
-	compile group: 'org.hibernate', name: 'hibernate-core', version:'4.3.8.Final'
-	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version:'4.3.8.Final'
-	compile group: 'org.springframework', name: 'spring-jdbc', version:"${springVersion}"
-	compile group: 'org.springframework', name: 'spring-orm', version:"${springVersion}"
-
-	
-	
+	compile ('com.ryantenney.metrics:metrics-spring:3.0.3'){
+		exclude(module: 'org.springframework')
+	}
 	compile project(':micro-core')
-	
-	testCompile group: 'org.hsqldb', name:'hsqldb', version:'2.0.0'
+	testCompile project(':micro-boot')
 }
 
 modifyPom {
 	project {
-		name 'Microserver data'
+		name 'Microserver metrics'
 		description 'Opinionated rest microservices'
 		url 'https://github.com/aol/micro-server'
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'microserver-data'
+		artifactId 'microserver-metrics'
 		version "$version" 
 		
 		

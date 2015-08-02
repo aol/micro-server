@@ -44,12 +44,6 @@ subprojects {
 
 	dependencies {
 		compile ('com.aol.cyclops:cyclops-all:5.1.0')
-		
-
-		compile ('com.ryantenney.metrics:metrics-spring:3.0.3'){
-			exclude(module: 'org.springframework')
-		}
-	
 		compile group: 'com.aol.simplereact', name:'simple-react', version:'0.98'
 		compile group: 'org.aspectj', name: 'aspectjrt', version:'1.5.4'
 		compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.5.4'

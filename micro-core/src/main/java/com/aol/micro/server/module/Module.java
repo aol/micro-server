@@ -2,6 +2,7 @@ package com.aol.micro.server.module;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,6 +15,7 @@ import javax.servlet.ServletRequestListener;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -96,20 +98,54 @@ public interface Module {
 		return  ImmutableList.copyOf(list);
 	}
 	default List<ServletRequestListener> getRequestListeners(ServerData data){
-		return ImmutableList.of();
+		List<ServletRequestListener>  list = new ArrayList<>();
+		list.addAll(SequenceM.fromStream(FunctionalModuleLoader.INSTANCE.functionalModules.get().stream())
+				.filter(module -> module.servletRequestListeners()!=null)
+				.flatMapCollection(FunctionalModule::servletRequestListeners)
+				.map(fn->fn.apply(data))
+				.toList());
+		return list;
+		
 	}
 	default Map<String,Filter> getFilters(ServerData data) {
-		return ImmutableMap.of("/*",new QueryIPRetriever());
+		Map<String, Filter> map = new HashMap<>();
+		map.put("/*", new QueryIPRetriever());
+		SequenceM
+				.fromStream(
+						FunctionalModuleLoader.INSTANCE.functionalModules.get()
+								.stream())
+				.filter(module -> module.filters() != null)
+				.map(module -> module.filters().apply(data))
+				.forEach(pluginMap -> map.putAll(pluginMap));
+		return map;
 	}
 	default Map<String,Servlet> getServlets(ServerData data) {
-		return ImmutableMap.of();
+		Map<String, Servlet> map = new HashMap<>();
+		SequenceM
+				.fromStream(
+						FunctionalModuleLoader.INSTANCE.functionalModules.get()
+								.stream())
+				.filter(module -> module.servlets() != null)
+				.map(module -> module.servlets().apply(data))
+				.forEach(pluginMap -> map.putAll(pluginMap));
+		return map;
+		
 	}
 	
 	default  String getJaxWsRsApplication(){
 		return JerseyRestApplication.class.getCanonicalName();
 	}
 	default String getProviders(){
-		return "com.aol.micro.server.rest.providers";
+		String additional = SequenceM
+		.fromStream(
+				FunctionalModuleLoader.INSTANCE.functionalModules.get()
+						.stream()).filter(module -> module.providers()!=null)
+						.flatMapCollection(FunctionalModule::providers)
+						.join(",");
+			
+		if(StringUtils.isEmpty(additional))
+			return "com.aol.micro.server.rest.providers";
+		return "com.aol.micro.server.rest.providers,"+additional;
 	}
 	
 	public String getContext();

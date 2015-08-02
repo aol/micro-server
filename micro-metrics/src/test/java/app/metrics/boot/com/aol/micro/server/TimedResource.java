@@ -1,4 +1,4 @@
-package app.metrics.com.aol.micro.server;
+package app.metrics.boot.com.aol.micro.server;
 
 import org.springframework.stereotype.Component;
 
