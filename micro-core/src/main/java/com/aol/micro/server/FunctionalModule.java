@@ -26,27 +26,51 @@ import com.aol.micro.server.servers.model.ServerData;
  */
 public interface FunctionalModule {
 
+	/**
+	 * @return jax-rs Resources for this plugin
+	 */
 	default Set<Class> jaxRsResources(){
 		return new HashSet<>();
 	}
+	/**
+	 * @return  jax-rs Packages for this plugin
+	 */
 	default Set<String> jaxRsPackages(){
 		return new HashSet<>();
 	}
+	/**
+	 * @return Spring configuration classes for this plugin
+	 */
 	default Set<Class> springClasses(){
 		return new HashSet<>();
 	}
+	/**
+	 * @return Servlet Context Listeners for this plugin
+	 */
 	default Set<Function<ServerData,ServletContextListener>> servletContextListeners(){
 		return new HashSet<>();
 	}
+	/**
+	 * @return Servlet Request Listeners for this plugin
+	 */
 	default Set<Function<ServerData,ServletRequestListener>> servletRequestListeners(){
 		return new HashSet<>();
 	}
+	/**
+	 * @return Filters for this plugin
+	 */
 	default Function<ServerData,Map<String,Filter>> filters(){
 		return serverData -> new HashMap<>();
 	}
+	/**
+	 * @return Servlets for this plugin
+	 */
 	default Function<ServerData,Map<String,Servlet>> servlets(){
 		return serverData -> new HashMap<>();
 	}
+	/**
+	 * @return jax-rs Providers for this plugin
+	 */
 	default List<String> providers(){
 		return new ArrayList<>();
 	}
