@@ -13,7 +13,6 @@ import lombok.Getter;
 import org.junit.Test;
 
 import com.aol.cyclops.trycatch.Try;
-import com.aol.micro.server.auto.discovery.MissingPipeException;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.reactive.Pipes;
 import com.aol.micro.server.reactive.Reactive;

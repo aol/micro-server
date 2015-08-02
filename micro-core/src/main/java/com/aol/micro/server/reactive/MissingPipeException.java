@@ -1,4 +1,4 @@
-package com.aol.micro.server.auto.discovery;
+package com.aol.micro.server.reactive;
 
 public class MissingPipeException extends RuntimeException{
 
