@@ -2,7 +2,6 @@ package app.reactive.pipes.com.aol.micro.server;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.reactive.Pipes;
-import com.aol.simple.react.async.Queue;
 import com.aol.simple.react.async.QueueFactories;
 import com.aol.simple.react.stream.traits.LazyFutureStream;
 

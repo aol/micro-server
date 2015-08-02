@@ -5,6 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Queue;
 
+import org.pcollections.ConsPStack;
+import org.pcollections.HashTreePMap;
+import org.pcollections.PMap;
+import org.pcollections.PStack;
+
 import com.aol.micro.server.rest.JacksonUtil;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -12,26 +17,26 @@ import com.google.common.collect.Maps;
 
 public class ActiveEvents<T extends BaseEventInfo> {
 
-	private final Map<String, T> active = Maps.newHashMap();
-	private final Queue<Map> recentlyFinished=  Lists.newLinkedList();
+	private volatile PMap<String, T> active = HashTreePMap.empty();
+	private volatile PStack<Map> recentlyFinished=  ConsPStack.empty();
 	private volatile int events = 0;
 	private volatile int added = 0;
 	private volatile int removed = 0;
 
-	public synchronized void active(String key, T data) {
-		active.put(key, data);
+	public void active(String key, T data) {
+		active = active.plus(key, data);
 		events++;
 		added++;
 	}
-	public synchronized void finished(String key) {
+	public  void finished(String key) {
 		finished(key,ImmutableMap.of());
 	}
-	public synchronized void finished(String key, ImmutableMap data) {
-		recentlyFinished.add(wrapInMap(active.get(key),data));
+	public void finished(String key, ImmutableMap data) {
+		recentlyFinished =recentlyFinished.plus(wrapInMap(active.get(key),data));
 		active.remove(key);
 		removed++;
 		if(recentlyFinished.size()>10)
-			recentlyFinished.remove();
+			recentlyFinished.minus(recentlyFinished.size()-1);
 			
 		
 	}
@@ -49,7 +54,7 @@ public class ActiveEvents<T extends BaseEventInfo> {
 	 * We don't want to expose the active map externally as access would not be thread safe
 	 * 	 
 	 * */
-	public synchronized String toString(){
+	public  String toString(){
 		Map result = toMap();
 		return JacksonUtil.serializeToJson(result);
 	}

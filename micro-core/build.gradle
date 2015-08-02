@@ -1,7 +1,8 @@
 description = 'micro-core'
 dependencies {
-	compile ('com.aol.cyclops:cyclops-all:5.1.0')
-	compile group: 'com.aol.simplereact', name:'simple-react', version:'0.98'
+	compile ("com.aol.cyclops:cyclops-all:$cyclopsVersion")
+	compile group: 'com.aol.simplereact', name:'simple-react', version:"${simpleReactVersion}"
+	
 	compile group: 'org.aspectj', name: 'aspectjrt', version:'1.5.4'
 	compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.5.4'
 	

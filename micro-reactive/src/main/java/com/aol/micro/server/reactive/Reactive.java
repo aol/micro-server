@@ -6,7 +6,6 @@ import java.util.function.Function;
 import com.aol.cyclops.trycatch.Failure;
 import com.aol.cyclops.trycatch.Success;
 import com.aol.cyclops.trycatch.Try;
-import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.simple.react.async.Adapter;
 import com.aol.simple.react.stream.lazy.LazyReact;
 import com.aol.simple.react.stream.traits.LazyFutureStream;

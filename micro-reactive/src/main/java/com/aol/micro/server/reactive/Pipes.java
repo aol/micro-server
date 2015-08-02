@@ -2,12 +2,11 @@ package com.aol.micro.server.reactive;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import com.aol.simple.react.async.Adapter;
-import com.aol.simple.react.async.Queue;
-import com.aol.simple.react.async.Topic;
 import com.aol.simple.react.stream.traits.LazyFutureStream;
-import com.google.common.collect.Maps;
 
 /**
  * Store for Pipes for cross-thread communication
@@ -17,7 +16,7 @@ import com.google.common.collect.Maps;
  */
 public class Pipes {
 	
-	private static Map<Object,Adapter<?>> registered = Maps.newConcurrentMap();
+	private static final ConcurrentMap<Object,Adapter<?>> registered = new ConcurrentHashMap<>();
 	
 	
 	/**
@@ -50,7 +49,7 @@ public class Pipes {
 	}
 
 	public static void clear() {
-		 registered = Maps.newConcurrentMap();
+		 registered.clear();
 		
 	}
 	

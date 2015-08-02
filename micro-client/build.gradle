@@ -2,7 +2,8 @@ description = 'micro-client'
 dependencies {
 	compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version:"$jerseyVersion"
 	compile project(':micro-core')
-	
+	testCompile project(':micro-reactive')
+	testCompile project(':micro-events')
 	
 }
 

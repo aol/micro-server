@@ -3,5 +3,6 @@ dependencies {
 	compile project(':micro-data')
 	compile project(':micro-swagger')
 	compile project(':micro-metrics')
+	compile project(':micro-events')
 	
 }
