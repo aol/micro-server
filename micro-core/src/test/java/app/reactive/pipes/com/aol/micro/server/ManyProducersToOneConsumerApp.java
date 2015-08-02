@@ -1,4 +1,4 @@
-package app.async.pipes.com.aol.micro.server;
+package app.reactive.pipes.com.aol.micro.server;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.reactive.Pipes;

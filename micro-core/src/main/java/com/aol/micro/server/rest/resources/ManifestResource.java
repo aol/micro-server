@@ -20,10 +20,11 @@ import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.auto.discovery.SingletonRestResource;
+import com.aol.micro.server.reactive.Reactive;
 
 @Path("/manifest")
 @Component
-public class ManifestResource implements CommonRestResource, SingletonRestResource{
+public class ManifestResource implements CommonRestResource, SingletonRestResource,  Reactive{
 
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());

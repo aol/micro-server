@@ -2,10 +2,6 @@ package com.aol.micro.server.rest.resources;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,16 +16,13 @@ import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.auto.discovery.SingletonRestResource;
 import com.aol.micro.server.events.JobsBeingExecuted;
 import com.aol.micro.server.events.RequestsBeingExecuted;
-import com.aol.micro.server.reactive.Pipes;
-import com.aol.simple.react.async.QueueFactories;
-import com.aol.simple.react.stream.traits.LazyFutureStream;
-import com.aol.simple.react.stream.traits.SimpleReactStream;
+import com.aol.micro.server.reactive.Reactive;
 import com.google.common.collect.Maps;
 
 
 
 @Path("/active")
-public class ActiveResource implements CommonRestResource, SingletonRestResource {
+public class ActiveResource implements CommonRestResource, SingletonRestResource, Reactive {
 
 	private static final Object LOG_LEVEL = null;
 	private final Map<String,RequestsBeingExecuted> activeQueries;

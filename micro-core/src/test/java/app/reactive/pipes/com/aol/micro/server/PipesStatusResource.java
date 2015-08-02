@@ -1,24 +1,18 @@
-package app.async.pipes.com.aol.micro.server;
+package app.reactive.pipes.com.aol.micro.server;
 
-import java.io.InputStream;
-
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.auto.discovery.RestResource;
+import com.aol.micro.server.reactive.Reactive;
 
 
 @Path("/status")
 @Component
-public class PipesStatusResource implements RestResource {
+public class PipesStatusResource implements RestResource, Reactive {
 
 	volatile int next=0;
 	

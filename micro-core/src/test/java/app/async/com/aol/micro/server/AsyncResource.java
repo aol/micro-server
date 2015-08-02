@@ -12,13 +12,13 @@ import javax.ws.rs.container.Suspended;
 import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.auto.discovery.RestResource;
+import com.aol.micro.server.reactive.Reactive;
 import com.aol.micro.server.rest.client.nio.RestClient;
-import com.aol.simple.react.stream.simple.SimpleReact;
 import com.google.common.collect.ImmutableList;
 
 @Path("/async")
 @Component
-public class AsyncResource implements RestResource{
+public class AsyncResource implements RestResource,Reactive{
 
 	
 	private final ImmutableList<String> urls = ImmutableList.of("http://localhost:8080/async-app/async/ping2",
