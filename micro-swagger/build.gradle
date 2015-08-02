@@ -1,25 +1,20 @@
-description = 'micro-boot'
+description = 'micro-swagger'
 dependencies {
-	
-
-	compile 'org.springframework.boot:spring-boot:1.2.1.RELEASE'
-	compile 'org.springframework.boot:spring-boot-autoconfigure:1.2.1.RELEASE'
+	compile group: 'com.wordnik', name: 'swagger-jersey2-jaxrs_2.10', version:'1.3.10'
 	compile project(':micro-core')
-	testCompile project(':micro-swagger')
-
-
 }
 
 modifyPom {
 	project {
-		name 'Microserver-boot'
-		description 'Opinionated rest microservices with Spring Boot'
+		name 'Microserver : swagger'
+		description 'Opinionated rest microservices'
 		url 'https://github.com/aol/micro-server'
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'microserver-boot'
+		artifactId 'microserver-swagger'
 		version "$version" 
+		
 		
 		scm {
 			url 'scm:git@github.com:aol/micro-server.git'
@@ -42,6 +37,7 @@ modifyPom {
 				email 'john.mcclean@teamaol.com'
 			}
 		}
+		
 	}
 }
 

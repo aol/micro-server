@@ -96,12 +96,12 @@ public class ConfigurableModuleTest {
 	public void defaultResourcesDefault(){
 		Module m = ConfigurableModule.builder().build();
 		
-		assertThat(m.getDefaultResources().size(),equalTo(4));
+		assertThat(m.getDefaultResources().size(),equalTo(1));
 	}
 	@Test
 	public void defaultResourcesNew(){
 		Module m = ConfigurableModule.builder().defaultResources(Arrays.asList(this.getClass())).build();
-		assertThat(m.getDefaultResources().size(),equalTo(5));
+		assertThat(m.getDefaultResources().size(),equalTo(2));
 		
 	}
 	@Test
@@ -150,7 +150,7 @@ public class ConfigurableModuleTest {
 	}
 	@Test
 	public void testGetDefaultResources() {
-		assertThat(module.getDefaultResources().size(),is(4));
+		assertThat(module.getDefaultResources().size(),is(1));
 	}
 	@Test
 	public void testGetDefaultJaxRsPackagesReset() {
@@ -158,7 +158,7 @@ public class ConfigurableModuleTest {
 	}
 	@Test
 	public void testGetDefaultJaxRsPackagesResources() {
-		assertThat(module.getDefaultJaxRsPackages().size(),is(3));
+		assertThat(module.getDefaultJaxRsPackages().size(),is(1));
 	}
 	@Test
 	public void testGetDefaultResourcesUnchanged() {

@@ -1,9 +1,6 @@
 package com.aol.micro.server.rest.swagger;
 
 import org.junit.Test;
-
-import app.servlet.com.aol.micro.server.ServletStatusResource;
-
 import com.aol.micro.server.rest.swagger.SwaggerInitializer;
 import com.aol.micro.server.servers.model.ServerData;
 import com.google.common.collect.ImmutableList;
