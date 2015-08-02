@@ -2,5 +2,6 @@ description = 'micro-tutorial'
 dependencies {
 	compile project(':micro-data')
 	compile project(':micro-swagger')
+	compile project(':micro-metrics')
 	
 }

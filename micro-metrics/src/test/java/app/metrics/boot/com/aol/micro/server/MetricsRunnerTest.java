@@ -1,38 +1,29 @@
-package app.metrics.com.aol.micro.server;
+package app.metrics.boot.com.aol.micro.server;
 
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-
-import javax.management.MBeanServerConnection;
-import javax.management.ObjectName;
-import javax.management.remote.JMXConnector;
-import javax.management.remote.JMXConnectorFactory;
-import javax.management.remote.JMXServiceURL;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
-import com.aol.micro.server.MicroserverApp;
+import com.aol.micro.server.boot.config.Microboot;
+import com.aol.micro.server.boot.config.MicrobootApp;
 import com.aol.micro.server.spring.metrics.CodahaleMetricsConfigurer;
 import com.aol.micro.server.testing.RestAgent;
-import com.codahale.metrics.ConsoleReporter;
 
-@Configuration
-@ComponentScan(basePackages = { "app.metrics.com.aol.micro.server" })
+@Microboot
 public class MetricsRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicroserverApp server;
+	MicrobootApp server;
 	@Before
 	public void startServer(){
 		CodahaleMetricsConfigurer.setInit( metricRegistry -> 		 TestReporter
@@ -40,7 +31,7 @@ public class MetricsRunnerTest {
 		         .build()
 		         .start(10, TimeUnit.MILLISECONDS));
 		
-		server = new MicroserverApp( MetricsRunnerTest.class, ()-> "simple-app");
+		server = new MicrobootApp(  ()-> "simple-app");
 		server.start();
 
 	}
