@@ -1,9 +1,10 @@
 package com.aol.micro.server.rest;
 
 
-import static junit.framework.Assert.*;
-import static org.junit.Assert.assertThat;
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import org.junit.Test;
-
-import app.rest.client.com.aol.micro.server.MyEntity;
 
 import com.google.common.collect.ImmutableList;
 

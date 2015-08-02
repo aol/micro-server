@@ -10,7 +10,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import lombok.AllArgsConstructor;
-import lombok.experimental.Builder;
+import lombok.Builder;
 import lombok.experimental.Wither;
 
 import org.glassfish.jersey.client.ClientConfig;
@@ -24,7 +24,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 @Wither
 @Builder
 @AllArgsConstructor
-public class RestClient<T> {
+public class AsyncNonNIORestClient<T> {
 
 	private final Client client;
 	private final String contentType;
@@ -32,7 +32,7 @@ public class RestClient<T> {
 	private final Class<T> response;
 	private final JavaType genericResponse;
 
-	public RestClient(int readTimeout, int connectTimeout) {
+	public AsyncNonNIORestClient(int readTimeout, int connectTimeout) {
 
 		this.client = initClient(readTimeout, connectTimeout);
 		contentType = MediaType.APPLICATION_JSON;
@@ -41,11 +41,11 @@ public class RestClient<T> {
 		genericResponse = null;
 	}
 
-	public <R> RestClient<R> withResponse(Class<R> response) {
-		return new RestClient<R>(client, contentType, accept, response,null);
+	public <R> AsyncNonNIORestClient<R> withResponse(Class<R> response) {
+		return new AsyncNonNIORestClient<R>(client, contentType, accept, response,null);
 	}
-	public <R> RestClient<R> withGenericResponse(Class<R> responseClass, Class... genericResponse) {
-		return new RestClient<R>(client, contentType, accept, null,JacksonUtil.getMapper().getTypeFactory().constructParametricType(responseClass,genericResponse));
+	public <R> AsyncNonNIORestClient<R> withGenericResponse(Class<R> responseClass, Class... genericResponse) {
+		return new AsyncNonNIORestClient<R>(client, contentType, accept, null,JacksonUtil.getMapper().getTypeFactory().constructParametricType(responseClass,genericResponse));
 	}
 
 	protected Client initClient(int rt, int ct) {

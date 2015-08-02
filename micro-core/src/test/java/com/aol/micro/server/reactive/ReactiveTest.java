@@ -106,6 +106,8 @@ public class ReactiveTest {
 	static class MyResource implements RestResource,Reactive{
 		@Getter
 		String val;
+		
+		
 		public Try<Boolean,MissingPipeException> queue(){
 			return this.enqueue("hello","world");
 		}

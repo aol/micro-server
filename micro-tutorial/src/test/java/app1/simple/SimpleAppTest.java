@@ -9,12 +9,12 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.rest.client.nio.RestClient;
+import com.aol.micro.server.rest.client.nio.AsyncNonNIORestClient;
 
 public class SimpleAppTest {
 
 
-	   	private final RestClient<String> rest = new RestClient(1000,1000).withAccept("text/plain");
+	   	private final AsyncNonNIORestClient<String> rest = new AsyncNonNIORestClient(1000,1000).withAccept("text/plain");
 	  
 	
 		MicroserverApp server;
