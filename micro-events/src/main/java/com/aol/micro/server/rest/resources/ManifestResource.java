@@ -35,10 +35,10 @@ public class ManifestResource implements CommonRestResource, SingletonRestResour
 	@Produces("application/json")
 	public void mainfest(@Suspended AsyncResponse asyncResponse, @Context ServletContext context) {
 		
-		this.sync(lr -> lr.of("/META-INF/MANIFEST.MF")
+		this.ioStream().of("/META-INF/MANIFEST.MF")
 					.map(url->context.getResourceAsStream(url))
 					.map(this::getManifest)
-					.peek(result->asyncResponse.resume(result)))
+					.peek(result->asyncResponse.resume(result))
 					.run();
 		
 	}

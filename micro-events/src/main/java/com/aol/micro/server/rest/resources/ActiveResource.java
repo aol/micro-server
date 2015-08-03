@@ -60,9 +60,9 @@ public class ActiveResource implements CommonRestResource, SingletonRestResource
 	@Path("/jobs")
 	public void activeJobs(@Suspended AsyncResponse asyncResponse) {
 		
-		this.sync(lr->lr.of(this.activeJobs)
+		this.cpuStream().of(this.activeJobs)
 								  .then(JobsBeingExecuted::toString)
-								  .then(str->asyncResponse.resume(str)))
+								  .then(str->asyncResponse.resume(str))
 								  .run();
 		
 	}
