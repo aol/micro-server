@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.reactive.Reactive;
-import com.aol.micro.server.rest.client.nio.RestClient;
+import com.aol.micro.server.testing.RestAgent;
 import com.google.common.collect.ImmutableList;
 
 @Path("/async")
@@ -26,7 +26,7 @@ public class AsyncResource implements RestResource,Reactive{
 			"http://localhost:8080/async-app/async/ping",
 			"http://localhost:8080/async-app/async/ping");
     
-    	private final RestClient client = new RestClient(100,100).withAccept("text/plain");
+    	private final RestAgent client = new RestAgent();
     	
         @GET
         @Path("/expensive")
@@ -34,7 +34,7 @@ public class AsyncResource implements RestResource,Reactive{
         public void expensive(@Suspended AsyncResponse asyncResponse){
   
         	this.async(lr -> lr.fromStream(urls.stream()
-					.<CompletableFuture<String>>map(it ->  client.get(it)))
+					.<CompletableFuture<String>>map(it ->  CompletableFuture.completedFuture(client.get(it))))
 					.onFail(it -> "")
 					.peek(it -> 
 					System.out.println(it))

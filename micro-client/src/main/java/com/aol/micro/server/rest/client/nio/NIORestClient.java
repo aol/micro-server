@@ -23,7 +23,7 @@ import org.springframework.web.client.RestClientException;
 
 import com.aol.micro.server.rest.JacksonUtil;
 
-public class SpringRestTemplate {
+public class NIORestClient {
 
 	@Getter
 	private final AsyncRestTemplate template;
@@ -223,7 +223,7 @@ public class SpringRestTemplate {
 				requestCallback, responseExtractor));
 	}
 
-	public SpringRestTemplate(AsyncRestTemplate template) {
+	public NIORestClient(AsyncRestTemplate template) {
 		super();
 
 		this.template = template;

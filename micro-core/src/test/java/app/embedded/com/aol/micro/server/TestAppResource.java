@@ -1,13 +1,14 @@
 package app.embedded.com.aol.micro.server;
 
+import java.util.concurrent.CompletableFuture;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.rest.client.nio.SpringRestTemplate;
+import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.stream.simple.SimpleReact;
 import com.google.common.collect.ImmutableList;
 @Component
@@ -15,17 +16,13 @@ import com.google.common.collect.ImmutableList;
 public class TestAppResource implements TestAppRestResource {
 
 	private final SimpleReact simpleReact = new SimpleReact();
-	private final  SpringRestTemplate  template;
+	private final  RestAgent template = new RestAgent();
 	private final ImmutableList<String> urls = ImmutableList.of("http://localhost:8081/alternative-app/alt-status/ping",
 			"http://localhost:8080/test-app/test-status/ping",
 			"http://localhost:8082/simple-app/status/ping",
 			"http://localhost:8080/test-app/test-status/ping");
 	
-	@Autowired
-	public TestAppResource(SpringRestTemplate template) {
-		
-		this.template = template;
-	}
+	
 
 	@GET
 	@Produces("text/plain")
@@ -41,8 +38,8 @@ public class TestAppResource implements TestAppRestResource {
 		
 		return simpleReact
 			.fromStream(urls.stream()
-					.map(it ->  template.getForEntity(it,String.class)))
-			.then(it -> it.getBody())
+					.map(it ->  CompletableFuture.completedFuture(template.get(it))))
+			
 			.then(it -> "*"+it)
 			.peek(loadedAndModified -> System.out.println(loadedAndModified))
 			.block().stream().reduce("", (acc,next) -> acc+"-"+next);

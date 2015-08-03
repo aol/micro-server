@@ -11,8 +11,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import nonautoscan.com.aol.micro.server.MiscellaneousConfig;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,9 +21,9 @@ import org.springframework.web.client.RestClientException;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.rest.JacksonUtil;
-import com.aol.micro.server.rest.client.nio.RestClient;
-import com.aol.micro.server.rest.client.nio.SpringRestTemplate;
+import com.aol.micro.server.rest.client.nio.AsyncNonNIORestClient;
+import com.aol.micro.server.rest.client.nio.NIORestClient;
+import com.aol.micro.server.rest.client.nio.SpringConfig;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -33,11 +31,11 @@ import com.google.common.collect.ImmutableSet;
 @Microserver
 public class RestClientTest {
 
-   	private final RestClient<List<String>> listClient = new RestClient(1000,1000).withResponse(List.class);
-	private final RestClient<ImmutableSet<String>> setClient = new RestClient(1000,1000).withResponse(ImmutableSet.class);;
-	private final RestClient<ImmutableList<MyEntity>> genericsClient = new RestClient(1000,1000).withGenericResponse(ImmutableList.class, MyEntity.class);
+   	private final AsyncNonNIORestClient<List<String>> listClient = new AsyncNonNIORestClient(1000,1000).withResponse(List.class);
+	private final AsyncNonNIORestClient<ImmutableSet<String>> setClient = new AsyncNonNIORestClient(1000,1000).withResponse(ImmutableSet.class);;
+	private final AsyncNonNIORestClient<ImmutableList<MyEntity>> genericsClient = new AsyncNonNIORestClient(1000,1000).withGenericResponse(ImmutableList.class, MyEntity.class);
   
-	private final SpringRestTemplate rest = new MiscellaneousConfig().restClient();
+	private final NIORestClient rest = new SpringConfig().restClient();
 																			
 
 	MicroserverApp server;

@@ -6,7 +6,7 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot-autoconfigure:1.2.1.RELEASE'
 	compile project(':micro-core')
 	testCompile project(':micro-swagger')
-//	testCompile project(':micro-metrics')
+	testCompile project(':micro-client')
 
 
 }

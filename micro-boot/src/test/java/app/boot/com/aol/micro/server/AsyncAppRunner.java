@@ -11,14 +11,14 @@ import org.junit.Test;
 
 import com.aol.micro.server.boot.config.MicrobootApp;
 import com.aol.micro.server.boot.config.Microboot;
-import com.aol.micro.server.rest.client.nio.RestClient;
+import com.aol.micro.server.rest.client.nio.AsyncNonNIORestClient;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microboot
 public class AsyncAppRunner {
 
 
-	RestClient rest = new RestClient(1000,1000).withAccept("text/plain");
+	AsyncNonNIORestClient rest = new AsyncNonNIORestClient(1000,1000).withAccept("text/plain");
 	
 	MicrobootApp server;
 	@Before

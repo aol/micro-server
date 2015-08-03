@@ -1,5 +1,59 @@
 description = 'micro-core'
 dependencies {
+	compile ('com.aol.cyclops:cyclops-all:5.1.0')
+	compile group: 'com.aol.simplereact', name:'simple-react', version:'0.98'
+	compile group: 'org.aspectj', name: 'aspectjrt', version:'1.5.4'
+	compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.5.4'
+	
+	compile group: 'org.apache.httpcomponents', name:'httpclient', version:'4.4'
+	compile group: 'org.apache.httpcomponents', name:'httpasyncclient', version:'4.1-beta1'
+	
+	
+	compile group: 'org.springframework', name: 'spring-web', version:"${springVersion}"
+	compile group: 'org.springframework', name: 'spring-context', version:"${springVersion}"
+	compile group: 'org.springframework', name: 'spring-context-support', version:"${springVersion}"
+	compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.0.4'
+	compile group: 'ch.qos.logback', name: 'logback-core', version:'1.0.4'
+	compile group: 'org.slf4j', name: 'jcl-over-slf4j', version:'1.6.1'
+
+
+	compile group: 'com.google.guava', name: 'guava', version:'18.0'
+
+
+	compile group: 'org.apache.commons', name: 'commons-dbcp2', version:'2.1'
+	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-guava', version:'2.5.2'
+	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version:'2.5.2'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.5.2'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.5.2'
+	compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version:'2.5.2'
+	compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-base', version:'2.5.2'
+	
+	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version:'2.5.2'
+	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version:"$jerseyVersion"
+	
+	compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version:"$jerseyVersion"
+	compile(group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version:"$jerseyVersion") {
+		exclude(module: 'jackson-xc')
+		exclude(module: 'jackson-core-asl')
+		exclude(module: 'jackson-jaxrs')
+		exclude(module: 'jackson-mapper-asl')
+	}
+	compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version:'2.0'
+
+	compile group: 'org.glassfish.grizzly', name: 'grizzly-http-server', version:"$grizzlyVersion"
+	compile group: 'org.glassfish.grizzly', name: 'grizzly-http-all', version:"$grizzlyVersion"
+	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-http', version:"$jerseyVersion"
+	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-grizzly2-servlet', version:"$jerseyVersion"
+	compile "org.glassfish.jersey.media:jersey-media-multipart:$jerseyVersion"
+	
+	compile "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion"
+	compile "org.glassfish.jersey.ext:jersey-bean-validation:$jerseyVersion"
+
+	compile 'javax.interceptor:javax.interceptor-api:1.2-b04'
+	compile 'javax.el:javax.el-api:2.2.4'
+	compile 'org.glassfish.web:javax.el:2.2.4'
+	
+	testCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version:"$jerseyVersion"
 	
 }
 

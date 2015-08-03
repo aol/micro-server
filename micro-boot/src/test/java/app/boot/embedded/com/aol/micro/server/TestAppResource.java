@@ -6,7 +6,7 @@ import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.micro.server.rest.client.nio.SpringRestTemplate;
+import com.aol.micro.server.rest.client.nio.NIORestClient;
 import com.aol.simple.react.stream.simple.SimpleReact;
 import com.google.common.collect.ImmutableList;
 //@Component
@@ -15,14 +15,14 @@ import com.google.common.collect.ImmutableList;
 public class TestAppResource {
 
 	private final SimpleReact simpleReact = new SimpleReact();
-	private final  SpringRestTemplate  template;
+	private final  NIORestClient  template;
 	private final ImmutableList<String> urls = ImmutableList.of("http://localhost:8081/alternative-app/alt-status/ping",
 			"http://localhost:8080/test-app/test-status/ping",
 			"http://localhost:8082/simple-app/status/ping",
 			"http://localhost:8080/test-app/test-status/ping");
 	
 	@Autowired
-	public TestAppResource(SpringRestTemplate template) {
+	public TestAppResource(NIORestClient template) {
 		
 		this.template = template;
 	}
