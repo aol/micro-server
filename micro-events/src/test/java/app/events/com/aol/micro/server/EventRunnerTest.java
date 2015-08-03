@@ -50,11 +50,11 @@ public class EventRunnerTest {
 		
 		assertThat(rest.get("http://localhost:8080/event-app/status/ping"),is("ok"));
 		
-		assertThat(rest.get("http://localhost:8080/event-app/active/jobs"),
+		assertThat(rest.getJson("http://localhost:8080/event-app/active/jobs"),
 				containsString("startedAt"));
-		assertThat(rest.get("http://localhost:8080/event-app/active/requests"),
+		assertThat(rest.getJson("http://localhost:8080/event-app/active/requests"),
 				containsString("startedAt"));
-		assertThat(rest.get("http://localhost:8080/event-app/manifest"),
+		assertThat(rest.getJson("http://localhost:8080/event-app/manifest"),
 				containsString("Manifest"));
 		
 	}

@@ -1,8 +1,5 @@
 package app.async.com.aol.micro.server;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -11,9 +8,11 @@ import javax.ws.rs.container.Suspended;
 
 import org.springframework.stereotype.Component;
 
+import com.aol.cyclops.lambda.monads.SequenceM;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.stream.simple.SimpleReact;
+import com.aol.simple.react.stream.traits.LazyFutureStream;
 import com.google.common.collect.ImmutableList;
 
 @Path("/async")
@@ -33,14 +32,14 @@ public class AsyncResource implements RestResource{
         @Produces("text/plain")
         public void expensive(@Suspended AsyncResponse asyncResponse){
   
-        	simpleReact.fromStream(urls.stream()
-					.<CompletableFuture<String>>map(it ->  CompletableFuture.completedFuture(client.get(it))))
+        	LazyFutureStream.ofIterable(urls)
+					.then(it->client.get(it))
 					.onFail(it -> "")
 					.peek(it -> 
 					System.out.println(it))
 					.<String,Boolean>allOf(data -> {
 						System.out.println(data);
-							return asyncResponse.resume(String.join(";", (List<String>)data)); });
+							return asyncResponse.resume(SequenceM.fromIterable(data).join(";")); });
         }
         
         @GET

@@ -1,7 +1,5 @@
 description = 'micro-events'
 dependencies {
-	compile group: 'org.aspectj', name: 'aspectjrt', version:'1.5.4'
-	compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.5.4'
 	compile project(':micro-core')
 	compile project(':micro-reactive')
 }

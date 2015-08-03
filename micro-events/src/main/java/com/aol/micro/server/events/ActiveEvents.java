@@ -33,7 +33,7 @@ public class ActiveEvents<T extends BaseEventInfo> {
 	}
 	public void finished(String key, ImmutableMap data) {
 		recentlyFinished =recentlyFinished.plus(wrapInMap(active.get(key),data));
-		active.remove(key);
+		active=active.minus(key);
 		removed++;
 		if(recentlyFinished.size()>10)
 			recentlyFinished.minus(recentlyFinished.size()-1);
