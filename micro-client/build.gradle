@@ -1,8 +1,12 @@
 description = 'micro-client'
 dependencies {
 	compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version:"$jerseyVersion"
-	compile project(':micro-core')
+	compile group: 'org.apache.httpcomponents', name:'httpclient', version:'4.4'
+	compile group: 'org.apache.httpcomponents', name:'httpasyncclient', version:'4.1-beta1'
 	
+	compile project(':micro-core')
+	testCompile project(':micro-reactive')
+	testCompile project(':micro-events')
 	
 }
 

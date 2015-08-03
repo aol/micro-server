@@ -8,9 +8,7 @@ import nonautoscan.com.aol.micro.server.AopConfig;
 import nonautoscan.com.aol.micro.server.MiscellaneousConfig;
 import nonautoscan.com.aol.micro.server.ScheduleAndAsyncConfig;
 
-import com.aol.micro.server.events.ConfigureActiveJobsAspect;
 import com.aol.micro.server.module.ConfigureEnviroment;
-import com.aol.micro.server.rest.resources.ConfigureResources;
 import com.aol.micro.server.servers.AccessLogConfig;
 import com.aol.micro.server.spring.datasource.DataSourceBuilder;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
@@ -33,7 +31,7 @@ public class Classes {
 	 * Codahale Metrics, Event tracking etc
 	 */
 	public static final  Classes CORE_CLASSES = new Classes(PropertyFileConfig.class, MiscellaneousConfig.class, AopConfig.class,
-			ConfigureActiveJobsAspect.class, ScheduleAndAsyncConfig.class, ConfigureResources.class, ConfigureEnviroment.class, AccessLogConfig.class);
+			 ScheduleAndAsyncConfig.class,  ConfigureEnviroment.class, AccessLogConfig.class);
 	public static final  Classes DATA_SOURCE_CLASSES = new Classes(JdbcConfig.class,DataSourceBuilder.class);
 	
 	@Getter
