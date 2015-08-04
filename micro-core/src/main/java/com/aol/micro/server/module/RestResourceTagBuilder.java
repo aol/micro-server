@@ -12,8 +12,9 @@ import org.pcollections.ConsPStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aol.cyclops.lambda.utils.ExceptionSoftener;
 import com.aol.micro.server.auto.discovery.CommonRestResource;
-import com.aol.simple.react.exceptions.ExceptionSoftener;
+
 
 public class RestResourceTagBuilder {
 

@@ -4,6 +4,7 @@ dependencies {
 	compile project(':micro-reactive')
 	compile project(':micro-guava')
 	testCompile project(':micro-grizzly')
+	testCompile project(':micro-jersey')
 }
 
 modifyPom {

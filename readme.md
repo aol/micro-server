@@ -9,7 +9,7 @@ A convenient modular engine for Microservices. Microserver plugins offer seamles
 
 Install Microserver with Grizzly and Jersey (Gradle config below)
 
-    compile group: 'com.aol.microservices', name:'microserver-grizzly-with-jersey', version:'0.60'
+    compile group: 'com.aol.microservices', name:'microserver-grizzly-with-jersey', version:'0.61'
  
 Create and run a simple app 
  
@@ -67,9 +67,9 @@ Microserver is a zero configuration, standards based, battle hardened library to
 
 [Example Apps : Microserver Boot](https://github.com/aol/micro-server/tree/master/micro-boot/src/test/java/app)
 
-[Java Doc : Microserver Core](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.60)
+[Java Doc : Microserver Core](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.61)
 
-[Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.60)
+[Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.61)
 
 
 
@@ -80,7 +80,7 @@ Microserver core
     <dependency>
       <groupId>com.aol.microservices</groupId>
       <artifactId>microserver-core</artifactId>
-      <version>0.60</version>
+      <version>0.61</version>
     </dependency>
     
 Microserver Spring Boot 
@@ -88,7 +88,7 @@ Microserver Spring Boot
     <dependency>
       <groupId>com.aol.microservices</groupId>
       <artifactId>microserver-boot</artifactId>
-      <version>0.60</version>
+      <version>0.61</version>
     </dependency>
 
 
@@ -97,15 +97,15 @@ Microserver Spring Boot
 
 Microserver core 
 	
-	 compile group: 'com.aol.microservices', name:'microserver-core', version:'0.60'
+	 compile group: 'com.aol.microservices', name:'microserver-core', version:'0.61'
 	 
 Microserver Spring Boot 
 	 
-	  compile group: 'com.aol.microservices', name:'microserver-boot', version:'0.60'
+	  compile group: 'com.aol.microservices', name:'microserver-boot', version:'0.61'
 
 ##Tech Stack
 
-Microserver core is a lightweight server configuration engine built using Spring, Cyclops, simple-react and Jackson.
+Microserver core is a lightweight server configuration engine built using Spring, Cyclops and Jackson.
 
 
 

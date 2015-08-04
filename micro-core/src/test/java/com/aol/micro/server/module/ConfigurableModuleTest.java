@@ -196,8 +196,8 @@ public class ConfigurableModuleTest {
 
 	@Test
 	public void testGetFilters() {
-		assertThat(module.getFilters(ServerData.builder().resources(Arrays.asList()).build()).size(),
-				is(2  ));
+			assertThat(module.getFilters(ServerData.builder().resources(Arrays.asList()).build()).size(),
+				is(1  ));
 	}
 	@Test
 	public void testGetFiltersReset() {
@@ -206,8 +206,8 @@ public class ConfigurableModuleTest {
 	
 	@Test
 	public void testGetFiltersUnchanged() {
-		assertThat(unchanged.getFilters(ServerData.builder().resources(Arrays.asList()).build()).get("/*"),
-				instanceOf(m.getFilters( ServerData.builder().resources(Arrays.asList()).build() ).get("/*").getClass()));
+		assertThat(unchanged.getFilters(ServerData.builder().resources(Arrays.asList()).build()).size(),
+				equalTo(m.getFilters( ServerData.builder().resources(Arrays.asList()).build() ).size()));
 	}
 
 	
@@ -227,9 +227,9 @@ public class ConfigurableModuleTest {
 		assertThat(module.getJaxWsRsApplication(),is(this.jaxWsRsApplication));
 	}
 
-	@Test
+	@Test(expected=IncorrectJaxRsPluginsException.class)
 	public void testGetJaxWsRsApplicationUnchanged() {
-		assertThat(unchanged.getJaxWsRsApplication(),is(m.getJaxWsRsApplication()));
+		unchanged.getJaxWsRsApplication();
 	}
 
 	@Test

@@ -8,8 +8,9 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-import org.jooq.lambda.fi.util.function.CheckedSupplier;
 import org.pcollections.HashTreePMap;
+
+import com.aol.cyclops.trycatch.Try;
 
 public class Environment {
 
@@ -43,7 +44,7 @@ public class Environment {
 	}
 
 	private String getHost(Module module) {
-		CheckedSupplier<String> s = ()->InetAddress.getLocalHost().getHostName();
+		Try.CheckedSupplier<String,Exception> s = ()->InetAddress.getLocalHost().getHostName();
 		try{
 			return Optional.ofNullable(properties.get(module.getContext() + ".host")).orElse(s.get()).toString();
 		}catch(Throwable e){

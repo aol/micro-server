@@ -2,8 +2,10 @@ description = 'micro-grizzly-with-jersey'
 dependencies {
 
 	compile project(':micro-core')
+	compile project(':micro-grizzly')
 	compile project(':micro-jersey')
 	
+	testCompile group: 'com.aol.simplereact', name:'simple-react', version:"${simpleReactVersion}"
 	
 
 }

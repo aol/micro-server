@@ -3,7 +3,6 @@ dependencies {
 	compile 'javax.servlet:javax.servlet-api:3.1.0'
 	
 	compile ("com.aol.cyclops:cyclops-all:$cyclopsVersion")
-	compile group: 'com.aol.simplereact', name:'simple-react', version:"${simpleReactVersion}"
 	compile group: 'org.aspectj', name: 'aspectjrt', version:'1.5.4'
 	compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.5.4'
 
@@ -19,23 +18,19 @@ dependencies {
 
 	compile group: 'org.apache.commons', name: 'commons-dbcp2', version:'2.1'
 
-	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version:'2.5.2'
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.5.2'
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.5.2'
-	compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version:'2.5.2'
-	compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-base', version:'2.5.2'
+	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version:"$jacksonVersion"
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:"$jacksonVersion"
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:"$jacksonVersion"
+	compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version:"$jacksonVersion"
+	compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-base', version:"$jacksonVersion"
 	
-	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version:'2.5.2'
+	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version:"$jacksonVersion"
 	
 	compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version:'2.0'
 
 	
 
-	compile 'javax.interceptor:javax.interceptor-api:1.2-b04'
-	compile 'javax.el:javax.el-api:2.2.4'
-	compile 'org.glassfish.web:javax.el:2.2.4'
-	
-//	testCompile group: 'com.google.guava', name: 'guava', version:'18.0'
+
 }
 
 modifyPom {

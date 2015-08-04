@@ -1,9 +1,11 @@
 description = 'micro-reactive'
 dependencies {
+	
 	compile ("com.aol.cyclops:cyclops-all:$cyclopsVersion")
 	compile group: 'com.aol.simplereact', name:'simple-react', version:"${simpleReactVersion}"
 	testCompile project(':micro-core')
 	testCompile project(':micro-grizzly')
+	testCompile project(':micro-jersey')
 }
 
 modifyPom {

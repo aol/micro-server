@@ -1,6 +1,5 @@
 package com.aol.micro.server;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -14,6 +13,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
 import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.cyclops.lambda.utils.ExceptionSoftener;
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.MicroserverConfigurer;
 import com.aol.micro.server.module.Module;
@@ -22,7 +22,6 @@ import com.aol.micro.server.servers.ServerApplication;
 import com.aol.micro.server.servers.ServerApplicationFactory;
 import com.aol.micro.server.servers.ServerRunner;
 import com.aol.micro.server.spring.SpringContextFactory;
-import com.aol.simple.react.exceptions.ExceptionSoftener;
 
 /**
  * 
@@ -130,10 +129,11 @@ public class MicroserverApp {
 		if(applications.size()>1){
 			logger.error("ERROR!  Multiple server application factories found ",applications);
 			System.err.println("ERROR!  Multiple server application factories found "+applications);
-			
+			throw new IncorrectNumberOfServersConfiguredException("Multiple server application factories found "+applications);
 		}else if(applications.size()==0){
 			logger.error("ERROR!  No server application factories found.");
 			System.err.println("ERROR!  No server application factories found.");
+			throw new IncorrectNumberOfServersConfiguredException("No server application factories found. ");
 			
 		}
 		

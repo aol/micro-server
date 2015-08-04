@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.cyclops.lambda.utils.ExceptionSoftener;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
-import com.aol.simple.react.exceptions.ExceptionSoftener;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;

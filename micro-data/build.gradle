@@ -13,7 +13,7 @@ dependencies {
 	compile project(':micro-core')
 	testCompile project(':micro-client')
 	testCompile project(':micro-grizzly')
-	
+	testCompile project(':micro-jersey')
 	testCompile group: 'org.hsqldb', name:'hsqldb', version:'2.0.0'
 }
 

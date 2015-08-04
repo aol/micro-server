@@ -8,6 +8,8 @@ import java.util.concurrent.CompletableFuture;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.springframework.context.ApplicationContext;
 
 import com.aol.micro.server.servers.grizzly.GrizzlyApplication;
 import com.aol.micro.server.servers.model.AllData;
@@ -29,18 +31,20 @@ public class ServerRunnerTest {
 		server1Count =0;
 		server2Count =0;
 
-		ServerData data1 = new ServerData(8080,Arrays.asList(), null, "url1", () -> "app-context");
-		ServerData data2 = new ServerData(8081, Arrays.asList(), null, "url2", () -> "test-context");
+		ServerData data1 = new ServerData(8080,Arrays.asList(), Mockito.mock(ApplicationContext.class), "url1", () -> "app-context");
+		ServerData data2 = new ServerData(8081, Arrays.asList(), Mockito.mock(ApplicationContext.class), "url2", () -> "test-context");
 
 		serverApplication1 = new GrizzlyApplication(AllData.builder().serverData(data1).build()){
-			public void run(CompletableFuture start,CompletableFuture end) {
+			@Override
+			public void run(CompletableFuture start,JaxRsServletConfigurer jaxRsConfigurer, CompletableFuture end) {
 				server1Count++;
 				start.complete(true);
 				
 			}
 		};
 		serverApplication2 =  new GrizzlyApplication(AllData.builder().serverData(data2).build()){
-			public void run(CompletableFuture start,CompletableFuture end) {
+			@Override
+			public void run(CompletableFuture start,JaxRsServletConfigurer jaxRsConfigurer,CompletableFuture end) {
 				server2Count++;
 				start.complete(true);
 				

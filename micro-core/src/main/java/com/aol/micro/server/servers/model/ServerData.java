@@ -1,7 +1,5 @@
 package com.aol.micro.server.servers.model;
 
-import static org.jooq.lambda.tuple.Tuple.tuple;
-
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -10,12 +8,13 @@ import javax.ws.rs.Path;
 import lombok.Getter;
 import lombok.experimental.Builder;
 
-import org.jooq.lambda.tuple.Tuple2;
 import org.pcollections.ConsPStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
+import com.aol.cyclops.lambda.tuple.PTuple2;
+import com.aol.cyclops.lambda.tuple.PowerTuples;
 import com.aol.micro.server.module.Module;
 
 @Getter
@@ -42,10 +41,10 @@ public class ServerData {
 		this.baseUrlPattern = baseUrlPattern;
 	}
 
-	public Stream<Tuple2<String,String>> extractResources() {
+	public Stream<PTuple2<String,String>> extractResources() {
 		
 		
-		return resources.stream().map(resource -> tuple(resource.getClass().getName(), 
+		return resources.stream().map(resource -> PowerTuples.tuple(resource.getClass().getName(), 
 										resource.getClass().getAnnotation(Path.class).value()));
 		
 

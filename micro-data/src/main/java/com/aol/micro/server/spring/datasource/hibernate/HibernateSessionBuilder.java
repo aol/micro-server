@@ -11,12 +11,12 @@ import lombok.experimental.Builder;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
+import com.aol.cyclops.lambda.utils.ExceptionSoftener;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
-import com.aol.simple.react.exceptions.ExceptionSoftener;
+
 
 @Builder
 @AllArgsConstructor

@@ -2,10 +2,11 @@ description = 'micro-grizzly'
 dependencies {
 	compile group: 'org.glassfish.grizzly', name: 'grizzly-http-server', version:"$grizzlyVersion"
 	compile group: 'org.glassfish.grizzly', name: 'grizzly-http-all', version:"$grizzlyVersion"
-
+	
 	
 	compile project(':micro-core')
 	testCompile project(':micro-jersey')
+	testCompile group: 'com.aol.simplereact', name:'simple-react', version:"${simpleReactVersion}"
 	
 	
 

@@ -1,12 +1,9 @@
 package com.aol.micro.server.servers.grizzly;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
@@ -18,20 +15,15 @@ import lombok.experimental.Wither;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.accesslog.AccessLogBuilder;
-import org.glassfish.grizzly.servlet.ServletRegistration;
 import org.glassfish.grizzly.servlet.WebappContext;
 import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.cyclops.lambda.utils.ExceptionSoftener;
 import com.aol.micro.server.ErrorCode;
-import com.aol.micro.server.Plugin;
-import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.config.SSLProperties;
-import com.aol.micro.server.module.IncorrectJaxRsPluginsException;
 import com.aol.micro.server.module.WebServerProvider;
-import com.aol.micro.server.rest.RestConfiguration;
 import com.aol.micro.server.servers.AccessLogLocationBean;
 import com.aol.micro.server.servers.JaxRsServletConfigurer;
 import com.aol.micro.server.servers.ServerApplication;
@@ -39,7 +31,6 @@ import com.aol.micro.server.servers.model.AllData;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
-import com.aol.simple.react.exceptions.ExceptionSoftener;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GrizzlyApplication implements ServerApplication {
@@ -72,6 +63,7 @@ public class GrizzlyApplication implements ServerApplication {
 
 		new ServletContextListenerConfigurer(serverData, servletContextListenerData, servletRequestListenerData);
 
+		
 		jaxRsConfigurer.addServlet(this.serverData,webappContext);
 
 		new ServletConfigurer(serverData, servletData).addServlets(webappContext);
@@ -96,7 +88,7 @@ public class GrizzlyApplication implements ServerApplication {
 			logger.info("Browse to http://localhost:{}/{}/application.wadl", serverData.getPort(), serverData.getModule().getContext());
 			logger.info("Configured resource classes :-");
 			serverData.extractResources().forEach(
-					t -> logger.info(t.v1 + " : " + "http://localhost:" + serverData.getPort() + "/" + serverData.getModule().getContext() + t.v2));
+					t -> logger.info(t.v1() + " : " + "http://localhost:" + serverData.getPort() + "/" + serverData.getModule().getContext() + t.v2()));
 			;
 			httpServer.start();
 			start.complete(true);
@@ -132,7 +124,6 @@ public class GrizzlyApplication implements ServerApplication {
 		}
 
 	}
-
 	
 
 	private NetworkListener createSSLListener(int port) {

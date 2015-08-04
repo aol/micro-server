@@ -35,6 +35,7 @@ public class ModuleDataExtractorTest {
 									.restResourceClasses(restResourceTags(ModuleDataExtractorTest.class))
 									.context("test")
 									.servlets(HashMapBuilder.of("/*1",new BasicServlet()))
+									.filters(HashMapBuilder.of("/*",new BasicFilter()))
 									.build();
 		extractor = new ModuleDataExtractor(module);
 		rootContext = mock(AnnotationConfigWebApplicationContext.class);

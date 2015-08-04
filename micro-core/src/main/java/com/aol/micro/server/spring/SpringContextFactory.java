@@ -12,9 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
+import com.aol.cyclops.lambda.utils.ExceptionSoftener;
 import com.aol.micro.server.ErrorCode;
 import com.aol.micro.server.config.Config;
-import com.aol.simple.react.exceptions.ExceptionSoftener;
+
 
 @AllArgsConstructor
 public class SpringContextFactory {

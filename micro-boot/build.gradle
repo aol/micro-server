@@ -11,7 +11,7 @@ dependencies {
 	testCompile project(':micro-swagger')
 	testCompile project(':micro-client')
 	testCompile project(':micro-events')
-	testCompile project(':micro-grizzly')
+	testCompile project(':micro-jersey')
 
 
 }

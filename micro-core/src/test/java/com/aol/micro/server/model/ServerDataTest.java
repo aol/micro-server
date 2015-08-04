@@ -36,7 +36,7 @@ public class ServerDataTest {
 		assertThat(serverData.getPort(), is(8080));
 	}
 	
-	@Test(expected=NullPointerException.class)
+	@Test
 	public void testExtractNull(){
 		
 		serverData = new ServerData(8080,  Arrays.asList((Object)null), rootContext, "url", 
@@ -49,14 +49,14 @@ public class ServerDataTest {
 	public void testExtractResourceClassName(){
 		
 		
-		assertThat(serverData.extractResources().collect(Collectors.toList()).get(0).v1,is(ServletStatusResource.class.getName()));
+		assertThat(serverData.extractResources().collect(Collectors.toList()).get(0).v1(),is(ServletStatusResource.class.getName()));
 		
 	}
 	@Test
 	public void testExtractResourcePath(){
 		
 		
-		assertThat(serverData.extractResources().collect(Collectors.toList()).get(0).v2,is("/servlet"));
+		assertThat(serverData.extractResources().collect(Collectors.toList()).get(0).v2(),is("/servlet"));
 		
 	}
 

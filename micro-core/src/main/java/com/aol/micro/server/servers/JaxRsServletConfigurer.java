@@ -31,9 +31,10 @@ public class JaxRsServletConfigurer {
 		for(String key : initParams.keySet()){
 			servletRegistration.setInitParameter(key,initParams.get(key));
 		}
-		
+		servletRegistration.setInitParameter("javax.ws.rs.Application", serverData.getModule().getJaxWsRsApplication());
 		servletRegistration.setInitParameter(config.getProvidersName(), serverData.getModule().getProviders());
 		servletRegistration.setLoadOnStartup(1);
 		servletRegistration.addMapping(serverData.getBaseUrlPattern());
 	}
+	
 }
