@@ -13,14 +13,14 @@ import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.rest.client.nio.AsyncNonNIORestClient;
+import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver
 public class EventRunnerTest {
 
 	RestAgent rest = new RestAgent();
-	private final AsyncNonNIORestClient<String> client = new AsyncNonNIORestClient<String>(100,100).withAccept("application/json");
+	private final AsyncRestClient<String> client = new AsyncRestClient<String>(100,100).withAccept("application/json");
 	MicroserverApp server;
 	
 	

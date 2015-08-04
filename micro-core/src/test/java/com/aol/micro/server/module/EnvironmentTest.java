@@ -1,17 +1,16 @@
 package com.aol.micro.server.module;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.Properties;
 
 import org.junit.Test;
-
-import com.aol.micro.server.module.Environment;
-import com.aol.micro.server.module.ModuleBean;
-import com.google.common.collect.Lists;
 
 public class EnvironmentTest {
 
@@ -21,7 +20,7 @@ public class EnvironmentTest {
 		
 		
 		Environment environment = new Environment(new Properties(),
-				Lists.newArrayList(new ModuleBean(8081, "host1", () -> "test")));
+				Arrays.asList(new ModuleBean(8081, "host1", () -> "test")));
 		assertThat(environment.getModuleBean(()-> "test").getPort(), is(8081));
 	}
 	@Test

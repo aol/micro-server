@@ -1,5 +1,6 @@
 package com.aol.micro.server.module;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -9,27 +10,26 @@ import javax.servlet.Servlet;
 
 import lombok.AllArgsConstructor;
 
+import org.pcollections.ConsPStack;
+import org.pcollections.PStack;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
-import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 
 @AllArgsConstructor
 public class ModuleDataExtractor {
 
 	private final Module module;
 	
-	public  ImmutableList getRestResources( ApplicationContext rootContext){
+	public  PStack getRestResources( ApplicationContext rootContext){
 		
-			List resources = Lists.newArrayList();
+			List resources = new ArrayList<>();
 			module.getRestResourceClasses().forEach(it -> resources.addAll(rootContext.getBeansOfType(it).values()));
 			module.getRestAnnotationClasses().forEach(it -> resources.addAll(rootContext.getBeansWithAnnotation(it).values()));
-			return ImmutableList.copyOf(resources);
+			return ConsPStack.from(resources);
 		
 	}
 	

@@ -7,8 +7,6 @@ import javax.ws.rs.Produces;
 
 import org.springframework.stereotype.Component;
 
-import app.guava.com.aol.micro.server.ImmutableGuavaEntity;
-
 import com.aol.micro.server.auto.discovery.RestResource;
 @Component
 @Path("/status")
@@ -17,7 +15,7 @@ public class ValidationAppResource implements RestResource {
 	@POST
 	@Produces("application/json")
 	@Path("/ping")
-	public ImmutableGuavaEntity ping( @NotNull ImmutableGuavaEntity entity) {
+	public ImmutableEntity ping( @NotNull ImmutableEntity entity) {
 		return entity;
 	}
 	

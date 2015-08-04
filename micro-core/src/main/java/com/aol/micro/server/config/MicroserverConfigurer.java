@@ -5,13 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import org.pcollections.HashTreePMap;
+import org.pcollections.HashTreePSet;
 
 import com.aol.cyclops.lambda.monads.SequenceM;
-import com.aol.micro.server.FunctionalModule;
-import com.aol.micro.server.FunctionalModuleLoader;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
+import com.aol.micro.server.Plugin;
+import com.aol.micro.server.PluginLoader;
 import com.nurkiewicz.lazyseq.LazySeq;
 
 public class MicroserverConfigurer implements Configurer {
@@ -34,9 +34,9 @@ public class MicroserverConfigurer implements Configurer {
 
 		Map<String, String> properties = buildProperties(microserver);
 
-		return Config.instance().withBasePackages(basePackages).withEntityScan(microserver.entityScan()).withClasses(ImmutableSet.copyOf(classes))
+		return Config.instance().withBasePackages(basePackages).withEntityScan(microserver.entityScan()).withClasses(HashTreePSet.from(classes))
 				.withPropertiesName(microserver.propertiesName()).withInstancePropertiesName(microserver.instancePropertiesName())
-				.withAllowCircularReferences(microserver.allowCircularDependencies()).withProperties(ImmutableMap.copyOf(properties)).set();
+				.withAllowCircularReferences(microserver.allowCircularDependencies()).withProperties(HashTreePMap.from(properties)).set();
 	}
 
 	private Map<String, String> buildProperties(Microserver microserver) {
@@ -50,7 +50,7 @@ public class MicroserverConfigurer implements Configurer {
 		classes.add(class1);
 		if (microserver.classes() != null)
 			classes.addAll(Arrays.asList(microserver.classes()));
-		List<FunctionalModule> modules = FunctionalModuleLoader.INSTANCE.functionalModules.get();
+		List<Plugin> modules = PluginLoader.INSTANCE.plugins.get();
 		if(modules.size()>0)
 			classes.addAll(SequenceM.fromStream(modules.stream()).flatMap(module -> module.springClasses().stream()).toList());
 		

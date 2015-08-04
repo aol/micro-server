@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.Locale;
 import java.util.SortedMap;
 import java.util.TimeZone;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
 import lombok.Getter;
@@ -18,13 +19,12 @@ import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.ScheduledReporter;
 import com.codahale.metrics.Timer;
-import com.google.common.collect.Maps;
 
 
 public class TestReporter extends ScheduledReporter {
 
 	@Getter
-	private static volatile SortedMap<String, Timer> timer = Maps.newTreeMap();
+	private static volatile SortedMap<String, Timer> timer = new TreeMap<>();
 
 	protected TestReporter(MetricRegistry registry, String name,
 			MetricFilter filter, TimeUnit rateUnit, TimeUnit durationUnit) {

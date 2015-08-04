@@ -19,7 +19,7 @@ import com.aol.micro.server.events.JobsBeingExecuted;
 import com.aol.micro.server.events.RequestEvents;
 import com.aol.micro.server.events.RequestsBeingExecuted;
 import com.aol.micro.server.events.ScheduledJob;
-import com.aol.micro.server.rest.JacksonUtil;
+import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.eventbus.EventBus;
 

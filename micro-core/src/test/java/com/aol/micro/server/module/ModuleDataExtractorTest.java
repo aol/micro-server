@@ -3,11 +3,11 @@ package com.aol.micro.server.module;
 import static com.aol.micro.server.module.RestResourceTagBuilder.restResourceTags;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import javax.servlet.Filter;
@@ -18,8 +18,7 @@ import org.junit.Test;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.servers.model.ServerData;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import com.aol.micro.server.utility.HashMapBuilder;
 
 public class ModuleDataExtractorTest {
 
@@ -35,11 +34,11 @@ public class ModuleDataExtractorTest {
 		module = ConfigurableModule.builder()
 									.restResourceClasses(restResourceTags(ModuleDataExtractorTest.class))
 									.context("test")
-									.servlets(ImmutableMap.of("/*1",new BasicServlet()))
+									.servlets(HashMapBuilder.of("/*1",new BasicServlet()))
 									.build();
 		extractor = new ModuleDataExtractor(module);
 		rootContext = mock(AnnotationConfigWebApplicationContext.class);
-		data = ServerData.builder().resources(ImmutableList.of()).module(module).build();
+		data = ServerData.builder().resources(Arrays.asList()).module(module).build();
 		
 	}
 	

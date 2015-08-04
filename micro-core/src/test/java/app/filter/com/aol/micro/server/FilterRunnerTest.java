@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -13,13 +12,13 @@ import javax.servlet.Filter;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.testing.RestAgent;
-import com.google.common.collect.ImmutableMap;
+import com.aol.micro.server.utility.HashMapBuilder;
+
 
 
 public class FilterRunnerTest {
@@ -29,7 +28,7 @@ public class FilterRunnerTest {
 	MicroserverApp server;
 	@Before
 	public void startServer(){
-		Map<String, Filter> filters = ImmutableMap.of("/filter-app/status/ping2",new ConfiguredFilter());
+		Map<String, Filter> filters = HashMapBuilder.<String, Filter>map("/filter-app/status/ping2",new ConfiguredFilter()).build();
 		server = new MicroserverApp(ConfigurableModule.builder()
 													.context("filter-app")
 													.filters(filters )

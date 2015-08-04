@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.events.RequestEvents;
-import com.aol.micro.server.rest.JacksonUtil;
+import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.spring.datasource.jdbc.SQL;
 import com.aol.micro.server.web.filter.QueryIPRetriever;
 import com.aol.simple.react.stream.traits.EagerFutureStream;

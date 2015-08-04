@@ -4,7 +4,7 @@ import java.util.Map;
 
 import javax.servlet.Filter;
 
-import com.google.common.collect.ImmutableMap;
+import org.pcollections.HashTreePMap;
 
 public interface FilterConfiguration {
 	
@@ -17,6 +17,6 @@ public interface FilterConfiguration {
 		return null;
 	}
 	default Map<String,String> getInitParameters(){
-		return ImmutableMap.of();
+		return HashTreePMap.empty();
 	}
 }

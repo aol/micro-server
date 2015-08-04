@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import org.junit.Before;
@@ -14,17 +15,17 @@ import org.junit.Test;
 
 import app.servlet.com.aol.micro.server.ServletStatusResource;
 
+import com.aol.micro.server.rest.jackson.JacksonFeature;
 import com.aol.micro.server.servers.ServerThreadLocalVariables;
-import com.google.common.collect.Lists;
 public class JerseyRestApplicationTest {
 
 	
 	@Before
 	public void setup(){
 		ServerThreadLocalVariables.getContext().set(Thread.currentThread().getName());
-		JerseyRestApplication.getResourcesMap().put(Thread.currentThread().getName(), Lists.newArrayList(new ServletStatusResource()));
-		JerseyRestApplication.getPackages().put(Thread.currentThread().getName(), Lists.newArrayList());
-		JerseyRestApplication.getResourcesClasses().put(Thread.currentThread().getName(), Lists.newArrayList(JacksonFeature.class));
+		JerseyRestApplication.getResourcesMap().put(Thread.currentThread().getName(), Arrays.asList(new ServletStatusResource()));
+		JerseyRestApplication.getPackages().put(Thread.currentThread().getName(), Arrays.asList());
+		JerseyRestApplication.getResourcesClasses().put(Thread.currentThread().getName(), Arrays.asList(JacksonFeature.class));
 	}
 
 		@Test
@@ -52,8 +53,8 @@ public class JerseyRestApplicationTest {
 		@Test @Ignore //fix up after spring / jersey integration
 		public void testConstructor() {
 			JerseyRestApplication.getResourcesMap().clear();
-			JerseyRestApplication app = new JerseyRestApplication(Lists.newArrayList(new ServletStatusResource()),
-					Lists.newArrayList(),Lists.newArrayList(JacksonFeature.class));
+			JerseyRestApplication app = new JerseyRestApplication(Arrays.asList(new ServletStatusResource()),
+					Arrays.asList(),Arrays.asList(JacksonFeature.class));
 			assertThat(app.getApplication().getClasses().size(),is(1));
 			assertTrue(app.isRegistered(ServletStatusResource.class));
 		}

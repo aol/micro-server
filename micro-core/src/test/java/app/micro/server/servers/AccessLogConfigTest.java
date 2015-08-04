@@ -10,9 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Microserver;
-import com.google.common.collect.ImmutableMap;
 
 @Microserver(properties={"access.log.output", "${user.home}"})
 public class AccessLogConfigTest {

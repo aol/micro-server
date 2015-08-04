@@ -1,0 +1,60 @@
+description = 'micro-guava'
+dependencies {
+	
+	compile group: 'com.google.guava', name: 'guava', version:'18.0'
+	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-guava', version:'2.5.2'
+	compile project(':micro-core')
+	
+	
+
+}
+
+modifyPom {
+	project {
+		name 'Microserver guava'
+		description 'Opinionated rest microservices'
+		url 'https://github.com/aol/micro-server'
+		inceptionYear '2015'
+
+		groupId 'com.aol.microservices'
+		artifactId 'microserver-guava'
+		version "$version" 
+		
+		
+		scm {
+			url 'scm:git@github.com:aol/micro-server.git'
+			connection 'scm:git@github.com:aol/micro-server.git'
+			developerConnection 'scm:git@github.com:aol/micro-server.git'
+		}
+
+		licenses {
+			license {
+				name 'The Apache Software License, Version 2.0'
+				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+				distribution 'repo'
+			}
+		}
+
+		developers {
+			developer {
+				id 'johnmcclean-aol'
+				name 'John McClean'
+				email 'john.mcclean@teamaol.com'
+			}
+		}
+		
+	}
+}
+
+extraArchive {
+	sources = true
+	tests = true
+	javadoc = true
+}
+
+nexus {
+	sign = true
+	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+}
+

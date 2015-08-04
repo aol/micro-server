@@ -9,7 +9,7 @@ import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import com.aol.micro.server.rest.JacksonUtil;
+import com.aol.micro.server.rest.jackson.JacksonUtil;
 
 public class RestAgent {
 

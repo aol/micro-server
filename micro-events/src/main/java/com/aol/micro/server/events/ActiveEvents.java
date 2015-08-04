@@ -3,17 +3,16 @@ package com.aol.micro.server.events;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Map;
-import java.util.Queue;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import org.pcollections.ConsPStack;
 import org.pcollections.HashTreePMap;
 import org.pcollections.PMap;
 import org.pcollections.PStack;
 
-import com.aol.micro.server.rest.JacksonUtil;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.aol.micro.server.rest.jackson.JacksonUtil;
 
 public class ActiveEvents<T extends BaseEventInfo> {
 

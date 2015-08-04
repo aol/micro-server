@@ -1,8 +1,8 @@
 package com.aol.micro.server.rest.jersey;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.function.Consumer;
 
 import lombok.Getter;
 
@@ -12,18 +12,17 @@ import org.glassfish.jersey.server.ServerProperties;
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.servers.ServerThreadLocalVariables;
-import com.google.common.collect.Maps;
 
 public class JerseyRestApplication extends ResourceConfig {
 
 	@Getter
-	private static volatile ConcurrentMap<String, List<Object>> resourcesMap = Maps.newConcurrentMap();
+	private static volatile ConcurrentMap<String, List<Object>> resourcesMap = new ConcurrentHashMap<>();
 	
 	@Getter
-	private static volatile ConcurrentMap<String, List<String>> packages = Maps.newConcurrentMap();
+	private static volatile ConcurrentMap<String, List<String>> packages = new ConcurrentHashMap<>();
 	
 	@Getter
-	private static volatile ConcurrentMap<String, List<Class>> resourcesClasses = Maps.newConcurrentMap();
+	private static volatile ConcurrentMap<String, List<Class>> resourcesClasses = new ConcurrentHashMap<>();
 
 	public JerseyRestApplication() {
 		this(resourcesMap.get(ServerThreadLocalVariables.getContext().get()),

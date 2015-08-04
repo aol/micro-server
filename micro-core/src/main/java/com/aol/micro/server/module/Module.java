@@ -3,6 +3,7 @@ package com.aol.micro.server.module;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +14,8 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
+import jersey.repackaged.com.google.common.collect.ImmutableList;
+
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.util.StringUtils;
@@ -20,20 +23,16 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.aol.cyclops.lambda.monads.SequenceM;
-import com.aol.micro.server.FunctionalModule;
-import com.aol.micro.server.FunctionalModuleLoader;
+import com.aol.micro.server.Plugin;
+import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Classes;
-import com.aol.micro.server.rest.jersey.JacksonFeature;
+import com.aol.micro.server.rest.jackson.JacksonFeature;
 import com.aol.micro.server.rest.jersey.JerseyRestApplication;
 import com.aol.micro.server.rest.jersey.JerseySpringIntegrationContextListener;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.web.filter.QueryIPRetriever;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 
 public interface Module {
 	
@@ -44,14 +43,14 @@ public interface Module {
 		return rc->{};
 	}
 	default List<String> getPackages(){
-		return ImmutableList.of();
+		return Arrays.asList();
 	}
 	
 	default Map<String,String> getPropertyOverrides(){
-		return Maps.newHashMap();
+		return new HashMap<>();
 	}
 	default Set<Class> getSpringConfigurationClasses(){
-		return Sets.newHashSet(Classes.CORE_CLASSES.getClasses());
+		return new HashSet<Class>(Arrays.asList(Classes.CORE_CLASSES.getClasses()));
 	}
 	default List<Class> getRestResourceClasses() {
 		return Arrays.asList(RestResource.class);
@@ -62,9 +61,9 @@ public interface Module {
 	
 	default List<String> getDefaultJaxRsPackages(){
 		List list = new ArrayList<>();
-		list.addAll(SequenceM.fromStream(FunctionalModuleLoader.INSTANCE.functionalModules.get().stream())
+		list.addAll(SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
 				.filter(module -> module.servletContextListeners()!=null)
-				.flatMapCollection(FunctionalModule::jaxRsPackages)
+				.flatMapCollection(Plugin::jaxRsPackages)
 				
 				.toList());
 		return list;
@@ -73,9 +72,9 @@ public interface Module {
 	default List<Class> getDefaultResources(){
 		List list = new ArrayList<>();
 		list.add(JacksonFeature.class);
-		list.addAll(SequenceM.fromStream(FunctionalModuleLoader.INSTANCE.functionalModules.get().stream())
+		list.addAll(SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
 				.filter(module -> module.servletContextListeners()!=null)
-				.flatMapCollection(FunctionalModule::jaxRsResources)
+				.flatMapCollection(Plugin::jaxRsResources)
 				.toList());
 		return list;
 	}
@@ -87,11 +86,11 @@ public interface Module {
 					.getRootContext()));
 		}
 		list.add(new JerseySpringIntegrationContextListener(data));
-		List<FunctionalModule> modules = FunctionalModuleLoader.INSTANCE.functionalModules.get();
+		List<Plugin> modules = PluginLoader.INSTANCE.plugins.get();
 		
 		list.addAll(SequenceM.fromStream(modules.stream())
 				.filter(module -> module.servletContextListeners()!=null)
-				.flatMapCollection(FunctionalModule::servletContextListeners)
+				.flatMapCollection(Plugin::servletContextListeners)
 				.map(fn->fn.apply(data))
 				.toList());
 		
@@ -99,9 +98,9 @@ public interface Module {
 	}
 	default List<ServletRequestListener> getRequestListeners(ServerData data){
 		List<ServletRequestListener>  list = new ArrayList<>();
-		list.addAll(SequenceM.fromStream(FunctionalModuleLoader.INSTANCE.functionalModules.get().stream())
+		list.addAll(SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
 				.filter(module -> module.servletRequestListeners()!=null)
-				.flatMapCollection(FunctionalModule::servletRequestListeners)
+				.flatMapCollection(Plugin::servletRequestListeners)
 				.map(fn->fn.apply(data))
 				.toList());
 		return list;
@@ -112,7 +111,7 @@ public interface Module {
 		map.put("/*", new QueryIPRetriever());
 		SequenceM
 				.fromStream(
-						FunctionalModuleLoader.INSTANCE.functionalModules.get()
+						PluginLoader.INSTANCE.plugins.get()
 								.stream())
 				.filter(module -> module.filters() != null)
 				.map(module -> module.filters().apply(data))
@@ -123,7 +122,7 @@ public interface Module {
 		Map<String, Servlet> map = new HashMap<>();
 		SequenceM
 				.fromStream(
-						FunctionalModuleLoader.INSTANCE.functionalModules.get()
+						PluginLoader.INSTANCE.plugins.get()
 								.stream())
 				.filter(module -> module.servlets() != null)
 				.map(module -> module.servlets().apply(data))
@@ -138,9 +137,9 @@ public interface Module {
 	default String getProviders(){
 		String additional = SequenceM
 		.fromStream(
-				FunctionalModuleLoader.INSTANCE.functionalModules.get()
+				PluginLoader.INSTANCE.plugins.get()
 						.stream()).filter(module -> module.providers()!=null)
-						.flatMapCollection(FunctionalModule::providers)
+						.flatMapCollection(Plugin::providers)
 						.join(",");
 			
 		if(StringUtils.isEmpty(additional))

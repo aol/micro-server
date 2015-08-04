@@ -1,6 +1,7 @@
 package com.aol.micro.server.events;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +10,7 @@ import com.google.common.eventbus.EventBus;
 
 @Configuration
 public class ConfigureActiveJobsAspect {
-	@Autowired
+	@Resource(name="microserverEventBus")
 	private EventBus bus; 
 	private @Value("${system.logging.max.per.hour:10}") int maxLoggingCapacity;
 	private @Value("${system.request.capture:true}") boolean requestCapture;

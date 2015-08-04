@@ -11,12 +11,12 @@ import lombok.Getter;
 import lombok.experimental.Builder;
 
 import org.jooq.lambda.tuple.Tuple2;
+import org.pcollections.ConsPStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
 import com.aol.micro.server.module.Module;
-import com.google.common.collect.ImmutableList;
 
 @Getter
 @Builder
@@ -26,7 +26,7 @@ public class ServerData {
 
 	private final int port;
 
-	private final ImmutableList<Object> resources;
+	private final List<Object> resources;
 	private final ApplicationContext rootContext;
 	private final String baseUrlPattern;
 	private final Module module;
@@ -37,7 +37,7 @@ public class ServerData {
 
 		this.port = port;
 		this.module = module;
-		this.resources = ImmutableList.copyOf(resources);
+		this.resources = ConsPStack.from(resources);
 		this.rootContext = rootContext;
 		this.baseUrlPattern = baseUrlPattern;
 	}

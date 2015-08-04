@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import com.aol.micro.server.boot.config.Microboot;
 import com.aol.micro.server.boot.config.MicrobootApp;
-import com.aol.micro.server.rest.JacksonUtil;
+import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.stream.simple.SimpleReact;
 import com.aol.simple.react.stream.traits.SimpleReactStream;

@@ -9,21 +9,19 @@ import lombok.AllArgsConstructor;
 
 import org.glassfish.grizzly.servlet.FilterRegistration;
 import org.glassfish.grizzly.servlet.WebappContext;
+import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aol.micro.server.auto.discovery.FilterConfiguration;
-import com.aol.micro.server.auto.discovery.ServletConfiguration;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
-import com.aol.micro.server.servers.model.ServletData;
-import com.google.common.collect.ImmutableList;
 
 @AllArgsConstructor
 public class FilterConfigurer {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final ServerData serverData;
-	private final ImmutableList<FilterData> filterData;
+	private final PStack<FilterData> filterData;
 	
 	public void addFilters(WebappContext webappContext) {
 

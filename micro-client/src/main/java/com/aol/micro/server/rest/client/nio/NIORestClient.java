@@ -21,7 +21,7 @@ import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 
-import com.aol.micro.server.rest.JacksonUtil;
+import com.aol.micro.server.rest.jackson.JacksonUtil;
 
 public class NIORestClient {
 

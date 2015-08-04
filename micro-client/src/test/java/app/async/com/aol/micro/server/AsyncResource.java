@@ -1,5 +1,6 @@
 package app.async.com.aol.micro.server;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -13,20 +14,19 @@ import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.reactive.Reactive;
-import com.aol.micro.server.rest.client.nio.AsyncNonNIORestClient;
-import com.google.common.collect.ImmutableList;
+import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 
 @Path("/async")
 @Component
 public class AsyncResource implements RestResource,Reactive{
 
 	
-	private final ImmutableList<String> urls = ImmutableList.of("http://localhost:8080/async-app/async/ping2",
+	private final List<String> urls =Arrays.asList("http://localhost:8080/async-app/async/ping2",
 			"http://localhost:8080/async-app/async/ping",
 			"http://localhost:8080/async-app/async/ping",
 			"http://localhost:8080/async-app/async/ping");
     
-    	private final AsyncNonNIORestClient client = new AsyncNonNIORestClient(100,100).withAccept("text/plain");
+    	private final AsyncRestClient client = new AsyncRestClient(100,100).withAccept("text/plain");
     	
         @GET
         @Path("/expensive")

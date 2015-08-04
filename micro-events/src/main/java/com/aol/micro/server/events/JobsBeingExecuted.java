@@ -1,5 +1,6 @@
 package com.aol.micro.server.events;
 
+import javax.annotation.Resource;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
@@ -11,6 +12,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.google.common.collect.ConcurrentHashMultiset;
@@ -29,7 +31,7 @@ public class JobsBeingExecuted {
 	private final int maxLoggingCapacity;
 	
 	@Autowired
-	public JobsBeingExecuted(EventBus bus,  
+	public JobsBeingExecuted(@Qualifier("microserverEventBus") EventBus bus,  
 			@Value("${system.logging.max.per.hour:10}") int maxLoggingCapacity) {
 		this.eventBus = bus;
 		this.loggingRateLimiter = new LoggingRateLimiter<>();

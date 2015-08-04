@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.rest.client.nio.AsyncNonNIORestClient;
+import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver(entityScan="app.hibernate.com.aol.micro.server",properties={"db.connection.driver","org.hsqldb.jdbcDriver",
@@ -23,7 +23,7 @@ import com.aol.micro.server.testing.RestAgent;
 																						    "db.connection.ddl.auto","create-drop"})
 public class HibernateRunnerTest {
 
-  	private final AsyncNonNIORestClient<List<HibernateEntity>> listClient = new AsyncNonNIORestClient(1000,1000).withGenericResponse(List.class, HibernateEntity.class);
+  	private final AsyncRestClient<List<HibernateEntity>> listClient = new AsyncRestClient(1000,1000).withGenericResponse(List.class, HibernateEntity.class);
 
 	RestAgent rest = new RestAgent();
 	

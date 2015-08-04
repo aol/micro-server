@@ -21,7 +21,7 @@ import org.springframework.web.client.RestClientException;
 
 import com.aol.micro.server.boot.config.Microboot;
 import com.aol.micro.server.boot.config.MicrobootApp;
-import com.aol.micro.server.rest.client.nio.AsyncNonNIORestClient;
+import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.micro.server.rest.client.nio.NIORestClient;
 import com.aol.micro.server.rest.client.nio.SpringConfig;
 import com.google.common.collect.ImmutableList;
@@ -31,9 +31,9 @@ import com.google.common.collect.ImmutableSet;
 @Microboot
 public class RestClientTest {
 
-   	private final AsyncNonNIORestClient<List<String>> listClient = new AsyncNonNIORestClient(1000,1000).withResponse(List.class);
-	private final AsyncNonNIORestClient<ImmutableSet<String>> setClient = new AsyncNonNIORestClient(1000,1000).withResponse(ImmutableSet.class);;
-	private final AsyncNonNIORestClient<ImmutableList<MyEntity>> genericsClient = new AsyncNonNIORestClient(1000,1000).withGenericResponse(ImmutableList.class, MyEntity.class);
+   	private final AsyncRestClient<List<String>> listClient = new AsyncRestClient(1000,1000).withResponse(List.class);
+	private final AsyncRestClient<ImmutableSet<String>> setClient = new AsyncRestClient(1000,1000).withResponse(ImmutableSet.class);;
+	private final AsyncRestClient<ImmutableList<MyEntity>> genericsClient = new AsyncRestClient(1000,1000).withGenericResponse(ImmutableList.class, MyEntity.class);
   
 	private final NIORestClient rest = new SpringConfig().restClient();
 																			

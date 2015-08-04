@@ -11,6 +11,8 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.NotFoundException;
 
+import jersey.repackaged.com.google.common.collect.ImmutableList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +22,6 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.module.EmbeddedModule;
 import com.aol.micro.server.testing.RestAgent;
-import com.google.common.collect.ImmutableList;
 
 public class EmbeddedAppTest {
 	

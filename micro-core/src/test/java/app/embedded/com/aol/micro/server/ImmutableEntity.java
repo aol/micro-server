@@ -1,5 +1,7 @@
 package app.embedded.com.aol.micro.server;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -8,8 +10,6 @@ import javax.xml.bind.annotation.XmlType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Builder;
-
-import com.google.common.collect.ImmutableList;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList;
 public class ImmutableEntity {
 
 	private final String value;
-	private final ImmutableList<String> list;
+	private final List<String> list;
 	
 	public ImmutableEntity() {
 		this(null,null);

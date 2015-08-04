@@ -3,16 +3,16 @@ package com.aol.micro.server.rest;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import app.servlet.com.aol.micro.server.ServletStatusResource;
 
-import com.aol.micro.server.module.Module;
 import com.aol.micro.server.rest.jersey.JerseyRestApplication;
 import com.aol.micro.server.rest.jersey.JerseySpringIntegrationContextListener;
 import com.aol.micro.server.servers.model.ServerData;
-import com.google.common.collect.Lists;
 
 public class RestContextListenerTest {
 
@@ -22,7 +22,7 @@ public class RestContextListenerTest {
 	@Before
 	public void setUp() {
 		statsResource = new ServletStatusResource();
-		ServerData serverData = new ServerData(8080, Lists.newArrayList(statsResource), null, "baseUrl", () -> "test");
+		ServerData serverData = new ServerData(8080, Arrays.asList(statsResource), null, "baseUrl", () -> "test");
 		restContextListener = new JerseySpringIntegrationContextListener(serverData);
 	}
 

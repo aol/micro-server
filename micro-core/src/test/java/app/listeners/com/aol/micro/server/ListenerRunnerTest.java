@@ -4,6 +4,7 @@ package app.listeners.com.aol.micro.server;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -19,7 +20,6 @@ import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.testing.RestAgent;
-import com.google.common.collect.ImmutableList;
 
 
 @Microserver
@@ -30,7 +30,7 @@ public class ListenerRunnerTest {
 	MicroserverApp server;
 	@Before
 	public void startServer(){
-		List<ServletContextListener> listeners = ImmutableList.of(new ConfiguredListener());
+		List<ServletContextListener> listeners = Arrays.asList(new ConfiguredListener());
 		server = new MicroserverApp( ListenerRunnerTest.class, ConfigurableModule.builder().context("listener-app").listeners(listeners ).build());
 		server.start();
 

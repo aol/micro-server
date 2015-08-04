@@ -18,8 +18,8 @@ import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.rest.JacksonUtil;
-import com.aol.micro.server.rest.jersey.JacksonFeature;
+import com.aol.micro.server.rest.jackson.JacksonFeature;
+import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 

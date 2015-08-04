@@ -3,6 +3,7 @@ package com.aol.micro.server.spring.properties;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
@@ -19,7 +20,6 @@ import org.springframework.core.io.UrlResource;
 
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.ConfigAccessor;
-import com.google.common.collect.Lists;
 
 @Configuration
 public class PropertyFileConfig {
@@ -58,7 +58,7 @@ public class PropertyFileConfig {
 	}
 
 	private List<Resource> loadPropertyResource() {
-		List<Resource> resources = Lists.newArrayList();
+		List<Resource> resources = new ArrayList<>();
 		loadProperties().ifPresent(it -> resources.add(it));
 		
 		String instancePropertyFileName = new ConfigAccessor().get().getInstancePropertiesName();
