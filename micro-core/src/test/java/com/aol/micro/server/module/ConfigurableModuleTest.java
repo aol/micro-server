@@ -1,9 +1,12 @@
 package com.aol.micro.server.module;
 
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,14 +24,13 @@ import javax.servlet.ServletRequestListener;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.Before;
 import org.junit.Test;
+import org.pcollections.HashTreePSet;
 
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.servers.model.ServerData;
+import com.aol.micro.server.utility.HashMapBuilder;
 import com.aol.micro.server.web.filter.QueryIPRetriever;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 
 public class ConfigurableModuleTest {
 
@@ -52,19 +54,19 @@ public class ConfigurableModuleTest {
 	@Before
 	public void setup(){
 		
-		defaultJaxRsPackages = ImmutableList.of("hello world");
+		defaultJaxRsPackages = Arrays.asList("hello world");
 		context="context";
 		defaultResources =  new ArrayList<>();
-		filters =   ImmutableMap.of("/*1",new QueryIPRetriever());
+		filters =   HashMapBuilder.<String,Filter>map("/*1",new QueryIPRetriever()).build();
 		jaxWsRsApplication = "jaxRsApp2";
-		listeners = m.getListeners(ServerData.builder().resources(ImmutableList.of()).build());
-		requestListeners = m.getRequestListeners(ServerData.builder().resources(ImmutableList.of()).build());
+		listeners = m.getListeners(ServerData.builder().resources(Arrays.asList()).build());
+		requestListeners = m.getRequestListeners(ServerData.builder().resources(Arrays.asList()).build());
 		providers = "providers2";
 		Module m = () -> "hello";
 		resourceClasses =new ArrayList<>();
 		resourceAnnotationClasses = Arrays.asList(Rest.class);
 		servlets = new HashMap<>();
-		springConfigurationClasses = ImmutableSet.of(this.getClass());
+		springConfigurationClasses = HashTreePSet.singleton(this.getClass());
 		
 		
 		module = ConfigurableModule.builder()
@@ -167,59 +169,59 @@ public class ConfigurableModuleTest {
 
 	@Test
 	public void testGetListeners() {
-		assertThat(module.getListeners(ServerData.builder().resources(ImmutableList.of()).build()).size(),
-				is(m.getListeners(ServerData.builder().resources(ImmutableList.of()).build()).size()*2)); //doubled
+		assertThat(module.getListeners(ServerData.builder().resources(Arrays.asList()).build()).size(),
+				is(m.getListeners(ServerData.builder().resources(Arrays.asList()).build()).size()*2)); //doubled
 	}
 	@Test
 	public void testGetListenersReset() {
-		assertThat(module.withResetAll(true).getListeners(ServerData.builder().resources(ImmutableList.of()).build()),is(this.listeners));
+		assertThat(module.withResetAll(true).getListeners(ServerData.builder().resources(Arrays.asList()).build()),is(this.listeners));
 	}
 	@Test
 	public void testGetListenersUnchanged() {
-		assertThat(unchanged.getListeners(ServerData.builder().resources(ImmutableList.of()).build()).size() ,
-				is(m.getListeners(ServerData.builder().resources(ImmutableList.of()).build()).size()));
+		assertThat(unchanged.getListeners(ServerData.builder().resources(Arrays.asList()).build()).size() ,
+				is(m.getListeners(ServerData.builder().resources(Arrays.asList()).build()).size()));
 	}
 	@Test
 	public void testGetRequestListeners() {
-		assertThat(module.getRequestListeners(ServerData.builder().resources(ImmutableList.of()).build()).size(),
-				is(m.getRequestListeners(ServerData.builder().resources(ImmutableList.of()).build()).size()*2)); //doubled
+		assertThat(module.getRequestListeners(ServerData.builder().resources(Arrays.asList()).build()).size(),
+				is(m.getRequestListeners(ServerData.builder().resources(Arrays.asList()).build()).size()*2)); //doubled
 	}
 	@Test
 	public void testGetRequestListenersReset() {
-		assertThat(module.withResetAll(true).getRequestListeners(ServerData.builder().resources(ImmutableList.of()).build()),is(this.requestListeners));
+		assertThat(module.withResetAll(true).getRequestListeners(ServerData.builder().resources(Arrays.asList()).build()),is(this.requestListeners));
 	}
 	@Test
 	public void testGetRequestListenersUnchanged() {
-		assertThat(unchanged.getRequestListeners(ServerData.builder().resources(ImmutableList.of()).build()).size() ,
-				is(m.getRequestListeners(ServerData.builder().resources(ImmutableList.of()).build()).size()));
+		assertThat(unchanged.getRequestListeners(ServerData.builder().resources(Arrays.asList()).build()).size() ,
+				is(m.getRequestListeners(ServerData.builder().resources(Arrays.asList()).build()).size()));
 	}
 
 	@Test
 	public void testGetFilters() {
-		assertThat(module.getFilters(ServerData.builder().resources(ImmutableList.of()).build()).size(),
+		assertThat(module.getFilters(ServerData.builder().resources(Arrays.asList()).build()).size(),
 				is(2  ));
 	}
 	@Test
 	public void testGetFiltersReset() {
-		assertThat(module.withResetAll(true).getFilters(ServerData.builder().resources(ImmutableList.of()).build()),is(this.filters));
+		assertThat(module.withResetAll(true).getFilters(ServerData.builder().resources(Arrays.asList()).build()),is(this.filters));
 	}
 	
 	@Test
 	public void testGetFiltersUnchanged() {
-		assertThat(unchanged.getFilters(ServerData.builder().resources(ImmutableList.of()).build()).get("/*"),
-				instanceOf(m.getFilters( ServerData.builder().resources(ImmutableList.of()).build() ).get("/*").getClass()));
+		assertThat(unchanged.getFilters(ServerData.builder().resources(Arrays.asList()).build()).get("/*"),
+				instanceOf(m.getFilters( ServerData.builder().resources(Arrays.asList()).build() ).get("/*").getClass()));
 	}
 
 	
 	
 	@Test
 	public void testGetServlets() {
-		assertThat(module.getServlets(ServerData.builder().resources(ImmutableList.of()).build()),is(this.servlets));
+		assertThat(module.getServlets(ServerData.builder().resources(Arrays.asList()).build()),is(this.servlets));
 	}
 	
 	@Test
 	public void testGetServletsUnchanged() {
-		assertThat(unchanged.getServlets(ServerData.builder().resources(ImmutableList.of()).build()),is(m.getServlets(ServerData.builder().resources(ImmutableList.of()).build())));
+		assertThat(unchanged.getServlets(ServerData.builder().resources(Arrays.asList()).build()),is(m.getServlets(ServerData.builder().resources(Arrays.asList()).build())));
 	}
 
 	@Test
@@ -279,21 +281,21 @@ public class ConfigurableModuleTest {
 	
 	@Test
 	public void testWithListeners() {
-		assertThat(unchanged.withListeners(this.listeners).getListeners(ServerData.builder().resources(ImmutableList.of()).build()).size(),
-				is(module.getListeners(ServerData.builder().resources(ImmutableList.of()).build()).size()));
+		assertThat(unchanged.withListeners(this.listeners).getListeners(ServerData.builder().resources(Arrays.asList()).build()).size(),
+				is(module.getListeners(ServerData.builder().resources(Arrays.asList()).build()).size()));
 	}
 
 	
 	@Test
 	public void testWithFilters() {
-		assertThat(unchanged.withFilters(this.filters).getFilters(ServerData.builder().resources(ImmutableList.of()).build()).size(),
-				is(module.getFilters(ServerData.builder().resources(ImmutableList.of()).build()).size()));
+		assertThat(unchanged.withFilters(this.filters).getFilters(ServerData.builder().resources(Arrays.asList()).build()).size(),
+				is(module.getFilters(ServerData.builder().resources(Arrays.asList()).build()).size()));
 	}
 
 	@Test
 	public void testWithServlets() {
-		assertThat(unchanged.withServlets(this.servlets).getServlets(ServerData.builder().resources(ImmutableList.of()).build()).size(),
-				is(m.getServlets(ServerData.builder().resources(ImmutableList.of()).build()).size()));
+		assertThat(unchanged.withServlets(this.servlets).getServlets(ServerData.builder().resources(Arrays.asList()).build()).size(),
+				is(m.getServlets(ServerData.builder().resources(Arrays.asList()).build()).size()));
 
 	}
 

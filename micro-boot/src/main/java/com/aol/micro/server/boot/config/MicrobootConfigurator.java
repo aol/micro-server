@@ -5,15 +5,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import org.pcollections.HashTreePMap;
+import org.pcollections.HashTreePSet;
 
 import com.aol.cyclops.lambda.monads.SequenceM;
-import com.aol.micro.server.FunctionalModule;
-import com.aol.micro.server.FunctionalModuleLoader;
+import com.aol.micro.server.Plugin;
+import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Configurer;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
+
 import com.nurkiewicz.lazyseq.LazySeq;
 
 public class MicrobootConfigurator implements Configurer{
@@ -27,8 +28,8 @@ public class MicrobootConfigurator implements Configurer{
 			
 			Map<String, String> properties = buildProperties(microserver);
 			
-			return Config.instance().withEntityScan(microserver.entityScan()).withClasses(ImmutableSet.copyOf(classes))
-					.withPropertiesName(microserver.propertiesName()).withProperties(ImmutableMap.copyOf(properties)).set();
+			return Config.instance().withEntityScan(microserver.entityScan()).withClasses(HashTreePSet.from(classes))
+					.withPropertiesName(microserver.propertiesName()).withProperties(HashTreePMap.from(properties)).set();
 		}
 
 		private Map<String, String> buildProperties(Microboot microserver) {
@@ -44,7 +45,7 @@ public class MicrobootConfigurator implements Configurer{
 			classes.add(class1);
 			if(microserver.classes()!=null)
 				classes.addAll(Arrays.asList(microserver.classes()));
-			List<FunctionalModule> modules = FunctionalModuleLoader.INSTANCE.functionalModules.get();
+			List<Plugin> modules = PluginLoader.INSTANCE.plugins.get();
 			if(modules.size()>0)
 				classes.addAll(SequenceM.fromStream(modules.stream()).flatMap(module -> module.springClasses().stream()).toList());
 			return classes;

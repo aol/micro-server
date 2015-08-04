@@ -7,27 +7,30 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
+import jersey.repackaged.com.google.common.collect.ImmutableList;
+import jersey.repackaged.com.google.common.collect.Maps;
+
+import org.pcollections.ConsPStack;
+import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aol.micro.server.module.Module;
 import com.aol.micro.server.servers.model.ServerData;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
 
 public class ServerRunner {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
-	private final ImmutableList<ServerApplication> apps;
+	private final PStack<ServerApplication> apps;
 	private final Optional<ApplicationRegister> register;
 	private final CompletableFuture end;
 
 	public ServerRunner(ApplicationRegister register, List<ServerApplication> apps, CompletableFuture end) {
-		this.apps = ImmutableList.copyOf(apps);
+		this.apps = ConsPStack.from(apps);
 		this.register = Optional.of(register);
 		this.end = end;
 	}
 	public ServerRunner(List<ServerApplication> apps, CompletableFuture end) {
-		this.apps = ImmutableList.copyOf(apps);
+		this.apps = ConsPStack.from(apps);
 		this.register = Optional.empty();
 		this.end = end;
 	}

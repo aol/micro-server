@@ -1,13 +1,14 @@
 package com.aol.micro.server.rest.jersey;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.servers.model.ServerData;
-import com.google.common.collect.ImmutableList;
 
 public class JerseySpringIntegrationContextListenerTest {
 	
@@ -15,7 +16,7 @@ public class JerseySpringIntegrationContextListenerTest {
 	ServerData serverData;
 	@Before
 	public void setup (){
-		serverData = ServerData.builder().module(()->"hello").resources(ImmutableList.of()).build();
+		serverData = ServerData.builder().module(()->"hello").resources(Arrays.asList()).build();
 		listener = new JerseySpringIntegrationContextListener(serverData);
 	}
 	

@@ -6,33 +6,36 @@ import java.util.List;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
+import jersey.repackaged.com.google.common.collect.ImmutableList;
 import lombok.Getter;
 import lombok.experimental.Builder;
 
+import org.pcollections.ConsPStack;
+import org.pcollections.PStack;
+
 import com.aol.micro.server.utility.UsefulStaticMethods;
-import com.google.common.collect.ImmutableList;
 
 @Getter
 @Builder
 public class AllData {
 
 	private final ServerData serverData;
-	private final ImmutableList<FilterData> filterDataList;
-	private final ImmutableList<ServletData> servletDataList;
-	private final ImmutableList<ServletContextListener> servletContextListeners;
-	private final ImmutableList<ServletRequestListener> servletRequestListeners;
+	private final PStack<FilterData> filterDataList;
+	private final PStack<ServletData> servletDataList;
+	private final PStack<ServletContextListener> servletContextListeners;
+	private final PStack<ServletRequestListener> servletRequestListeners;
 
 	public AllData(ServerData serverData, List<FilterData> filterDataList, 
 				List<ServletData> servletDataList,
 				List<ServletContextListener> servletContextListeners,
 				List<ServletRequestListener> servletRequestListeners  ) {
 
-		this.servletContextListeners = ImmutableList.copyOf(UsefulStaticMethods.either(servletContextListeners, new ArrayList<ServletContextListener>()));
+		this.servletContextListeners = ConsPStack.from(UsefulStaticMethods.either(servletContextListeners, new ArrayList<ServletContextListener>()));
 
-		this.servletRequestListeners = ImmutableList.copyOf(UsefulStaticMethods.either(servletRequestListeners, new ArrayList<ServletRequestListener>()));
+		this.servletRequestListeners = ConsPStack.from(UsefulStaticMethods.either(servletRequestListeners, new ArrayList<ServletRequestListener>()));
 
-		this.filterDataList = ImmutableList.copyOf(UsefulStaticMethods.either(filterDataList, new ArrayList<FilterData>()));
-		this.servletDataList = ImmutableList.copyOf(UsefulStaticMethods.either(servletDataList, new ArrayList<ServletData>()));
+		this.filterDataList = ConsPStack.from(UsefulStaticMethods.either(filterDataList, new ArrayList<FilterData>()));
+		this.servletDataList = ConsPStack.from(UsefulStaticMethods.either(servletDataList, new ArrayList<ServletData>()));
 		this.serverData = serverData;
 	}
 

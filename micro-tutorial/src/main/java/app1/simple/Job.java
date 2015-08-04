@@ -23,7 +23,7 @@ public class Job implements ScheduledJob<Job>{
 		Long time =System.currentTimeMillis();
 		service.createEntity("time", ""+time);
 		return SystemData.<String,Long>builder().errors(0).processed(1).dataMap(
-				HashMapBuilder.of("time", time).build() ).build();
+				HashMapBuilder.map("time", time).build() ).build();
 	}
 
 }

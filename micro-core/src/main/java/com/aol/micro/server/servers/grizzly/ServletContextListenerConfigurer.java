@@ -10,10 +10,7 @@ import lombok.AllArgsConstructor;
 import org.glassfish.grizzly.servlet.WebappContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.ContextLoaderListener;
 
-import com.aol.micro.server.rest.jersey.JerseySpringIntegrationContextListener;
-import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
 
 @AllArgsConstructor

@@ -18,6 +18,7 @@ import org.glassfish.grizzly.http.server.accesslog.AccessLogBuilder;
 import org.glassfish.grizzly.servlet.ServletRegistration;
 import org.glassfish.grizzly.servlet.WebappContext;
 import org.glassfish.jersey.servlet.ServletContainer;
+import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,6 @@ import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
 import com.aol.simple.react.exceptions.ExceptionSoftener;
-import com.google.common.collect.ImmutableList;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GrizzlyApplication implements ServerApplication {
@@ -41,10 +41,10 @@ public class GrizzlyApplication implements ServerApplication {
 	@Getter
 	private final ServerData serverData;
 
-	private final ImmutableList<FilterData> filterData;
-	private final ImmutableList<ServletData> servletData;
-	private final ImmutableList<ServletContextListener> servletContextListenerData;
-	private final ImmutableList<ServletRequestListener> servletRequestListenerData;
+	private final PStack<FilterData> filterData;
+	private final PStack<ServletData> servletData;
+	private final PStack<ServletContextListener> servletContextListenerData;
+	private final PStack<ServletRequestListener> servletRequestListenerData;
 	@Wither
 	private final SSLProperties SSLProperties;
 

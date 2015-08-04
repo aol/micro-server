@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 
+import org.pcollections.PStack;
 import org.springframework.context.ApplicationContext;
 
 import com.aol.micro.server.module.Environment;
@@ -11,7 +12,6 @@ import com.aol.micro.server.module.Module;
 import com.aol.micro.server.module.ModuleDataExtractor;
 import com.aol.micro.server.servers.ServerApplication;
 import com.aol.micro.server.servers.grizzly.GrizzlyApplication;
-import com.google.common.collect.ImmutableList;
 
 @AllArgsConstructor
 public class GrizzlyApplicationFactory {
@@ -23,7 +23,7 @@ public class GrizzlyApplicationFactory {
 	
 	public ServerApplication createApp() {
 		 ModuleDataExtractor extractor = new ModuleDataExtractor(module);
-		ImmutableList resources = extractor.getRestResources(rootContext);
+		PStack resources = extractor.getRestResources(rootContext);
 
 		Environment environment = rootContext.getBean(Environment.class);
 

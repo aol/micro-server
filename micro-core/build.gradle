@@ -14,11 +14,9 @@ dependencies {
 	compile group: 'org.slf4j', name: 'jcl-over-slf4j', version:'1.6.1'
 
 
-	compile group: 'com.google.guava', name: 'guava', version:'18.0'
-
 
 	compile group: 'org.apache.commons', name: 'commons-dbcp2', version:'2.1'
-	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-guava', version:'2.5.2'
+
 	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version:'2.5.2'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.5.2'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.5.2'
@@ -51,7 +49,7 @@ dependencies {
 	compile 'org.glassfish.web:javax.el:2.2.4'
 	
 	testCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version:"$jerseyVersion"
-	
+//	testCompile group: 'com.google.guava', name: 'guava', version:'18.0'
 }
 
 modifyPom {

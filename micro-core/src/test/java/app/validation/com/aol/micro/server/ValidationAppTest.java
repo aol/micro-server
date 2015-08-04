@@ -5,21 +5,20 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.InternalServerErrorException;
 
+import jersey.repackaged.com.google.common.collect.ImmutableList;
+import jersey.repackaged.com.google.common.collect.ImmutableMap;
+import jersey.repackaged.com.google.common.collect.ImmutableMultimap;
+import jersey.repackaged.com.google.common.collect.ImmutableSet;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import app.guava.com.aol.micro.server.ImmutableGuavaEntity;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.stream.simple.SimpleReact;
 import com.aol.simple.react.stream.traits.SimpleReactStream;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.ImmutableSet;
 
 @Microserver(basePackages = { "app.guava.com.aol.micro.server" })
 public class ValidationAppTest {
@@ -28,7 +27,7 @@ public class ValidationAppTest {
 
 	MicroserverApp server;
 
-	ImmutableGuavaEntity entity;
+	ImmutableEntity entity;
 	
 
 	SimpleReact simpleReact = new SimpleReact();
@@ -40,10 +39,7 @@ public class ValidationAppTest {
 				() -> server = new MicroserverApp(ValidationAppTest.class,
 						() -> "guava-app")).then(server -> server.start());
 
-		entity = ImmutableGuavaEntity.builder().value("value")
-				.list(ImmutableList.of("hello", "world"))
-				.mapOfSets(ImmutableMap.of("key1", ImmutableSet.of(1, 2, 3)))
-				.multiMap(ImmutableMultimap.of("1", 2, "1", 2, "2", 4)).build();
+		entity = ImmutableEntity.builder().value("value").build();
 
 		
 	}

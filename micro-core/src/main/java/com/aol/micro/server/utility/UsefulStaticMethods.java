@@ -3,6 +3,10 @@ package com.aol.micro.server.utility;
 
 import static java.util.Optional.ofNullable;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class UsefulStaticMethods {
 
 	
@@ -17,6 +21,11 @@ public class UsefulStaticMethods {
 		}
 
 	}
-	
+	public static <T> List<T> concat(Collection<T> a,
+			Collection<T> b) {
+		List<T> result = new ArrayList<T>(a);
+		result.addAll(b);
+		return result;
+	}
 
 }

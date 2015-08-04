@@ -1,5 +1,8 @@
 package app.async.com.aol.micro.server;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -13,14 +16,13 @@ import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.stream.simple.SimpleReact;
 import com.aol.simple.react.stream.traits.LazyFutureStream;
-import com.google.common.collect.ImmutableList;
 
 @Path("/async")
 @Component
 public class AsyncResource implements RestResource{
 
 	private final SimpleReact simpleReact =new SimpleReact();
-	private final ImmutableList<String> urls = ImmutableList.of("http://localhost:8080/async-app/async/ping2",
+	private final List<String> urls = Arrays.asList("http://localhost:8080/async-app/async/ping2",
 			"http://localhost:8080/async-app/async/ping",
 			"http://localhost:8080/async-app/async/ping",
 			"http://localhost:8080/async-app/async/ping");

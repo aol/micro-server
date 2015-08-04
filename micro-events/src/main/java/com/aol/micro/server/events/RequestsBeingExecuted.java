@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.experimental.Builder;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,7 @@ public class RequestsBeingExecuted<T> {
 	private final String type;
 	
 	@Autowired
-	public RequestsBeingExecuted(EventBus bus,  boolean queryCapture){
+	public RequestsBeingExecuted(@Qualifier("microserverEventBus") EventBus bus,  boolean queryCapture){
 		this.bus = bus;
 		this.type = "default";
 		if(queryCapture)

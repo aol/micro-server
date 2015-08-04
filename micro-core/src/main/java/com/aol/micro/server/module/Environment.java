@@ -2,16 +2,14 @@ package com.aol.micro.server.module;
 
 import java.net.InetAddress;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
 import org.jooq.lambda.fi.util.function.CheckedSupplier;
-
-import com.aol.simple.react.exceptions.ExceptionSoftener;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
+import org.pcollections.HashTreePMap;
 
 public class Environment {
 
@@ -25,7 +23,7 @@ public class Environment {
 	}
 
 	public Environment(Properties propertyFactory) {
-		modulePort = ImmutableMap.of();
+		modulePort = HashTreePMap.empty();
 		this.properties = propertyFactory;
 
 	}
@@ -36,10 +34,10 @@ public class Environment {
 
 	public void assureModule(Module module) {
 		if (!modulePort.containsKey(module.getContext())) {
-			Map<String, ModuleBean> builder = Maps.newHashMap();
+			Map<String, ModuleBean> builder = new HashMap<>();
 			builder.putAll(modulePort);
 			builder.put(module.getContext(), ModuleBean.builder().host(getHost(module)).port(getPort(module)).build());
-			modulePort = ImmutableMap.copyOf(builder);
+			modulePort = HashTreePMap.from(builder);
 		}
 
 	}

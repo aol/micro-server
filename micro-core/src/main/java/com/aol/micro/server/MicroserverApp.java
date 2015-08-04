@@ -1,9 +1,11 @@
 package com.aol.micro.server;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+import jersey.repackaged.com.google.common.collect.Lists;
 import lombok.Getter;
 
 import org.slf4j.Logger;
@@ -12,7 +14,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
 import com.aol.micro.server.config.Config;
-import com.aol.micro.server.config.Configurer;
 import com.aol.micro.server.config.MicroserverConfigurer;
 import com.aol.micro.server.module.Module;
 import com.aol.micro.server.servers.ApplicationRegister;
@@ -21,7 +22,6 @@ import com.aol.micro.server.servers.ServerRunner;
 import com.aol.micro.server.servers.model.GrizzlyApplicationFactory;
 import com.aol.micro.server.spring.SpringContextFactory;
 import com.aol.simple.react.exceptions.ExceptionSoftener;
-import com.google.common.collect.Lists;
 
 /**
  * 
@@ -69,7 +69,7 @@ public class MicroserverApp {
 	 */
 	public MicroserverApp(Class c, Module... modules) {
 
-		this.modules = Lists.newArrayList(modules);
+		this.modules = Arrays.asList(modules);
 		springContext = new SpringContextFactory(
 				new MicroserverConfigurer().buildConfig(c), c,
 				modules[0].getSpringConfigurationClasses())

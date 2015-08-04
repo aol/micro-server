@@ -1,5 +1,6 @@
 package com.aol.micro.server.boot.config;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -20,7 +21,8 @@ import com.aol.micro.server.servers.model.GrizzlyApplicationFactory;
 import com.aol.micro.server.spring.SpringContextFactory;
 import com.aol.micro.server.spring.boot.BootApplicationConfigurator;
 import com.aol.simple.react.exceptions.ExceptionSoftener;
-import com.google.common.collect.Lists;
+
+
 
 public class MicrobootApp {
 
@@ -46,7 +48,7 @@ public class MicrobootApp {
 	 *            single Spring context
 	 */
 	public MicrobootApp(Module... modules) {
-		this.modules = Lists.newArrayList(modules);
+		this.modules = Arrays.asList(modules);
 		springContext = new SpringContextFactory(
 				new MicrobootConfigurator().buildConfig(extractClass()),
 				extractClass(), modules[0].getSpringConfigurationClasses())
@@ -70,7 +72,7 @@ public class MicrobootApp {
 	 */
 	public MicrobootApp(Class c, Module... modules) {
 
-		this.modules = Lists.newArrayList(modules);
+		this.modules = Arrays.asList(modules);
 		springContext = new SpringContextFactory(
 				new MicrobootConfigurator().buildConfig(c), c,
 				modules[0].getSpringConfigurationClasses()).withSpringBuilder(

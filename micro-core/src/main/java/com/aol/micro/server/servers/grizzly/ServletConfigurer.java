@@ -6,20 +6,20 @@ import lombok.AllArgsConstructor;
 
 import org.glassfish.grizzly.servlet.ServletRegistration;
 import org.glassfish.grizzly.servlet.WebappContext;
+import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aol.micro.server.auto.discovery.ServletConfiguration;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
-import com.google.common.collect.ImmutableList;
 
 @AllArgsConstructor
 public class ServletConfigurer {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final ServerData serverData;
-	private final ImmutableList<ServletData> servletData;
+	private final PStack<ServletData> servletData;
 	
 	public void addServlets(WebappContext webappContext) {
 		addExplicitlyDeclaredServlets(webappContext);

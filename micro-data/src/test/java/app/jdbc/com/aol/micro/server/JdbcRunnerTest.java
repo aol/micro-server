@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.rest.client.nio.AsyncNonNIORestClient;
+import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver(entityScan="app.jdbc.com.aol.micro.server",properties={"db.connection.driver","org.hsqldb.jdbcDriver",
@@ -22,7 +22,7 @@ import com.aol.micro.server.testing.RestAgent;
 																						    "db.connection.ddl.auto","create-drop"   })
 public class JdbcRunnerTest {
 
-  	private final AsyncNonNIORestClient<JdbcEntity> listClient = new AsyncNonNIORestClient(1000,1000).withResponse(JdbcEntity.class);
+  	private final AsyncRestClient<JdbcEntity> listClient = new AsyncRestClient(1000,1000).withResponse(JdbcEntity.class);
 
 	RestAgent rest = new RestAgent();
 	

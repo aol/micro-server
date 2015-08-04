@@ -6,6 +6,11 @@ This adds a facility to capture events such as requests, request execution and s
 
 Simply add micro-events to your classpath.
 
+### Depends on
+
+1. [micro-reactive](https://github.com/aol/micro-server/tree/master/micro-reactive)
+2. [micro-guava]()
+
 ## Capturing scheduled Jobs
 
 Any Spring Bean implementing com.aol.micro.server.events.ScheduledJob will have start / completion tracking for the  scheduleAndLog() method. 

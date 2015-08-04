@@ -1,6 +1,7 @@
 package com.aol.micro.server.module;
 
-import java.util.ArrayList;
+import static com.aol.micro.server.utility.UsefulStaticMethods.concat;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -13,19 +14,19 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
+import jersey.repackaged.com.google.common.collect.ImmutableList;
+import jersey.repackaged.com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
 import lombok.experimental.Builder;
 import lombok.experimental.Wither;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.pcollections.ConsPStack;
+import org.pcollections.HashTreePSet;
 
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.utility.HashMapBuilder;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
 
 
 @Builder
@@ -68,7 +69,7 @@ public class ConfigurableModule implements Module{
 	@Override
 	public List<String> getDefaultJaxRsPackages() {
 		if(defaultJaxRsPackages!=null)
-			return ImmutableList.copyOf(Iterables.concat(defaultJaxRsPackages,extract(()->Module.super.getDefaultJaxRsPackages())));
+			return ConsPStack.from(concat(defaultJaxRsPackages,extract(()->Module.super.getDefaultJaxRsPackages())));
 		
 		return Module.super.getDefaultJaxRsPackages();
 	}
@@ -85,16 +86,11 @@ public class ConfigurableModule implements Module{
 	@Override
 	public List<Class> getRestResourceClasses() {
 		if(restResourceClasses!=null)
-			return  ImmutableList.copyOf(concat(restResourceClasses, extract(() -> Module.super.getRestResourceClasses())));
+			return  ConsPStack.from(concat(restResourceClasses, extract(() -> Module.super.getRestResourceClasses())));
 		
 		return Module.super.getRestResourceClasses();
 	}
-	private <T> List<T> concat(Collection<T> a,
-			Collection<T> b) {
-		List<T> result = new ArrayList<T>(a);
-		result.addAll(b);
-		return result;
-	}
+	
 	@Override
 	public List<Class> getRestAnnotationClasses() {
 		if(restAnnotationClasses!=null)
@@ -106,7 +102,7 @@ public class ConfigurableModule implements Module{
 	@Override
 	public List<Class> getDefaultResources() {
 		if(this.defaultResources!=null){
-			return  ImmutableList.copyOf(concat(this.defaultResources,extract(()->Module.super.getDefaultResources())));
+			return ConsPStack.from(concat(this.defaultResources,extract(()->Module.super.getDefaultResources())));
 		}
 			
 		return Module.super.getDefaultResources();
@@ -115,7 +111,7 @@ public class ConfigurableModule implements Module{
 	@Override
 	public List<ServletContextListener> getListeners(ServerData data) {
 		if(listeners!=null)
-			return  ImmutableList.copyOf(concat(this.listeners, extract(()->Module.super.getListeners(data))));
+			return  ConsPStack.from(concat(this.listeners, extract(()->Module.super.getListeners(data))));
 		
 		return Module.super.getListeners(data);
 	}
@@ -123,7 +119,7 @@ public class ConfigurableModule implements Module{
 	@Override
 	public List<ServletRequestListener> getRequestListeners(ServerData data) {
 		if(requestListeners!=null)
-			return  ImmutableList.copyOf(concat(this.requestListeners,
+			return  ConsPStack.from(concat(this.requestListeners,
 					                                      extract(()->Module.super.getRequestListeners(data))));
 
 		return Module.super.getRequestListeners(data);
@@ -168,7 +164,7 @@ public class ConfigurableModule implements Module{
 	@Override
 	public Set<Class> getSpringConfigurationClasses() {
 		if(this.springConfigurationClasses!=null)
-			return ImmutableSet.copyOf(Iterables.concat(this.springConfigurationClasses, extract(()->Module.super.getSpringConfigurationClasses())));
+			return HashTreePSet.from(concat(this.springConfigurationClasses, extract(()->Module.super.getSpringConfigurationClasses())));
 			
 		return Module.super.getSpringConfigurationClasses();
 	}

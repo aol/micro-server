@@ -4,7 +4,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Collectors;
+
+import jersey.repackaged.com.google.common.collect.Lists;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +17,6 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import app.servlet.com.aol.micro.server.ServletStatusResource;
 
 import com.aol.micro.server.servers.model.ServerData;
-import com.google.common.collect.Lists;
 
 public class ServerDataTest {
 
@@ -23,7 +26,7 @@ public class ServerDataTest {
 	@Before
 	public void setUp() {
 		rootContext = mock(AnnotationConfigWebApplicationContext.class);
-		serverData = new ServerData(8080,  Lists.newArrayList(new ServletStatusResource()), rootContext, "url", 
+		serverData = new ServerData(8080,  Arrays.asList(new ServletStatusResource()), rootContext, "url", 
 				()->"context");
 	}
 

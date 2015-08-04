@@ -20,7 +20,6 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.module.EmbeddedModule;
 import com.aol.micro.server.testing.RestAgent;
-import com.google.common.collect.ImmutableList;
 
 public class EmbeddedAppTest {
 	
@@ -47,7 +46,7 @@ public class EmbeddedAppTest {
 		assertThat(rest.get("http://localhost:8080/test-app/test-status/ping"),is("test!"));
 		
 		
-		assertThat((List<String>)rest.post("http://localhost:8081/alternative-app/alt-status/ping",new ImmutableEntity("value",ImmutableList.of("hello","world")),List.class),
+		assertThat((List<String>)rest.post("http://localhost:8081/alternative-app/alt-status/ping",new ImmutableEntity("value",Arrays.asList("hello","world")),List.class),
 				hasItem("hello"));
 	
 	}
@@ -96,7 +95,7 @@ public class EmbeddedAppTest {
 	@Test(expected=NotFoundException.class)
 	public void confirmTestAppCantUseAltAppResources(){
 		
-		assertThat((List<String>)rest.post("http://localhost:8081/test-app/alt-status/ping",new ImmutableEntity("value",ImmutableList.of("hello","world")),List.class),
+		assertThat((List<String>)rest.post("http://localhost:8081/test-app/alt-status/ping",new ImmutableEntity("value",Arrays.asList("hello","world")),List.class),
 				hasItem("hello"));
 	
 	}

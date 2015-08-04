@@ -12,7 +12,7 @@ import javax.ws.rs.container.Suspended;
 import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.rest.client.nio.AsyncNonNIORestClient;
+import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.simple.react.stream.simple.SimpleReact;
 import com.google.common.collect.ImmutableList;
 
@@ -26,7 +26,7 @@ public class AsyncResource implements RestResource{
 			"http://localhost:8080/async-app/async/ping",
 			"http://localhost:8080/async-app/async/ping");
     
-    	private final AsyncNonNIORestClient client = new AsyncNonNIORestClient(1000,1000).withAccept("text/plain");
+    	private final AsyncRestClient client = new AsyncRestClient(1000,1000).withAccept("text/plain");
     	
         @GET
         @Path("/expensive")

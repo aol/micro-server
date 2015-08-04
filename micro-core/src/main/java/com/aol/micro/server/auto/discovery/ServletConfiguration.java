@@ -4,7 +4,7 @@ import java.util.Map;
 
 import javax.servlet.Servlet;
 
-import com.google.common.collect.ImmutableMap;
+import org.pcollections.HashTreePMap;
 
 
 public interface ServletConfiguration {
@@ -14,7 +14,7 @@ public interface ServletConfiguration {
 		return null;
 	}
 	default Map<String,String> getInitParameters(){
-		return ImmutableMap.of();
+		return HashTreePMap.empty();
 	}
 	default Class<? extends Servlet> getServlet(){
 		return null;
