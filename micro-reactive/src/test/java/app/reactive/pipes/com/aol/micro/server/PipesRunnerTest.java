@@ -1,20 +1,18 @@
 package app.reactive.pipes.com.aol.micro.server;
 
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.reactive.Pipes;
 import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.async.Queue;

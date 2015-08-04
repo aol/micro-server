@@ -8,9 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import jersey.repackaged.com.google.common.collect.ImmutableMap;
-import jersey.repackaged.com.google.common.collect.ImmutableSet;
-import jersey.repackaged.com.google.common.collect.Lists;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Wither;
@@ -105,7 +103,7 @@ public class Config {
 	 * @return New Config object, with configured packages
 	 */
 	public Config withDefaultDataSource(Class... c) {
-		List<Class> result = Lists.newArrayList(Classes.DATA_SOURCE_CLASSES.getClasses());
+		List<Class> result = Arrays.asList(Classes.DATA_SOURCE_CLASSES.getClasses());
 		if (classes != null)
 			result.addAll(classes);
 		Stream.of(c).forEach(next -> result.add(next));

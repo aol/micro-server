@@ -2,6 +2,7 @@ package com.aol.micro.server.module;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,10 +15,6 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
-import jersey.repackaged.com.google.common.collect.ImmutableList;
-
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
@@ -29,16 +26,14 @@ import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Classes;
 import com.aol.micro.server.rest.jackson.JacksonFeature;
-import com.aol.micro.server.rest.jersey.JerseyRestApplication;
-import com.aol.micro.server.rest.jersey.JerseySpringIntegrationContextListener;
 import com.aol.micro.server.servers.model.ServerData;
 
 public interface Module {
 	
-	default Consumer<HttpServer> getServerConfigManager(){
+	default <T> Consumer<WebServerProvider<T>> getServerConfigManager(){
 		return server->{};
 	}
-	default Consumer<ResourceConfig> getResourceConfigManager(){
+	default <T> Consumer<JaxRsProvider<T>> getResourceConfigManager(){
 		return rc->{};
 	}
 	default List<String> getPackages(){
@@ -84,7 +79,7 @@ public interface Module {
 			list.add(new ContextLoaderListener((WebApplicationContext)data
 					.getRootContext()));
 		}
-		list.add(new JerseySpringIntegrationContextListener(data));
+		
 		List<Plugin> modules = PluginLoader.INSTANCE.plugins.get();
 		
 		list.addAll(SequenceM.fromStream(modules.stream())
@@ -93,7 +88,7 @@ public interface Module {
 				.map(fn->fn.apply(data))
 				.toList());
 		
-		return  ImmutableList.copyOf(list);
+		return Collections.unmodifiableList( new ArrayList<>(list));
 	}
 	default List<ServletRequestListener> getRequestListeners(ServerData data){
 		List<ServletRequestListener>  list = new ArrayList<>();
@@ -131,7 +126,20 @@ public interface Module {
 	}
 	
 	default  String getJaxWsRsApplication(){
-		return JerseyRestApplication.class.getCanonicalName();
+		List<String> jaxRsApplications = SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
+		.filter(module -> module.jaxWsRsApplication()!=null)
+		.flatMapOptional(Plugin::jaxWsRsApplication)
+		.toList();
+		if(jaxRsApplications.size()>1) {
+			throw new IncorrectJaxRsPluginsException("ERROR!  Multiple jax-rs application plugins found " + jaxRsApplications);
+			
+			
+		}else if(jaxRsApplications.size()==0){
+			throw new IncorrectJaxRsPluginsException("ERROR!  No jax-rs application plugins found ");
+			
+			
+		}
+		return jaxRsApplications.get(0);
 	}
 	default String getProviders(){
 		String additional = SequenceM

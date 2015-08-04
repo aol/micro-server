@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mock;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import jersey.repackaged.com.google.common.collect.Lists;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class ServerDataTest {
 	@Test(expected=NullPointerException.class)
 	public void testExtractNull(){
 		
-		serverData = new ServerData(8080,  Lists.newArrayList((Object)null), rootContext, "url", 
+		serverData = new ServerData(8080,  Arrays.asList((Object)null), rootContext, "url", 
 				()->"context");
 		serverData.extractResources();
 		

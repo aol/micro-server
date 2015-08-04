@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.aol.micro.server.model.ServletStatusResource;
+
 import com.aol.micro.server.rest.jackson.JacksonFeature;
 import com.aol.micro.server.servers.ServerThreadLocalVariables;
 public class JerseyRestApplicationTest {

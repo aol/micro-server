@@ -7,21 +7,13 @@ import static org.junit.Assert.assertThat;
 
 import java.util.concurrent.ExecutionException;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.ClientProperties;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.rest.jackson.JacksonFeature;
-import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 @Microserver
 public class EventRunnerTest {
@@ -58,21 +50,7 @@ public class EventRunnerTest {
 				containsString("Manifest"));
 		
 	}
-	protected Client initClient(int rt, int ct) {
-
-		ClientConfig clientConfig = new ClientConfig();
-		clientConfig.property(ClientProperties.CONNECT_TIMEOUT, ct);
-		clientConfig.property(ClientProperties.READ_TIMEOUT, rt);
-
-		ClientBuilder.newBuilder().register(JacksonFeature.class);
-		Client client = ClientBuilder.newClient(clientConfig);
-		client.register(JacksonFeature.class);
-		JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
-		provider.setMapper(JacksonUtil.getMapper());
-		client.register(provider);
-		return client;
-
-	}
+	
 	
 	
 }

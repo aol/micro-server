@@ -1,12 +1,15 @@
 package com.aol.micro.server.rest.jackson;
 
+import java.util.Map;
+
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
 
-import org.glassfish.jersey.CommonProperties;
-
+import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.micro.server.Plugin;
+import com.aol.micro.server.PluginLoader;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
 
@@ -14,9 +17,15 @@ public class JacksonFeature implements Feature {
 
     @Override
     public boolean configure(final FeatureContext context) {
-        final String disableMoxy = CommonProperties.MOXY_JSON_FEATURE_DISABLE + '.'
-                + context.getConfiguration().getRuntimeType().name().toLowerCase();
-        context.property(disableMoxy, true);
+        
+    	SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
+		.filter(module -> module.jacksonFeatureProperties()!=null)
+		.map(Plugin::jacksonFeatureProperties)
+		.map(fn->fn.apply(context))
+		.forEach(map -> {
+			addAll(map,context);
+		});
+       
         
         context.register(JacksonJaxbJsonProvider.class, MessageBodyReader.class, MessageBodyWriter.class);
         JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
@@ -25,4 +34,11 @@ public class JacksonFeature implements Feature {
      
         return true;
     }
+
+	private void addAll(Map<String, Object> map, FeatureContext context) {
+		for(String key : map.keySet()){
+			context.property(key,map.get(key));
+		}
+		
+	}
 }

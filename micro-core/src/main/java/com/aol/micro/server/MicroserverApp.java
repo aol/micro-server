@@ -1,11 +1,11 @@
 package com.aol.micro.server;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-import jersey.repackaged.com.google.common.collect.Lists;
 import lombok.Getter;
 
 import org.slf4j.Logger;
@@ -50,7 +50,7 @@ public class MicroserverApp {
 	 * @param modules Multiple Microservice end points that can be deployed within a single Spring context
 	 */
 	public MicroserverApp(Module... modules) {
-		this.modules = Lists.newArrayList(modules);
+		this.modules = Arrays.asList(modules);
 		springContext = new SpringContextFactory(new MicroserverConfigurer().buildConfig(
 				extractClass()), extractClass(),
 				modules[0].getSpringConfigurationClasses())

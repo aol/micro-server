@@ -1,6 +1,8 @@
 package com.aol.micro.server.servers.grizzly;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -17,13 +19,18 @@ import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.accesslog.AccessLogBuilder;
 import org.glassfish.grizzly.servlet.ServletRegistration;
 import org.glassfish.grizzly.servlet.WebappContext;
-import org.glassfish.jersey.servlet.ServletContainer;
 import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aol.cyclops.lambda.monads.SequenceM;
 import com.aol.micro.server.ErrorCode;
+import com.aol.micro.server.Plugin;
+import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.config.SSLProperties;
+import com.aol.micro.server.module.IncorrectJaxRsPluginsException;
+import com.aol.micro.server.module.WebServerProvider;
+import com.aol.micro.server.rest.RestConfiguration;
 import com.aol.micro.server.servers.AccessLogLocationBean;
 import com.aol.micro.server.servers.ServerApplication;
 import com.aol.micro.server.servers.model.AllData;
@@ -72,7 +79,7 @@ public class GrizzlyApplication implements ServerApplication {
 		addListeners(webappContext);
 
 		HttpServer httpServer = HttpServer.createSimpleServer(null, "0.0.0.0", serverData.getPort());
-		serverData.getModule().getServerConfigManager().accept(httpServer);
+		serverData.getModule().getServerConfigManager().accept(new WebServerProvider(httpServer));
 		addAccessLog(httpServer);
 		if (SSLProperties != null)
 			this.createSSLListener(serverData.getPort());
@@ -124,11 +131,26 @@ public class GrizzlyApplication implements ServerApplication {
 
 	}
 
-	private void addServlet(WebappContext webappContext) {
-		ServletContainer container = new ServletContainer();
-		ServletRegistration servletRegistration = webappContext.addServlet("Jersey Spring Web Application", container);
-		servletRegistration.setInitParameter("javax.ws.rs.Application", this.serverData.getModule().getJaxWsRsApplication());
-		servletRegistration.setInitParameter("jersey.config.server.provider.packages", this.serverData.getModule().getProviders());
+public  void addServlet(WebappContext webappContext) {
+		
+		List<RestConfiguration> restConfigList = SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
+				.filter(module -> module.restServletConfiguration()!=null)
+				.flatMapOptional(Plugin::restServletConfiguration)
+				.toList();
+		if(restConfigList.size()>1) {
+			throw new IncorrectJaxRsPluginsException("ERROR!  Multiple jax-rs application plugins found " + restConfigList);
+		}else if(restConfigList.size()==0){
+			throw new IncorrectJaxRsPluginsException("ERROR!  No jax-rs application plugins found ");
+		}
+		
+		RestConfiguration config = restConfigList.get(0);
+		ServletRegistration servletRegistration = webappContext.addServlet(config.getName(),config.getServlet());
+		Map<String,String> initParams = config.getInitParams();
+		for(String key : initParams.keySet()){
+			servletRegistration.setInitParameter(key,initParams.get(key));
+		}
+		
+		servletRegistration.setInitParameter(config.getProvidersName(), this.serverData.getModule().getProviders());
 		servletRegistration.setLoadOnStartup(1);
 		servletRegistration.addMapping(serverData.getBaseUrlPattern());
 	}

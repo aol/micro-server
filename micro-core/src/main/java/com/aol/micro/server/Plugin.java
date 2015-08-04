@@ -13,11 +13,12 @@ import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
+import javax.ws.rs.core.FeatureContext;
 
-
-
-
+import com.aol.micro.server.rest.RestConfiguration;
 import com.aol.micro.server.servers.model.ServerData;
+import com.aol.micro.server.utility.HashMapBuilder;
+import com.fasterxml.jackson.databind.Module;
 
 /**
  * To implement a plugin for Microserver, implement this interface in your library and add the fully resolved class name to 
@@ -30,10 +31,19 @@ import com.aol.micro.server.servers.model.ServerData;
  */
 public interface Plugin {
 
+	default Optional<RestConfiguration> restServletConfiguration(){
+		return Optional.empty();
+	}
+	default Function<FeatureContext, Map<String, Object>> jacksonFeatureProperties(){
+		return context->HashMapBuilder.of();
+	}
+	default  Optional<String> jaxWsRsApplication(){
+		return Optional.empty();
+	}
 	default Optional<ServerApplicationFactory> serverApplicationFactory(){
 		return Optional.empty();
 	}
-	default Set<com.fasterxml.jackson.databind.Module> jacksonModules(){
+	default Set<Module> jacksonModules(){
 		return new HashSet<>();
 	}
 	/**

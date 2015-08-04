@@ -1,5 +1,6 @@
 package com.aol.micro.server.servers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -7,8 +8,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
-import jersey.repackaged.com.google.common.collect.ImmutableList;
-import jersey.repackaged.com.google.common.collect.Maps;
+
+
 
 import org.pcollections.ConsPStack;
 import org.pcollections.PStack;
@@ -43,7 +44,7 @@ public class ServerRunner {
 					.collect(Collectors.toList())
 					.toArray(new ServerData[0])));
 
-		Map<ServerApplication,CompletableFuture> mapFutures = Maps.newHashMap();
+		Map<ServerApplication,CompletableFuture> mapFutures = new HashMap<>();
 		apps.stream().forEach(app -> mapFutures.put(app,new CompletableFuture()));
 		
 		List<Thread> threads = apps.stream().map(app -> start(app, app.getServerData().getModule(),mapFutures.get(app))).collect(Collectors.toList());

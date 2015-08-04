@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
-import jersey.repackaged.com.google.common.collect.ImmutableList;
 import lombok.Getter;
 import lombok.experimental.Builder;
 

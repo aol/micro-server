@@ -21,7 +21,6 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
-import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.Before;
 import org.junit.Test;
 import org.pcollections.HashTreePSet;
@@ -49,7 +48,7 @@ public class ConfigurableModuleTest {
 	private List<String> defaultJaxRsPackages;
 	
 	private Module m = () -> "module";
-	Consumer<HttpServer> serverConfigManager = server-> {};
+	Consumer<WebServerProvider<HttpServer>> serverConfigManager = server-> {};
 	@Before
 	public void setup(){
 		
@@ -69,7 +68,7 @@ public class ConfigurableModuleTest {
 		
 		
 		module = ConfigurableModule.builder()
-									.serverConfigManager(serverConfigManager )
+									.serverConfigManager((Consumer)serverConfigManager )
 									.defaultJaxRsPackages(defaultJaxRsPackages)
 									.context(context)
 									.defaultResources(defaultResources)

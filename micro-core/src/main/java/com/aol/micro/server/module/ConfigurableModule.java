@@ -2,6 +2,8 @@ package com.aol.micro.server.module;
 
 import static com.aol.micro.server.utility.UsefulStaticMethods.concat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -14,14 +16,10 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
-import jersey.repackaged.com.google.common.collect.ImmutableList;
-import jersey.repackaged.com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
 import lombok.experimental.Builder;
 import lombok.experimental.Wither;
 
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.pcollections.ConsPStack;
 import org.pcollections.HashTreePSet;
 
@@ -47,21 +45,33 @@ public class ConfigurableModule implements Module{
 	private final Set<Class> springConfigurationClasses;
 	private final Map<String,String> propertyOverrides;
 	private final List<String> defaultJaxRsPackages;
-	private final Consumer<HttpServer> serverConfigManager;
-	private final Consumer<ResourceConfig> resourceConfigManager;
+	private final Consumer<WebServerProvider<?>> serverConfigManager;
+	private final Consumer<JaxRsProvider<?>> resourceConfigManager;
 	final boolean resetAll;
 	
+	
+	public <T> ConfigurableModule withResourceConfigManager(Consumer<JaxRsProvider<T>> resourceConfigManager){
+		return new ConfigurableModule(restResourceClasses,restAnnotationClasses, defaultResources,
+				listeners, requestListeners,filters,servlets, jaxWsRsApplication,providers,
+				context, springConfigurationClasses, propertyOverrides,defaultJaxRsPackages,serverConfigManager,(Consumer)resourceConfigManager,resetAll);
+	}
+	public <T> ConfigurableModule withServerConfigManager(Consumer<WebServerProvider<?>> serverConfigManager){
+		return new ConfigurableModule(restResourceClasses,restAnnotationClasses, defaultResources,
+				listeners, requestListeners,filters,servlets, jaxWsRsApplication,providers,
+				context, springConfigurationClasses, propertyOverrides,defaultJaxRsPackages,(Consumer)serverConfigManager,resourceConfigManager,resetAll);
+	}
+	
 	@Override
-	public Consumer<HttpServer> getServerConfigManager(){
+	public <T> Consumer<WebServerProvider<T>> getServerConfigManager(){
 		if(serverConfigManager!=null)
-			return serverConfigManager;
+			return (Consumer)serverConfigManager;
 		
 		return Module.super.getServerConfigManager();
 	}
 	@Override
-	public Consumer<ResourceConfig> getResourceConfigManager(){
+	public <T> Consumer<JaxRsProvider<T>> getResourceConfigManager(){
 		if(resourceConfigManager!=null)
-			return resourceConfigManager;
+			return (Consumer)resourceConfigManager;
 		
 		return Module.super.getResourceConfigManager();
 	}
@@ -76,12 +86,12 @@ public class ConfigurableModule implements Module{
 	private <T> Collection<T> extract(Supplier<Collection<T>> s) {
 		if(!resetAll)
 			return s.get();
-		return ImmutableList.of();
+		return Arrays.asList();
 	}
 	private <K,V> Map<K,V> extractMap(Supplier<Map<K,V>> s) {
 		if(!resetAll)
 			return s.get();
-		return ImmutableMap.of();
+		return HashMapBuilder.of();
 	}
 	@Override
 	public List<Class> getRestResourceClasses() {
@@ -94,7 +104,7 @@ public class ConfigurableModule implements Module{
 	@Override
 	public List<Class> getRestAnnotationClasses() {
 		if(restAnnotationClasses!=null)
-			return  ImmutableList.copyOf(concat(restAnnotationClasses, extract(() -> Module.super.getRestAnnotationClasses())));
+			return  new ArrayList<>(concat(restAnnotationClasses, extract(() -> Module.super.getRestAnnotationClasses())));
 		
 		return Module.super.getRestAnnotationClasses();
 	}
