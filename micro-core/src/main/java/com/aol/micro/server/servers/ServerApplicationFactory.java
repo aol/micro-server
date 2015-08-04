@@ -1,9 +1,8 @@
-package com.aol.micro.server;
+package com.aol.micro.server.servers;
 
 import org.springframework.context.ApplicationContext;
 
 import com.aol.micro.server.module.Module;
-import com.aol.micro.server.servers.ServerApplication;
 
 public interface ServerApplicationFactory {
 

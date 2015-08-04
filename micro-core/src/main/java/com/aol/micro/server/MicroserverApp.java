@@ -19,6 +19,7 @@ import com.aol.micro.server.config.MicroserverConfigurer;
 import com.aol.micro.server.module.Module;
 import com.aol.micro.server.servers.ApplicationRegister;
 import com.aol.micro.server.servers.ServerApplication;
+import com.aol.micro.server.servers.ServerApplicationFactory;
 import com.aol.micro.server.servers.ServerRunner;
 import com.aol.micro.server.spring.SpringContextFactory;
 import com.aol.simple.react.exceptions.ExceptionSoftener;

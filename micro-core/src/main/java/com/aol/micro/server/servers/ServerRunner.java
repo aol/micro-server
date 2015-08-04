@@ -66,7 +66,7 @@ public class ServerRunner {
 	private Thread start(ServerApplication next, Module module, CompletableFuture start) {
 		Thread t = new Thread(() -> { 
 			ServerThreadLocalVariables.getContext().set(module.getContext());
-			next.run(start, end); 
+			next.run(start,new JaxRsServletConfigurer(), end); 
 			
 		});
 		

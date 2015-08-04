@@ -16,13 +16,15 @@ import javax.servlet.ServletRequestListener;
 import javax.ws.rs.core.FeatureContext;
 
 import com.aol.micro.server.rest.RestConfiguration;
+import com.aol.micro.server.servers.ServerApplicationFactory;
 import com.aol.micro.server.servers.model.ServerData;
+import com.aol.micro.server.spring.SpringDBConfig;
 import com.aol.micro.server.utility.HashMapBuilder;
 import com.fasterxml.jackson.databind.Module;
 
 /**
  * To implement a plugin for Microserver, implement this interface in your library and add the fully resolved class name to 
- * META-INF/services/com.aol.micro.server.FunctionalModule
+ * META-INF/services/com.aol.micro.server.Plugin
  * 
  * in your library
  * 
@@ -31,18 +33,33 @@ import com.fasterxml.jackson.databind.Module;
  */
 public interface Plugin {
 
+	/**
+	 * @return Configuration for the jax-rs servlet
+	 */
 	default Optional<RestConfiguration> restServletConfiguration(){
 		return Optional.empty();
 	}
+	/**
+	 * @return Jackson feature properties
+	 */
 	default Function<FeatureContext, Map<String, Object>> jacksonFeatureProperties(){
 		return context->HashMapBuilder.of();
 	}
+	/**
+	 * @return jax-rs Application name
+	 */
 	default  Optional<String> jaxWsRsApplication(){
 		return Optional.empty();
 	}
+	/**
+	 * @return Factory for creating web server instances
+	 */
 	default Optional<ServerApplicationFactory> serverApplicationFactory(){
 		return Optional.empty();
 	}
+	/**
+	 * @return Jackson modules for this plugin
+	 */
 	default Set<Module> jacksonModules(){
 		return new HashSet<>();
 	}
@@ -57,6 +74,12 @@ public interface Plugin {
 	 */
 	default Set<String> jaxRsPackages(){
 		return new HashSet<>();
+	}
+	/**
+	 * @return Used for configuring Data Beans (or other Beans) directly into the ApplicationContext
+	 */
+	default Optional<SpringDBConfig> springDbConfigurer(){
+		return Optional.empty();
 	}
 	/**
 	 * @return Spring configuration classes for this plugin

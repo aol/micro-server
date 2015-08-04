@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
@@ -32,6 +33,7 @@ import com.aol.micro.server.module.IncorrectJaxRsPluginsException;
 import com.aol.micro.server.module.WebServerProvider;
 import com.aol.micro.server.rest.RestConfiguration;
 import com.aol.micro.server.servers.AccessLogLocationBean;
+import com.aol.micro.server.servers.JaxRsServletConfigurer;
 import com.aol.micro.server.servers.ServerApplication;
 import com.aol.micro.server.servers.model.AllData;
 import com.aol.micro.server.servers.model.FilterData;
@@ -64,13 +66,13 @@ public class GrizzlyApplication implements ServerApplication {
 		this.SSLProperties = null;
 	}
 
-	public void run(CompletableFuture start, CompletableFuture end) {
+	public void run(CompletableFuture start,  JaxRsServletConfigurer jaxRsConfigurer, CompletableFuture end) {
 
 		WebappContext webappContext = new WebappContext("WebappContext", "");
 
 		new ServletContextListenerConfigurer(serverData, servletContextListenerData, servletRequestListenerData);
 
-		addServlet(webappContext);
+		jaxRsConfigurer.addServlet(this.serverData,webappContext);
 
 		new ServletConfigurer(serverData, servletData).addServlets(webappContext);
 
@@ -131,29 +133,7 @@ public class GrizzlyApplication implements ServerApplication {
 
 	}
 
-public  void addServlet(WebappContext webappContext) {
-		
-		List<RestConfiguration> restConfigList = SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
-				.filter(module -> module.restServletConfiguration()!=null)
-				.flatMapOptional(Plugin::restServletConfiguration)
-				.toList();
-		if(restConfigList.size()>1) {
-			throw new IncorrectJaxRsPluginsException("ERROR!  Multiple jax-rs application plugins found " + restConfigList);
-		}else if(restConfigList.size()==0){
-			throw new IncorrectJaxRsPluginsException("ERROR!  No jax-rs application plugins found ");
-		}
-		
-		RestConfiguration config = restConfigList.get(0);
-		ServletRegistration servletRegistration = webappContext.addServlet(config.getName(),config.getServlet());
-		Map<String,String> initParams = config.getInitParams();
-		for(String key : initParams.keySet()){
-			servletRegistration.setInitParameter(key,initParams.get(key));
-		}
-		
-		servletRegistration.setInitParameter(config.getProvidersName(), this.serverData.getModule().getProviders());
-		servletRegistration.setLoadOnStartup(1);
-		servletRegistration.addMapping(serverData.getBaseUrlPattern());
-	}
+	
 
 	private NetworkListener createSSLListener(int port) {
 

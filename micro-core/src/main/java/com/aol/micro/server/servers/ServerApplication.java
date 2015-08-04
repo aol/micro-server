@@ -7,7 +7,7 @@ import com.aol.micro.server.servers.model.ServerData;
 
 public interface ServerApplication {
 
-	void run(CompletableFuture start, CompletableFuture end);
+	void run(CompletableFuture start, JaxRsServletConfigurer jaxRsConfigurer, CompletableFuture end);
 	ServerData getServerData();
 	ServerApplication withSSLProperties(SSLProperties sslProperties);
 }
