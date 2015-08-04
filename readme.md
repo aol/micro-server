@@ -3,11 +3,31 @@
 
 [![Join the chat at https://gitter.im/aol/micro-server](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aol/micro-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Choosing between Java EE or Spring? 
+A convenient modular engine for Microservices. Microserver plugins offer seamless integration with Spring (core), Jersey, Guava, Grizzly, reactive programming, Hibernate & Spring Data, Codahale Metrics, Swagger and more to come!
 
-Microserver is the best of both! Spring, Jersey and Grizzly working together harmoniously for your Microservices.
+## Quick start
 
-##Getting started
+Install Microserver with Grizzly and Jersey 
+
+compile group: 'com.aol.microservices', name:'microserver-grizzly-with-jersey', version:'0.60'
+ 
+Create and run a simple app 
+ 
+    @Rest
+	@Path("/test")
+	public class SimpleApp {
+
+	public static void main(String[] args){
+		new MicroserverApp(()->"test-app").run();
+	}
+	@GET
+	public String myEndPoint(){
+		return "hello world!";
+	}
+  }
+
+
+# Tutorial and overview
 
 [Tutorial](https://github.com/aol/micro-server/wiki/Getting-started-:-Tutorial) 
 
@@ -29,6 +49,8 @@ Microserver is a zero configuration, standards based, battle hardened library to
 
 ![Build health](https://travis-ci.org/aol/micro-server.svg)
 
+* micro-grizzly-with-jersey
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-core)
 * micro-core 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-core)
 * micro-boot 
@@ -41,13 +63,13 @@ Microserver is a zero configuration, standards based, battle hardened library to
 
 [Google Group](https://groups.google.com/forum/#!forum/micro-server)
 
-[Example Apps : Microserver Core](https://github.com/aol/micro-server/tree/master/micro-core/src/test/java/app)
+[Example Apps : Microserver Core with Grizzly and Jersey](https://github.com/aol/micro-server/tree/master/micro-grizzly/src/test/java/app)
 
 [Example Apps : Microserver Boot](https://github.com/aol/micro-server/tree/master/micro-boot/src/test/java/app)
 
-[Java Doc : Microserver Core](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.55)
+[Java Doc : Microserver Core](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.60)
 
-[Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.55)
+[Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.60)
 
 
 
@@ -58,7 +80,7 @@ Microserver core
     <dependency>
       <groupId>com.aol.microservices</groupId>
       <artifactId>microserver-core</artifactId>
-      <version>0.55</version>
+      <version>0.60</version>
     </dependency>
     
 Microserver Spring Boot 
@@ -66,7 +88,7 @@ Microserver Spring Boot
     <dependency>
       <groupId>com.aol.microservices</groupId>
       <artifactId>microserver-boot</artifactId>
-      <version>0.55</version>
+      <version>0.60</version>
     </dependency>
 
 
@@ -75,17 +97,17 @@ Microserver Spring Boot
 
 Microserver core 
 	
-	 compile group: 'com.aol.microservices', name:'microserver-core', version:'0.55'
+	 compile group: 'com.aol.microservices', name:'microserver-core', version:'0.60'
 	 
 Microserver Spring Boot 
 	 
-	  compile group: 'com.aol.microservices', name:'microserver-boot', version:'0.55'
+	  compile group: 'com.aol.microservices', name:'microserver-boot', version:'0.60'
 
 ##Tech Stack
 
-Microserver seamlessly integrates Jersey 2, Spring 4, Guava, Codahale Metrics, Swagger, Spring Data / JDBC / Hibernate, SimpleReact and Grizzly into a standalone REST server that can be leveraged as a simple library within a Java app.
+Microserver core is a lightweight server configuration engine built using Spring, Cyclops, simple-react and Jackson.
 
-It also includes features, and supports patterns we have found useful in scaling out our own Microservices infrastructure.
+
 
 ##Zero Configuration
 
@@ -124,7 +146,14 @@ This will deploy a REST server on port 8080 (configurable by test-app.port in ap
 
     }
 
-###Application configuration
+### Configuration Options
+
+If you find you need configuration options for your application you have two options.
+
+1. Override some of the available options on the Module interface (ConfigurableModule provides a builder mechanism for this)
+2. [Implement a custom plugin](https://github.com/aol/micro-server/wiki/Creating-a-Microserver-plugin) (the cleanest option, which also promotes reuse across services).
+
+### Application configuration (for Grizzly with Jersey)
 
 The core of Microserver is a Spring 4.x Dependency Injection container which is used to store all the main classes of your Microservice (s). The Spring Dependency Injection container can be configured by the @Microservice Annotation on your main class, or by the Config object (optionally passed as a parameter to startup).
 
@@ -266,94 +295,3 @@ plugins {
 
 Maven users can use Shade plugin or equivalent (Maven assembly plugin).
 
-#Release notes
-
-v0.1 : Initial release
-Grizzly NIO Java EE Server
-Jersey for REST
-Spring 4
-Guava for Immutable Collections
-Jackson configured for Guava and Java 8
-SimpleReact
-Filters and Servlets
-IP Capturing Filter
-Embedded  Microservices
-
-v0.2 :
-1. Full Swagger integration
-2. Spring NIO Rest clients that return completablefutures
-3. Autodiscovery and declartive config for ServletListeners
-4. Sample App showing how take full advantage of Grizzly's NIO server capabilities from within Jersey (using AsyncResponse - take a look at AsyncResource if interested).
-
-v0.3 :
-1. @Microservice configuring annotation
-2. JaxRS NIO Rest Client
-3. Codahale Metrics
-
-v0.4
-Simpler & more powerful configuration (annotation, Configuration class and module level).
-Relational db integration (Datasources, hibernate, JDBC, Generic DAOs (Hibernate / JDBC / Spring Data).
-Events and Scheduled job monitoring and REST end points
-
-Examples :
-
-Startup
-
-@Microserver annotation on class and then
-
-new Microserver( ()-> "context");
-
-is all you need. (Will automatically identify calling class and search for annotations)
-
-
-.Datasource configuration
-Configure multiple datasources
-Hibernate entity manager
-Spring transaction manager automatically
-
-Artefacts automatically configured for *main* data source
-
-.Jdbc
-Spring JDBC template bean available
-ROMA - object mapping for Spring JDBC integrated
-Spring data JDBCRepo integrated
-
-
-
-.Hibernate integration
-GenericHibernateDAO created per data source 
-GenericService (Transactional created) (main only)
-
-.Spring Data Integration
-Spring data 'automagic' repos configured
-
-. Events
-Capture active and recently completed requests
-. Running jobs
-Capture active and recently completed scheduled jobs
-Rest calls to view recent events & recent jobs
-
-Microserver annotation configuration
-
-    public @interface Microserver {
-
-    
-       String[] basePackages() default {};
-       Class[] classes() default {};
-       Classes[] springClasses() default {};
-       String propertiesName() default "application.properties";
-       String[] entityScan() default {};
-       String[] properties() default {};
-    }
-   
-v0.45
-
-Rest end points can use the annotation @Rest instead of both @Component (Spring) and implementing RestResource. Users can specify their own tag annotations also.
-
-ROMA - Spring Row Mapper has been made an optional dependency. It's only available on a minor Repo no-one really uses, so it caused problems building Microserver apps externally.
-
-v0.5
-
-Spring Boot support is added with v0.5, so now you can launch a Spring Boot application that runs on a Grizzly Server with Jersey 2 and Microserver Jersey / Spring Integration. Your Spring Boot apps can also take advantage of Microserver optimisations and enhancements such as co-locating services with shared Spring resources (you might want to do this, to reduce consumption of scarce resources such as datasource connections to critical dbs).
-
-This version also includes validation via Jersey bean validation and hibernate validator.

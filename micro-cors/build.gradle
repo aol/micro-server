@@ -35,7 +35,11 @@ modifyPom {
 		}
 
 		developers {
-			
+			developer {
+				id 'marcocast'
+				name 'Marco Castigliego'
+				email 'marcocast@gmail.com'
+			}
 		}
 		
 	}
