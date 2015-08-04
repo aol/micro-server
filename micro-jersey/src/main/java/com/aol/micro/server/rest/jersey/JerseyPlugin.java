@@ -1,6 +1,5 @@
 package com.aol.micro.server.rest.jersey;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
