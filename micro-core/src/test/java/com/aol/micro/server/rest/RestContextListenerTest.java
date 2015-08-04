@@ -8,8 +8,7 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import app.servlet.com.aol.micro.server.ServletStatusResource;
-
+import com.aol.micro.server.model.ServletStatusResource;
 import com.aol.micro.server.rest.jersey.JerseyRestApplication;
 import com.aol.micro.server.rest.jersey.JerseySpringIntegrationContextListener;
 import com.aol.micro.server.servers.model.ServerData;

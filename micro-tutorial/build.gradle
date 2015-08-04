@@ -6,5 +6,6 @@ dependencies {
 	compile project(':micro-events')
 	compile project(':micro-client')
 	compile project(':micro-ip-tracker')
+	testCompile project(':micro-grizzly')
 	
 }

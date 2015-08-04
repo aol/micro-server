@@ -1,8 +1,7 @@
-description = 'micro-cors'
+description = 'micro-grizzly'
 dependencies {
 	
 	compile project(':micro-core')
-	testCompile project(':micro-grizzly')
 	
 	
 
@@ -10,13 +9,13 @@ dependencies {
 
 modifyPom {
 	project {
-		name 'Microserver cors'
+		name 'Microserver Grizzly'
 		description 'Opinionated rest microservices'
 		url 'https://github.com/aol/micro-server'
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'microserver-cors'
+		artifactId 'microserver-grizzly'
 		version "$version" 
 		
 		
@@ -35,7 +34,16 @@ modifyPom {
 		}
 
 		developers {
-			
+			developer {
+				id 'johnmcclean-aol'
+				name 'John McClean'
+				email 'john.mcclean@teamaol.com'
+			}
+			developer {
+				id 'kewangie'
+				name 'Ke Wang'
+				email 'ke.wang@teamaol.com'
+			}
 		}
 		
 	}

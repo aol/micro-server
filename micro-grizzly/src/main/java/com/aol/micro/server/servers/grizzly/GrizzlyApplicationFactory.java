@@ -6,8 +6,9 @@ import lombok.AllArgsConstructor;
 
 import org.pcollections.PStack;
 import org.springframework.context.ApplicationContext;
-
 import com.aol.micro.server.module.Environment;
+
+import com.aol.micro.server.ServerApplicationFactory;
 import com.aol.micro.server.module.Module;
 import com.aol.micro.server.module.ModuleDataExtractor;
 import com.aol.micro.server.servers.ServerApplication;
@@ -17,14 +18,12 @@ import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
 
 @AllArgsConstructor
-public class GrizzlyApplicationFactory {
+public class GrizzlyApplicationFactory implements ServerApplicationFactory {
 
-	private final ApplicationContext rootContext;
-	private final Module module;
 	
 	
 	
-	public ServerApplication createApp() {
+	public ServerApplication createApp(final  Module module, final ApplicationContext rootContext) {
 		 ModuleDataExtractor extractor = new ModuleDataExtractor(module);
 		PStack resources = extractor.getRestResources(rootContext);
 

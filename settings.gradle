@@ -1,5 +1,6 @@
 rootProject.name = 'com.aol.microservices'
 include ':micro-core'
+include ':micro-grizzly'
 include ':micro-boot'
 include ':micro-data'
 include ':micro-swagger'

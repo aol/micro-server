@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -12,6 +13,9 @@ import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
+
+
+
 
 import com.aol.micro.server.servers.model.ServerData;
 
@@ -26,6 +30,9 @@ import com.aol.micro.server.servers.model.ServerData;
  */
 public interface Plugin {
 
+	default Optional<ServerApplicationFactory> serverApplicationFactory(){
+		return Optional.empty();
+	}
 	default Set<com.fasterxml.jackson.databind.Module> jacksonModules(){
 		return new HashSet<>();
 	}

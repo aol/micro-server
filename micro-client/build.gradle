@@ -10,6 +10,7 @@ dependencies {
 	
 	testCompile group: 'com.google.guava', name: 'guava', version:'18.0'
 	testCompile project(':micro-reactive')
+	testCompile project(':micro-grizzly')
 	testCompile project(':micro-events')
 	
 }

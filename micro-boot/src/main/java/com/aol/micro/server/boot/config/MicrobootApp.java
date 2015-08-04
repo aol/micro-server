@@ -12,12 +12,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
+import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.micro.server.Plugin;
+import com.aol.micro.server.PluginLoader;
+import com.aol.micro.server.ServerApplicationFactory;
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.module.Module;
 import com.aol.micro.server.servers.ApplicationRegister;
 import com.aol.micro.server.servers.ServerApplication;
 import com.aol.micro.server.servers.ServerRunner;
-import com.aol.micro.server.servers.grizzly.GrizzlyApplicationFactory;
 import com.aol.micro.server.spring.SpringContextFactory;
 import com.aol.micro.server.spring.boot.BootApplicationConfigurator;
 import com.aol.simple.react.exceptions.ExceptionSoftener;
@@ -106,8 +109,8 @@ public class MicrobootApp {
 
 		List<ServerApplication> apps = modules
 				.stream()
-				.map(module -> new GrizzlyApplicationFactory(springContext,
-						module).createApp()).collect(Collectors.toList());
+				.map(this::createServer)
+				.collect(Collectors.toList());
 
 		ServerRunner runner;
 		try {
@@ -121,7 +124,29 @@ public class MicrobootApp {
 		return runner.run();
 
 	}
-
+	private ServerApplication createServer(Module module) {
+		List<ServerApplicationFactory> applications = SequenceM
+				.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
+				.filter(m -> m.serverApplicationFactory() != null)
+				.flatMapOptional(Plugin::serverApplicationFactory)
+				.toList();
+		if(applications.size()>1){
+			logger.error("ERROR!  Multiple server application factories found ",applications);
+			System.err.println("ERROR! Multiple server application factories found "+applications);
+			System.exit(1);
+		}else if(applications.size()>0){
+			logger.error("ERROR! No server application factories found.");
+			System.err.println("ERROR! No server application factories found.");
+			System.exit(2);
+		}
+		
+		ServerApplication app = applications.get(0).createApp(module, springContext);
+		
+		if(Config.instance().getSslProperties()!=null)
+			return app.withSSLProperties(Config.instance().getSslProperties());
+		else
+			return app;
+	}
 	private void join(Thread thread) {
 		try {
 			thread.join();

@@ -2,8 +2,7 @@ description = 'micro-ip-tracker'
 dependencies {
 	
 	compile project(':micro-core')
-	
-	
+	testCompile project(':micro-grizzly')
 
 }
 
