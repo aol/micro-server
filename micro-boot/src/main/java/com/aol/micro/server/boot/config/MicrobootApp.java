@@ -17,7 +17,7 @@ import com.aol.micro.server.module.Module;
 import com.aol.micro.server.servers.ApplicationRegister;
 import com.aol.micro.server.servers.ServerApplication;
 import com.aol.micro.server.servers.ServerRunner;
-import com.aol.micro.server.servers.model.GrizzlyApplicationFactory;
+import com.aol.micro.server.servers.grizzly.GrizzlyApplicationFactory;
 import com.aol.micro.server.spring.SpringContextFactory;
 import com.aol.micro.server.spring.boot.BootApplicationConfigurator;
 import com.aol.simple.react.exceptions.ExceptionSoftener;

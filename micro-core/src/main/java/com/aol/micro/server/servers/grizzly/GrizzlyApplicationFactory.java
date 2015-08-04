@@ -1,4 +1,4 @@
-package com.aol.micro.server.servers.model;
+package com.aol.micro.server.servers.grizzly;
 
 import java.util.List;
 
@@ -11,7 +11,10 @@ import com.aol.micro.server.module.Environment;
 import com.aol.micro.server.module.Module;
 import com.aol.micro.server.module.ModuleDataExtractor;
 import com.aol.micro.server.servers.ServerApplication;
-import com.aol.micro.server.servers.grizzly.GrizzlyApplication;
+import com.aol.micro.server.servers.model.AllData;
+import com.aol.micro.server.servers.model.FilterData;
+import com.aol.micro.server.servers.model.ServerData;
+import com.aol.micro.server.servers.model.ServletData;
 
 @AllArgsConstructor
 public class GrizzlyApplicationFactory {
