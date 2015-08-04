@@ -30,7 +30,6 @@ import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.utility.HashMapBuilder;
-import com.aol.micro.server.web.filter.QueryIPRetriever;
 
 public class ConfigurableModuleTest {
 
@@ -57,7 +56,7 @@ public class ConfigurableModuleTest {
 		defaultJaxRsPackages = Arrays.asList("hello world");
 		context="context";
 		defaultResources =  new ArrayList<>();
-		filters =   HashMapBuilder.<String,Filter>map("/*1",new QueryIPRetriever()).build();
+		filters =   HashMapBuilder.<String,Filter>map("/*1",new DummyQueryIPRetriever()).build();
 		jaxWsRsApplication = "jaxRsApp2";
 		listeners = m.getListeners(ServerData.builder().resources(Arrays.asList()).build());
 		requestListeners = m.getRequestListeners(ServerData.builder().resources(Arrays.asList()).build());

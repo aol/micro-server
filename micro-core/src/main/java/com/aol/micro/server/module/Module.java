@@ -32,7 +32,6 @@ import com.aol.micro.server.rest.jackson.JacksonFeature;
 import com.aol.micro.server.rest.jersey.JerseyRestApplication;
 import com.aol.micro.server.rest.jersey.JerseySpringIntegrationContextListener;
 import com.aol.micro.server.servers.model.ServerData;
-import com.aol.micro.server.web.filter.QueryIPRetriever;
 
 public interface Module {
 	
@@ -108,7 +107,7 @@ public interface Module {
 	}
 	default Map<String,Filter> getFilters(ServerData data) {
 		Map<String, Filter> map = new HashMap<>();
-		map.put("/*", new QueryIPRetriever());
+		
 		SequenceM
 				.fromStream(
 						PluginLoader.INSTANCE.plugins.get()

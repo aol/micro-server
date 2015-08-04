@@ -1,8 +1,4 @@
-package com.aol.micro.server.servers;
-
-import static org.junit.Assert.*;
-
-import org.junit.Test;
+package com.aol.micro.server.ip.tracker;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -18,8 +14,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Test;
-
-import com.aol.micro.server.web.filter.QueryIPRetriever;
 
 public class QueryIPRetrieverTest {
 

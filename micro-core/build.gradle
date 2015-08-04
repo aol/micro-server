@@ -95,6 +95,11 @@ modifyPom {
 				name 'John McClean'
 				email 'john.mcclean@teamaol.com'
 			}
+			developer {
+				id 'kewangie'
+				name 'Ke Wang'
+				email 'ke.wang@teamaol.com'
+			}
 		}
 		
 	}

@@ -1,4 +1,4 @@
-package com.aol.micro.server.servers;
+package com.aol.micro.server.web.cors;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
-import com.aol.micro.server.web.filter.CrossDomainFilter;
 
 public class CrossDomainFilterTest {
 

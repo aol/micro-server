@@ -1,4 +1,4 @@
-package com.aol.micro.server.web.filter;
+package com.aol.micro.server.web.cors;
 
 import java.io.IOException;
 
