@@ -7,9 +7,9 @@ A convenient modular engine for Microservices. Microserver plugins offer seamles
 
 ## Quick start
 
-Install Microserver with Grizzly and Jersey 
+Install Microserver with Grizzly and Jersey (Gradle config below)
 
-compile group: 'com.aol.microservices', name:'microserver-grizzly-with-jersey', version:'0.60'
+    compile group: 'com.aol.microservices', name:'microserver-grizzly-with-jersey', version:'0.60'
  
 Create and run a simple app 
  
