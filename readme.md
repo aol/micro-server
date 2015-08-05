@@ -50,11 +50,11 @@ Microserver is a zero configuration, standards based, battle hardened library to
 ![Build health](https://travis-ci.org/aol/micro-server.svg)
 
 * micro-grizzly-with-jersey
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-grizzly-with-jersey)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-grizzly-with-jersey)
 * micro-core 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-core)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-core)
 * micro-boot 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-boot)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/microserver-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-boot)
 
 
 ##Info
@@ -67,9 +67,9 @@ Microserver is a zero configuration, standards based, battle hardened library to
 
 [Example Apps : Microserver Boot](https://github.com/aol/micro-server/tree/master/micro-boot/src/test/java/app)
 
-[Java Doc : Microserver Core](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.61)
+[Java Doc : Microserver Core](http://www.javadoc.io/doc/com.aol.microservices/micro-core/0.62)
 
-[Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.aol.microservices/microserver-core/0.61)
+[Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.aol.microservices/micro-core/0.62)
 
 
 
@@ -79,16 +79,16 @@ Microserver core
 
     <dependency>
       <groupId>com.aol.microservices</groupId>
-      <artifactId>microserver-core</artifactId>
-      <version>0.61</version>
+      <artifactId>micro-core</artifactId>
+      <version>0.62</version>
     </dependency>
     
 Microserver Spring Boot 
 
     <dependency>
       <groupId>com.aol.microservices</groupId>
-      <artifactId>microserver-boot</artifactId>
-      <version>0.61</version>
+      <artifactId>micro-boot</artifactId>
+      <version>0.62</version>
     </dependency>
 
 
@@ -97,11 +97,11 @@ Microserver Spring Boot
 
 Microserver core 
 	
-	 compile group: 'com.aol.microservices', name:'microserver-core', version:'0.61'
+	 compile group: 'com.aol.microservices', name:'micro-core', version:'0.62'
 	 
 Microserver Spring Boot 
 	 
-	  compile group: 'com.aol.microservices', name:'microserver-boot', version:'0.61'
+	  compile group: 'com.aol.microservices', name:'micro-boot', version:'0.62'
 
 ##Tech Stack
 
