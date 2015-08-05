@@ -210,4 +210,40 @@ Simply inject the Repository into your Rest Resource
     }
  
  
+ # Plain ol' JDBC
  
+[JDBC Template Exmaple App](https://github.com/aol/micro-server/tree/master/micro-data/src/test/java/app/jdbc/com/aol/micro/server)
+
+The micro-data plugin also facilitate JDBC use via the Spring JDBCTemplate. A Spring called SQL will be created that contains a JDBCTemplate, simply inject SQL into your classes.
+ 
+ e.g.
+ 
+    @Rest
+    @Path("/persistence")
+    public class PersistentResource  {
+
+	    private final SQL dao;
+
+	    @Autowired
+	    public PersistentResource(SQL dao) {
+
+	    	this.dao = dao;
+    	}
+
+    	@GET    
+    	@Produces("text/plain")
+    	@Path("/create")
+    	public String createEntity() {
+    		dao.getJdbc().update("insert into t_jdbc VALUES (1,'hello','world',1)");
+
+    		return "ok";
+    	}
+
+    	@GET
+    	@Produces("application/json")    
+    	@Path("/get")
+	    public JdbcEntity get() {
+	    	return dao.getJdbc().<JdbcEntity> queryForObject("select * from t_jdbc", new BeanPropertyRowMapper(JdbcEntity.class));
+	    }
+
+    }

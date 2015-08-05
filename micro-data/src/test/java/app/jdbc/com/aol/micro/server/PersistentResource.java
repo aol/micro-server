@@ -6,14 +6,13 @@ import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.auto.discovery.RestResource;
+import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.spring.datasource.jdbc.SQL;
 
-@Component
+@Rest
 @Path("/persistence")
-public class PersistentResource implements RestResource {
+public class PersistentResource  {
 
 	private final SQL dao;
 
