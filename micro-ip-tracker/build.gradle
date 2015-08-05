@@ -14,7 +14,7 @@ modifyPom {
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'microserver-ip-tracker'
+		artifactId 'micro-ip-tracker'
 		version "$version" 
 		
 		

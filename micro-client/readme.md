@@ -1,5 +1,7 @@
 # REST client plugin for Microserver
 
+[micro-client example apps](https://github.com/aol/micro-server/tree/master/micro-client/src/test/java/app)
+
 This plugin provides two REST Clients
 
 1. NIORestClient - which is a non-blocking REST client using NIO
@@ -15,10 +17,10 @@ Maven
 
      <dependency>
         <groupId>com.aol.microservices</groupId>  
-        <artifactId>microserver-client</artifactId>
-        <version>0.61</version>
+        <artifactId>micro-client</artifactId>
+        <version>0.62</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:microserver-client:0.61'
+    compile 'com.aol.microservices:micro-client:0.62'

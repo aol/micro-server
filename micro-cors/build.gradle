@@ -16,7 +16,7 @@ modifyPom {
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'microserver-cors'
+		artifactId 'micro-cors'
 		version "$version" 
 		
 		

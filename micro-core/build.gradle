@@ -41,20 +41,9 @@ modifyPom {
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'microserver-core'
+		artifactId 'micro-core'
 		version "$version" 
 		
-		dependencyManagement {
-			dependencies{
-				dependency{
-					groupId 'org.springframework'
-					artifactId 'spring-framework-bom'
-					version '4.1.5.RELEASE'
-					type 'pom'
-					scope 'import'
-				}
-			}
-		}
 		
 		scm {
 			url 'scm:git@github.com:aol/micro-server.git'

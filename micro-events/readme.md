@@ -10,13 +10,13 @@ Maven
 
      <dependency>
         <groupId>com.aol.microservices</groupId>  
-        <artifactId>microserver-events</artifactId>
+        <artifactId>micro-events</artifactId>
         <version>0.61</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:microserver-events:0.61'
+    compile 'com.aol.microservices:micro-events:0.61'
 
 ### Depends on
 

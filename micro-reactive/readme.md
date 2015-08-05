@@ -1,6 +1,24 @@
 # Reactive plugin for Microserver
 
+[micro-reactive example apps](https://github.com/aol/micro-server/tree/master/micro-reactive/src/test/java/app)
+
 Also can run standalone outside of Microserver
+
+## To use
+
+Simply add to the classpath
+
+Maven 
+
+     <dependency>
+        <groupId>com.aol.microservices</groupId>  
+        <artifactId>micro-reactive</artifactId>
+        <version>0.62</version>
+     </dependency>
+     
+Gradle
+
+    compile 'com.aol.microservices:micro-reactive:0.62'
 
 ## Reactive mixin
 

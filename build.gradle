@@ -17,8 +17,6 @@ buildscript {
 
 
 
-//apply plugin: 'com.github.lkishalmi.bill-of-materials'
-//apply from: "$rootDir/versions.gradle"
 
 subprojects {
 	apply plugin:'java'

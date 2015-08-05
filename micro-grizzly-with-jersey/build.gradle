@@ -18,7 +18,7 @@ modifyPom {
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'microserver-grizzly-with-jersey'
+		artifactId 'micro-grizzly-with-jersey'
 		version "$version" 
 		
 		

@@ -24,7 +24,7 @@ modifyPom {
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'microserver-client'
+		artifactId 'micro-client'
 		version "$version" 
 		
 		

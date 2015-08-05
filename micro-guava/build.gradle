@@ -18,7 +18,7 @@ modifyPom {
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'microserver-guava'
+		artifactId 'micro-guava'
 		version "$version" 
 		
 		

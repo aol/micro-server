@@ -10,10 +10,10 @@ Maven
 
      <dependency>
         <groupId>com.aol.microservices</groupId>  
-        <artifactId>microserver-cors</artifactId>
+        <artifactId>micro-cors</artifactId>
         <version>0.61</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:microserver-cors:0.61'
+    compile 'com.aol.microservices:micro-cors:0.61'
