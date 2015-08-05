@@ -15,10 +15,10 @@ import com.aol.simple.react.stream.traits.LazyFutureStream;
 public class ManyProducersToOneConsumerApp {
 
 	public static void main(String[] args){
-		LazyFutureStream<String> stream = Pipes.registerForIO("test", QueueFactories.
+		LazyFutureStream<String> stream = Pipes.register("test", QueueFactories.
 											<String>boundedNonBlockingQueue(100)
 												.build());
-		stream.filter(it->it!=null).async().peek(System.out::println).sync().run();
+		stream.filter(it->it!=null).peek(System.out::println).run();
 		new MicroserverApp(()-> "simple-app").run();
 	}
 	
