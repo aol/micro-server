@@ -18,7 +18,7 @@ public class ManyProducersToOneConsumerApp {
 		LazyFutureStream<String> stream = Pipes.register("test", QueueFactories.
 											<String>boundedNonBlockingQueue(100)
 												.build());
-		stream.filter(it->it!=null).peek(System.out::println).run();
+		stream.filter(it->it!=null).async().peek(System.out::println).run();
 		new MicroserverApp(()-> "simple-app").run();
 	}
 	

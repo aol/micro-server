@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 
-public interface HibernateEntityRepository extends CrudRepository<HibernateEntity, Long> {
+public interface SpringDataRepository extends CrudRepository<SpringDataEntity, Long> {
 
 }

@@ -5,19 +5,18 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.auto.discovery.RestResource;
+import com.aol.micro.server.auto.discovery.Rest;
 
-@Component
+@Rest
 @Path("/persistence")
-public class PersistentResource implements RestResource {
+public class PersistentResource  {
 
 	
-	private final HibernateEntityRepository dao;
+	private final SpringDataRepository dao;
 	
 	@Autowired
-	public PersistentResource(HibernateEntityRepository dao) {
+	public PersistentResource(SpringDataRepository dao) {
 	
 		this.dao = dao;
 	}
@@ -27,7 +26,7 @@ public class PersistentResource implements RestResource {
 	@Path("/create")
 	public String createEntity() {
 		
-		HibernateEntity saved =	dao.save(HibernateEntity.builder()
+		SpringDataEntity saved =	dao.save(SpringDataEntity.builder()
 								.name("test")
 								.value("value").build());
 		
@@ -36,7 +35,7 @@ public class PersistentResource implements RestResource {
 	@GET
 	@Produces("application/json")
 	@Path("/get")
-	public Iterable<HibernateEntity> get(){
+	public Iterable<SpringDataEntity> get(){
 		
 		return dao.findAll();
 		

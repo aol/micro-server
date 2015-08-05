@@ -25,9 +25,9 @@ import com.aol.micro.server.testing.RestAgent;
 	    "db.connection.dialect","org.hibernate.dialect.HSQLDialect",
 	    "db.connection.ddl.auto","create-drop"}, entityScan="app.spring.data.jpa.com.aol.micro.server")
 @EnableJpaRepositories
-public class HibernateRunnerTest {
+public class SpringDataTest {
 
-  	private final AsyncRestClient<List<HibernateEntity>> listClient = new AsyncRestClient(1000,1000).withGenericResponse(List.class, HibernateEntity.class);
+  	private final AsyncRestClient<List<SpringDataEntity>> listClient = new AsyncRestClient(1000,1000).withGenericResponse(List.class, SpringDataEntity.class);
 
 	RestAgent rest = new RestAgent();
 	
@@ -47,13 +47,13 @@ public class HibernateRunnerTest {
 		server.stop();
 	}
 	
-	@Test @Ignore //spring data tests don't play well with other tests
+	@Test  
 	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
 		
 		
 		
 		assertThat(rest.get("http://localhost:8080/hibernate-app/persistence/create"),is("ok"));
-		assertThat(listClient.get("http://localhost:8080/hibernate-app/persistence/get").get().get(0),is(HibernateEntity.class));
+		assertThat(listClient.get("http://localhost:8080/hibernate-app/persistence/get").get().get(0),is(SpringDataEntity.class));
 		
 		
 	}
