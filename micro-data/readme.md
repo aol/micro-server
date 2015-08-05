@@ -112,6 +112,8 @@ Use the Microserver annotation to set the Hibernate entityScan
     
  # Spring Data
  
+ [Spring Data example app](https://github.com/aol/micro-server/tree/master/micro-data/src/test/java/app/spring/data/jpa/com/aol/micro/server)
+ 
  On your main class add the following annotation to switch on Spring Data
  
      @EnableJpaRepositories
