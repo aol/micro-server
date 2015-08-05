@@ -2,14 +2,26 @@
 
 This adds a facility to capture events such as requests, request execution and scheduled jobs. 
 
-## Installing this plugin
+## To use
 
-Simply add micro-events to your classpath.
+Simply add to the classpath
+
+Maven 
+
+     <dependency>
+        <groupId>com.aol.microservices</groupId>  
+        <artifactId>microserver-events</artifactId>
+        <version>0.61</version>
+     </dependency>
+     
+Gradle
+
+    compile 'com.aol.microservices:microserver-events:0.61'
 
 ### Depends on
 
 1. [micro-reactive](https://github.com/aol/micro-server/tree/master/micro-reactive)
-2. [micro-guava]()
+2. [micro-guava](https://github.com/aol/micro-server/tree/master/micro-guava)
 
 ## Capturing scheduled Jobs
 
