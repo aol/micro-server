@@ -2,8 +2,8 @@ description = 'micro-boot'
 dependencies {
 	
 
-	compile 'org.springframework.boot:spring-boot:1.2.1.RELEASE'
-	compile 'org.springframework.boot:spring-boot-autoconfigure:1.2.1.RELEASE'
+	compile 'org.springframework.boot:spring-boot:1.2.5.RELEASE'
+	compile 'org.springframework.boot:spring-boot-autoconfigure:1.2.5.RELEASE'
 	compile project(':micro-core')
 	testCompile group: 'com.google.guava', name: 'guava', version:'18.0'
 	
