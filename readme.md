@@ -33,6 +33,14 @@ Create and run a simple app
 
 [Tutoiral code](https://github.com/aol/micro-server/tree/master/micro-tutorial)
 
+## Note on Fat Jars
+Microserver (& Cyclops) have a plugin architecture and make use of the Java Service Laoder mechanism. Make sure your Far Jar implementation is configured to aggreagate services. With the Gradle Shadow Jar you do this with
+    
+    shadowJar {
+      mergeServiceFiles()  
+    }
+
+
 ###Quick start youtube video
 [![Getting started video](https://cloud.githubusercontent.com/assets/9964792/6361863/9991c50c-bc7e-11e4-8d28-746b0b87b1da.png)](https://www.youtube.com/watch?v=McXy9oGRpfA&feature=youtu.be)
 

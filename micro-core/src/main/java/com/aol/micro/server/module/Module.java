@@ -145,7 +145,9 @@ public interface Module {
 		String additional = SequenceM
 		.fromStream(
 				PluginLoader.INSTANCE.plugins.get()
-						.stream()).filter(module -> module.providers()!=null)
+						.stream())
+						.peek(System.out::println)
+						.filter(module -> module.providers()!=null)
 						.flatMapCollection(Plugin::providers)
 						.join(",");
 			

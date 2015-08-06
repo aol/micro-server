@@ -6,13 +6,14 @@ import javax.ws.rs.Produces;
 
 import org.springframework.stereotype.Component;
 
+import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.reactive.Reactive;
 
 
 @Path("/status")
-@Component
-public class PipesStatusResource implements RestResource, Reactive {
+@Rest
+public class PipesStatusResource implements Reactive {
 
 	volatile int next=0;
 	

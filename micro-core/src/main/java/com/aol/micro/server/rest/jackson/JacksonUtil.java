@@ -36,9 +36,9 @@ public final class JacksonUtil {
 			mapper.registerModule(module);
 
 			
-			SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
+			PluginLoader.INSTANCE.plugins.get().stream()
 				.filter(m -> m.jacksonModules()!=null)
-				.flatMapCollection(Plugin::jacksonModules)
+				.flatMap(m -> m.jacksonModules().stream())
 				.forEach(m -> mapper.registerModule(m));
 				
 			mapper.registerModule(new Jdk8Module());

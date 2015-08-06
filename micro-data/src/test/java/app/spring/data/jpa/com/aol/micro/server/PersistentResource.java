@@ -26,7 +26,7 @@ public class PersistentResource  {
 	@Path("/create")
 	public String createEntity() {
 		
-		SpringDataEntity saved =	dao.save(SpringDataEntity.builder()
+		SpringDataEntity saved = dao.save(SpringDataEntity.builder()
 								.name("test")
 								.value("value").build());
 		
