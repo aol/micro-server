@@ -10,13 +10,13 @@ Maven
 
      <dependency>
         <groupId>com.aol.microservices</groupId>  
-        <artifactId>microserver-data</artifactId>
-        <version>0.61</version>
+        <artifactId>micro-data</artifactId>
+        <version>0.62</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:microserver-data:0.61'
+    compile 'com.aol.microservices:micro-data:0.62'
 
 # Configuring a data source
 
