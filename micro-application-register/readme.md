@@ -40,7 +40,7 @@ Functionality
 
 ## Properties
 
-service.registry.delay:300000
-service.registry.entry.max.live:43200000
-service.registry.dir:java.io.tmpdir/services
-service.registry.url: url to register services on (http://hostname:port/context)
+    service.registry.delay:300000
+    service.registry.entry.max.live:43200000
+    service.registry.dir:java.io.tmpdir/services
+    service.registry.url: url to register services on (http://hostname:port/context)
