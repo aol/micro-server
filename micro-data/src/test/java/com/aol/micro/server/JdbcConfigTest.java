@@ -1,4 +1,4 @@
-package nonautoscan.com.aol.micro.server;
+package com.aol.micro.server;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;

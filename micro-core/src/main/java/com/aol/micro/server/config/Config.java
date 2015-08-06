@@ -95,20 +95,7 @@ public class Config {
 		return this.withDataSources(HashTreePMap.from(newMap));
 	}
 
-	/**
-	 * Add the provided Classes to initial Spring Context as well as
-	 *  
-	 * 
-	 * @param c Array of additional Spring configuration classes
-	 * @return New Config object, with configured packages
-	 */
-	public Config withDefaultDataSource(Class... c) {
-		List<Class> result = Arrays.asList(Classes.DATA_SOURCE_CLASSES.getClasses());
-		if (classes != null)
-			result.addAll(classes);
-		Stream.of(c).forEach(next -> result.add(next));
-		return this.withClasses(HashTreePSet.from(result));
-	}
+	
 
 	public Config withClassesArray(Class... classes){
 		Set<Class> org = new HashSet<Class>(this.getClasses());

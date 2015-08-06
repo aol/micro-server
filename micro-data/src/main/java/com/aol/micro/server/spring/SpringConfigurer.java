@@ -1,5 +1,7 @@
 package com.aol.micro.server.spring;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import lombok.Setter;
@@ -12,6 +14,7 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.config.Config;
+import com.aol.micro.server.spring.datasource.DataSourceBuilder;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.aol.micro.server.spring.datasource.hibernate.HibernateSessionBuilder;
 
@@ -32,6 +35,9 @@ public class SpringConfigurer implements SpringDBConfig {
 	
 	public void createSpringApp(String name) {
 
+		JdbcConfig jdbc = buildJdbcProperties(rootContext, name);
+		DataSource dataSource = buildDataSource(name, jdbc);
+		beanFactory.registerSingleton(name + "DataSource", dataSource);
 		
 			SessionFactory sessionFactory = buildSession(name, config, dataSource, jdbc);
 			beanFactory.registerSingleton(name + "DataSource", dataSource);
@@ -40,7 +46,13 @@ public class SpringConfigurer implements SpringDBConfig {
 		
 	}
 
-	
+	private DataSource buildDataSource(String name, JdbcConfig jdbc) {
+		return DataSourceBuilder.builder().env(jdbc).build().mainDataSource();
+	}
+
+	private JdbcConfig buildJdbcProperties(AnnotationConfigWebApplicationContext rootContext, String name) {
+		return JdbcConfig.builder().properties((Properties) rootContext.getBean("propertyFactory")).name(name).build();
+	}
 
 	private HibernateTransactionManager buildTransactionManager(String name, Config config, DataSource dataSource, JdbcConfig jdbc) {
 		return HibernateSessionBuilder.builder().packages(config.getDataSources().get(name)).dataSource(dataSource).env(jdbc).build()

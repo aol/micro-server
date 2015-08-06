@@ -1,11 +1,6 @@
 package com.aol.micro.server.spring;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
-
-import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +13,6 @@ import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.ConfigAccessor;
-import com.aol.micro.server.spring.datasource.DataSourceBuilder;
-import com.aol.micro.server.spring.datasource.JdbcConfig;
 
 class SpringApplicationConfigurator implements SpringBuilder {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -37,11 +30,10 @@ class SpringApplicationConfigurator implements SpringBuilder {
 		ConfigurableListableBeanFactory beanFactory = ((ConfigurableApplicationContext) rootContext).getBeanFactory();
 		
 		config.getDataSources().keySet().stream().filter(it -> !new ConfigAccessor().get().getDefaultDataSourceName().equals(it)).forEach(name -> {
-			JdbcConfig jdbc = buildJdbcProperties(rootContext, name);
-			DataSource dataSource = buildDataSource(name, jdbc);
-			List<SpringDBConfig> dbConfig = getConfig(config,jdbc,dataSource,rootContext,beanFactory);
+			
+			List<SpringDBConfig> dbConfig = getConfig(config,rootContext,beanFactory);
 			dbConfig.forEach(  spring-> spring.createSpringApp(name) );
-			beanFactory.registerSingleton(name + "DataSource", dataSource);
+			
 			
 
 		});
@@ -51,7 +43,7 @@ class SpringApplicationConfigurator implements SpringBuilder {
 	}
 
 	
-	private List<SpringDBConfig> getConfig(Config config,JdbcConfig jdbc, DataSource dataSource, AnnotationConfigWebApplicationContext rootContext, ConfigurableListableBeanFactory beanFactory) {
+	private List<SpringDBConfig> getConfig(Config config, AnnotationConfigWebApplicationContext rootContext, ConfigurableListableBeanFactory beanFactory) {
 		List<SpringDBConfig> result = 
 				SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
 				.filter(module -> module.springDbConfigurer()!=null)
@@ -63,9 +55,9 @@ class SpringApplicationConfigurator implements SpringBuilder {
 				
 				next.setBeanFactory(beanFactory);
 				next.setRootContext(rootContext);
-				next.setDataSource(dataSource);
+				
 				next.setConfig(config);
-				next.setJdbc(jdbc);
+				
 			
 			
 		});
@@ -75,12 +67,6 @@ class SpringApplicationConfigurator implements SpringBuilder {
 	}
 
 
-	private DataSource buildDataSource(String name, JdbcConfig jdbc) {
-		return DataSourceBuilder.builder().env(jdbc).build().mainDataSource();
-	}
-
-	private JdbcConfig buildJdbcProperties(AnnotationConfigWebApplicationContext rootContext, String name) {
-		return JdbcConfig.builder().properties((Properties) rootContext.getBean("propertyFactory")).name(name).build();
-	}
+	
 
 }

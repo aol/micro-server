@@ -7,9 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Builder;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.zaxxer.hikari.HikariDataSource;
 
 @Builder
 @Configuration
@@ -25,26 +26,15 @@ public class DataSourceBuilder {
 		return getDataSource();
 	}
 	private DataSource getDataSource() {
-		BasicDataSource ds = new BasicDataSource();
+		HikariDataSource ds = new HikariDataSource();
 
 		ds.setDriverClassName(env.getDriverClassName());
-		ds.setUrl(env.getUrl());
+		ds.setJdbcUrl(env.getUrl());
 		ds.setUsername(env.getUsername());
 		ds.setPassword(env.getPassword());
-		retrySetup(ds, -1);
+		
 
 		return ds;
 	}
-	private void retrySetup(BasicDataSource ds, int maxActive) {
-		if (!"org.hibernate.dialect.HSQLDialect".equals(env.getDialect())) {
-			ds.setTestOnBorrow(true);
-			ds.setValidationQuery("SELECT 1");
-			ds.setMaxTotal(maxActive);
-			ds.setMinEvictableIdleTimeMillis(1800000);
-			ds.setTimeBetweenEvictionRunsMillis(1800000);
-			ds.setNumTestsPerEvictionRun(3);
-			ds.setTestWhileIdle(true);
-			ds.setTestOnReturn(true);
-		}
-	}
+	
 }

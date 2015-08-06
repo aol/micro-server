@@ -9,8 +9,6 @@ import nonautoscan.com.aol.micro.server.ScheduleAndAsyncConfig;
 
 import com.aol.micro.server.module.ConfigureEnviroment;
 import com.aol.micro.server.servers.AccessLogConfig;
-import com.aol.micro.server.spring.datasource.DataSourceBuilder;
-import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.aol.micro.server.spring.properties.PropertyFileConfig;
 
 /**
@@ -31,7 +29,7 @@ public class Classes {
 	 */
 	public static final  Classes CORE_CLASSES = new Classes(PropertyFileConfig.class, AopConfig.class,
 			 ScheduleAndAsyncConfig.class,  ConfigureEnviroment.class, AccessLogConfig.class);
-	public static final  Classes DATA_SOURCE_CLASSES = new Classes(JdbcConfig.class,DataSourceBuilder.class);
+	
 	
 	@Getter
 	private final Class[] classes;
