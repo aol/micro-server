@@ -1,15 +1,18 @@
 package com.aol.micro.server.application.registry;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.servers.model.ServerData;
-import com.google.common.collect.Lists;
+
 
 public class ApplicationRegisterTest {
 
@@ -30,11 +33,11 @@ public class ApplicationRegisterTest {
 
 	@Test
 	public void testRegister() {
-		ServerData data1 = new ServerData(8080, Lists.newArrayList(), null, "url", () -> "");
-		ServerData data2 = new ServerData(8080, Lists.newArrayList(), null, "url", () -> "");
-		ServerData data3 = new ServerData(8080, Lists.newArrayList(), null, "url", () -> "");
+		ServerData data1 = new ServerData(8080, new ArrayList<>(), null, "url", () -> "");
+		ServerData data2 = new ServerData(8080, new ArrayList<>(), null, "url", () -> "");
+		ServerData data3 = new ServerData(8080, new ArrayList<>(), null, "url", () -> "");
 
-		List<ServerData> datas = Lists.newArrayList(data1, data2, data3);
+		List<ServerData> datas = Arrays.asList(data1, data2, data3);
 
 		applicationRegister = new ApplicationRegisterImpl();
 

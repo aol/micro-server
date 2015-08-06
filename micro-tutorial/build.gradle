@@ -3,6 +3,7 @@ dependencies {
 	compile project(':micro-data')
 	compile project(':micro-swagger')
 	compile project(':micro-metrics')
+	compile project(':micro-guava')
 	compile project(':micro-events')
 	compile project(':micro-client')
 	compile project(':micro-ip-tracker')

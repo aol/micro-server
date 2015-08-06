@@ -11,13 +11,14 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.events.RequestEvents;
+import com.aol.micro.server.ip.tracker.QueryIPRetriever;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.spring.datasource.jdbc.SQL;
-import com.aol.micro.server.ip.tracker.QueryIPRetriever;
 import com.aol.simple.react.stream.traits.EagerFutureStream;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
@@ -35,7 +36,7 @@ public class MyRestEndPoint {
 	private final DataService dataService;
 	
 	@Autowired
-	public MyRestEndPoint(final EventBus bus,final SQL dao, final DataService dataService) {
+	public MyRestEndPoint(@Qualifier("microserverEventBus")final EventBus bus,final SQL dao, final DataService dataService) {
 		this.bus = bus;
 		this.dao = dao;
 		this.dataService = dataService;
