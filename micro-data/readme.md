@@ -1,6 +1,7 @@
  # Data plugin
 
-Adds Spring Data, Spring JDBC and Hibernate support. Creates a DataSource Spring Bean with name "mainDataSource", based on [HikariCP](http://brettwooldridge.github.io/HikariCP/ludicrous.html).
+Adds Spring Data, Spring JDBC and Hibernate support. 
+Creates a DataSource Spring Bean with name "mainDataSource" from v0.63 this will be based on [HikariCP](http://brettwooldridge.github.io/HikariCP/ludicrous.html).
 
 ## To use
 
