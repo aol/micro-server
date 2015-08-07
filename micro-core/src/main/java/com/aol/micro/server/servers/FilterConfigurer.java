@@ -1,14 +1,15 @@
-package com.aol.micro.server.servers.grizzly;
+package com.aol.micro.server.servers;
 
 import java.util.EnumSet;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
+import javax.servlet.FilterRegistration.Dynamic;
+import javax.servlet.ServletContext;
 
 import lombok.AllArgsConstructor;
 
-import org.glassfish.grizzly.servlet.FilterRegistration;
-import org.glassfish.grizzly.servlet.WebappContext;
+
 import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,14 +24,14 @@ public class FilterConfigurer {
 	private final ServerData serverData;
 	private final PStack<FilterData> filterData;
 	
-	public void addFilters(WebappContext webappContext) {
+	public void addFilters(ServletContext webappContext) {
 
 		addExplicitlyDeclaredFilters(webappContext);
 		addAutoDiscoveredFilters(webappContext);
 
 	}
 
-	private void addAutoDiscoveredFilters(WebappContext webappContext) {
+	private void addAutoDiscoveredFilters(ServletContext webappContext) {
 		serverData
 				.getRootContext()
 				.getBeansOfType(FilterConfiguration.class)
@@ -42,16 +43,17 @@ public class FilterConfigurer {
 								webappContext.addFilter(getName(filter),
 										getClass(filter)), filter)
 								.addMappingForUrlPatterns(
-										EnumSet.allOf(DispatcherType.class),
+										EnumSet.allOf(DispatcherType.class),true,
 										filter.getMapping()));
 	}
 
-	private void addExplicitlyDeclaredFilters(WebappContext webappContext) {
+	private void addExplicitlyDeclaredFilters(ServletContext webappContext) {
 		for (FilterData filterData : filterData) {
-			FilterRegistration filterReg = webappContext.addFilter(
+			Dynamic filterReg = webappContext.addFilter(
 					filterData.getFilterName(), filterData.getFilter());
+			
 			filterReg.addMappingForUrlPatterns(
-					EnumSet.allOf(DispatcherType.class),
+					EnumSet.allOf(DispatcherType.class),true,
 					filterData.getMapping());
 			logFilter(filterData);
 		}
@@ -62,7 +64,7 @@ public class FilterConfigurer {
 	}
 
 	private void logFilter(FilterConfiguration filter) {
-		System.out.println(filter.getClass().getName());
+		
 		logger.info("Registering {} filter on {}",filter.getClass().getName(),filter.getMapping()[0]);
 	}
 
@@ -72,7 +74,7 @@ public class FilterConfigurer {
 		return (Class<? extends Filter>) filter.getClass();
 	}
 
-	private FilterRegistration setInitParameters(FilterRegistration addFilter,
+	private Dynamic setInitParameters(Dynamic addFilter,
 			FilterConfiguration filter) {
 		addFilter.setInitParameters(filter.getInitParameters());
 		return addFilter;

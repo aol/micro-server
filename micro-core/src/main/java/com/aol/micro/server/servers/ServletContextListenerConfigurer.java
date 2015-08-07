@@ -1,13 +1,13 @@
-package com.aol.micro.server.servers.grizzly;
+package com.aol.micro.server.servers;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
 import lombok.AllArgsConstructor;
 
-import org.glassfish.grizzly.servlet.WebappContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +21,7 @@ public class ServletContextListenerConfigurer {
 	private final List<ServletContextListener> listenerData;
 	private final List<ServletRequestListener> listenerRequestData;
 
-	public void addListeners(WebappContext webappContext) {
+	public void addListeners(ServletContext webappContext) {
 	
 		serverData.getRootContext()
 				.getBeansOfType(ServletContextListener.class)
