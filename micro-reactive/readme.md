@@ -74,7 +74,11 @@ Register your Pipe (bounded non blocking Queue) which returns a LazyFutureStream
 	    stream.filter(it->it!=null).peek(System.out::println).run();
 	    new MicroserverApp(()-> "simple-app").run();
 	}
-	
+
+NB - in practice with the current version - unless you expect to have a high throughput of data this implementation will be very inefficient (a blocking queue would in many cases perform better). v0.99 of simple-react will introduce native 'wait' strategies for Queues which will perform better than the custom simple-react filter we are using here. To create a pipe with a blocking queue :
+
+     Pipes.register("unbounded", new Queue());  // unbounded
+     Pipes.register("bounded", QueueFactories.boundedQueue(1000)); //bound size 1000
 
 Elsewhere in our application we can pass data to our Pipe (e.g. from a REST request, incoming data from an Aeron or Kafka Queue, Scheduled job etc)
 
