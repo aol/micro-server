@@ -37,25 +37,27 @@ Find active queries (making use of @Suspended AsyncResponse asyncResponse NIO Re
 
 ## multi-threaded (optionally non blocking)
 
-**IOStream** for creating IO bound Streams. The first action would be async (i.e. tasks passed to task executor), subsequent tasks would execute synchronously on the calling thread. Note the first action doesn't have to be IO related, the first stage being async distributes the work to separate workers. Users can manually change this behaviour via async / sync operators on FutureStreams. (Can be non-blocking to the calling thread)
+**IOStream** for creating IO bound Streams. The first action is be async (i.e. tasks passed to task executor), subsequent tasks can execute synchronously on the calling thread, via the sync operator. Note the first action doesn't have to be IO related, the first stage being async distributes the work to separate workers. Users can manually change this behaviour via async / sync operators on FutureStreams. (Can be non-blocking to the calling thread)
 
 Load a Resource from the classpath  (making use of @Suspended AsyncResponse asyncResponse NIO Rest interface)
 
     this.ioStream().of("/META-INF/MANIFEST.MF")
-					.map(url->context.getResourceAsStream(url))
-					.map(this::getManifest)
-					.peek(result->asyncResponse.resume(result))
-					.run();
+                   	.sync()
+			.map(url->context.getResourceAsStream(url))
+			.map(this::getManifest)
+			.peek(result->asyncResponse.resume(result))
+			.run();
  
 
-**cpuStream** for creating CPU bound streams, would probably reuse the common ForkJoinPool, first action would be async (i.e. tasks passed to a task executor to distribute the work load), subsequent tasks would execute synchronously on the calling thread. Users can manually change this behaviour via async / sync operators on FutureStreams. (Can be non-blocking to the calling thread) 
+**cpuStream** for creating CPU bound streams, would probably reuse the common ForkJoinPool, first action would be async (i.e. tasks passed to a task executor to distribute the work load), subsequent tasks could execute synchronously on the calling thread via the sync operator. Users can manually change this behaviour via async / sync operators on FutureStreams. (Can be non-blocking to the calling thread) 
 
 Find active jobs currently running (making use of @Suspended AsyncResponse asyncResponse NIO Rest interface)
 
     this.cpuStream().of(this.activeJobs)
-								  .then(JobsBeingExecuted::toString)
-								  .then(str->asyncResponse.resume(str))
-								  .run();
+    			.sync()
+			.then(JobsBeingExecuted::toString)
+			.then(str->asyncResponse.resume(str))
+			.run();
 
 **switchIO** could be used to switch a Stream optimised for CPU bound execution into one optimised for IO Bound execution
 
