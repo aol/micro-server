@@ -22,6 +22,7 @@ subprojects {
 	apply plugin:'java'
 	apply plugin: 'com.github.johnrengelman.shadow'
 	apply plugin: 'com.bmuschko.nexus'
+	apply plugin: 'eclipse'
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
 
@@ -31,7 +32,9 @@ subprojects {
 		}
 	}
 
-
+	configurations {
+		provided
+	}
 
 	repositories {
 		mavenCentral()
@@ -45,15 +48,18 @@ subprojects {
 		testCompile group: 'junit', name: 'junit', version:'4.12'
 		testCompile group: 'org.mockito', name: 'mockito-core', version:'1.9.5'
 	
-		
+		provided group: 'org.projectlombok', name: 'lombok', version:'1.16.4'
 
-		compile(group: 'org.projectlombok', name: 'lombok', version:'1.16.2') {
-			/* This dependency was originally in the Maven provided scope, but the project was not of type war.
-			 This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
-			 Please review and delete this closure when resolved. */
-		}
+		
 	}
 
+	sourceSets {
+		main.compileClasspath += [configurations.provided]
+		test.compileClasspath += [configurations.provided]
+		test.runtimeClasspath += [configurations.provided]
+	}
+	eclipse.classpath.plusConfigurations += [configurations.provided]  // Eclipse users only
+	
 	test { systemProperties 'property': 'value' }
 
 	

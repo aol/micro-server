@@ -126,10 +126,12 @@ public interface Module {
 	}
 	
 	default  String getJaxWsRsApplication(){
+		
 		List<String> jaxRsApplications = SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
-		.filter(module -> module.jaxWsRsApplication()!=null)
-		.flatMapOptional(Plugin::jaxWsRsApplication)
-		.toList();
+													.flatMapOptional(Plugin::jaxWsRsApplication)
+													.toList();
+	
+		
 		if(jaxRsApplications.size()>1) {
 			throw new IncorrectJaxRsPluginsException("ERROR!  Multiple jax-rs application plugins found " + jaxRsApplications);
 			
@@ -149,7 +151,7 @@ public interface Module {
 						.peek(System.out::println)
 						.filter(module -> module.providers()!=null)
 						.flatMapCollection(Plugin::providers)
-						.join(",");
+						.join(";");
 			
 		if(StringUtils.isEmpty(additional))
 			return "com.aol.micro.server.rest.providers";
