@@ -6,19 +6,20 @@ import java.util.UUID;
 import lombok.Getter;
 import net.spy.memcached.internal.OperationFuture;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import com.aol.advertising.lana.common.loggers.FunctionalAreaPrefix;
-import com.aol.advertising.lana.common.loggers.LanaLogger;
+import com.aol.micro.server.utility.DistributedLockService;
 import com.couchbase.client.CouchbaseClient;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 public class DistributedLockServiceCouchbaseImpl implements DistributedLockService {
 
-	private final LanaLogger logger = LanaLogger.getLogger(FunctionalAreaPrefix.COMMON_DISTRIBUTED_LOCK, this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Getter
 	private volatile ImmutableMap<String, LockData> lockDataMap = ImmutableMap.of();

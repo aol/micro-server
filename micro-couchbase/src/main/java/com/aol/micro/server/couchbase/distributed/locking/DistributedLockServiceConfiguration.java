@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.aol.micro.server.utility.DistributedLockService;
+
 @Configuration
 public class DistributedLockServiceConfiguration {
 
 	@Value("${key.timeout.in.seconds:120}")
 	private int keyTimeoutInSeconds;
-
-	@Value("${distributed.lock.to.use:couchbase}")
-	private String distributedLockToUse;
 
 	@Bean
 	public DistributedLockService distributedLockService() {
