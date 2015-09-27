@@ -17,14 +17,14 @@ Create and run a simple app
 	@Path("/test")
 	public class SimpleApp {
 
-	public static void main(String[] args){
-		new MicroserverApp(()->"test-app").run();
-	}
-	@GET
-	public String myEndPoint(){
-		return "hello world!";
-	}
-  }
+		public static void main(String[] args){
+			new MicroserverApp(()->"test-app").run();
+		}
+		@GET
+		public String myEndPoint(){
+			return "hello world!";
+		}
+    }
 
 
 # Tutorial and overview
@@ -274,20 +274,18 @@ This example will start two different Rest end points - one on context "test-app
 "test-app" will automagically wire in any Jersey end points that implement TestAppRestResource.
 "alternative-app" will automagically wire in any Jersey end points that implement AltAppRestResource.
 
-    @Microserver
-    public class EmbeddedAppRunnerTest {
-
-	public static void main(String[] args) throws InterruptedException {
-		new MicroserverApp(EmbeddedAppRunnerTest.class, 
-				new EmbeddedModule(TestAppRestResource.class,"test-app"),
-				new EmbeddedModule(AltAppRestResource.class,"alternative-app")).start();
-
-		
-
-	}
-
+	@Microserver
+	public class EmbeddedAppRunnerTest {
 	
-  }
+		public static void main(String[] args) throws InterruptedException {
+			new MicroserverApp(EmbeddedAppRunnerTest.class, 
+					new EmbeddedModule(TestAppRestResource.class,"test-app"),
+					new EmbeddedModule(AltAppRestResource.class,"alternative-app")).start();
+		
+			
+		
+		}
+	}
 
 
 
