@@ -1,4 +1,4 @@
-package com.aol.advertising.lana.sigar;
+package com.aol.micro.server.machine.stats.sigar;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -13,6 +13,8 @@ import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.Swap;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.aol.micro.server.machine.stats.sigar.MachineStatsChecker;
 
 public class MachineStatsCheckerTest {
 	

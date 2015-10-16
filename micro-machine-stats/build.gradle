@@ -2,7 +2,8 @@ apply plugin: 'groovy'
 
 description = 'micro-machine-stats'
 dependencies {
-	
+	compile group: 'org.fusesource', name: 'sigar', version:'1.6.4'
+	compile group: 'org.fusesource', name: 'sigar', version:'1.6.4', classifier:'native'
 	compile project(':micro-core')
 	compile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.3.3'
 	

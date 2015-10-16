@@ -3,12 +3,13 @@ package com.aol.micro.server.machine.stats.sigar;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import com.aol.advertising.lana.common.loggers.FunctionalAreaPrefix;
-import com.aol.advertising.lana.common.loggers.LanaLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class StatsServletContextListener implements ServletContextListener {
 
-	private final LanaLogger logger = LanaLogger.getLogger(FunctionalAreaPrefix.SERVER_START, this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {

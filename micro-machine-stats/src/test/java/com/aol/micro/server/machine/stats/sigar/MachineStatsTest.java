@@ -1,4 +1,4 @@
-package com.aol.advertising.lana.sigar;
+package com.aol.micro.server.machine.stats.sigar;
 
 import org.junit.Test;
 

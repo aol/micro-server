@@ -2,16 +2,17 @@ package com.aol.micro.server.machine.stats.sigar;
 
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.aol.advertising.lana.common.loggers.FunctionalAreaPrefix;
-import com.aol.advertising.lana.common.loggers.LanaLogger;
+
 
 @Component
 public class MachineStatsChecker {
 
-	private LanaLogger logger = LanaLogger.getLogger(FunctionalAreaPrefix.COMMON_STATS, MachineStatsChecker.class);
-
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	public MachineStats getStats(Sigar sigar) {
 
 		SwapStats.SwapStatsBuilder swapStats = SwapStats.builder();

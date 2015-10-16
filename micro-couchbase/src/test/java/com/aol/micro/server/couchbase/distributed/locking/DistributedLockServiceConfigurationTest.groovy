@@ -12,15 +12,10 @@ class DistributedLockServiceConfigurationTest {
 
 	@Test
 	public void "test couchbase"() {
-		configuration.distributedLockToUse = "couchbase"
+		
 		configuration.keyTimeoutInSeconds = 100
 		assertThat(configuration.distributedLockService() instanceof DistributedLockServiceCouchbaseImpl, is(true));
 	}
 
-	@Test
-	public void "test mysql"() {
-		configuration.distributedLockToUse = "mysql"
-		configuration.keyTimeoutInSeconds = 100
-		assertThat(configuration.distributedLockService() instanceof DistributedLockServiceMySqlImpl, is(true));
-	}
+	
 }

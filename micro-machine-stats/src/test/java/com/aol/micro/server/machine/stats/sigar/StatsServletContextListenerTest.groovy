@@ -1,4 +1,4 @@
-package com.aol.advertising.lana.sigar;
+package com.aol.micro.server.machine.stats.sigar;
 
 import static org.hamcrest.Matchers.is
 import static org.junit.Assert.assertThat
