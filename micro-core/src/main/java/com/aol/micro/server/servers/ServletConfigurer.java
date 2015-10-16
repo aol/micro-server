@@ -1,11 +1,14 @@
-package com.aol.micro.server.servers.grizzly;
+package com.aol.micro.server.servers;
 
 import javax.servlet.Servlet;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRegistration;
 
 import lombok.AllArgsConstructor;
 
-import org.glassfish.grizzly.servlet.ServletRegistration;
-import org.glassfish.grizzly.servlet.WebappContext;
+
+
+
 import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +24,12 @@ public class ServletConfigurer {
 	private final ServerData serverData;
 	private final PStack<ServletData> servletData;
 	
-	public void addServlets(WebappContext webappContext) {
+	public void addServlets(ServletContext webappContext) {
 		addExplicitlyDeclaredServlets(webappContext);
 		addAutoDiscoveredServlets(webappContext);
 	}
 
-	private void addAutoDiscoveredServlets(WebappContext webappContext) {
+	private void addAutoDiscoveredServlets(ServletContext webappContext) {
 		serverData
 				.getRootContext()
 				.getBeansOfType(ServletConfiguration.class)
@@ -41,9 +44,9 @@ public class ServletConfigurer {
 						});
 	}
 
-	private void addExplicitlyDeclaredServlets(WebappContext webappContext) {
+	private void addExplicitlyDeclaredServlets(ServletContext webappContext) {
 		for (ServletData servletData : servletData) {
-			ServletRegistration servletReg = webappContext.addServlet(
+			ServletRegistration.Dynamic servletReg = webappContext.addServlet(
 					servletData.getServletName(), servletData.getServlet());
 			servletReg.addMapping(servletData.getMapping());
 			logServlet(servletData);
@@ -65,8 +68,8 @@ public class ServletConfigurer {
 		return (Class<? extends Servlet>) servlet.getClass();
 	}
 
-	private ServletRegistration setInitParameters(
-			ServletRegistration addServlet, ServletConfiguration servlet) {
+	private ServletRegistration.Dynamic setInitParameters(
+			ServletRegistration.Dynamic addServlet, ServletConfiguration servlet) {
 		addServlet.setInitParameters(servlet.getInitParameters());
 		return addServlet;
 	}

@@ -38,11 +38,10 @@ public class SpringConfigurer implements SpringDBConfig {
 		JdbcConfig jdbc = buildJdbcProperties(rootContext, name);
 		DataSource dataSource = buildDataSource(name, jdbc);
 		beanFactory.registerSingleton(name + "DataSource", dataSource);
-		
-			SessionFactory sessionFactory = buildSession(name, config, dataSource, jdbc);
-			beanFactory.registerSingleton(name + "DataSource", dataSource);
-			beanFactory.registerSingleton(name + "SessionFactory", sessionFactory);
-			beanFactory.registerSingleton(name + "HibernateTransactionManager", buildTransactionManager(name, config, dataSource, jdbc));
+		SessionFactory sessionFactory = buildSession(name, config, dataSource, jdbc);
+		beanFactory.registerSingleton(name + "DataSource", dataSource);
+		beanFactory.registerSingleton(name + "SessionFactory", sessionFactory);
+		beanFactory.registerSingleton(name + "HibernateTransactionManager", buildTransactionManager(name, config, dataSource, jdbc));
 		
 	}
 
