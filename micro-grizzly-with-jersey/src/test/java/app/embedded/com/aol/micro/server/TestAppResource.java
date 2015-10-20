@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.stream.simple.SimpleReact;
-import com.aol.simple.react.stream.traits.EagerFutureStream;
+import com.aol.simple.react.stream.traits.LazyFutureStream;
 @Component
 @Path("/test-status")
 public class TestAppResource implements TestAppRestResource {
@@ -37,7 +37,7 @@ public class TestAppResource implements TestAppRestResource {
 	@Path("/rest-calls")
 	public String restCallResult(){
 		
-		return EagerFutureStream.ofIterable(urls)
+		return LazyFutureStream.lazyFutureStreamFromIterable(urls)
 					.map(it ->template.get(it))
 					.then(it -> "*"+it)
 					.peek(loadedAndModified -> System.out.println(loadedAndModified))

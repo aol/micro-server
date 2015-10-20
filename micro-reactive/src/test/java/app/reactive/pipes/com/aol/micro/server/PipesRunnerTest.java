@@ -27,8 +27,8 @@ public class PipesRunnerTest {
 	LazyFutureStream<String> stream;
 	@Before
 	public void startServer(){
-		stream = Pipes.register("test", new Queue<String>());
-		
+		Pipes.register("test", new Queue<String>());
+		stream =  Pipes.futureStreamCPUBound("test");
 		server = new MicroserverApp(()->"simple-app");
 	
 		server.start();

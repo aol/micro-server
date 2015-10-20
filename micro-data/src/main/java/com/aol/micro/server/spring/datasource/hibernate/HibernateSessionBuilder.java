@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
-import com.aol.cyclops.lambda.utils.ExceptionSoftener;
+import com.aol.cyclops.invokedynamic.ExceptionSoftener;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 
 
@@ -22,7 +22,6 @@ import com.aol.micro.server.spring.datasource.JdbcConfig;
 @AllArgsConstructor
 public class HibernateSessionBuilder {
 	private final Logger logger = LoggerFactory.getLogger( getClass());
-	ExceptionSoftener softener = ExceptionSoftener.singleton.factory.getInstance();
 	
 	
 	private final JdbcConfig env;
@@ -57,14 +56,14 @@ public class HibernateSessionBuilder {
 			sessionFactoryBean.afterPropertiesSet();
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			softener.throwSoftenedException(e);
+			ExceptionSoftener.throwSoftenedException(e);
 		}
 		
 		try{
 			return sessionFactoryBean.getObject();
 		}catch(Exception e){
 			logger.error(e.getMessage(),e);
-			softener.throwSoftenedException(e);
+			ExceptionSoftener.throwSoftenedException(e);
 		}
 		return null;
 	}

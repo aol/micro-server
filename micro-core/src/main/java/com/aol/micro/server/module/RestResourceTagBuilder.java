@@ -12,13 +12,12 @@ import org.pcollections.ConsPStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.lambda.utils.ExceptionSoftener;
+import com.aol.cyclops.invokedynamic.ExceptionSoftener;
 import com.aol.micro.server.auto.discovery.CommonRestResource;
 
 
 public class RestResourceTagBuilder {
 
-	private final static ExceptionSoftener softener = ExceptionSoftener.singleton.factory.getInstance();
 	private final static Logger logger = LoggerFactory.getLogger(RestResourceTagBuilder.class);
 	
 	@Setter
@@ -36,7 +35,7 @@ public class RestResourceTagBuilder {
 			return Class.forName(cl);
 		} catch (ClassNotFoundException e) {
 			logger.error("Class not found for {}", cl);
-			softener.throwSoftenedException(e);
+			ExceptionSoftener.throwSoftenedException(e);
 		}
 		return null;
 	}

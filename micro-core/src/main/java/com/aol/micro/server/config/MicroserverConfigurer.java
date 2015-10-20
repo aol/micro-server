@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import org.pcollections.HashTreePMap;
 import org.pcollections.HashTreePSet;
 
-import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.cyclops.sequence.SequenceM;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.nurkiewicz.lazyseq.LazySeq;

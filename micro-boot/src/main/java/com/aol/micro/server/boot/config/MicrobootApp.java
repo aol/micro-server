@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
-import com.aol.cyclops.lambda.monads.SequenceM;
-import com.aol.cyclops.lambda.utils.ExceptionSoftener;
+import com.aol.cyclops.invokedynamic.ExceptionSoftener;
+import com.aol.cyclops.sequence.SequenceM;
 import com.aol.micro.server.IncorrectNumberOfServersConfiguredException;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
@@ -35,8 +35,7 @@ public class MicrobootApp {
 
 	private final List<Module> modules;
 	private final CompletableFuture end = new CompletableFuture();
-	private final ExceptionSoftener softener = ExceptionSoftener.singleton.factory
-			.getInstance();
+
 
 	@Getter
 	private final ApplicationContext springContext;
@@ -91,7 +90,7 @@ public class MicrobootApp {
 			return Class.forName(new Exception().getStackTrace()[2]
 					.getClassName());
 		} catch (ClassNotFoundException e) {
-			softener.throwSoftenedException(e);
+			ExceptionSoftener.throwSoftenedException(e);
 		}
 		return null; // unreachable normally
 	}
@@ -154,7 +153,7 @@ public class MicrobootApp {
 			thread.join();
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
-			softener.throwSoftenedException(e);
+			ExceptionSoftener.throwSoftenedException(e);
 		}
 	}
 

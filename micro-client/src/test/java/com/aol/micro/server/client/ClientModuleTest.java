@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.cyclops.sequence.SequenceM;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.module.Module;

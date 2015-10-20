@@ -42,7 +42,7 @@ public class ServiceRegistryResource  implements Reactive{
 	@Path("/list")
 	@Produces("application/json")
 	public void list(@Suspended AsyncResponse response) {
-		this.ioStream().of(this).forEach(next -> {
+		this.ioStreamBuilder().of(this).forEach(next -> {
 			try{
 				cleaner.clean();
 				response.resume(finder.find());
@@ -59,7 +59,7 @@ public class ServiceRegistryResource  implements Reactive{
 	@Consumes("application/json")
 	@Produces("application/json")
 	public void schedule(@Suspended AsyncResponse response) {
-		this.ioStream().of(this).forEach(next -> {
+		this.ioStreamBuilder().of(this).forEach(next -> {
 			try{
 				job.schedule();
 				response.resume(HashMapBuilder.of("status", "success"));
@@ -76,7 +76,7 @@ public class ServiceRegistryResource  implements Reactive{
 	@Consumes("application/json")
 	@Produces("application/json")
 	public void register(@Suspended AsyncResponse response,RegisterEntry entry) {
-		this.ioStream().of(this).forEach(next -> {
+		this.ioStreamBuilder().of(this).forEach(next -> {
 			try{
 				register.register(entry);
 				response.resume(HashMapBuilder.of("status", "complete"));

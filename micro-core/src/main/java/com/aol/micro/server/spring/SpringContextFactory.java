@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
-import com.aol.cyclops.lambda.utils.ExceptionSoftener;
+import com.aol.cyclops.invokedynamic.ExceptionSoftener;
 import com.aol.micro.server.ErrorCode;
 import com.aol.micro.server.config.Config;
 
@@ -21,7 +21,6 @@ import com.aol.micro.server.config.Config;
 public class SpringContextFactory {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	private final ExceptionSoftener softener = ExceptionSoftener.singleton.factory.getInstance();
 	private final PSet<Class> classes;
 	private final Config config;
 	@Wither
@@ -50,7 +49,7 @@ public class SpringContextFactory {
 			return springContext;
 		} catch (Exception e) {
 			logger.error( ErrorCode.STARTUP_FAILED_SPRING_INITIALISATION.toString(),e.getMessage());
-			softener.throwSoftenedException(e);
+			ExceptionSoftener.throwSoftenedException(e);
 		}
 		return null;
 	}

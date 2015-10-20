@@ -7,15 +7,15 @@ import java.util.function.Supplier;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import com.aol.cyclops.functions.Memoise;
-import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.cyclops.functions.caching.Memoize;
+import com.aol.cyclops.sequence.SequenceM;
 
 @NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class PluginLoader {
 
 	public final static PluginLoader INSTANCE = new PluginLoader();
 	
-	public final Supplier<List<Plugin>> plugins = Memoise.memoiseSupplier(this::load);
+	public final Supplier<List<Plugin>> plugins = Memoize.memoizeSupplier(this::load);
 
 	private List<Plugin> load(){
 		 return  SequenceM.fromIterable(ServiceLoader.load(Plugin.class)).toList();

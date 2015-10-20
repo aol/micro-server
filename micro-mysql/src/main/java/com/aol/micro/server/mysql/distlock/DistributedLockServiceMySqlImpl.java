@@ -18,7 +18,7 @@ public class DistributedLockServiceMySqlImpl implements DistributedLockService {
 	volatile JdbcTemplate jdbcTemplate;
 
 	@Autowired(required = false)
-	@Qualifier("dataSourceForDistributedLocking")
+	@Qualifier("distLockingDataSource")
 	public void setSmartDataSource(DataSource dataSource) {
 		if (dataSource != null)
 			this.jdbcTemplate = new JdbcTemplate(dataSource);

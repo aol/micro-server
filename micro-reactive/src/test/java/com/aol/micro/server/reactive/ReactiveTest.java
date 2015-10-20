@@ -27,10 +27,11 @@ public class ReactiveTest {
 	}
 	@Test
 	public void testPipe() {
-		LazyFutureStream<String> stream = Pipes.register("hello", new Queue<String>());
+		Pipes.register("hello", new Queue<String>());
+		LazyFutureStream<String> stream = Pipes.futureStreamIOBound("hello");
 		assertTrue(new MyResource().queue().isSuccess());
 		
-		assertThat(stream.limit(1).toList(),equalTo(Arrays.asList("world")));
+		assertThat(stream.peek(System.out::println).limit(1).peek(System.out::println).toList(),equalTo(Arrays.asList("world")));
 		
 	}
 	@Test
@@ -39,7 +40,7 @@ public class ReactiveTest {
 		MyResource resource = new MyResource();
 		LazyFutureStream<String> lfs = resource.asyncCPUStream();
 		
-		assertFalse(lfs.isAsync());
+		assertTrue(lfs.isAsync());
 		
 	}
 	@Test
@@ -48,7 +49,7 @@ public class ReactiveTest {
 		MyResource resource = new MyResource();
 		LazyFutureStream<String> lfs = resource.asyncIOStream();
 		
-		assertFalse(lfs.isAsync());
+		assertTrue(lfs.isAsync());
 		
 	}
 	@Test
@@ -87,22 +88,7 @@ public class ReactiveTest {
 		assertThat(resource.getVal(),equalTo("HELLO"));
 		
 	}
-	@Test
-	public void testAsync() {
-		MyResource resource = new MyResource();
-		resource.async();
-		
-		assertThat(resource.getVal(),equalTo("HELLO"));
-		
-	}
-	@Test
-	public void testSync() {
-		MyResource resource = new MyResource();
-		resource.sync();
-		
-		assertThat(resource.getVal(),equalTo("HELLO"));
-		
-	}
+	
 	static class MyResource implements RestResource,Reactive{
 		@Getter
 		String val;
@@ -115,38 +101,33 @@ public class ReactiveTest {
 			List<String> collection = new ArrayList<>();
 			for(int i=0;i<1000;i++)
 				collection.add("hello");
-			return this.ioStream().of(collection).map(String::toUpperCase);
+			return this.ioStreamBuilder().from(collection).map(String::toUpperCase);
 		}
 		public LazyFutureStream<String> asyncCPUStream(){
 			List<String> collection = new ArrayList<>();
 			for(int i=0;i<1000;i++)
 				collection.add("hello");
-			return this.cpuStream().of(collection).map(String::toUpperCase);
+			return this.cpuStreamBuilder().from(collection).map(String::toUpperCase);
 		}
 		public Set<Long> asyncIOFanout(){
 			List<String> collection = new ArrayList<>();
 			for(int i=0;i<1000;i++)
 				collection.add("hello");
-			return this.ioStream().of(collection).map(str-> Thread.currentThread().getId()).toSet();
+			return this.ioStreamBuilder().from(collection).map(str-> Thread.currentThread().getId()).toSet();
 		}
 		public Set<Long> asyncCPUFanout(){
 			List<String> collection = new ArrayList<>();
 			for(int i=0;i<1000;i++)
 				collection.add("hello");
-			return this.cpuStream().of(collection).map(str-> Thread.currentThread().getId()).toSet();
+			return this.cpuStreamBuilder().from(collection).map(str-> Thread.currentThread().getId()).toSet();
 		}
 		public void asyncIO(){
-			this.ioStream().of("hello").map(String::toUpperCase).peek(str->val=str).block();
+			this.ioStreamBuilder().of("hello").map(String::toUpperCase).peek(str->val=str).block();
 		}
 		public void asyncCPU(){
-			this.cpuStream().of("hello").map(String::toUpperCase).peek(str->val=str).block();
+			this.cpuStreamBuilder().of("hello").map(String::toUpperCase).peek(str->val=str).block();
 		}
-		public void async(){
-			this.sync(lr->lr.of("hello").map(String::toUpperCase).peek(str->val=str)).block();
-		}
-		public void sync(){
-			this.sync(lr->lr.of("hello").map(String::toUpperCase).peek(str->val=str)).block();
-		}
+		
 	}
 
 }

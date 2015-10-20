@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.lambda.utils.ExceptionSoftener;
+import com.aol.cyclops.invokedynamic.ExceptionSoftener;
 import com.couchbase.client.CouchbaseClient;
 
 public class SimpleCouchbaseClient<V> {
@@ -31,7 +31,7 @@ public class SimpleCouchbaseClient<V> {
 		try{
 			return client.set(key, value).get();
 		} catch (InterruptedException | ExecutionException e) {
-			ExceptionSoftener.singleton.factory.getInstance().throwSoftenedException(e);
+			ExceptionSoftener.throwSoftenedException(e);
 			return false;//unreachable
 		}
 	}

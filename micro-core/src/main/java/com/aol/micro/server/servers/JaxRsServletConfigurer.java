@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.cyclops.sequence.SequenceM;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.module.IncorrectJaxRsPluginsException;

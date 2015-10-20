@@ -3,10 +3,12 @@ package com.aol.micro.server.reactive;
 import java.util.Optional;
 import java.util.function.Function;
 
+import com.aol.cyclops.sequence.SequenceM;
 import com.aol.cyclops.trycatch.Failure;
 import com.aol.cyclops.trycatch.Success;
 import com.aol.cyclops.trycatch.Try;
 import com.aol.simple.react.async.Adapter;
+import com.aol.simple.react.async.pipes.LazyReactors;
 import com.aol.simple.react.stream.lazy.LazyReact;
 import com.aol.simple.react.stream.traits.LazyFutureStream;
 import com.aol.simple.react.threads.ParallelElasticPools;
@@ -37,25 +39,25 @@ public interface Reactive {
 		
 	}
 	
+	default <K,T> LazyFutureStream<T> ioFutureStream(K key){
+		return Pipes.futureStreamIOBound(key);
+	}
+	default <K,T> SequenceM<T> sequentialStream(K key){
+		return Pipes.stream(key);
+	}
+	default <K,T> SequenceM<T> cpuFutureStream(K key){
+		return Pipes.futureStreamCPUBound(key);
+	}
+	default  LazyReact ioStreamBuilder(){
+		return LazyReactors.ioReact;
+	}
 	
-	/**
-	 * 
-	 * Generate a sequentially executing single-threaded a LazyFutureStream that executes all tasks directly without involving
-	 * a task executor between each stage (unless async operator invoked). A preconfigured LazyReact builder that will be supplied as
-	 * input to the function supplied. The user Function should create a LazyFutureStream with any
-	 * business logic stages predefined. This method will handle elastic scaling and pooling of Executor
-	 * services. User code should call a terminal op on the returned LazyFutureStream
-	 * @see Reactive#run(com.aol.simple.react.stream.traits.LazyFutureStream)
-	 * 
-	 * @param react Function that generates a LazyFutureStream from a LazyReact builder
-	 * @return Generated LazyFutureStream
-	 */
-	default <T> LazyFutureStream<T> sync(Function<LazyReact,LazyFutureStream<T>> react){
-		 LazyReact r  =SequentialElasticPools.lazyReact.nextReactor().withAsync(false);
-		 return react.apply( r)
-				 	.onFail(e->{ SequentialElasticPools.lazyReact.populate(r); throw e;})
-				 	.peek(i->SequentialElasticPools.lazyReact.populate(r));
-		 				 	
+	default LazyReact cpuStreamBuilder(){
+		return LazyReactors.cpuReact;
+	}
+	
+	default <T> SequenceM<T> switchToSequential(LazyFutureStream<T> stream){
+		return SequenceM.fromStream(stream);
 	}
 	
 	/**
@@ -64,8 +66,8 @@ public interface Reactive {
 	 * @param stream to convert to IO mode
 	 * @return LazyFutureStream in IO mode
 	 */
-	default <T> LazyFutureStream<T> swithToIO(LazyFutureStream<T> stream){
-		LazyReact react = Reactors.ioReact;
+	default <T> LazyFutureStream<T> switchToIO(LazyFutureStream<T> stream){
+		LazyReact react = LazyReactors.ioReact;
 		return stream.withTaskExecutor(react.getExecutor()).withRetrier(react.getRetrier());
 	}
 	/**
@@ -74,48 +76,10 @@ public interface Reactive {
 	 * @param stream to convert to CPU bound mode
 	 * @return LazyFutureStream in CPU bound mode
 	 */
-	default <T> LazyFutureStream<T> swithToCPU(LazyFutureStream<T> stream){
-		LazyReact react = Reactors.cpuReact;
+	default <T> LazyFutureStream<T> switchToCPU(LazyFutureStream<T> stream){
+		LazyReact react = LazyReactors.cpuReact;
 		return stream.withTaskExecutor(react.getExecutor()).withRetrier(react.getRetrier());
 	}
-	/**
-	 * @return Stream builder for IO Bound Streams
-	 */
-	default MicroLazyReact ioStream(){
-		return new MicroLazyReact(Reactors.ioReact);
-	}
-	/**
-	 * @return  Stream builder for CPU Bound Streams
-	 */
-	default MicroLazyReact cpuStream(){
-		return new MicroLazyReact(Reactors.cpuReact);
-	}
-	/**
-	 * Generate a multi-threaded LazyFutureStream that executes all tasks via 
-	 *  a task executor between each stage (unless sync operator invoked). 
-	 * A preconfigured LazyReact builder that will be supplied as
-	 * input to the function supplied. The user Function should create a LazyFutureStream with any
-	 * business logic stages predefined. This method will handle elastic scaling and pooling of Executor
-	 * services. User code should call a terminal op on the returned LazyFutureStream
-	 * @see Reactive#run(com.aol.simple.react.stream.traits.LazyFutureStream)
-	 * 
-	 * @param react Function that generates a LazyFutureStream from a LazyReact builder
-	 * @return Generated LazyFutureStream
-	 */
-	default <T> LazyFutureStream<T>  async(Function<LazyReact,LazyFutureStream<T>> react){
-		 LazyReact r  =ParallelElasticPools.lazyReact.nextReactor().withAsync(true);
-		return  react.apply( r)
-					.onFail(e->{ SequentialElasticPools.lazyReact.populate(r); throw e;})
-					.peek(i->SequentialElasticPools.lazyReact.populate(r));
-		 	
-	}
 	
 	
-	/**
-	 * Convenience method that runs a LazyFutureStream without blocking the current thread
-	 * @param stream to execute
-	 */
-	default <T> void run(LazyFutureStream<T> stream){
-		stream.run();
-	}
 }

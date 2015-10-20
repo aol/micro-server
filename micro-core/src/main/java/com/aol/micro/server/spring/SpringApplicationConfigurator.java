@@ -8,7 +8,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.cyclops.sequence.SequenceM;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.config.Config;

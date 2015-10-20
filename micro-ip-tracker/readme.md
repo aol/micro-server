@@ -8,14 +8,16 @@ The IP Address is stored in a thread local variable & available via QueryIPRetri
 
 Simply add to the classpath
 
-Maven 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-ip-tracker/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-ip-tracker)
+
+### Maven 
 
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-ip-tracker</artifactId>
-        <version>0.62</version>
+        <version>x.yx</version>
      </dependency>
      
-Gradle
+### Gradle
 
-    compile 'com.aol.microservices:micro-ip-tracker:0.62'
+    compile 'com.aol.microservices:micro-ip-tracker:x.yz'

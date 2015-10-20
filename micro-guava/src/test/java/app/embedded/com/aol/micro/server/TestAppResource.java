@@ -1,7 +1,5 @@
 package app.embedded.com.aol.micro.server;
 
-import java.util.concurrent.CompletableFuture;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -10,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.stream.simple.SimpleReact;
-import com.aol.simple.react.stream.traits.EagerFutureStream;
+import com.aol.simple.react.stream.traits.LazyFutureStream;
 import com.google.common.collect.ImmutableList;
 @Component
 @Path("/test-status")
@@ -37,7 +35,7 @@ public class TestAppResource implements TestAppRestResource {
 	@Path("/rest-calls")
 	public String restCallResult(){
 		
-		return EagerFutureStream.ofIterable(urls)
+		return LazyFutureStream.lazyFutureStreamFromIterable(urls)
 					.map(it ->template.get(it))
 					.then(it -> "*"+it)
 					.peek(loadedAndModified -> System.out.println(loadedAndModified))

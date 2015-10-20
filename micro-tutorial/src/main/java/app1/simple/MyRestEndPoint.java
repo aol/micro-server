@@ -19,7 +19,8 @@ import com.aol.micro.server.events.RequestEvents;
 import com.aol.micro.server.ip.tracker.QueryIPRetriever;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.spring.datasource.jdbc.SQL;
-import com.aol.simple.react.stream.traits.EagerFutureStream;
+import com.aol.simple.react.stream.lazy.LazyReact;
+import com.aol.simple.react.stream.traits.LazyFutureStream;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
 import com.wordnik.swagger.annotations.Api;
@@ -99,8 +100,7 @@ public class MyRestEndPoint {
      @Produces("application/json")
 	 @ApiOperation(value = "Do Expensive operation", response = List.class)
      public void expensiveDb(@Suspended AsyncResponse asyncResponse){
-     		EagerFutureStream.sequentialBuilder()
-     						.react(()-> dataService.findAll("time"))
+     		new LazyReact(1,10).react(()-> dataService.findAll("time"))
      						.map(list -> JacksonUtil.serializeToJson(list))
      						.peek(asyncResponse::resume);
      		

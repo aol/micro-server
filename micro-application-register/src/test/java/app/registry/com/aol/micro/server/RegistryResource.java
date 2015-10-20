@@ -11,7 +11,7 @@ import javax.ws.rs.container.Suspended;
 
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.cyclops.sequence.SequenceM;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.stream.simple.SimpleReact;
@@ -34,11 +34,12 @@ public class RegistryResource implements RestResource{
         @Produces("text/plain")
         public void expensive(@Suspended AsyncResponse asyncResponse){
   
-        	LazyFutureStream.ofIterable(urls)
+        	LazyFutureStream.lazyFutureStreamFromIterable(urls)
 					.then(it->client.get(it))
 					.onFail(it -> "")
 					.peek(it -> 
 					System.out.println(it))
+					.convertToSimpleReact()
 					.<String,Boolean>allOf(data -> {
 						System.out.println(data);
 							return asyncResponse.resume(SequenceM.fromIterable(data).join(";")); });

@@ -37,18 +37,25 @@ public class PipesTest {
 		assertThat(Pipes.stream("hello").limit(1).toList(),equalTo(Arrays.asList("world")));
 	}
 	@Test
+	public void testStreamSequential() {
+		Queue queue = new Queue();
+		queue.add("world");
+		Pipes.register("hello",queue);
+		assertThat(Pipes.stream("hello").limit(1).toList(),equalTo(Arrays.asList("world")));
+	}
+	@Test
 	public void testStreamIO() {
 		Queue queue = new Queue();
 		queue.add("world");
 		Pipes.register("hello",queue);
-		assertThat(Pipes.streamIOBound("hello").limit(1).toList(),equalTo(Arrays.asList("world")));
+		assertThat(Pipes.futureStreamIOBound("hello").limit(1).toList(),equalTo(Arrays.asList("world")));
 	}
 	@Test
 	public void testStreamCPU() {
 		Queue queue = new Queue();
 		queue.add("world");
 		Pipes.register("hello",queue);
-		assertThat(Pipes.streamCPUBound("hello").limit(1).toList(),equalTo(Arrays.asList("world")));
+		assertThat(Pipes.futureStreamCPUBound("hello").limit(1).toList(),equalTo(Arrays.asList("world")));
 	}
 	@Test
 	public void cpuBound() {

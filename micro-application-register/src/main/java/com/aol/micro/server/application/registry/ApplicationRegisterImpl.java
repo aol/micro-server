@@ -9,10 +9,9 @@ import lombok.Getter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.lambda.utils.ExceptionSoftener;
+import com.aol.cyclops.invokedynamic.ExceptionSoftener;
 import com.aol.micro.server.servers.ApplicationRegister;
 import com.aol.micro.server.servers.model.ServerData;
 
@@ -38,7 +37,7 @@ public class ApplicationRegisterImpl implements ApplicationRegister {
 							.getModule().getContext(), null)).collect(Collectors.toList()));
 			logger.info("Registered application {} ", application);
 		} catch (UnknownHostException e) {
-			ExceptionSoftener.singleton.factory.getInstance().throwSoftenedException(e);
+			ExceptionSoftener.throwSoftenedException(e);
 		}
 	}
 }

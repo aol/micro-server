@@ -33,14 +33,16 @@ public class AsyncResource implements RestResource,Reactive{
         @Produces("text/plain")
         public void expensive(@Suspended AsyncResponse asyncResponse){
   
-        	this.async(lr -> lr.fromStream(urls.stream()
+        	this.ioStreamBuilder().fromStream(urls.stream()
 					.<CompletableFuture<String>>map(it ->  client.get(it)))
 					.onFail(it -> "")
 					.peek(it -> 
 					System.out.println(it))
+					.convertToSimpleReact()
 					.<String,Boolean>allOf(data -> {
 						System.out.println(data);
-							return asyncResponse.resume(String.join(";", (List<String>)data)); })).run();
+							return asyncResponse.resume(String.join(";", (List<String>)data)); })
+							.convertToLazyStream().run();
         	
         }
         

@@ -39,17 +39,15 @@ public class ActiveResource implements CommonRestResource, SingletonRestResource
 		this.activeJobs = activeJobs;
 	}
 
-	private void updateLogLevel(String level){
-		
-	}
+	
 	@GET
 	@Produces("application/json")
 	@Path("/requests")
 	public void activeRequests(@Suspended AsyncResponse asyncResponse,@QueryParam("type") final String  type) {
 		
-		this.sync(lr-> lr.of((type == null ? "default" : type))
+		this.cpuStreamBuilder().of((type == null ? "default" : type))
 							.map(typeToUse->activeQueries.get(typeToUse).toString())
-							.peek(result->asyncResponse.resume(result)))
+							.peek(result->asyncResponse.resume(result))
 							.run();
 	}
 	
@@ -60,7 +58,7 @@ public class ActiveResource implements CommonRestResource, SingletonRestResource
 	@Path("/jobs")
 	public void activeJobs(@Suspended AsyncResponse asyncResponse) {
 		
-		this.cpuStream().of(this.activeJobs)
+		this.cpuStreamBuilder().of(this.activeJobs)
 								  .then(JobsBeingExecuted::toString)
 								  .then(str->asyncResponse.resume(str))
 								  .run();

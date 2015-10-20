@@ -19,7 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.aol.cyclops.lambda.monads.SequenceM;
+import com.aol.cyclops.sequence.SequenceM;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.auto.discovery.Rest;
