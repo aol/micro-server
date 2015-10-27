@@ -9,10 +9,10 @@ A convenient modular engine for Microservices. Microserver plugins offer seamles
 
 Install Microserver with Grizzly and Jersey (Gradle config below)
 
-    compile group: 'com.aol.microservices', name:'micro-grizzly-with-jersey', version:'0.62'
+    compile group: 'com.aol.microservices', name:'micro-grizzly-with-jersey', version:'x.yz'
  
 Create and run a simple app 
- 
+ ```java
     @Rest
 	@Path("/test")
 	public class SimpleApp {
@@ -25,7 +25,7 @@ Create and run a simple app
 			return "hello world!";
 		}
     }
-
+```
 
 # Tutorial and overview
 
@@ -35,10 +35,11 @@ Create and run a simple app
 
 ## Note on Fat Jars
 Microserver (& Cyclops) have a plugin architecture and make use of the Java Service Laoder mechanism. Make sure your Far Jar implementation is configured to aggreagate services. With the Gradle Shadow Jar you do this with
-    
+ ```groovy
     shadowJar {
       mergeServiceFiles()  
     }
+ ```
 
 
 ###Quick start youtube video
@@ -84,33 +85,33 @@ Microserver is a zero configuration, standards based, battle hardened library to
 ### Maven dependency
 
 Microserver core 
-
+ ```xml
     <dependency>
       <groupId>com.aol.microservices</groupId>
       <artifactId>micro-core</artifactId>
-      <version>0.62</version>
+      <version>x.yz</version>
     </dependency>
-    
+```
 Microserver Spring Boot 
-
+ ```xml
     <dependency>
       <groupId>com.aol.microservices</groupId>
       <artifactId>micro-boot</artifactId>
-      <version>0.62</version>
+      <version>x.yz</version>
     </dependency>
-
+ ```
 
 
 ### Gradle dependency
 
 Microserver core 
-	
-	 compile group: 'com.aol.microservices', name:'micro-core', version:'0.62'
-	 
+ ```groovy	
+	 compile group: 'com.aol.microservices', name:'micro-core', version:'x.yz'
+ ```	 
 Microserver Spring Boot 
-	 
-	  compile group: 'com.aol.microservices', name:'micro-boot', version:'0.62'
-
+ ```groovy	 
+	  compile group: 'com.aol.microservices', name:'micro-boot', version:'x.yz'
+ ```
 ##Tech Stack
 
 Microserver core is a lightweight server configuration engine built using Spring, Cyclops and Jackson.
@@ -125,7 +126,7 @@ Example working application :-
 
 ###The main class :-
 
-     
+```java   
      public class AppRunnerTest {
 
 		
@@ -134,13 +135,13 @@ Example working application :-
 		}
 
     }
-
+ ```
 
 This will deploy a REST server on port 8080 (configurable by test-app.port in application.properties), it will also automagically capture any Rest end points (Spring & Jersey annotations) that implement the tag interface RestResource (see below for an example).
 
 ###A rest end point 
 
-
+ ```java
     @Rest 
     @Path("/status")
     public class StatusResource {
@@ -153,7 +154,7 @@ This will deploy a REST server on port 8080 (configurable by test-app.port in ap
 	  }
 
     }
-
+ ```
 ### Configuration Options
 
 If you find you need configuration options for your application you have two options.
@@ -180,9 +181,9 @@ The configuration of your Rest end points can be managed via the Module interfac
 
 e.g. 
 
-
+ ```java
     new MicroserverApp(() -> "context").start();
-
+ ```
 
 () -> "context"  is a Module!
 
@@ -190,7 +191,7 @@ e.g.
 ####Configurable Options
 
 Module provides the following default methods, that clients can override
-
+ ```java
     default Map<String,String> getPropertyOverrides(){
 		return Maps.newHashMap();
 	}
@@ -235,7 +236,7 @@ Module provides the following default methods, that clients can override
 	default String getProviders(){
 		return "com.aol.micro.server.rest.providers";
 	}
-
+ ```
 RestResource class defines the tag interface used to identify Rest end points for this module.
 
 Filters provides a map of Servlet filters and the paths to which they should be applied
@@ -273,7 +274,7 @@ Embedding microservices is an optimisation that allows better performance, enhan
 This example will start two different Rest end points - one on context "test-app" and another on context "alternative-app".
 "test-app" will automagically wire in any Jersey end points that implement TestAppRestResource.
 "alternative-app" will automagically wire in any Jersey end points that implement AltAppRestResource.
-
+ ```java
 	@Microserver
 	public class EmbeddedAppRunnerTest {
 	
@@ -287,17 +288,17 @@ This example will start two different Rest end points - one on context "test-app
 		}
 	}
 
-
+ ```
 
 
 ##Building a 'fat' Jar
 
 We recommend the Gradle plugin Shadow Jar. For Gradle 2.0 simply define it in your plugins section ->
-
+ ```groovy
 plugins {
   id 'java' // or 'groovy' Must be explicitly applied
   id 'com.github.johnrengelman.shadow' version '1.2.0'
 }
-
+ ```
 Maven users can use Shade plugin or equivalent (Maven assembly plugin).
 

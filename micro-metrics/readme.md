@@ -6,6 +6,8 @@ This adds support for Dropwizard metrics annotations on Spring beans. For more d
 
 ## To use
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-metrics/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-metrics)
+
 Simply add to the classpath
 
 Maven 
@@ -13,12 +15,12 @@ Maven
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-metrics</artifactId>
-        <version>0.62</version>
+        <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-metrics:0.62'
+    compile 'com.aol.microservices:micro-metrics:x.yz'
     
  # Configuring Metrics Reporters
  

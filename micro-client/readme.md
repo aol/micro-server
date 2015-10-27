@@ -11,6 +11,8 @@ The NIORestClient is available as  Spring bean. AsyncRestClient can simply be in
 
 ## To use
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-client)
+
 Simply add to the classpath
 
 Maven 
@@ -18,9 +20,9 @@ Maven
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-client</artifactId>
-        <version>0.62</version>
+        <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-client:0.62'
+    compile 'com.aol.microservices:micro-client:x.yz'

@@ -6,20 +6,24 @@ Also can run standalone outside of Microserver
 
 ## To use
 
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-reactive/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-reactive)
+
 Simply add to the classpath
 
 Maven 
-
+ ```xml
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-reactive</artifactId>
-        <version>0.62</version>
+        <version>x.yz</version>
      </dependency>
-     
+ ```    
 Gradle
-
+ ```groovy
     compile 'com.aol.microservices:micro-reactive:0.62'
-
+ ```
+ 
 ## Reactive mixin
 
 implement com.aol.micro.server.reactive.Reactive to add Reactive functionality via [simple-react](https://github.com/aol/simple-react).
@@ -68,7 +72,7 @@ Find active jobs currently running (making use of @Suspended AsyncResponse async
 The Pipes class can manage simple-react Adapters (Queues / Topics and Signals). Example using an Agrona wait-free Queue (with mechanical sympathy) :
 
 Register your Pipe (bounded non blocking Queue) which returns a LazyFutureStream for infinite processing & start our server. Any events with the Key  "test" passed into our Pipes class (via Reactive.enqueue for example) will be passed straight to our processing Stream.
-
+ ```java
 	public static void main(String[] args){
 	    LazyFutureStream<String> stream = Pipes.register("test", QueueFactories.
 	                                        <String>boundedNonBlockingQueue(100)
@@ -76,14 +80,14 @@ Register your Pipe (bounded non blocking Queue) which returns a LazyFutureStream
 	    stream.filter(it->it!=null).peek(System.out::println).run();
 	    new MicroserverApp(()-> "simple-app").run();
 	}
-
+ ```
 NB - in practice with the current version - unless you expect to have a high throughput of data this implementation will be very inefficient (a blocking queue would in many cases perform better). v0.99 of simple-react will introduce native 'wait' strategies for Queues which will perform better than the custom simple-react filter we are using here. To create a pipe with a blocking queue :
-
+ ```java
      Pipes.register("unbounded", new Queue());  // unbounded
      Pipes.register("bounded", QueueFactories.boundedQueue(1000)); //bound size 1000
-
+ ```
 Elsewhere in our application we can pass data to our Pipe (e.g. from a REST request, incoming data from an Aeron or Kafka Queue, Scheduled job etc)
-
+ ```java
 	@GET
 	@Produces("text/plain")
 	@Path("/ping")
@@ -91,7 +95,7 @@ Elsewhere in our application we can pass data to our Pipe (e.g. from a REST requ
 	    this.enqueue("test","ping : " + next++);
 	    return "ok";
 	}
-	
+ ```	
 In this example our processing Stream will simple print 
 
     ping : 0 

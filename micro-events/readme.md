@@ -4,6 +4,8 @@ This adds a facility to capture events such as requests, request execution and s
 
 ## To use
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-events/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-events)
+
 Simply add to the classpath
 
 Maven 
@@ -11,12 +13,12 @@ Maven
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-events</artifactId>
-        <version>0.62</version>
+        <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-events:0.62'
+    compile 'com.aol.microservices:micro-events:x.yz'
 
 ### Depends on
 

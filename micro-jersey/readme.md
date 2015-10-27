@@ -6,6 +6,8 @@ Plugin that allows the Jersey to be used as the jax-rs implementation with Micro
 
 ## To use
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-jersey)
+
 Simply add to the classpath
 
 Maven 
@@ -13,9 +15,9 @@ Maven
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-jersey</artifactId>
-        <version>0.62</version>
+        <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-jersey:0.62'
+    compile 'com.aol.microservices:micro-jersey:x.yz'

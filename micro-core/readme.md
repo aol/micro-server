@@ -4,6 +4,9 @@ This module imports your configured plugins, starts and manages your JEE webserv
 
 ## To use
 
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-core)
+
 Simply add to the classpath
 
 Maven 
@@ -11,9 +14,9 @@ Maven
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-core</artifactId>
-        <version>0.62</version>
+        <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-core:0.62'
+    compile 'com.aol.microservices:micro-core:x.yz'

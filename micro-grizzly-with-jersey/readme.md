@@ -6,6 +6,8 @@ Convenience module that packages Grizzly, Jersey and Microserver together
 
 ## To use
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-grizzly-with-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-grizzly-with-jersey)
+
 Simply add to the classpath
 
 Maven 
@@ -13,9 +15,9 @@ Maven
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-grizzly-with-jersey</artifactId>
-        <version>0.62</version>
+        <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-grizzly-with-jersey:0.62'
+    compile 'com.aol.microservices:micro-grizzly-with-jersey:x.yz'
