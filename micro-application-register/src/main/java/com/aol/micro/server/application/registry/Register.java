@@ -28,7 +28,7 @@ public class Register {
 		File dir = new File(config.getOutputDir(), "" + entry.getModule());
 		dir.mkdirs();
 
-		File file = new File(dir, entry.getHostname() + ":" + entry.getModule() + ":" + entry.getUuid());
+		File file = new File(dir, entry.getHostname() + "-" + entry.getModule() + "-" + entry.getUuid());
 		try {
 			FileUtils.writeStringToFile(file, JacksonUtil.serializeToJson(entry));
 		} catch (IOException e) {
