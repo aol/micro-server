@@ -20,12 +20,12 @@ public class FinderTest {
 	@Before
 	public void setUp() throws Exception {
 		try{
-			new File(System.getProperty("java.io.tmpdir"),"lana-service-reg-finder").delete();
+			new File(System.getProperty("java.io.tmpdir"),"service-reg-finder").delete();
 		}catch(Exception e){
 		}
 
-		new File(System.getProperty("java.io.tmpdir"),"lana-service-reg-finder").mkdirs();
-		registerConfig = new RegisterConfig(new File(System.getProperty("java.io.tmpdir"),"lana-service-reg-finder")
+		new File(System.getProperty("java.io.tmpdir"),"service-reg-finder").mkdirs();
+		registerConfig = new RegisterConfig(new File(System.getProperty("java.io.tmpdir"),"service-reg-finder")
 					.getAbsolutePath());
 		writer = new Register(registerConfig);
 		finder = new Finder(registerConfig);

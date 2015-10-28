@@ -1,5 +1,6 @@
 package com.aol.micro.server.spring.datasource.jdbc;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import javax.sql.DataSource;
 
 import lombok.Getter;
@@ -15,7 +16,7 @@ public class SQL {
 	private final JdbcTemplate jdbc;
 
 	@Autowired
-	public SQL(DataSource dataSource) {
+	public SQL(@Qualifier("mainDataSource") DataSource dataSource) {
 		jdbc = new JdbcTemplate(dataSource);
 	}
 

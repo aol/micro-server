@@ -11,8 +11,8 @@ import lombok.experimental.Builder;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 import com.aol.cyclops.invokedynamic.ExceptionSoftener;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
