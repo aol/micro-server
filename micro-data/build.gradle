@@ -2,7 +2,9 @@ description = 'micro-data'
 dependencies {
 	compile 'org.springframework.data:spring-data-jpa:'+springDataJPA
 	
-	compile group: 'org.hibernate', name:'hibernate-validator', version:'5.1.3.Final'
+	compile ('org.hibernate:hibernate-validator:'+hibernateValidator) {
+		exclude group: 'org.jboss.logging'
+	}
 	compile group: 'org.hibernate', name: 'hibernate-core', version:hibernateVersion
 	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version:hibernateVersion
 	compile group: 'org.springframework', name: 'spring-jdbc', version:"${springVersion}"
