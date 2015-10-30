@@ -28,10 +28,10 @@ public class JdbcConfigDistLock {
 
 	@Autowired
 	public JdbcConfigDistLock(@Value("${db.dist.connection.driver:${db.connection.driver}}") String driverClassName,
-			@Value("${db.dist.connection.url:${db.connection.url}") String url,
+			@Value("${db.dist.connection.url:${db.connection.url}}") String url,
 			@Value("${db.dist.connection.username:${db.connection.username}}") String username,
 			@Value("${db.dist.connection.password:${db.connection.password}}") String password,
-			@Value("${db.dist.connection.hibernate.showsql:false}") String showSql, @Value("${db.dist.connection.dialect:mysql") String dialect,
+			@Value("${db.dist.connection.hibernate.showsql:false}") String showSql, @Value("${db.dist.connection.dialect:mysql}") String dialect,
 			@Value("${db.dist.connection.ddl.auto:#{null}}") String ddlAuto, @Value("${db.dist.connection.max.pool.size:1}") int maxPoolSize,
 			@Qualifier("propertyFactory") Properties properties) {
 		this.properties = properties;
