@@ -17,25 +17,23 @@ import com.zaxxer.hikari.HikariDataSource;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DataSourceBuilder {
-	
-	@Resource(name="distLockingEnv")
+
+	@Resource(name = "distLockingEnv")
 	private JdbcConfigDistLock env;
 
 	@Bean(destroyMethod = "close", name = "distLockingDataSource")
 	public DataSource mainDataSource() {
 		return getDataSource();
 	}
+
 	private DataSource getDataSource() {
 		HikariDataSource ds = new HikariDataSource();
-
 		ds.setDriverClassName(env.getDriverClassName());
 		ds.setJdbcUrl(env.getUrl());
 		ds.setUsername(env.getUsername());
 		ds.setPassword(env.getPassword());
-
-	
-
+		ds.setMaximumPoolSize(env.getMaxPoolSize());
 		return ds;
 	}
-	
+
 }
