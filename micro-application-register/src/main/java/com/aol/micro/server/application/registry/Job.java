@@ -21,12 +21,15 @@ public class Job {
 	private final String apiUrl;
 	private final ApplicationRegisterImpl app;
 	private final String uuid = UUID.randomUUID().toString();
+	private final String resourcePath;
 
 	@Autowired
-	public Job(@Value("${service.registry.url:null}") String apiUrl, ApplicationRegisterImpl app) {
+	public Job(@Value("${service.registry.url:null}") String apiUrl, ApplicationRegisterImpl app,
+			@Value("${resource.path:/service-registry/register}") String resourcePath) {
 
 		this.apiUrl = apiUrl;
 		this.app = app;
+		this.resourcePath = resourcePath;
 		
 	}
 
@@ -41,10 +44,10 @@ public class Job {
 												.withUuid(uuid);
 		try {
 
-			logger.info("Posting {} to " + apiUrl + "/service-registry/register", JacksonUtil.serializeToJson(entry));
-			rest.post(apiUrl + "/service-registry/register", JacksonUtil.serializeToJson(entry)).join();
+			logger.info("Posting {} to " + apiUrl + resourcePath, JacksonUtil.serializeToJson(entry));
+			rest.post(apiUrl + resourcePath, JacksonUtil.serializeToJson(entry)).join();
 		} catch (Exception e) {
-			logger.warn("Failed posting {} to {}/service-registry/register", JacksonUtil.serializeToJson(entry), apiUrl);
+			logger.warn("Failed posting {} to {}"+resourcePath, JacksonUtil.serializeToJson(entry), apiUrl);
 
 		}
 	}
