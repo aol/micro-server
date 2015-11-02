@@ -1,4 +1,4 @@
-package app.simple.com.aol.micro.server;
+package app.single.com.aol.micro.server;
 
 import java.io.InputStream;
 
@@ -11,29 +11,26 @@ import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aol.micro.server.auto.discovery.Rest;
+import com.aol.micro.server.mysql.distlock.DistributedLockServiceMySqlImpl;
 
 @Rest
 @Path("/status")
 public class SimpleStatusResource {
+	@Autowired
+	DistributedLockServiceMySqlImpl lock;
+	
+	
 
 	@GET
 	@Produces("text/plain")
 	@Path("/ping")
 	public String ping() {
 
-		return "ok";
+		return ""+ (lock!=null);
 	}
 
-	@POST
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	@Produces(MediaType.TEXT_PLAIN)
-	@Path("/file")
-	public String create(
-			@FormDataParam("file") InputStream fileInputStream,
-			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
-
-		return "done";
-	}
+	
 }
