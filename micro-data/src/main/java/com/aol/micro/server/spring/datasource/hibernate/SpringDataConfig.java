@@ -4,17 +4,14 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.ConfigAccessor;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 
@@ -35,9 +32,8 @@ public class SpringDataConfig {
 
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
-		
-		factory.setPackagesToScan(new ConfigAccessor().get().getDataSources()
-				.get(new ConfigAccessor().get().getDefaultDataSourceName())
+
+		factory.setPackagesToScan(new ConfigAccessor().get().getDataSources().get(new ConfigAccessor().get().getDefaultDataSourceName())
 				.toArray(new String[0]));
 		factory.setDataSource(dataSource);
 		factory.afterPropertiesSet();
