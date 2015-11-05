@@ -3,7 +3,7 @@ package app1.simple;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.spring.DataPlugin;
-import com.aol.micro.server.spring.datasource.DataSourceBuilder;
+import com.aol.micro.server.spring.datasource.DataDataSourceBuilder;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.aol.micro.server.spring.datasource.hibernate.HibernateConfig;
 import com.aol.micro.server.spring.datasource.hibernate.SpringDataConfig;
