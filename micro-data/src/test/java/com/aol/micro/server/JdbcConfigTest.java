@@ -15,22 +15,24 @@ import com.aol.micro.server.spring.datasource.JdbcConfig;
 public class JdbcConfigTest {
 
 	JdbcConfig config;
+
 	@Before
 	public void setUp() throws Exception {
 		Config.instance();
-		config = new JdbcConfig("driverClassName", "url", "username", "password", "showSql", "mysql", "none",new Properties(),null);
-		
+		config = new JdbcConfig("driverClassName", "url", "username", "password", "showSql", "mysql", "none", new Properties(), null, "false");
+
 	}
 
 	@Test
 	public void test() {
-		assertThat (config, notNullValue());
-		assertThat(config.getDdlAuto(),is("none"));
-		assertThat(config.getDialect(),is("mysql"));
-		assertThat(config.getDriverClassName(),is("driverClassName"));
-		assertThat(config.getUrl(),is("url"));
-		assertThat(config.getUsername(),is("username"));
-		assertThat(config.getPassword(),is("password"));
-		assertThat(config.getShowSql(),is("showSql"));
+		assertThat(config, notNullValue());
+		assertThat(config.getDdlAuto(), is("none"));
+		assertThat(config.getDialect(), is("mysql"));
+		assertThat(config.getDriverClassName(), is("driverClassName"));
+		assertThat(config.getUrl(), is("url"));
+		assertThat(config.getUsername(), is("username"));
+		assertThat(config.getPassword(), is("password"));
+		assertThat(config.getShowSql(), is("showSql"));
+		assertThat(config.getGenerateDdl(), is("false"));
 	}
 }

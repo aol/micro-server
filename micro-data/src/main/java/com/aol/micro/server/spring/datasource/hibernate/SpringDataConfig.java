@@ -28,7 +28,11 @@ public class SpringDataConfig {
 	public EntityManagerFactory entityManagerFactory() {
 
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		vendorAdapter.setGenerateDdl(true);
+		if (env.getGenerateDdl().equals("true")) {
+			vendorAdapter.setGenerateDdl(true);
+		} else {
+			vendorAdapter.setGenerateDdl(false);
+		}
 
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
