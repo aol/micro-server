@@ -18,7 +18,7 @@ public class JdbcConfigTest {
 	@Before
 	public void setUp() throws Exception {
 		Config.instance();
-		config = new JdbcConfig("driverClassName", "url", "username", "password", "showSql", "mysql", "none",new Properties(),null);
+		config = new JdbcConfig("driverClassName", "url", "username", "password", "showSql", "mysql", "none", new Properties(), null, "false");
 		
 	}
 

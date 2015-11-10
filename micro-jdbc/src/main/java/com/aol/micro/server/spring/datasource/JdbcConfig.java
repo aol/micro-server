@@ -2,7 +2,7 @@ package com.aol.micro.server.spring.datasource;
 
 import java.util.Properties;
 
-import lombok.Builder;
+import lombok.experimental.Builder;
 import lombok.Getter;
 
 import org.springframework.beans.factory.annotation.Autowired;
