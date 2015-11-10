@@ -1,24 +1,29 @@
-description = 'micro-reactive'
+description = 'micro-hibernate'
 dependencies {
 	
-	compile ("com.aol.cyclops:cyclops-all:$cyclopsVersion")
-	compile ('com.aol.simplereact:simple-react:'+simpleReactVersion){
-		exclude group:'com.aol.cyclops'
-	}	
-	testCompile project(':micro-core')
+	compile ('org.hibernate:hibernate-validator:'+hibernateValidator) {
+		exclude group: 'org.jboss.logging'
+	}
+	compile group: 'org.hibernate', name: 'hibernate-core', version:hibernateVersion
+	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version:hibernateVersion
+	
+	compile 'com.zaxxer:HikariCP:2.4.0'
+	compile project(':micro-jdbc')
+	testCompile project(':micro-client')
 	testCompile project(':micro-grizzly')
 	testCompile project(':micro-jersey')
+	testCompile group: 'org.hsqldb', name:'hsqldb', version:'2.0.0'
 }
 
 modifyPom {
 	project {
-		name 'Microserver reactive'
+		name 'Microserver data'
 		description 'Opinionated rest microservices'
 		url 'https://github.com/aol/micro-server'
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'micro-reactive'
+		artifactId 'micro-data'
 		version "$version" 
 		
 		
@@ -41,6 +46,16 @@ modifyPom {
 				id 'johnmcclean-aol'
 				name 'John McClean'
 				email 'john.mcclean@teamaol.com'
+			}
+			developer {
+				id 'kewangie'
+				name 'Ke Wang'
+				email 'ke.wang@teamaol.com'
+			}
+			developer {
+				id 'earlzero'
+				name 'Nikita Sapozhnikov'
+				email 'nikita.sapozhnikov@teamaol.com'
 			}
 		}
 		
