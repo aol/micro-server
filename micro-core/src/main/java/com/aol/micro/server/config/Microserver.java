@@ -35,6 +35,12 @@ public @interface Microserver {
 	 * @return Instance property file name
 	 */
 	String instancePropertiesName() default "instance.properties";
+	
+	/**
+	 * @return Filename for service type related properties (e.g. OrderService)
+	 *
+	 */
+	String serviceTypePropertiesName() default "service-type.properties";
 
 	/**
 	 * @return Hibernate entity scan packages
