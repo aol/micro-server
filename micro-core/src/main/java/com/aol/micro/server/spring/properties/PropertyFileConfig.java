@@ -59,22 +59,23 @@ public class PropertyFileConfig {
 
 	private List<Resource> loadPropertyResource() {
 		List<Resource> resources = new ArrayList<>();
-		loadProperties().ifPresent(it -> resources.add(it));
+		String applicationPropertyFileName = new ConfigAccessor().get().getPropertiesName();
+		loadProperties(applicationPropertyFileName,"application").ifPresent(it -> resources.add(it));
+		
+		String serviceTypePropertyFileName = new ConfigAccessor().get().getServiceTypePropertiesName();
+		loadProperties(serviceTypePropertyFileName,"service-type").ifPresent(it -> resources.add(it));
+		
+		
 		
 		String instancePropertyFileName = new ConfigAccessor().get().getInstancePropertiesName();
-
-		URL instanceResource = getClass().getClassLoader().getResource(instancePropertyFileName);
-		if (instanceResource != null) {
-			resources.add(new UrlResource(instanceResource));
-			logger.info("instance.properties added");
-		}
-
+		loadProperties(instancePropertyFileName,"instance").ifPresent(it -> resources.add(it));
+		
 		return resources;
 	}
 
-	private Optional<Resource> loadProperties() {
+	private Optional<Resource> loadProperties(String applicationPropertyFileName, String type) {
 
-		String applicationPropertyFileName = new ConfigAccessor().get().getPropertiesName();
+		
 
 		Optional<Resource> resource = Optional.empty();
 
@@ -89,7 +90,7 @@ public class PropertyFileConfig {
 			logger.info(applicationPropertyFileName + " added");
 		}
 
-		if (System.getProperty("application.env") != null) {
+		if (System.getProperty(type+".env") != null) {
 			URL envResource = getClass().getClassLoader().getResource(createEnvBasedPropertyFileName(applicationPropertyFileName));
 			if (envResource != null) {
 				resource = Optional.of(new UrlResource(envResource));
@@ -97,8 +98,8 @@ public class PropertyFileConfig {
 			}
 
 		}
-		if (System.getProperty("application.property.file") != null) {
-			resource = Optional.of(new FileSystemResource(new File(System.getProperty("application.property.file"))));
+		if (System.getProperty(type+".property.file") != null) {
+			resource = Optional.of(new FileSystemResource(new File(System.getProperty(type+".property.file"))));
 			logger.info(System.getProperty("application.property.file") + " added");
 
 		}

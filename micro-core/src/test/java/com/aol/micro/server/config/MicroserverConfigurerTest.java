@@ -8,7 +8,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-@Microserver(propertiesName = "test!", instancePropertiesName = "test2!", properties = { "hello", "world" }, entityScan = { "packages" }, classes = { Integer.class })
+@Microserver(propertiesName = "test!", instancePropertiesName = "test2!",serviceTypePropertiesName = "servicetType!", 
+			properties = { "hello", "world" }, entityScan = { "packages" }, classes = { Integer.class })
 public class MicroserverConfigurerTest {
 	MicroserverConfigurer configurer = new MicroserverConfigurer();
 
@@ -27,6 +28,11 @@ public class MicroserverConfigurerTest {
 	@Test
 	public void instancPpropertiesName() {
 		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getInstancePropertiesName(), equalTo("test2!"));
+
+	}
+	@Test
+	public void serviceTypePropertiesName() {
+		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getServiceTypePropertiesName(), equalTo("servicetType!"));
 
 	}
 

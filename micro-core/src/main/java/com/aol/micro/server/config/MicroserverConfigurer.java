@@ -36,6 +36,7 @@ public class MicroserverConfigurer implements Configurer {
 
 		return Config.instance().withBasePackages(basePackages).withEntityScan(microserver.entityScan()).withClasses(HashTreePSet.from(classes))
 				.withPropertiesName(microserver.propertiesName()).withInstancePropertiesName(microserver.instancePropertiesName())
+				.withServiceTypePropertiesName(microserver.serviceTypePropertiesName())
 				.withAllowCircularReferences(microserver.allowCircularDependencies()).withProperties(HashTreePMap.from(properties)).set();
 	}
 
