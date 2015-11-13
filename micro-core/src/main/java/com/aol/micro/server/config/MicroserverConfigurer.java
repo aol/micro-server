@@ -60,4 +60,10 @@ public class MicroserverConfigurer implements Configurer {
 		
 		return classes.stream().filter(clazz -> !blackList.contains(clazz)).collect(Collectors.toList());
 	}
+
+	public Set<Class> vetClasses(Class class1,Set<Class> coreClasses) {
+		Microserver microserver = (Microserver) class1.getAnnotation(Microserver.class);
+		Set<Class> blackList = Arrays.stream(microserver.blacklistedClasses()).collect(Collectors.toSet());
+		return coreClasses.stream().filter(clazz -> !blackList.contains(clazz)).collect(Collectors.toSet());
+	}
 }

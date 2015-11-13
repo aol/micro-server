@@ -17,7 +17,7 @@ import com.aol.micro.server.SchedulingConfiguration;
 @EnableScheduling
 @EnableAsync
 public class ScheduleAndAsyncConfig implements SchedulingConfiguration {
-
+	
 	private int executorThreadPoolSize;
 	private int schedulerThreadPoolSize;
 
