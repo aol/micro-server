@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.pcollections.HashTreePMap;
@@ -48,6 +49,8 @@ public class MicroserverConfigurer implements Configurer {
 
 	private List<Class> buildClasses(Class class1, Microserver microserver) {
 		List<Class> classes = new ArrayList();
+		Set<Class> blackList = Arrays.stream(microserver.blacklistedClasses()).collect(Collectors.toSet());
+
 		classes.add(class1);
 		if (microserver.classes() != null)
 			classes.addAll(Arrays.asList(microserver.classes()));
@@ -55,6 +58,6 @@ public class MicroserverConfigurer implements Configurer {
 		if(modules.size()>0)
 			classes.addAll(SequenceM.fromStream(modules.stream()).flatMap(module -> module.springClasses().stream()).toList());
 		
-		return classes;
+		return classes.stream().filter(clazz -> !blackList.contains(clazz)).collect(Collectors.toList());
 	}
 }

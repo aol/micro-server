@@ -24,7 +24,10 @@ public @interface Microserver {
 	 */
 	Class[] classes() default {};
 
-	
+	/** @return blacklist of classes that should be excluded from spring context
+	 * 
+	 */
+	Class[] blacklistedClasses() default {};
 
 	/**
 	 * @return Property file name
