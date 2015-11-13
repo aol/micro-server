@@ -67,6 +67,11 @@ modifyPom {
 				name 'Ke Wang'
 				email 'ke.wang@teamaol.com'
 			}
+			developer {
+				id 'earlzero'
+				name 'Nikita Sapozhnikov'
+				email 'nikita.sapozhnikov@teamaol.com '
+			}
 		}
 		
 	}
