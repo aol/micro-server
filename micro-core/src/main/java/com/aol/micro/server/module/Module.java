@@ -53,6 +53,7 @@ public interface Module {
 		return Arrays.asList(Rest.class);
 	}
 	
+	
 	default List<String> getDefaultJaxRsPackages(){
 		List list = new ArrayList<>();
 		list.addAll(SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
