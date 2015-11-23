@@ -2,8 +2,8 @@ package com.aol.micro.server.spring.datasource;
 
 import java.util.Properties;
 
-import lombok.experimental.Builder;
 import lombok.Getter;
+import lombok.experimental.Builder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,12 +29,13 @@ public class JdbcConfig {
 	private final Properties properties;
 	private final String name;
 	private final String generateDdl;
+	private final int maxPoolSize;
 
 	public JdbcConfig(@Value("${db.connection.driver:}") String driverClassName, @Value("${db.connection.url:}") String url,
 			@Value("${db.connection.username:}") String username, @Value("${db.connection.password:}") String password,
 			@Value("${db.connection.hibernate.showsql:false}") String showSql, @Value("${db.connection.dialect:}") String dialect,
 			@Value("${db.connection.ddl.auto:#{null}}") String ddlAuto) {
-		this(driverClassName, url, username, password, showSql, dialect, ddlAuto, new Properties(), "db", "false");
+		this(driverClassName, url, username, password, showSql, dialect, ddlAuto, new Properties(), "db", "false", 100);
 
 	}
 
@@ -43,7 +44,8 @@ public class JdbcConfig {
 			@Value("${db.connection.username:}") String username, @Value("${db.connection.password:}") String password,
 			@Value("${db.connection.hibernate.showsql:false}") String showSql, @Value("${db.connection.dialect:}") String dialect,
 			@Value("${db.connection.ddl.auto:#{null}}") String ddlAuto, @Qualifier("propertyFactory") Properties properties,
-			@Value("${internal.not.use.microserver:#{null}}") String name, @Value("${db.connection.generate.ddl:false}") String generateDdl) {
+			@Value("${internal.not.use.microserver:#{null}}") String name, @Value("${db.connection.generate.ddl:false}") String generateDdl,
+			@Value("${db.connection.max.pool.size:100}") int maxPoolSize) {
 		this.properties = properties;
 		this.name = UsefulStaticMethods.either(name, new ConfigAccessor().get().getDefaultDataSourceName());
 		this.driverClassName = UsefulStaticMethods.either(driverClassName, extract("connection.driver"));
@@ -54,6 +56,7 @@ public class JdbcConfig {
 		this.dialect = UsefulStaticMethods.either(dialect, extract("connection.dialect"));
 		this.ddlAuto = UsefulStaticMethods.either(ddlAuto, extract("connection.ddl.auto"));
 		this.generateDdl = UsefulStaticMethods.either(generateDdl, extract("connection.generate.ddl"));
+		this.maxPoolSize = maxPoolSize;
 
 	}
 
