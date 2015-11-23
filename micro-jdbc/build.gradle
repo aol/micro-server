@@ -2,7 +2,6 @@ description = 'micro-jdbc'
 dependencies {
 	compile 'org.springframework.data:spring-data-jpa:'+springDataJPA
 	compile group: 'org.springframework', name: 'spring-jdbc', version:"${springVersion}"
-	compile group: 'org.springframework', name: 'spring-orm', version:"${springVersion}"
 
 	
 	compile 'com.zaxxer:HikariCP:2.4.0'
