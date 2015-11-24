@@ -9,6 +9,29 @@ This plugin provides two REST Clients
 
 The NIORestClient is available as  Spring bean. AsyncRestClient can simply be instantiated via the new keyword.
 
+## Example
+ ```java
+public class Example{
+
+
+	
+	private final AsyncRestClient restClient;
+	private final String url;
+	private final String ACCEPT_HEADERS;
+	private final String CONTENT_HEADERS;
+
+	public CompletableFuture<Result> query(Payload payload){
+		
+		return this.restClient.withAccept(ACCEPT_HEADERS)
+						.withContentType(CONTENT_HEADERS)
+						.withResponse(RESULT.class)
+						.post(url,payload);
+	
+	}
+
+	
+}
+```
 ## To use
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-client)
