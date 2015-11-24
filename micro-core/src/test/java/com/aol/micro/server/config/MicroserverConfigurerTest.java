@@ -2,13 +2,17 @@ package com.aol.micro.server.config;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-@Microserver(propertiesName = "test!", instancePropertiesName = "test2!", properties = { "hello", "world" }, entityScan = { "packages" }, classes = { Integer.class })
+@Microserver(propertiesName = "test!", instancePropertiesName = "test2!",serviceTypePropertiesName = "servicetType!", 
+			properties = { "hello", "world" }, entityScan = { "packages" }, classes = { String.class, Integer.class }, 
+			blacklistedClasses = {String.class})
+
 public class MicroserverConfigurerTest {
 	MicroserverConfigurer configurer = new MicroserverConfigurer();
 
@@ -29,6 +33,11 @@ public class MicroserverConfigurerTest {
 		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getInstancePropertiesName(), equalTo("test2!"));
 
 	}
+	@Test
+	public void serviceTypePropertiesName() {
+		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getServiceTypePropertiesName(), equalTo("servicetType!"));
+
+	}
 
 	@Test
 	public void entityScan() {
@@ -42,6 +51,14 @@ public class MicroserverConfigurerTest {
 		Config config = configurer.buildConfig(MicroserverConfigurerTest.class);
 		System.out.println(config.getClasses());
 		assertThat(config.getClasses(), hasItem(Integer.class));
+
+	}
+	
+	@Test
+	public void blacklistedClasses() {
+		Config config = configurer.buildConfig(MicroserverConfigurerTest.class);
+		System.out.println(config.getClasses());
+		assertThat(config.getClasses(), not(hasItem(String.class)));
 
 	}
 

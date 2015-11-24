@@ -44,10 +44,17 @@ public class ServerData {
 	public Stream<PTuple2<String,String>> extractResources() {
 		
 		
-		return resources.stream().map(resource -> PowerTuples.tuple(resource.getClass().getName(), 
+		return resources.stream().peek(resource -> logMissingPath(resource)).map(resource -> PowerTuples.tuple(resource.getClass().getName(), 
 										resource.getClass().getAnnotation(Path.class).value()));
 		
 
+	}
+
+	private void logMissingPath(Object resource) {
+		if(resource.getClass().getAnnotation(Path.class)==null){
+			logger.error("Missing path attribute for resource " + resource);
+			throw new RestResourceMissingPathException("Missing path attribute for resource " + resource);
+		}
 	}
 
 	

@@ -18,12 +18,13 @@ import app.javaslang.com.aol.micro.server.ImmutableJavaslangEntity;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
+import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.stream.simple.SimpleReact;
 import com.aol.simple.react.stream.traits.SimpleReactStream;
 
 
-@Microserver(basePackages = { "app.guava.com.aol.micro.server" })
+@Microserver(basePackages = { "app.validation.com.aol.micro.server" })
 public class ValidationAppTest {
 
 	RestAgent rest = new RestAgent();
@@ -40,12 +41,16 @@ public class ValidationAppTest {
 	public void startServer() {
 		stream = simpleReact.react(
 				() -> server = new MicroserverApp(ValidationAppTest.class,
-						() -> "guava-app")).then(server -> server.start());
+						() -> "validation-app")).then(server -> server.start());
 
 		entity = ImmutableJavaslangEntity.builder().value("value")
-				.list(List.of("hello", "world"))
+				.list(List.ofAll("hello", "world"))
 				.mapOfSets(HashMap.<String,Set>empty().put("key1",HashSet.ofAll(Arrays.asList(1, 2, 3))))
 				.build();
+		
+		String json = JacksonUtil.serializeToJson(entity);
+		
+		ImmutableJavaslangEntity entity  = JacksonUtil.convertFromJson(json, ImmutableJavaslangEntity.class);
 
 		
 	}
@@ -62,8 +67,8 @@ public class ValidationAppTest {
 
 		stream.block();
 		rest.post(
-				"http://localhost:8080/guava-app/status/ping", null,
-				List.class);
+				"http://localhost:8080/validation-app/status/ping", null,
+				ImmutableJavaslangEntity.class);
 		
 
 	}
@@ -73,8 +78,8 @@ public class ValidationAppTest {
 
 		stream.block();
 		rest.post(
-				"http://localhost:8080/guava-app/status/ping", entity,
-				List.class);
+				"http://localhost:8080/validation-app/status/ping", entity,
+				ImmutableJavaslangEntity.class);
 		
 
 	}

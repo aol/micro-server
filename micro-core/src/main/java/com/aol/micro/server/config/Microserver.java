@@ -24,7 +24,10 @@ public @interface Microserver {
 	 */
 	Class[] classes() default {};
 
-	
+	/** @return blacklist of classes that should be excluded from spring context
+	 * 
+	 */
+	Class[] blacklistedClasses() default {};
 
 	/**
 	 * @return Property file name
@@ -35,6 +38,12 @@ public @interface Microserver {
 	 * @return Instance property file name
 	 */
 	String instancePropertiesName() default "instance.properties";
+	
+	/**
+	 * @return Filename for service type related properties (e.g. OrderService)
+	 *
+	 */
+	String serviceTypePropertiesName() default "service-type.properties";
 
 	/**
 	 * @return Hibernate entity scan packages

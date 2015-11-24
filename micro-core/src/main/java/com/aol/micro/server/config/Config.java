@@ -36,6 +36,7 @@ public class Config {
 
 	private final String propertiesName;
 	private final String instancePropertiesName;
+	private final String serviceTypePropertiesName;
 	private final PMap<String, List<String>> dataSources;
 	private final SSLProperties sslProperties;
 	private final boolean allowCircularReferences;
@@ -48,6 +49,7 @@ public class Config {
 		defaultDataSourceName = "db";
 		propertiesName = "application.properties";
 		instancePropertiesName = "instance.properties";
+		serviceTypePropertiesName = "service-type.properties";
 		sslProperties = null;
 		allowCircularReferences = false;
 		basePackages=new String[0];

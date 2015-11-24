@@ -1,14 +1,13 @@
 repositories {
 	mavenCentral()
-	maven {
-		url "https://oss.sonatype.org/content/repositories/snapshots"
-		//url "https://jitpack.io"
-	}
+	
 }
 description = 'micro-javaslang'
 dependencies {
 	
 	compile "com.javaslang:javaslang:$javaslangVersion"
+	
+	
 	compile "com.javaslang:javaslang-jackson:$javaslangDatatypeVersion"
 	compile 'com.aol.cyclops:cyclops-javaslang:'+cyclopsVersion
 	compile project(':micro-core')

@@ -16,25 +16,24 @@ import com.aol.micro.server.auto.discovery.Rest;
 
 @Rest
 @Path("/status")
-public class SimpleStatusResource  {
+public class SimpleStatusResource {
 
-	
-	
 	@GET
 	@Produces("text/plain")
 	@Path("/ping")
 	public String ping() {
-		
+
 		return "ok";
 	}
 
-	   @POST
-	    @Consumes(MediaType.MULTIPART_FORM_DATA)
-	    @Produces(MediaType.TEXT_PLAIN)
-	    @Path("/file")
-	    public String create(@FormDataParam("file") InputStream fileInputStream,
-	                         @FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("/file")
+	public String create(
+			@FormDataParam("file") InputStream fileInputStream,
+			@FormDataParam("file") FormDataContentDisposition contentDispositionHeader) {
 
-	        return "done";
-	    }
+		return "done";
+	}
 }

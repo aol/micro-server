@@ -29,7 +29,7 @@ public class JacksonUtilTest {
 	@Test
 	public void testGenerics(){
 		String s = JacksonUtil.serializeToJson(List.of(new MyEntity()));
-		List<MyEntity> list = JacksonUtil.convertFromJson(s, JacksonUtil.getMapper().getTypeFactory().constructParametricType(ImmutableList.class,MyEntity.class));
+		List<MyEntity> list = JacksonUtil.convertFromJson(s, JacksonUtil.getMapper().getTypeFactory().constructParametricType(List.class,MyEntity.class));
 		assertThat(list.get(0),is(new MyEntity()));
 		
 	}

@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import javaslang.collection.List;
+import javaslang.jackson.datatype.JavaslangModule;
 
 import javax.ws.rs.NotFoundException;
 
@@ -20,7 +21,10 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.module.EmbeddedModule;
+import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class EmbeddedAppTest {
@@ -43,12 +47,17 @@ public class EmbeddedAppTest {
 	}
 	
 	@Test
-	public void confirmExpectedUrlsPresentTest() throws InterruptedException, ExecutionException{
+	public void confirmExpectedUrlsPresentTest() throws InterruptedException, ExecutionException, JsonProcessingException{
 		
 		assertThat(rest.get("http://localhost:8080/test-app/test-status/ping"),is("test!"));
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new JavaslangModule());
+		String json = mapper.writer().writeValueAsString(List.of(List.of(1)));
 		
-		
-		assertThat((List<String>)rest.post("http://localhost:8081/alternative-app/alt-status/ping",new ImmutableEntity("value",List.of("hello","world")),List.class),
+		System.out.println(mapper.writer().writeValueAsString(new ImmutableEntity("value",List.ofAll("hello","world"))));
+
+		System.out.println(JacksonUtil.serializeToJson(new ImmutableEntity("value",List.ofAll("hello","world"))));
+assertThat((List<String>)rest.post("http://localhost:8081/alternative-app/alt-status/ping",new ImmutableEntity("value",List.ofAll("hello","world")),List.class),
 				hasItem("hello"));
 	
 	}
@@ -97,7 +106,7 @@ public class EmbeddedAppTest {
 	@Test(expected=NotFoundException.class)
 	public void confirmTestAppCantUseAltAppResources(){
 		
-		assertThat((List<String>)rest.post("http://localhost:8081/test-app/alt-status/ping",new ImmutableEntity("value",List.of("hello","world")),List.class),
+		assertThat((List<String>)rest.post("http://localhost:8081/test-app/alt-status/ping",new ImmutableEntity("value",List.ofAll("hello","world")),List.class),
 				hasItem("hello"));
 	
 	}

@@ -3,6 +3,8 @@ dependencies {
 	compile group: 'org.springframework', name: 'spring-jdbc', version:"${springVersion}"
 	compile 'com.zaxxer:HikariCP:2.4.0'
 	compile project(':micro-core')
+	testCompile project(':micro-grizzly-with-jersey')
+	testCompile group: 'org.hsqldb', name:'hsqldb', version:'2.0.0'
 	
 }
 
