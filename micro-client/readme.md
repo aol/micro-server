@@ -15,7 +15,7 @@ public class Example{
 
 
 	
-	private final AsyncRestClient restClient;
+	private final AsyncRestClient<Result> restClient;
 	private final String url;
 	private final String ACCEPT_HEADERS;
 	private final String CONTENT_HEADERS;
