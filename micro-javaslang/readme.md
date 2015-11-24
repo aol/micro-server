@@ -6,6 +6,12 @@ This plugin
 
 1. Configures Jackson for Javaslang serialisation / deserialisation, so Javaslang types can be used as input and output to jax-rs Resources
 2. Add cyclops-javaslang to your project which enables conversion between JDK / Javaslang / Guava / Jool / simple-react types and adds features such as for-comprehensions to Javaslang.
+3. Integrates with micro-client, Rest clients (RestClient, AsyncRestClient and NIORestClient) automatically pick up Javaslang mappings
+4. Adds some reactive programming support for Javaslang Streams namely 
+     a. JavaslangReactive mixin allows creating Javaslang reactive-streams Publishers and Subsribers simple
+     b. JavaslangPipes and JavaslangReactive provide integration with simple-react
+     c. Ability to push data into a Javaslang Stream across threads via JavaslangPipes
+	 
 
 ## To use
 
