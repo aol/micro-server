@@ -5,10 +5,12 @@ import java.util.Optional;
 import javaslang.collection.Stream;
 
 import com.aol.cyclops.javaslang.FromJDK;
-import com.aol.cyclops.sequence.SequenceM;
+import com.aol.cyclops.javaslang.reactivestreams.JavaslangReactiveStreamsSubscriber;
 import com.aol.simple.react.async.Adapter;
 import com.aol.simple.react.async.pipes.LazyReactors;
+import com.aol.simple.react.async.pipes.Pipes;
 import com.aol.simple.react.async.subscription.Subscription;
+import com.aol.simple.react.reactivestreams.FutureStreamAsyncPublisher;
 import com.aol.simple.react.stream.traits.LazyFutureStream;
 
 /**
@@ -104,7 +106,9 @@ public class JavaslangPipes{
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <V> Stream<V> stream(Object key){
-		return FromJDK.stream(JavaslangPipes.<Object,V>get(key).get().stream());
+		Adapter<V> adapter = JavaslangPipes.<Object,V>get(key).get();
+		Subscription sub = new Subscription();
+		return FromJDK.stream(adapter.stream(sub),sub);
 	}
 	/**
 	 * @param key : Queue identifier
@@ -123,6 +127,17 @@ public class JavaslangPipes{
 	public static <V> LazyFutureStream<V> futureStreamCPUBound(Object key){
 		Subscription sub = new Subscription();
 		return LazyReactors.cpuReact.from(JavaslangPipes.<Object,V>get(key).get().stream(sub)).withSubscription(sub);
+	}
+	/**
+	 * Clear all registered adapters & pipes from the registry
+	 */
+	public static void clear() {
+		Pipes.clear();
+		
+	}
+	public static <K,V> void register(K key, Adapter<V> adapter) {
+		Pipes.register(key, adapter);
+		
 	}
 
 	
