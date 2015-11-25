@@ -153,7 +153,7 @@ public class ReactiveStreamsPublisherTest implements JavaslangReactive {
 }
  ```
  
- ### reactive-streams subscriber example
+### reactive-streams subscriber example
  
 ```java 
  public class ReactiveStreamsSubscriberTest implements JavaslangReactive {
@@ -170,7 +170,7 @@ public class ReactiveStreamsPublisherTest implements JavaslangReactive {
 }
  ``` 
  
- ### reactive-streams subscriber example on a separate thread
+### reactive-streams subscriber example on a separate thread
  
  
  ```java
