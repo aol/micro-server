@@ -37,13 +37,16 @@ public class JavaslangPipes{
 	 * 
 	 *  <pre>
 	 * {@code
-	 * Stream<String> stream = Pipes.registerForSequential("test", QueueFactories.
+	 * Stream<String> stream = JavaslangPipes.registerForSequential("test", QueueFactories.
 											<String>boundedNonBlockingQueue(100)
 												.build());
 		stream.filter(it->it!=null)
 		      .peek(this::process)
 		      .forEach(System.out::println);
 	 * 
+	 *   //note that the take operator will limit items taken, but not close connection to the queue / adapter
+	 *   //queue needs to be closed independently
+	 *
 	 * }</pre>
 	 * @param key : Adapter identifier
 	 * @param adapter
@@ -60,7 +63,7 @@ public class JavaslangPipes{
 	 * 
 	 *  <pre>
 	 * {@code
-	 * LazyFutureStream<String> stream = Pipes.registerForCPU("test", QueueFactories.
+	 * LazyFutureStream<String> stream = JavaslangPipes.registerForCPU("test", QueueFactories.
 											<String>boundedNonBlockingQueue(100)
 												.build());
 		stream.filter(it->it!=null)
@@ -82,7 +85,7 @@ public class JavaslangPipes{
 	 * 
 	 * <pre>
 	 * {@code
-	 * LazyFutureStream<String> stream = Pipes.registerForIO("test", QueueFactories.
+	 * LazyFutureStream<String> stream = JavaslangPipes.registerForIO("test", QueueFactories.
 											<String>boundedNonBlockingQueue(100)
 												.build());
 		stream.filter(it->it!=null)
@@ -135,6 +138,12 @@ public class JavaslangPipes{
 		Pipes.clear();
 		
 	}
+	/**
+	 * Register specified adapter with key
+	 * 
+	 * @param key  Lookup key for adapter
+	 * @param adapter Adapter to register
+	 */
 	public static <K,V> void register(K key, Adapter<V> adapter) {
 		Pipes.register(key, adapter);
 		

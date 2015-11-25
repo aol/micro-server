@@ -77,23 +77,55 @@ public interface JavaslangReactive {
 		JavaslangReactiveStreamsPublisher<T> pub = JavaslangReactiveStreamsPublisher.ofAsync(s,exec);
 		pub.subscribe(sub);
 	}
+	/**
+	 * Get a LazyFutureStream optimized for IO operations,
+	 * connected to the adapter cached in JavaslangPipes with the specified key
+	 * 
+	 * @param key of Adapter in JavaslangPipes
+	 * @return IO Optimized LazyFutureStream
+	 */
 	default <K,T> LazyFutureStream<T> ioFutureStream(K key){
 		return JavaslangPipes.futureStreamIOBound(key);
 	}
+	/**
+	 * Get a Javaslang Stream connected to the adapter cached in JavaslangPipes with the specified key
+	 * 
+	 * @param key of Adapter in JavaslangPipes
+	 * @return Javaslang Stream connected to adapter
+	 */
 	default <K,T> Stream<T> sequentialStream(K key){
 		return JavaslangPipes.<T>stream(key);
 	}
+	/**
+	 *  Get a LazyFutureStream optimized for CPU operations,
+	 *  connected to the adapter cached in JavaslangPipes with the specified key
+	 *  
+	 * @param key of Adapter in JavaslangPipes
+	 * @return  Javaslang Stream connected to adapter
+	 */
 	default <K,T> LazyFutureStream<T> cpuFutureStream(K key){
 		return JavaslangPipes.futureStreamCPUBound(key);
 	}
+	/**
+	 * @return LazyReact Stream builder optimized for IO Operations
+	 */
 	default  LazyReact ioStreamBuilder(){
 		return LazyReactors.ioReact;
 	}
 	
+	/**
+	 * @return LazyReact Stream builder optimized for CPU Operations
+	 */
 	default LazyReact cpuStreamBuilder(){
 		return LazyReactors.cpuReact;
 	}
 	
+	/**
+	 * Switch a LazyFutureStream to a Javaslang Stream
+	 * 
+	 * @param stream LazyFutureStream to convert
+	 * @return Javaslang Stream
+	 */
 	default <T> Stream<T> switchToSequential(LazyFutureStream<T> stream){
 		return FromSimpleReact.fromSimpleReact(stream);
 	}
