@@ -3,12 +3,12 @@ package app.validation.com.aol.micro.server;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
+import javax.ws.rs.BadRequestException;
+
 import javaslang.collection.HashMap;
 import javaslang.collection.HashSet;
 import javaslang.collection.List;
 import javaslang.collection.Set;
-
-import javax.ws.rs.InternalServerErrorException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -61,7 +61,7 @@ public class ValidationAppTest {
 	}
 
 	
-	@Test(expected=InternalServerErrorException.class)
+	@Test(expected=BadRequestException.class)
 	public void confirmError() throws InterruptedException,
 			ExecutionException {
 

@@ -2,7 +2,6 @@ description = 'micro-guava'
 dependencies {
 	compile 'com.google.guava:guava:'+guavaVersion
 	compile 'com.aol.cyclops:cyclops-guava:'+cyclopsVersion
-	compile 'com.google.guava:'+guavaVersion
 	compile 'com.fasterxml.jackson.datatype:jackson-datatype-guava:'+guavaDatatypeVersion
 
 	compile project(':micro-core')

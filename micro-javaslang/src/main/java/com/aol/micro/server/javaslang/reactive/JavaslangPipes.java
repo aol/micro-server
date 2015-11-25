@@ -132,7 +132,7 @@ public class JavaslangPipes{
 		return LazyReactors.cpuReact.from(JavaslangPipes.<Object,V>get(key).get().stream(sub)).withSubscription(sub);
 	}
 	/**
-	 * Clear all registered adapters & pipes from the registry
+	 * Clear all registered adapters &amp; pipes from the registry
 	 */
 	public static void clear() {
 		Pipes.clear();
