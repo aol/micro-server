@@ -1,6 +1,6 @@
 # Javaslang Plugin for Microserver
 
-[micro-javaslang example apps](https://github.com/aol/micro-server/tree/master/micro-javslang/src/test/java/app)
+[micro-javaslang example apps]https://github.com/aol/micro-server/tree/master/micro-javaslang/src/test/java/app)
 
 This plugin 
 
@@ -35,7 +35,7 @@ Gradle
     
 ## Examples
 
-JavaslangPipes
+### JavaslangPipes
 
  ```java
  	
@@ -50,7 +50,7 @@ JavaslangPipes
 	
 ```
     
-Simple App with Javaslang Lists and Sets
+### Simple App with Javaslang Lists and Sets
 
  ```java
 @Microserver
@@ -116,3 +116,25 @@ Running the app and browsing to http://localhost:8080/javaslang-app/javaslang/pi
     }
 }    
  ```   
+ 
+ ### For comphrension example
+ 
+ Javaslang List and JDK8 CompletableFuture
+ 
+ ```java 
+ public void cfList(){
+		
+		CompletableFuture<String> future = CompletableFuture.supplyAsync(this::loadData);
+		CompletableFuture<List<String>> results1 = Do.add(future)
+ 									    .add(List.of("first","second"))
+ 										.yield( loadedData -> localData-> loadedData + ":" + localData )
+ 										.unwrap();
+		
+		System.out.println(results1.join());
+		
+	}
+	private String loadData(){
+		return "loaded";
+	}
+ ```
+
