@@ -117,7 +117,7 @@ Running the app and browsing to http://localhost:8080/javaslang-app/javaslang/pi
 }    
  ```   
  
-### For comphrension example
+### for-comprehension example
  
  Javaslang List and JDK8 CompletableFuture
  
@@ -138,3 +138,54 @@ Running the app and browsing to http://localhost:8080/javaslang-app/javaslang/pi
 	}
  ```
 
+### reactive-streams publisher example
+
+ ```java 
+public class ReactiveStreamsPublisherTest implements JavaslangReactive {
+
+	@Test
+	public void publish(){
+		
+		Stream<Integer> javaslangStream = this.publish(LazyFutureStream.of(1,2,3));
+		
+		assertThat(javaslangStream.toList(),equalTo(List.ofAll(1,2,3)));
+	}
+}
+ ```
+ 
+ ### reactive-streams subscriber example
+ 
+```java 
+ public class ReactiveStreamsSubscriberTest implements JavaslangReactive {
+
+	
+	@Test
+	public void subscribe(){
+		Stream<Integer> stream = Stream.ofAll(1,2,3);
+		CyclopsSubscriber<Integer> sub = SequenceM.subscriber();
+		this.subsribe(stream, sub);
+		
+		assertThat(sub.sequenceM().toList(),equalTo(Arrays.asList(1,2,3)));
+	}
+}
+ ``` 
+ 
+ ### reactive-streams subscriber example on a separate thread
+ 
+ 
+ ```java
+ public class ReactiveStreamsAsyncSubscriberTest implements JavaslangReactive {
+
+
+	
+	@Test
+	public void subscribeAsync(){
+		Stream<Integer> stream = Stream.ofAll(1,2,3);
+		CyclopsSubscriber<Integer> sub = SequenceM.subscriber();
+		this.subsribe(stream, sub,Executors.newFixedThreadPool(1));
+		
+		assertThat(sub.sequenceM().toList(),equalTo(Arrays.asList(1,2,3)));
+	}
+}
+```
+ 
