@@ -3,16 +3,16 @@ dependencies {
 	compile 'javax.servlet:javax.servlet-api:3.1.0'
 	
 	compile ("com.aol.cyclops:cyclops-all:$cyclopsVersion")
-	compile group: 'org.aspectj', name: 'aspectjrt', version:'1.5.4'
-	compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.5.4'
+	compile group: 'org.aspectj', name: 'aspectjrt', version:aspectJVersion
+	compile group: 'org.aspectj', name: 'aspectjweaver', version:aspectJVersion
 
 	
 	compile group: 'org.springframework', name: 'spring-web', version:"${springVersion}"
 	compile group: 'org.springframework', name: 'spring-context', version:"${springVersion}"
 	compile group: 'org.springframework', name: 'spring-context-support', version:"${springVersion}"
-	compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.0.4'
-	compile group: 'ch.qos.logback', name: 'logback-core', version:'1.0.4'
-	compile group: 'org.slf4j', name: 'jcl-over-slf4j', version:'1.6.1'
+	compile group: 'ch.qos.logback', name: 'logback-classic', version:logbackVersion
+	compile group: 'ch.qos.logback', name: 'logback-core', version:logbackVersion
+	compile group: 'org.slf4j', name: 'jcl-over-slf4j', version:slf4jVersion
 
 
 	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version:"$jacksonVersion"

@@ -2,7 +2,11 @@ def custom ={ "$rootDir/gradle/${it}.gradle"}
 
 buildscript {
 	repositories { jcenter()
-		maven { url 'https://github.com/serkan-ozal/maven-repository/raw/master/' }
+		maven { 
+			url 'https://github.com/serkan-ozal/maven-repository/raw/master/'
+			url "https://oss.sonatype.org/content/repositories/snapshots"
+			
+		}
 		
 	}
 

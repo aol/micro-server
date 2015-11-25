@@ -1,27 +1,32 @@
-description = 'micro-reactive'
+repositories {
+	mavenCentral()
+	
+}
+description = 'micro-javaslang'
 dependencies {
 	
-	compile ("com.aol.cyclops:cyclops-all:$cyclopsVersion")
+	compile "com.javaslang:javaslang:$javaslangVersion"
 	
-
-	compile ('com.aol.simplereact:simple-react:'+simpleReactVersion){
-		exclude group:'com.aol.cyclops'
-	}	
-
-	testCompile project(':micro-core')
+	
+	compile "com.javaslang:javaslang-jackson:$javaslangDatatypeVersion"
+	compile 'com.aol.cyclops:cyclops-javaslang:'+cyclopsVersion
+	compile project(':micro-core')
 	testCompile project(':micro-grizzly')
 	testCompile project(':micro-jersey')
+	testCompile group: 'com.aol.simplereact', name:'simple-react', version:"${simpleReactVersion}"
+	
 }
+
 
 modifyPom {
 	project {
-		name 'Microserver reactive'
+		name 'Microserver guava'
 		description 'Opinionated rest microservices'
 		url 'https://github.com/aol/micro-server'
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'micro-reactive'
+		artifactId 'micro-guava'
 		version "$version" 
 		
 		

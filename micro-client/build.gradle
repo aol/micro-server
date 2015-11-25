@@ -3,8 +3,8 @@ dependencies {
 	
 	
 	compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version:"$jerseyVersion"
-	compile group: 'org.apache.httpcomponents', name:'httpclient', version:'4.4'
-	compile group: 'org.apache.httpcomponents', name:'httpasyncclient', version:'4.1-beta1'
+	compile group: 'org.apache.httpcomponents', name:'httpclient', version:apacheHttpClientVersion
+	compile group: 'org.apache.httpcomponents', name:'httpasyncclient', version:apacheHttpClientVersionAsync
 	
 	compile project(':micro-core')
 	

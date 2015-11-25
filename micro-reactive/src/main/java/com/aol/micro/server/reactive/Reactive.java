@@ -45,7 +45,7 @@ public interface Reactive {
 	default <K,T> SequenceM<T> sequentialStream(K key){
 		return Pipes.stream(key);
 	}
-	default <K,T> SequenceM<T> cpuFutureStream(K key){
+	default <K,T> LazyFutureStream<T> cpuFutureStream(K key){
 		return Pipes.futureStreamCPUBound(key);
 	}
 	default  LazyReact ioStreamBuilder(){

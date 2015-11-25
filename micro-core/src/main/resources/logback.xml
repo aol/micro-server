@@ -1,5 +1,5 @@
 <configuration scan="true">
-	<property resource="lana.properties" />
+	
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
