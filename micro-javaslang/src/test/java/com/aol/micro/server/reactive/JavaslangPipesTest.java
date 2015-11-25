@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import com.aol.micro.server.javaslang.reactive.JavaslangPipes;
 import com.aol.simple.react.async.Queue;
+import com.aol.simple.react.async.factories.QueueFactories;
 import com.aol.simple.react.stream.traits.LazyFutureStream;
 
 public class JavaslangPipesTest {
@@ -34,6 +35,7 @@ public class JavaslangPipesTest {
 
 	@Test
 	public void testStream() {
+		
 		Queue queue = new Queue();
 		queue.add("world");
 		JavaslangPipes.register("hello",queue);
