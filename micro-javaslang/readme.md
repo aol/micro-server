@@ -1,6 +1,6 @@
 # Javaslang Plugin for Microserver
 
-[micro-javaslang example apps]https://github.com/aol/micro-server/tree/master/micro-javaslang/src/test/java/app)
+[micro-javaslang example apps](https://github.com/aol/micro-server/tree/master/micro-javaslang/src/test/java/app)
 
 This plugin 
 
@@ -117,7 +117,7 @@ Running the app and browsing to http://localhost:8080/javaslang-app/javaslang/pi
 }    
  ```   
  
- ### For comphrension example
+### For comphrension example
  
  Javaslang List and JDK8 CompletableFuture
  
