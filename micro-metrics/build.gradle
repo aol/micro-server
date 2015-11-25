@@ -1,6 +1,6 @@
 description = 'micro-metrics'
 dependencies {
-	compile ('com.ryantenney.metrics:metrics-spring:3.0.3'){
+	compile ('com.ryantenney.metrics:metrics-spring:'+springMetricsVersion){
 		exclude(module: 'org.springframework')
 	}
 	compile project(':micro-core')
