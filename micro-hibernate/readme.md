@@ -6,7 +6,7 @@ Creates a DataSource Spring Bean with name "mainDataSource" from v0.63 this will
 ## To use
 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-data/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-data)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-hibernate/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-hibernate)
 
 Simply add to the classpath
 
