@@ -45,7 +45,7 @@ public class JdbcConfig {
 			@Value("${db.connection.hibernate.showsql:false}") String showSql, @Value("${db.connection.dialect:}") String dialect,
 			@Value("${db.connection.ddl.auto:#{null}}") String ddlAuto, @Qualifier("propertyFactory") Properties properties,
 			@Value("${internal.not.use.microserver:#{null}}") String name, @Value("${db.connection.generate.ddl:false}") String generateDdl,
-			@Value("${db.connection.max.pool.size:100}") int maxPoolSize) {
+			@Value("${db.connection.max.pool.size:30}") int maxPoolSize) {
 		this.properties = properties;
 		this.name = UsefulStaticMethods.either(name, new ConfigAccessor().get().getDefaultDataSourceName());
 		this.driverClassName = UsefulStaticMethods.either(driverClassName, extract("connection.driver"));
