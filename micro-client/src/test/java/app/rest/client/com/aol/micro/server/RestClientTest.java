@@ -21,6 +21,7 @@ import org.springframework.web.client.RestClientException;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
+import com.aol.micro.server.rest.client.RestClient;
 import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.micro.server.rest.client.nio.NIORestClient;
 import com.aol.micro.server.rest.client.nio.SpringConfig;
@@ -34,7 +35,11 @@ public class RestClientTest {
    	private final AsyncRestClient<List<String>> listClient = new AsyncRestClient(1000,1000).withResponse(List.class);
 	private final AsyncRestClient<ImmutableSet<String>> setClient = new AsyncRestClient(1000,1000).withResponse(ImmutableSet.class);;
 	private final AsyncRestClient<ImmutableList<MyEntity>> genericsClient = new AsyncRestClient(1000,1000).withGenericResponse(ImmutableList.class, MyEntity.class);
-  
+ 
+  	private final RestClient<List<String>> listClientSync = new RestClient(1000,1000).withResponse(List.class);
+	private final RestClient<ImmutableSet<String>> setClientSync = new RestClient(1000,1000).withResponse(ImmutableSet.class);;
+	private final RestClient<ImmutableList<MyEntity>> genericsClientSync = new RestClient(1000,1000).withGenericResponse(ImmutableList.class, MyEntity.class);
+ 
 	private final NIORestClient rest = new SpringConfig().restClient();
 																			
 
@@ -72,6 +77,28 @@ public class RestClientTest {
 		assertThat(genericsClient.post("http://localhost:8080/rest-app/generics/post",ImmutableMap.of(1,"hello")).get(),is(ImmutableList.of(new MyEntity())));
 		assertThat(genericsClient.put("http://localhost:8080/rest-app/generics/put",ImmutableMap.of(1,"hello")).get(),is(ImmutableList.of(new MyEntity())));
 		assertThat(genericsClient.delete("http://localhost:8080/rest-app/generics/delete").get().get(0),is(new MyEntity()));
+	}
+	/*
+	 * Simpler with JaxRsNIOClient
+	 */
+	@Test
+	public void testCRUDSync() throws InterruptedException, ExecutionException{
+		
+		
+		assertThat(listClientSync.get("http://localhost:8080/rest-app/rest/get").get(0),is("ok"));
+		assertThat(setClientSync.post("http://localhost:8080/rest-app/rest/post",ImmutableMap.of(1,"hello")),is(ImmutableSet.of("hello")));
+		assertThat(setClientSync.put("http://localhost:8080/rest-app/rest/put",ImmutableMap.of(1,"hello")),is(ImmutableSet.of("hello")));
+		assertThat(listClientSync.delete("http://localhost:8080/rest-app/rest/delete").get(0),is("ok"));
+	}
+	
+	@Test
+	public void testCRUDGenericsSync() throws InterruptedException, ExecutionException{
+		
+		
+		assertThat(genericsClientSync.get("http://localhost:8080/rest-app/generics/get").get(0),is(new MyEntity()));
+		assertThat(genericsClientSync.post("http://localhost:8080/rest-app/generics/post",ImmutableMap.of(1,"hello")),is(ImmutableList.of(new MyEntity())));
+		assertThat(genericsClientSync.put("http://localhost:8080/rest-app/generics/put",ImmutableMap.of(1,"hello")),is(ImmutableList.of(new MyEntity())));
+		assertThat(genericsClientSync.delete("http://localhost:8080/rest-app/generics/delete").get(0),is(new MyEntity()));
 	}
 	
 	/**

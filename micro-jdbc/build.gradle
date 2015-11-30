@@ -4,7 +4,7 @@ dependencies {
 	compile group: 'org.springframework', name: 'spring-jdbc', version:"${springVersion}"
 
 	
-	compile 'com.zaxxer:HikariCP:2.4.0'
+	compile 'com.zaxxer:HikariCP:'+hikariCPVersion
 	compile project(':micro-core')
 	testCompile project(':micro-client')
 	testCompile project(':micro-grizzly')

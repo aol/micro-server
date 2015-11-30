@@ -2,9 +2,12 @@ description = 'micro-reactive'
 dependencies {
 	
 	compile ("com.aol.cyclops:cyclops-all:$cyclopsVersion")
+	
+
 	compile ('com.aol.simplereact:simple-react:'+simpleReactVersion){
 		exclude group:'com.aol.cyclops'
 	}	
+
 	testCompile project(':micro-core')
 	testCompile project(':micro-grizzly')
 	testCompile project(':micro-jersey')

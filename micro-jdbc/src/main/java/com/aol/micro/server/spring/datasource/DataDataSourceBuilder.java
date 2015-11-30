@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import lombok.AllArgsConstructor;
-import lombok.experimental.Builder;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
@@ -33,6 +33,7 @@ public class DataDataSourceBuilder {
 		ds.setJdbcUrl(env.getUrl());
 		ds.setUsername(env.getUsername());
 		ds.setPassword(env.getPassword());
+		ds.setMaximumPoolSize(env.getMaxPoolSize());
 
 		return ds;
 	}

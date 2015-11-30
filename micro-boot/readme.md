@@ -8,45 +8,45 @@
 
 Add micro-boot to the classpath
 
-Maven 
+Maven
 
-     <dependency>
-        <groupId>com.aol.microservices</groupId>  
-        <artifactId>micro-boot</artifactId>
-        <version>x.yz</version>
-     </dependency>
-     
+    <dependency>
+       <groupId>com.aol.microservices</groupId>  
+       <artifactId>micro-boot</artifactId>
+       <version>x.yz</version>
+    </dependency>
+
 Gradle
 
     compile 'com.aol.microservices:micro-boot:x.yz'
-    
- And also add Grizzly and Jersey (micro-grizzly-with-jersey will add both)
- 
- Maven 
 
-     <dependency>
-        <groupId>com.aol.microservices</groupId>  
-        <artifactId>micro-grizzly-with-jersey</artifactId>
-        <version>x.yz</version>
-     </dependency>
-     
+And also add Grizzly and Jersey (micro-grizzly-with-jersey will add both)
+
+Maven
+
+    <dependency>
+       <groupId>com.aol.microservices</groupId>
+       <artifactId>micro-grizzly-with-jersey</artifactId>
+       <version>x.yz</version>
+    </dependency>
+
 Gradle
 
     compile 'com.aol.microservices:micro-grizzly-with-jersey:x.yz'
-    
- 
- ## Create a simple server
- 
-     public class SimpleApp {
 
-	   public static void main(String[] args){
-		   new MicrobootApp(()->"test-app").run();
-	   }
-	
-     }
- 
- # Relationship to Microserver and Spring Boot
- 
- micro-boot allows you to use Microserver  plugins & jax-rs support with Spring Boot back ends.
- 
- micro-boot apps are started via the MicrobootApp (equivalent to MicroserverApp) and configured via the Microboot annotation (equivalent to the Microserver annotation)
+
+## Create a simple server
+
+    public class SimpleApp {
+
+        public static void main(String[] args){
+            new MicrobootApp(()->"test-app").run();
+        }
+
+    }
+
+# Relationship to Microserver and Spring Boot
+
+micro-boot allows you to use Microserver  plugins & jax-rs support with Spring Boot back ends.
+
+micro-boot apps are started via the MicrobootApp (equivalent to MicroserverApp) and configured via the Microboot annotation (equivalent to the Microserver annotation)
