@@ -22,7 +22,7 @@ public class ApplicationRegisterImpl implements ApplicationRegister {
 	@Getter
 	private volatile Application application;
 
-	@Value("${configuration.hostname:#null}")
+	@Value("${host.address:#null}")
 	private String customHostname;
 	
 	public ApplicationRegisterImpl() {
