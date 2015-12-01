@@ -20,6 +20,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientException;
 
 import com.aol.micro.server.MicroserverApp;
+import com.aol.micro.server.boot.config.Microboot;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.micro.server.rest.client.nio.NIORestClient;
@@ -28,7 +29,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
-@Microserver
+@Microserver @Microboot
 public class RestClientTest {
 
    	private final AsyncRestClient<List<String>> listClient = new AsyncRestClient(1000,1000).withResponse(List.class);

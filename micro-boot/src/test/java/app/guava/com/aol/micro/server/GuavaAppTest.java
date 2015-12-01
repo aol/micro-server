@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
+import com.aol.micro.server.boot.config.Microboot;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
@@ -23,7 +24,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 
-@Microserver(basePackages = { "app.guava.com.aol.micro.server" })
+@Microserver @Microboot
 public class GuavaAppTest {
 
 	RestAgent rest = new RestAgent();

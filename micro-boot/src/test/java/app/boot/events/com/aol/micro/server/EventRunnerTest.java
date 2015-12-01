@@ -12,11 +12,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
+import com.aol.micro.server.boot.config.Microboot;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.micro.server.testing.RestAgent;
 
-@Microserver
+@Microserver @Microboot
 public class EventRunnerTest {
 
 	RestAgent rest = new RestAgent();

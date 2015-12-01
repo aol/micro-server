@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.ip.tracker.QueryIPRetriever;
 import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.testing.RestAgent;
 

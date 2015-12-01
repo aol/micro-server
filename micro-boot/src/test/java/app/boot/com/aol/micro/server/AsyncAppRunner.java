@@ -10,10 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
+import com.aol.micro.server.boot.config.Microboot;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 
-@Microserver
+@Microserver @Microboot
 public class AsyncAppRunner {
 
 

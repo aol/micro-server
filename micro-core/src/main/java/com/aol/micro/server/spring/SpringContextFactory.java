@@ -62,9 +62,6 @@ public class SpringContextFactory {
 	public ApplicationContext createSpringContext() {
 		try {
 			ApplicationContext springContext = springBuilder.createSpringApp(config,classes.toArray(new Class[0]));
-			Map l = springContext.getBeansOfType(RestResource.class);
-			System.out.println("Map = "+l);
-			System.out.println(springContext.getBean("simpleStatusResource"));
 			return springContext;
 		} catch (Exception e) {
 			logger.error( ErrorCode.STARTUP_FAILED_SPRING_INITIALISATION.toString(),e.getMessage());
