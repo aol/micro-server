@@ -17,9 +17,7 @@ import org.junit.Test;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-
-
-import com.aol.micro.server.boot.config.MicrobootApp;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.module.EmbeddedModule;
 import com.aol.micro.server.testing.RestAgent;
 import com.google.common.collect.ImmutableList;
@@ -28,11 +26,11 @@ public class EmbeddedAppTest {
 	
 	RestAgent rest = new RestAgent();
 	
-	MicrobootApp server;
+	MicroserverApp server;
 	
 	@Before
 	public void startServer(){
-		server = new MicrobootApp(EmbeddedAppLocalMain.class, 
+		server = new MicroserverApp(EmbeddedAppLocalMain.class, 
 				new EmbeddedModule(Arrays.asList(TestAppRestResource.class),"test-app"),
 				new EmbeddedModule(Arrays.asList(AltAppRestResource.class),"alternative-app"));
 		server.start();

@@ -13,8 +13,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.boot.config.Microboot;
-import com.aol.micro.server.boot.config.MicrobootApp;
 import com.aol.micro.server.spring.metrics.CodahaleMetricsConfigurer;
 import com.aol.micro.server.testing.RestAgent;
 
@@ -23,7 +23,7 @@ public class MetricsRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicrobootApp server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		CodahaleMetricsConfigurer.setInit( metricRegistry -> 		 TestReporter
@@ -31,7 +31,7 @@ public class MetricsRunnerTest {
 		         .build()
 		         .start(10, TimeUnit.MILLISECONDS));
 		
-		server = new MicrobootApp(  ()-> "simple-app");
+		server = new MicroserverApp(  ()-> "simple-app");
 		server.start();
 
 	}
