@@ -58,3 +58,10 @@ Use the property, host.address to set the host address (otherwise InetAddress.ge
 To configure the application register to use the callers ip (rather than the senders hostname), the sender should configure host.address as follows 
 
 	host.address=use-ip
+
+	
+### Configure a target address (e.g. a VIP or load balancer)
+
+Use the property target.endpoint to define an end point which should be used to communicate with the service being registered
+
+     target.endpoint=https://www.myendpoint.com/api	

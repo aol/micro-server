@@ -1,4 +1,4 @@
-package app.registry.com.aol.micro.server;
+package app.registry.config.com.aol.micro.server;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.*;
@@ -19,7 +19,7 @@ import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver(properties={"service.registry.url","http://localhost:8080/registry-app",
-		"target.endpoint","configured-target"})
+						"host.address","test-host"})
 public class RegistryAppRunner {
 
 
@@ -52,9 +52,8 @@ public class RegistryAppRunner {
 		Thread.sleep(1000);
 		System.out.println(rest.getJson("http://localhost:8080/registry-app/service-registry/list"));
 		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("[{\"port\":8081,"));
-		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("\"target\":\"my-target\""));
-		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("\"target\":\"configured-target\""));
-		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),not(containsString("\"hostname\":\"test-host\"")));
+		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("\"hostname\":\"test-host\""));
+		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),not(containsString("\"target\":\"configured-target\"")));
 
 	}
 	
