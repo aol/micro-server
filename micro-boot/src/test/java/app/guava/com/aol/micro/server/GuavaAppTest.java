@@ -12,8 +12,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.boot.config.Microboot;
-import com.aol.micro.server.boot.config.MicrobootApp;
+import com.aol.micro.server.MicroserverApp;
+import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
 import com.aol.simple.react.stream.simple.SimpleReact;
@@ -23,12 +23,12 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 
-@Microboot(basePackages = { "app.guava.com.aol.micro.server" })
+@Microserver(basePackages = { "app.guava.com.aol.micro.server" })
 public class GuavaAppTest {
 
 	RestAgent rest = new RestAgent();
 
-	MicrobootApp server;
+	MicroserverApp server;
 
 	ImmutableGuavaEntity entity;
 	Jdk8Entity present;
@@ -40,7 +40,7 @@ public class GuavaAppTest {
 	@Before
 	public void startServer() {
 		stream = simpleReact.react(
-				() -> server = new MicrobootApp(GuavaAppTest.class,
+				() -> server = new MicroserverApp(GuavaAppTest.class,
 						() -> "guava-app")).then(server -> server.start());
 
 		entity = ImmutableGuavaEntity.builder().value("value")

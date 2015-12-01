@@ -19,8 +19,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientException;
 
-import com.aol.micro.server.boot.config.Microboot;
-import com.aol.micro.server.boot.config.MicrobootApp;
+import com.aol.micro.server.MicroserverApp;
+import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.micro.server.rest.client.nio.NIORestClient;
 import com.aol.micro.server.rest.client.nio.SpringConfig;
@@ -28,7 +28,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
-@Microboot
+@Microserver
 public class RestClientTest {
 
    	private final AsyncRestClient<List<String>> listClient = new AsyncRestClient(1000,1000).withResponse(List.class);
@@ -38,11 +38,11 @@ public class RestClientTest {
 	private final NIORestClient rest = new SpringConfig().restClient();
 																			
 
-	MicrobootApp server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicrobootApp( RestClientTest.class, ()-> "rest-app");
+		server = new MicroserverApp( RestClientTest.class, ()-> "rest-app");
 		server.start();
 
 	}

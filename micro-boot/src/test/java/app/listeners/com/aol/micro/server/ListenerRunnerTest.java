@@ -15,23 +15,23 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.boot.config.Microboot;
-import com.aol.micro.server.boot.config.MicrobootApp;
+import com.aol.micro.server.MicroserverApp;
+import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.testing.RestAgent;
 import com.google.common.collect.ImmutableList;
 
 
-@Microboot
+@Microserver
 public class ListenerRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicrobootApp server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		List<ServletContextListener> listeners = ImmutableList.of(new ConfiguredListener());
-		server = new MicrobootApp( ListenerRunnerTest.class, ConfigurableModule.builder().context("listener-app").listeners(listeners ).build());
+		server = new MicroserverApp( ListenerRunnerTest.class, ConfigurableModule.builder().context("listener-app").listeners(listeners ).build());
 		server.start();
 
 	}

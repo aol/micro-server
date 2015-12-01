@@ -10,20 +10,20 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.boot.config.Microboot;
-import com.aol.micro.server.boot.config.MicrobootApp;
+import com.aol.micro.server.MicroserverApp;
+import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 
-@Microboot
+@Microserver
 public class SimpleRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicrobootApp server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicrobootApp( SimpleRunnerTest.class, ()-> "simple-app");
+		server = new MicroserverApp( SimpleRunnerTest.class, ()-> "simple-app");
 		server.start();
 
 	}

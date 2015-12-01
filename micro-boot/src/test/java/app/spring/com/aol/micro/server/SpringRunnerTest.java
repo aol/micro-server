@@ -11,12 +11,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.Bean;
 
-import com.aol.micro.server.boot.config.Microboot;
-import com.aol.micro.server.boot.config.MicrobootApp;
+import com.aol.micro.server.MicroserverApp;
+import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 /**@Configuration
 @ComponentScan(basePackages = { "app.spring.com.aol.micro.server" })**/
-@Microboot
+@Microserver
 public class SpringRunnerTest {
 
 	RestAgent rest = new RestAgent();
@@ -26,11 +26,11 @@ public class SpringRunnerTest {
 		return new MyBean();
 	}
 	
-	MicrobootApp server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicrobootApp( SpringRunnerTest.class, ()-> "spring-app");
+		server = new MicroserverApp( SpringRunnerTest.class, ()-> "spring-app");
 		server.start();
 
 	}
