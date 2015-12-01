@@ -94,9 +94,9 @@ public class SimpleApp {
         }
         
         @GET
-	public String ping() {
-		return "ok";
-	}
+        public String ping() {
+            return "ok";
+        }
 }
 ```
 # Relationship to Microserver and Spring Boot
