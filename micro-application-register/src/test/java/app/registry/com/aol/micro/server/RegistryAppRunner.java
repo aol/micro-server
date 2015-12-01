@@ -18,7 +18,8 @@ import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
 
-@Microserver(properties={"service.registry.url","http://localhost:8080/registry-app"})
+@Microserver(properties={"service.registry.url","http://localhost:8080/registry-app",
+		"target.endpoint","configured-target"})
 public class RegistryAppRunner {
 
 
@@ -52,6 +53,7 @@ public class RegistryAppRunner {
 		System.out.println(rest.getJson("http://localhost:8080/registry-app/service-registry/list"));
 		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("[{\"port\":8081,"));
 		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("\"target\":\"my-target\""));
+		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("\"target\":\"configured-target\""));
 		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),not(containsString("\"hostname\":\"test-host\"")));
 
 	}

@@ -1,7 +1,7 @@
 package app.registry.config.com.aol.micro.server;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 import java.util.Date;
@@ -53,7 +53,8 @@ public class RegistryAppRunner {
 		System.out.println(rest.getJson("http://localhost:8080/registry-app/service-registry/list"));
 		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("[{\"port\":8081,"));
 		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("\"hostname\":\"test-host\""));
-	
+		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),not(containsString("\"target\":\"configured-target\"")));
+
 	}
 	
 	private void sendPing(RegisterEntry entry) {
