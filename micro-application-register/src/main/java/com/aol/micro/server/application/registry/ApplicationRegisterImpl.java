@@ -40,7 +40,7 @@ public class ApplicationRegisterImpl implements ApplicationRegister {
 							.getModule().getContext(), null)).collect(Collectors.toList()));
 			logger.info("Registered application {} ", application);
 		} catch (UnknownHostException e) {
-			ExceptionSoftener.throwSoftenedException(e);
+			throw ExceptionSoftener.throwSoftenedException(e);
 		}
 	}
 }

@@ -46,3 +46,15 @@ Functionality
     service.registry.entry.max.live:43200000
     service.registry.dir:java.io.tmpdir/services
     service.registry.url: url to register services on (http://hostname:port/context)
+    
+### Configure a custom host address
+
+Use the property, host.address to set the host address (otherwise InetAddress.getLocalHost().getHostName() is used, which may cause some problems when using containers).
+
+	host.address=custom.host.addrress
+
+### Use caller ip
+
+To configure the application register to use the callers ip (rather than the senders hostname), the sender should configure host.address as follows 
+
+	host.address=use-ip
