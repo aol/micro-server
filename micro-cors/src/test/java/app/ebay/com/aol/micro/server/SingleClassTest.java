@@ -1,6 +1,6 @@
-package app.single.com.aol.micro.server;
+package app.ebay.com.aol.micro.server;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.concurrent.ExecutionException;
 
@@ -22,7 +22,7 @@ import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 
-@Microserver(properties={"cors.simple","true"})
+@Microserver
 @Path("/single")
 public class SingleClassTest implements RestResource{
 
@@ -51,7 +51,7 @@ public class SingleClassTest implements RestResource{
 
 		Builder request = resource.request();
 		request.accept(MediaType.TEXT_PLAIN);
-		assertTrue(request.get().getHeaders().containsKey("Access-Control-Allow-Origin"));
+		assertFalse(request.get().getHeaders().containsKey("Access-Control-Allow-Origin"));
 		
 		
 	
