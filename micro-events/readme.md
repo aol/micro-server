@@ -25,6 +25,39 @@ Gradle
 1. [micro-reactive](https://github.com/aol/micro-server/tree/master/micro-reactive)
 2. [micro-guava](https://github.com/aol/micro-server/tree/master/micro-guava)
 
+## Example resource capturing queries
+
+ ```java
+@Component
+@Path("/status")
+public class EventStatusResource implements RestResource {
+
+	private final EventBus bus;
+	
+	@Autowired //micro-events plugin configures a Guava EventBus as a Spring bean
+	public EventStatusResource(EventBus bus ){
+		this.bus = bus;
+	}
+
+	@GET
+	@Produces("text/plain")
+	@Path("/ping")
+	public String ping() {
+	        //Post RequestEvents starting
+		bus.post(RequestEvents.start("get", 1l));
+		try{
+			return "ok";
+		}finally{
+		        //and RequestEvents finishing
+			bus.post(RequestEvents.finish("get",1l));
+		}
+	}
+
+}
+ ```
+ 
+Active and recently finished events become available at https://hostname::port/context/active/requests
+
 ## Capturing scheduled Jobs
 
 Any Spring Bean implementing com.aol.micro.server.events.ScheduledJob will have start / completion tracking for the  scheduleAndLog() method. 
