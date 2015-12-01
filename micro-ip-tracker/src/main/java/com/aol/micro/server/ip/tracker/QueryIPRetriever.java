@@ -13,14 +13,34 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import com.aol.micro.server.auto.discovery.FilterConfiguration;
 
-public class QueryIPRetriever implements Filter {
+
+@Component
+public class QueryIPRetriever implements FilterConfiguration,Filter {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	
+	private static String ipForwardingHeader;
+	
+	private static String[] mappings;
+	
+	@Autowired
+	public QueryIPRetriever(@Value("${load.balancer.ip.forwarding.header:X-LB-Client-IP}") String ipForwardingHeaderValue, 
+							@Value("${ip.tracker.mappings:/*}") String[] mappingsValue){
+		ipForwardingHeader = ipForwardingHeaderValue;
+		mappings = mappingsValue;
+	}
+	public QueryIPRetriever(){
+		mappings = new String[]{"/*"};
+		ipForwardingHeader = "X-LB-Client-IP";
+	}
 	private static final ThreadLocal<String> ipAddress = new ThreadLocal<String>();
 
 	public static String getIpAddress(){
@@ -46,16 +66,7 @@ public class QueryIPRetriever implements Filter {
 
 	
 
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-
-	}
-
-	@Override
-	public void destroy() {
-
-	}
-
+	
 	private Optional<String> getVipClientIP(ServletRequest request) {
 		if (request instanceof HttpServletRequest) {
 
@@ -72,6 +83,11 @@ public class QueryIPRetriever implements Filter {
 			if (!isBlank(xForwardedFor)) {
 				return Optional.ofNullable(xForwardedFor);
 			}
+			String ipForwardedFor = httpServletRequest.getHeader(this.ipForwardingHeader);
+			logger.debug(this.ipForwardingHeader + ipForwardedFor);
+			if (!isBlank(ipForwardedFor)) {
+				return Optional.ofNullable(ipForwardedFor);
+			}
 		}
 		return Optional.empty();
 	}
@@ -85,6 +101,23 @@ public class QueryIPRetriever implements Filter {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public String[] getMapping() {
+		return mappings;
+	}
+
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+		
+		
+	}
+
+	@Override
+	public void destroy() {
+		
+		
 	}
 
 }
