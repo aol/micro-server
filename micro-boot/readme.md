@@ -85,9 +85,9 @@ Gradle
 
 ## Create a simple server
 ```java
-    @Microboot
-    @Path("/simple")
-    public class SimpleApp {
+@Microboot
+@Path("/simple")
+public class SimpleApp {
 
         public static void main(String[] args){
             new MicroserverApp(()->"test-app").run();
@@ -97,7 +97,7 @@ Gradle
 	public String ping() {
 		return "ok";
 	}
-    }
+}
 ```
 # Relationship to Microserver and Spring Boot
 
