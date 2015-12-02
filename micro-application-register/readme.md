@@ -8,20 +8,20 @@ This plugin turns any service into a Service Registry client (and optionally ser
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-application-registry/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-application-registry)
 
-Simply add to the classpath
+Simply add this plugin to the classpath on your Microserver app.
 
 Maven 
-
+```xml
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-application-registry</artifactId>
         <version>x.yz</version>
      </dependency>
-     
+```    
 Gradle
-
+```groovy
     compile 'com.aol.microservices:micro-application-registry:x.yz'
-
+```
 ## Depends on
 
     micro-client
@@ -29,7 +29,7 @@ Gradle
 
 Import this plugin to add ServiceRegistry functionality, Rest Resource available on
 
-/app-path/service-registry
+    /app-path/service-registry
 
 Functionality
 

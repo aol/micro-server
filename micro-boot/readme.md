@@ -84,15 +84,21 @@ Gradle
 
 
 ## Create a simple server
-
-    public class SimpleApp {
+```java
+@Microboot
+@Path("/simple")
+public class SimpleApp {
 
         public static void main(String[] args){
             new MicroserverApp(()->"test-app").run();
         }
-
-    }
-
+        
+        @GET
+        public String ping() {
+            return "ok";
+        }
+}
+```
 # Relationship to Microserver and Spring Boot
 
 micro-boot allows you to use Microserver plugins & jax-rs support with Spring Boot back ends.
