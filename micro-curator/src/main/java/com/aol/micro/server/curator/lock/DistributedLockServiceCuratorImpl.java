@@ -23,10 +23,17 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
 
 	private int timeout;
 
-	public DistributedLockServiceCuratorImpl(CuratorFramework curatorFramework, String basePath, int timeout) {
+	public DistributedLockServiceCuratorImpl(CuratorFramework curatorFramework, String basePath, int timeout) throws Exception {
 		this.curatorFramework = curatorFramework;
 		this.basePath = basePath;
 		this.timeout = timeout;
+		createIfNotExists(basePath);
+	}
+
+	private void createIfNotExists(String path) throws Exception {
+		if (curatorFramework.checkExists().forPath(path) == null) {
+			curatorFramework.create().creatingParentContainersIfNeeded().forPath(path, new byte[0]);
+		}
 	}
 
 	@Override

@@ -28,12 +28,15 @@ public class CuratorDistributorLockServiceProvider {
 	}
 /**
  * 
- * @param name - lock name
  * @param timeout - timeout for locking in milliseconds
  * @return DistributedLockService backed up by curator instance
  */
-	public DistributedLockService getDistributedLock(String name, int timeout) {
-		return new DistributedLockServiceCuratorImpl(curatorFramework, lockBasePath, timeout);
+	public DistributedLockService getDistributedLock(int timeout)  {
+		try {
+			return new DistributedLockServiceCuratorImpl(curatorFramework, lockBasePath, timeout);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
