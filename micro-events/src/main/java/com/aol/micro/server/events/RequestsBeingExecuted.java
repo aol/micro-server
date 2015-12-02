@@ -67,7 +67,7 @@ public class RequestsBeingExecuted<T> {
 	
 
 	private String buildId(RequestData data) {
-		String id =  data.correlationId+ "-"+data.getProcessingThread();
+		String id =  ""+data.correlationId;
 		return id;
 	}
 	
