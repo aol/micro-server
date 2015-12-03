@@ -14,23 +14,23 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.boot.config.Microboot;
-import com.aol.micro.server.boot.config.MicrobootApp;
+import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 
-@Microboot
+@Microserver
 @Path("/single")
 @Ignore
 public class SingleClassTest implements RestResource{
 
 	RestAgent rest = new RestAgent();
 	
-	MicrobootApp server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicrobootApp(  ()-> "simple-app");
+		server = new MicroserverApp(  ()-> "simple-app");
 		server.start();
 
 	}

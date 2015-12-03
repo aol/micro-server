@@ -1,10 +1,10 @@
 package app.registry.com.aol.micro.server;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
-import java.io.IOException;
-import java.util.Properties;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import org.junit.After;
@@ -12,16 +12,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
+import com.aol.micro.server.application.registry.RegisterEntry;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.spring.properties.PropertyFileConfig;
+import com.aol.micro.server.rest.client.nio.AsyncRestClient;
+import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
 
-@Microserver(properties={"service.registry.url","http://localhost:8080/registry-app"})
+@Microserver(properties={"service.registry.url","http://localhost:8080/registry-app",
+		"target.endpoint","configured-target"})
 public class RegistryAppRunner {
 
 
 	RestAgent rest = new RestAgent();
-	
+	private final AsyncRestClient restAsync = new AsyncRestClient(100,2000);
 	MicroserverApp server;
 	@Before
 	public void startServer(){
@@ -44,9 +47,26 @@ public class RegistryAppRunner {
 		assertThat(rest.post("http://localhost:8080/registry-app/service-registry/schedule"),is("{\"status\":\"success\"}"));
 		Thread.sleep(1000);
 		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("[{\"port\":8080,"));
-	
+		
+		sendPing(new RegisterEntry(8081,"use-ip","hello","world", new Date(),"my-target"));
+		Thread.sleep(1000);
+		System.out.println(rest.getJson("http://localhost:8080/registry-app/service-registry/list"));
+		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("[{\"port\":8081,"));
+		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("\"target\":\"my-target\""));
+		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),containsString("\"target\":\"configured-target\""));
+		assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),not(containsString("\"hostname\":\"test-host\"")));
+
 	}
 	
+	private void sendPing(RegisterEntry entry) {
+		
+		try {
+
+			restAsync.post("http://localhost:8080/registry-app/service-registry/register", JacksonUtil.serializeToJson(entry)).join();
+		} catch (Exception e) {
+
+		}
+	}
 	
 	
 	

@@ -37,6 +37,8 @@ public class FilterConfigurer {
 				.getBeansOfType(FilterConfiguration.class)
 				.values()
 				.stream()
+				.filter(f->f.getMapping()!=null)
+				.filter(f->f.getMapping().length>0)
 				.peek(this::logFilter)
 				.forEach(
 						filter -> setInitParameters(

@@ -11,24 +11,24 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.boot.config.Microboot;
-import com.aol.micro.server.boot.config.MicrobootApp;
+import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.micro.server.testing.RestAgent;
 
-@Microboot
+@Microserver @Microboot
 public class EventRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	private final AsyncRestClient<String> client = new AsyncRestClient<String>(1000,1000).withAccept("application/json");
-	MicrobootApp server;
+	MicroserverApp server;
 	
 	
 	@Before
 	public void startServer(){
 		
-		server = new MicrobootApp(()-> "event-app");
+		server = new MicroserverApp(()-> "event-app");
 		server.start();
 
 	}

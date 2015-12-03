@@ -10,6 +10,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.auto.discovery.FilterConfiguration;
@@ -17,16 +19,26 @@ import com.aol.micro.server.auto.discovery.FilterConfiguration;
 @Component(value = "crossDomainFilter")
 public class CrossDomainFilter implements Filter, FilterConfiguration {
 
+	private final  boolean simple;
+	@Autowired
+	public CrossDomainFilter(@Value("${cors.simple:false}")boolean simple){
+		this.simple=simple;
+	}
+	public CrossDomainFilter(){
+		simple=true;
+	}
 	@Override
 	public String[] getMapping() {
-		return new String[] { "/*" };
+		if(simple)
+			return new String[] { "/*" };
+		else
+			return new String[0];
 	}
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 
-	}
-
+	}  
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletResponse resp = (HttpServletResponse) response;

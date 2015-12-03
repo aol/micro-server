@@ -18,6 +18,8 @@ import javax.ws.rs.core.FeatureContext;
 import com.aol.micro.server.rest.RestConfiguration;
 import com.aol.micro.server.servers.ServerApplicationFactory;
 import com.aol.micro.server.servers.model.ServerData;
+import com.aol.micro.server.spring.SpringApplicationConfigurator;
+import com.aol.micro.server.spring.SpringBuilder;
 import com.aol.micro.server.spring.SpringDBConfig;
 import com.aol.micro.server.utility.HashMapBuilder;
 import com.fasterxml.jackson.databind.Module;
@@ -33,6 +35,12 @@ import com.fasterxml.jackson.databind.Module;
  */
 public interface Plugin {
 
+	/**
+	 * @return Engine for building Spring Context
+	 */
+	default SpringBuilder springBuilder(){
+		return null;
+	}
 	/**
 	 * @return Configuration for the jax-rs servlet
 	 */

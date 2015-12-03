@@ -1,5 +1,6 @@
 package com.aol.micro.server.web.cors;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 
@@ -22,7 +23,7 @@ public class CrossDomainFilterTest {
 
 	@Before
 	public void init() {
-		this.crossDomainFilter = new CrossDomainFilter();
+		this.crossDomainFilter = new CrossDomainFilter(true);
 	}
 
 	@Test
@@ -42,5 +43,11 @@ public class CrossDomainFilterTest {
 
 		inOrder.verify(filterChain, times(1)).doFilter(request, response);
 
+	}
+	@Test
+	public void testFilterFalse() throws IOException, ServletException {
+		this.crossDomainFilter = new CrossDomainFilter(false);
+		assertTrue(this.crossDomainFilter.getMapping().length==0);
+		
 	}
 }

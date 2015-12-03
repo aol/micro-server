@@ -22,7 +22,7 @@ import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 
-@Microserver
+@Microserver(properties={"cors.simple","true"})
 @Path("/single")
 public class SingleClassTest implements RestResource{
 
