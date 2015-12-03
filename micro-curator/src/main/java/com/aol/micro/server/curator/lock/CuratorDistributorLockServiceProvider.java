@@ -13,9 +13,9 @@ import com.aol.micro.server.utility.DistributedLockService;
 @Component
 public class CuratorDistributorLockServiceProvider {
 
-	private CuratorFramework curatorFramework;
+	final private CuratorFramework curatorFramework;
 
-	private String lockBasePath;
+	final private String lockBasePath;
 	
 	@Autowired
 	public CuratorDistributorLockServiceProvider(

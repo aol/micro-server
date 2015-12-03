@@ -21,9 +21,9 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
 
 	private final String basePath;
 
-	private CuratorFramework curatorFramework;
+	private final CuratorFramework curatorFramework;
 
-	private int timeout;
+	private final int timeout;
 
 	private static final Logger logger = LoggerFactory.getLogger(DistributedLockServiceCuratorImpl.class);
 	
