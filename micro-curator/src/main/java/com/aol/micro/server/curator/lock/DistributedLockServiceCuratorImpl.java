@@ -6,6 +6,8 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessSemaphoreMutex;
 import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.framework.state.ConnectionStateListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.aol.micro.server.utility.DistributedLockService;
 
@@ -23,6 +25,8 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
 
 	private int timeout;
 
+	private static final Logger logger = LoggerFactory.getLogger(DistributedLockServiceCuratorImpl.class);
+	
 	public DistributedLockServiceCuratorImpl(CuratorFramework curatorFramework, String basePath, int timeout) throws Exception {
 		this.curatorFramework = curatorFramework;
 		this.basePath = basePath;
@@ -62,8 +66,14 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
 
 	@Override
 	public boolean tryReleaseLock(String key) {
-		// TODO Auto-generated method stub
-		return false;
+		acquired = false;
+		try {
+			curatorLock.release();
+			return true;
+		} catch (Exception e) {
+			logger.warn("Can't release lock", e);
+			return false;
+		}
 	}
 
 	@Override
