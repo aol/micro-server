@@ -2,6 +2,7 @@ package com.aol.micro.server.curator.lock;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.UUID;
 
 import org.apache.zookeeper.server.ServerConfig;
 import org.apache.zookeeper.server.ZooKeeperServerMain;
@@ -54,8 +55,7 @@ public class IntegrationTest {
 	
 	@Test
 	public void lock() {
-		
-		final String lockName = "test3";
+		final String lockName = UUID.randomUUID().toString();
 		
 		DistributedLockService lock = provider.getDistributedLock(1000);
 		Assert.assertTrue(lock.tryLock(lockName));

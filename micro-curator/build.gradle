@@ -1,8 +1,33 @@
 description = 'micro-curator'
+sourceSets {
+    integTest {
+        java {
+		compileClasspath += main.output + test.output
+		runtimeClasspath += main.output + test.output
+		srcDir file('src/integration/java')
+	}
+        resources.srcDir file('src/integration/resources')
+    }
+}
+
+task integTest(type: Test) {
+    testClassesDir = sourceSets.integTest.output.classesDir
+    classpath = sourceSets.integTest.runtimeClasspath
+}
+
+check.dependsOn integTest
+integTest.dependsOn test
+
 dependencies {
 	compile 'org.apache.curator:curator-framework:' + curatorVersion
-    compile 'org.apache.curator:curator-recipes:' + curatorVersion
+	compile 'org.apache.curator:curator-recipes:' + curatorVersion
 	compile project(':micro-core')
+
+	integTestCompile sourceSets.main.output		
+	integTestCompile sourceSets.test.output 
+	
+	integTestCompile configurations.testCompile
+	integTestRuntime configurations.testRuntime	
 }
 
 modifyPom {
