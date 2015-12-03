@@ -6,9 +6,11 @@ import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.utility.DistributedLockService;
 
+@Component
 public class CuratorDistributorLockServiceProvider {
 
 	private CuratorFramework curatorFramework;
@@ -27,7 +29,6 @@ public class CuratorDistributorLockServiceProvider {
 		curatorFramework.start();
 	}
 /**
- * 
  * @param timeout - timeout for locking in milliseconds
  * @return DistributedLockService backed up by curator instance
  */
