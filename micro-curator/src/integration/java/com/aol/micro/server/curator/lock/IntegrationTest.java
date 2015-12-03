@@ -24,7 +24,7 @@ public class IntegrationTest {
 		Properties startupProperties = new Properties();
 		
 		startupProperties.put("dataDir", "/tmp/zookeeper");
-		startupProperties.put("clientPort", "2181");
+		startupProperties.put("clientPort", "12181");
 
 		
 		QuorumPeerConfig quorumConfiguration = new QuorumPeerConfig();
@@ -49,13 +49,13 @@ public class IntegrationTest {
 		}.start();
 		
 		
-		provider = new CuratorDistributorLockServiceProvider("localhost", 1000, 3, "/test");
+		provider = new CuratorDistributorLockServiceProvider("localhost:12181", "1000", "1", "/test");
 	}
 	
 	@Test
 	public void lock() {
 		
-		final String lockName = "test2";
+		final String lockName = "test3";
 		
 		DistributedLockService lock = provider.getDistributedLock(1000);
 		Assert.assertTrue(lock.tryLock(lockName));

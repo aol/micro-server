@@ -19,10 +19,10 @@ public class CuratorDistributorLockServiceProvider {
 	
 	@Autowired
 	public CuratorDistributorLockServiceProvider(
-			@Value("zookeeper.connectionString:#null") String zookeeperConnectionString,
-			@Value("zookeeper.sleepTime:1000") int sleepTime, @Value("zookeeper.maxRetries:1000") int maxRetries,
-			@Value("curator.lockBasePath") String lockBasePath) {
-		RetryPolicy retryPolicy = new ExponentialBackoffRetry(sleepTime, maxRetries);
+			@Value("${zookeeper.connectionString:localhost:12181}") String zookeeperConnectionString,
+			@Value("${zookeeper.sleepTime:1000}") String sleepTime, @Value("${zookeeper.maxRetries:3}") String maxRetries,
+			@Value("${curator.lockBasePath:test}") String lockBasePath) {
+		RetryPolicy retryPolicy = new ExponentialBackoffRetry(Integer.valueOf(sleepTime), Integer.valueOf(maxRetries));
 		this.curatorFramework = CuratorFrameworkFactory.newClient(zookeeperConnectionString, retryPolicy);
 		this.lockBasePath = lockBasePath;
 		
