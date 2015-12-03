@@ -9,21 +9,54 @@ This adds a facility to capture events such as requests, request execution and s
 Simply add to the classpath
 
 Maven 
-
+```xml
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-events</artifactId>
         <version>x.yz</version>
      </dependency>
-     
+```   
 Gradle
-
+```groovy
     compile 'com.aol.microservices:micro-events:x.yz'
-
+```
 ### Depends on
 
 1. [micro-reactive](https://github.com/aol/micro-server/tree/master/micro-reactive)
 2. [micro-guava](https://github.com/aol/micro-server/tree/master/micro-guava)
+
+## Example resource capturing queries
+
+ ```java
+@Component
+@Path("/status")
+public class EventStatusResource implements RestResource {
+
+	private final EventBus bus;
+	
+	@Autowired //micro-events plugin configures a Guava EventBus as a Spring bean
+	public EventStatusResource(EventBus bus ){
+		this.bus = bus;
+	}
+
+	@GET
+	@Produces("text/plain")
+	@Path("/ping")
+	public String ping() {
+	        //Post RequestEvents starting
+		bus.post(RequestEvents.start("get", 1l));
+		try{
+			return "ok";
+		}finally{
+		        //and RequestEvents finishing
+			bus.post(RequestEvents.finish("get",1l));
+		}
+	}
+
+}
+ ```
+ 
+Active and recently finished events become available at https://hostname::port/context/active/requests
 
 ## Capturing scheduled Jobs
 
@@ -36,7 +69,7 @@ Metrics about each job are captured in a SystemData object which will be also po
 completion event, for example, an EventBus listener that posts info to a simple-react Queue or Topic (via the Pipes class in the micro-reactive plugin) 
 or an RxJava Observable.
 
-
+ ```java
 
     public class SystemData<K, V> {
 
@@ -50,11 +83,11 @@ or an RxJava Observable.
 		this.dataMap = dataMap;
 	 }
   }
-  
+``` 
  ##  Capturing Queries
  
 To capture requests or Queries post a AddQuery event to the configured  Guava event bus when the Query starts, and a RemoveQuery event when it finishes. There are static helper methods on the RequestEvents class to help with this. E.g. 
-
+ ```java
 
         bus.post(RequestEvents.start("get request", correlationId));
 		try{
@@ -62,14 +95,14 @@ To capture requests or Queries post a AddQuery event to the configured  Guava ev
 		}finally{
 			bus.post(RequestEvents.finish("get request",correlationId));
 		}
-		
+```		
 ## REST Calls and output
 
 1. **/active/requests** shows currently active and recently completed requests
 2. **/active/jobs** shows currently active and recently completed jobs
 
 ### Active Requests output
-
+ ```json
     {
     "removed": 0,
     "added": 1,
@@ -105,9 +138,9 @@ To capture requests or Queries post a AddQuery event to the configured  Guava ev
         }
     ]
 }
-
+```
 ### Active Jobs output
-
+ ```json
     {
     "removed": 0,
     "added": 9304,
@@ -267,3 +300,4 @@ To capture requests or Queries post a AddQuery event to the configured  Guava ev
         }
     ]
 }
+```

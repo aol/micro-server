@@ -58,6 +58,23 @@ public class Example{
 	
 }
 ```
+
+## Configuring the NIORestClient
+
+The following properties & defaults are available to set values on the underlying Apache Async Http Client.
+
+Set the timeout in milliseconds used when requesting a connection from the connection manager using the underlying HttpClient. A timeout value of 0 specifies an infinite timeout.
+
+    nio.rest.connection.request.timeout=10000
+
+Set the socket read timeout for the underlying HttpClient in millis. A timeout value of 0 specifies an infinite timeout.
+	 
+    nio.rest.connection.read.timeout=0
+   
+The connection timeout for the underlying HttpClient in millis. A timeout value of 0 specifies an infinite timeout.
+  
+    nio.rest.connection.connect.timeout:2000
+   
 ## To use
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-client)

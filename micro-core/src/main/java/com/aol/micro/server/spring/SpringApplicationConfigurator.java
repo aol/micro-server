@@ -14,7 +14,7 @@ import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.ConfigAccessor;
 
-class SpringApplicationConfigurator implements SpringBuilder {
+public class SpringApplicationConfigurator implements SpringBuilder {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public ConfigurableApplicationContext createSpringApp(Config config, Class... classes) {

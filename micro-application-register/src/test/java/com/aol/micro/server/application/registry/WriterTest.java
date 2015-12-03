@@ -23,7 +23,7 @@ public class WriterTest {
 		new File(System.getProperty("java.io.tmpdir"),"service-reg-writer").mkdirs();
 		writer = new Register(new RegisterConfig(new File(System.getProperty("java.io.tmpdir"),"service-reg-writer").getAbsolutePath()));
 	
-		entry= new RegisterEntry(8080,"host","module","context",new Date());
+		entry= new RegisterEntry(8080,"host","module","context",new Date(),null);
 	}
 
 	@Test

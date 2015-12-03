@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.boot.config.MicrobootApp;
+import com.aol.micro.server.MicroserverApp;
 
 @Configuration
 @ComponentScan(basePackages = { "app.simple.com.aol.micro.server" })
@@ -18,7 +18,7 @@ import com.aol.micro.server.boot.config.MicrobootApp;
 public class SingleClassApp {
 
 	public static void main(String[] args){
-		new MicrobootApp( SingleClassApp.class, ()-> "simple-app");
+		new MicroserverApp( SingleClassApp.class, ()-> "simple-app");
 	}
 	@GET
 	@Produces("text/plain")

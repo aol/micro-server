@@ -1,6 +1,7 @@
 package com.aol.micro.server.spring;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +14,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
 import com.aol.cyclops.invokedynamic.ExceptionSoftener;
+import com.aol.cyclops.sequence.SequenceM;
 import com.aol.micro.server.ErrorCode;
+import com.aol.micro.server.Plugin;
+import com.aol.micro.server.PluginLoader;
+import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Config;
 
 
@@ -32,7 +37,13 @@ public class SpringContextFactory {
 		s.addAll(config.getClasses());
 		this.classes = HashTreePSet.from(s);
 		this.config = config;
-		springBuilder =  new SpringApplicationConfigurator();
+		
+		springBuilder = SequenceM
+				.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
+				.filter(m -> m.springBuilder() != null)
+				.map(Plugin::springBuilder)
+				.findFirst()
+				.orElse(new SpringApplicationConfigurator());
 	}
 	
 	public SpringContextFactory(Config config, Set<Class> classes) {
@@ -40,7 +51,12 @@ public class SpringContextFactory {
 		s.addAll(config.getClasses());
 		this.classes =  HashTreePSet.from(s);
 		this.config=config;
-		springBuilder =  new SpringApplicationConfigurator();
+		springBuilder = SequenceM
+				.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
+				.filter(m -> m.springBuilder() != null)
+				.map(Plugin::springBuilder)
+				.findFirst()
+				.orElse(new SpringApplicationConfigurator());
 	}
 
 	public ApplicationContext createSpringContext() {

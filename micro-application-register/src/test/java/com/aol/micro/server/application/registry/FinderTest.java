@@ -30,7 +30,7 @@ public class FinderTest {
 		writer = new Register(registerConfig);
 		finder = new Finder(registerConfig);
 
-		entry= new RegisterEntry(8080,"host","module","context",new Date());
+		entry= new RegisterEntry(8080,"host","module","context",new Date(),null);
 	}
 
 	@Test

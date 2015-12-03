@@ -13,9 +13,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.boot.config.MicrobootApp;
 import com.aol.micro.server.testing.RestAgent;
 
 @Rest
@@ -24,11 +23,11 @@ public class MinimalClassTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicrobootApp server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicrobootApp(()-> "minimal-app");
+		server = new MicroserverApp(()-> "minimal-app");
 		server.start();
 
 	}
@@ -43,7 +42,7 @@ public class MinimalClassTest {
 		
 		
 		
-		assertThat(rest.get("http://localhost:8080/minimal-app/single/ping"),is("ok"));
+		assertThat(rest.get("http://localhost:8080/minimal-app/single/ping"),is("ok1"));
 	
 	}
 
@@ -51,7 +50,7 @@ public class MinimalClassTest {
 	@Produces("text/plain")
 	@Path("/ping")
 	public String ping() {
-		return "ok";
+		return "ok1";
 	}
 	
 	

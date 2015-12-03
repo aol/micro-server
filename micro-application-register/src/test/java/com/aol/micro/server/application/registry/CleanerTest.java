@@ -31,7 +31,7 @@ public class CleanerTest {
 		finder = new Finder(registerConfig);
 		cleaner = new Cleaner(registerConfig,1);
 
-		entry= new RegisterEntry(8080,"host","module","context",new Date());
+		entry= new RegisterEntry(8080,"host","module","context",new Date(),null);
 		
 	}
 

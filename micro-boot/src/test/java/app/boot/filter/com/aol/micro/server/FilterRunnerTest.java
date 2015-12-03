@@ -4,7 +4,6 @@ package app.boot.filter.com.aol.micro.server;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -15,7 +14,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.aol.micro.server.boot.config.MicrobootApp;
+import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.testing.RestAgent;
 import com.google.common.collect.ImmutableMap;
@@ -25,11 +24,11 @@ public class FilterRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicrobootApp server;
+	MicroserverApp server;
 	@Before
 	public void startServer(){
 		Map<String, Filter> filters = ImmutableMap.of("/filter-app/status/ping2",new ConfiguredFilter());
-		server = new MicrobootApp( FilterAppLocalMain.class, ConfigurableModule.builder().context("filter-app").filters(filters ).build());
+		server = new MicroserverApp( FilterAppLocalMain.class, ConfigurableModule.builder().context("filter-app").filters(filters ).build());
 		server.start();
 
 	}

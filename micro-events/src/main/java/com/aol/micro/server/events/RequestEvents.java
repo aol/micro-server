@@ -4,22 +4,59 @@ import com.aol.micro.server.events.RequestsBeingExecuted.AddQuery;
 import com.aol.micro.server.events.RequestsBeingExecuted.RemoveQuery;
 import com.aol.micro.server.events.RequestsBeingExecuted.RequestData;
 
+/**
+ * Factory class for creating Start and End events
+ * 
+ * @author johnmcclean
+ *
+ */
 public class RequestEvents {
 
-	public static <T> AddQuery start(T query, long correlationId){
+	/**
+	 * Marks the start of a query identified by the provided correlationId
+	 * 
+	 * @param query  - Query data
+	 * @param correlationId - Identifier
+	 * @return Start event to pass to the Events systems EventBus
+	 */
+	public static <T> AddQuery<T> start(T query, long correlationId){
 		return start(query, correlationId,"default",null);
 	}
-	public static <T> AddQuery start(T query, long correlationId, String type, Object additionalData){
+	/**
+	 *  Marks the start of a query identified by the provided correlationId, with additional query type and data parameters
+	 * 
+	 * @param query  - Query data
+	 * @param correlationId - Identifier
+	 * @param type - allows queries to be grouped by type
+	 * @param additionalData - Any additional info about the reques to be rendered in the JSON view / rest endpoint
+	 * @return Start event to pass to the Events systems EventBus
+	 */
+	public static <T> AddQuery<T> start(T query, long correlationId, String type, Object additionalData){
 		
 		return new AddQuery(RequestData.builder().query(query).correlationId(correlationId)
 		.type(type).additionalData(additionalData).build());
 	}
-	public static <T> RemoveQuery finish(T query, long correlationId){
+	/**
+	 * Marks the end of a query identified by the provided correlationId
+	 * 
+	 * @param query  - Query data
+	 * @param correlationId - Identifier
+	 * @return Finish event to pass to the Events systems EventBus
+	 */
+	public static <T> RemoveQuery<T> finish(T query, long correlationId){
 		return finish(query,correlationId,"default");
 	}
-	public static <T> RemoveQuery finish(T query, long correlationId, String type){
+	/**
+	 * Marks the end of a query identified by the provided correlationId
+	 * 
+	 * @param query - Query data
+	 * @param correlationId - Identifier
+	 *  @param type - allows queries to be grouped by type
+	 * @return
+	 */
+	public static <T> RemoveQuery<T> finish(T query, long correlationId, String type){
 		
-		return new RemoveQuery(RequestData.builder().query(query).correlationId(correlationId)
+		return new RemoveQuery<>(RequestData.builder().query(query).correlationId(correlationId)
 		.type(type).build());
 	}
 	
