@@ -17,7 +17,7 @@ This plugin
 
 ## To use
 
-Simply add to the classpath
+Simply add this plugin to the classpath - do remember to also configure a Server and jax-rs provider (micro-grizzly-with-jersey is a good bet!)
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-javaslang/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-javaslang)
 
