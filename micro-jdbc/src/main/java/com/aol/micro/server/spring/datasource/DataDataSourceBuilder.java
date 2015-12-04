@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.experimental.Builder;
 import lombok.NoArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
