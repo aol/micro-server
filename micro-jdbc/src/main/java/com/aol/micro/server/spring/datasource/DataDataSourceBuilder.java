@@ -34,6 +34,8 @@ public class DataDataSourceBuilder {
 		ds.setUsername(env.getUsername());
 		ds.setPassword(env.getPassword());
 		ds.setMaximumPoolSize(env.getMaxPoolSize());
+		ds.setMinimumIdle(env.getMinimumIdle());
+		ds.setIdleTimeout(env.getIdleTimeout());
 
 		return ds;
 	}

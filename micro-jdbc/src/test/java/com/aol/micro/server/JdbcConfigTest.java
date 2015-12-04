@@ -19,7 +19,7 @@ public class JdbcConfigTest {
 	@Before
 	public void setUp() throws Exception {
 		Config.instance();
-		config = new JdbcConfig("driverClassName", "url", "username", "password", "showSql", "mysql", "none", new Properties(), null, "false", 100);
+		config = new JdbcConfig("driverClassName", "url", "username", "password", "showSql", "mysql", "none", new Properties(), null, "false", 30, 2, 600000);
 
 	}
 
@@ -33,6 +33,8 @@ public class JdbcConfigTest {
 		assertThat(config.getUsername(), is("username"));
 		assertThat(config.getPassword(), is("password"));
 		assertThat(config.getShowSql(), is("showSql"));
-		assertThat(config.getMaxPoolSize(), is(100));
+		assertThat(config.getMaxPoolSize(), is(30));
+		assertThat(config.getMinimumIdle(), is(2));
+		assertThat(config.getIdleTimeout(), is(600000L));
 	}
 }
