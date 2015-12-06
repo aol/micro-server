@@ -23,7 +23,7 @@ public final class JacksonUtil {
 	@Setter
 	private static volatile boolean strict = false;
 
-	public synchronized static ObjectMapper getMapper() {
+	private synchronized static ObjectMapper createMapper() {
 		if (mapper == null) {
 			mapper = new ObjectMapper();
 			if (strict)
@@ -37,12 +37,16 @@ public final class JacksonUtil {
 			PluginLoader.INSTANCE.plugins.get().stream()
 				.filter(m -> m.jacksonModules()!=null)
 				.flatMap(m -> m.jacksonModules().stream())
-				.peek(System.out::println)
 				.forEach(m -> mapper.registerModule(m));
 				
 			mapper.registerModule(new Jdk8Module());
 
 		}
+		return mapper;
+	}
+	public  static ObjectMapper getMapper() {
+		if(mapper==null)
+			return createMapper();
 		return mapper;
 	}
 
