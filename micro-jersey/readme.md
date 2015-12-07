@@ -2,7 +2,7 @@
 
 [Example Jersey Apps](https://github.com/aol/micro-server/tree/master/micro-grizzly/src/test/java/app)
 
-Plugin that allows the Jersey to be used as the jax-rs implementation with Microserver
+Plugin that allows the Jersey to be used as the jax-rs implementation with Microserver. (micro-jersey does not include a webserver (such as micro-grizzly, or JSON serializer / deserializer such as micro-jackson-configuration. See micro-grizzly-with-jersey for an end-to-end solution).
 
 ## To use
 
