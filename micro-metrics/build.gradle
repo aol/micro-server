@@ -4,7 +4,7 @@ dependencies {
 		exclude(module: 'org.springframework')
 	}
 	compile project(':micro-core')
-//	testCompile project(':micro-boot')
+	testCompile project(':micro-jackson-configuration')
 	testCompile project(':micro-grizzly')
 	testCompile project(':micro-jersey')
 }
