@@ -59,6 +59,7 @@ public class IntegrationTest {
 		
 		DistributedLockService lock = provider.getDistributedLock(1000);
 		Assert.assertTrue(lock.tryLock(lockName));
+		Assert.assertTrue(lock.tryLock(lockName));
 		DistributedLockService lock2 = provider.getDistributedLock(1000);
 		Assert.assertFalse(lock2.tryLock(lockName));
 	}

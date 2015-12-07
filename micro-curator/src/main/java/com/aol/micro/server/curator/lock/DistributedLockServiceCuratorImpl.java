@@ -63,7 +63,7 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
 
 	private boolean acquire() {
 		try {
-			return curatorLock.acquire(timeout, TimeUnit.MILLISECONDS);
+			return acquired ? acquired : curatorLock.acquire(timeout, TimeUnit.MILLISECONDS);
 		} catch (Exception e) {
 			return false;
 		}
