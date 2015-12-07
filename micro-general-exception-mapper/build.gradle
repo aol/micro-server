@@ -1,4 +1,4 @@
-description = 'micro-grizzly'
+description = 'micro-general-exception-mapper'
 dependencies {
 	
 	compile project(':micro-jersey')
