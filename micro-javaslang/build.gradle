@@ -6,7 +6,7 @@ description = 'micro-javaslang'
 dependencies {
 	
 	compile "com.javaslang:javaslang:$javaslangVersion"
-	
+	compile project(':micro-jackson-configuration')
 	
 	compile "com.javaslang:javaslang-jackson:$javaslangDatatypeVersion"
 	compile 'com.aol.cyclops:cyclops-javaslang:'+cyclopsVersion

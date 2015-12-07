@@ -1,6 +1,8 @@
 package com.aol.micro.server.rest.jackson;
 
 
+import java.util.List;
+
 import lombok.Setter;
 
 import org.slf4j.Logger;
@@ -8,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import com.aol.cyclops.invokedynamic.ExceptionSoftener;
 import com.aol.micro.server.PluginLoader;
+import com.aol.micro.server.jackson.JacksonMapperConfigurator;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,29 +21,19 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 public final class JacksonUtil {
 
 	
+	
 	private static ObjectMapper mapper = null;
 
 	private static final Logger logger = LoggerFactory.getLogger(JacksonUtil.class);
 	@Setter
-	private static volatile boolean strict = false;
+	private volatile static List<JacksonMapperConfigurator>  jacksonConfigurers;
 
 	private synchronized static ObjectMapper createMapper() {
 		if (mapper == null) {
 			mapper = new ObjectMapper();
-			if (strict)
-				mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-			JaxbAnnotationModule module = new JaxbAnnotationModule();
-			// configure as necessary
-			mapper.registerModule(module);
-
 			
-			PluginLoader.INSTANCE.plugins.get().stream()
-				.filter(m -> m.jacksonModules()!=null)
-				.flatMap(m -> m.jacksonModules().stream())
-				.forEach(m -> mapper.registerModule(m));
-				
-			mapper.registerModule(new Jdk8Module());
+			jacksonConfigurers.forEach(a-> a.accept(mapper));
+			
 
 		}
 		return mapper;

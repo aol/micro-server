@@ -33,6 +33,11 @@ Gradle
 
     compile 'com.aol.microservices:micro-javaslang:x.yz'
     
+## Depends on
+
+micro-jackson-configuration
+micro-core    
+    
 ## Examples
 
 ### JavaslangPipes

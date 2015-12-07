@@ -2,6 +2,7 @@ description = 'micro-grizzly'
 dependencies {
 	
 	compile project(':micro-core')
+	compile project(':micro-jackson-configuration')
 	
 	compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version:"$jerseyVersion"
 	compile(group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version:"$jerseyVersion") {

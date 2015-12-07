@@ -22,5 +22,6 @@ include ':micro-javaslang'
 include ':micro-transactions'
 include ':micro-curator'
 include ':micro-general-exception-mapper'
+include ':micro-jackson-configuration'
 include ':micro-tutorial'
 
