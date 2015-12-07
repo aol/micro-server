@@ -6,7 +6,7 @@ This plugin turns any service into a Service Registry client (and optionally ser
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-application-registry/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-application-registry)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-application-register/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-application-register)
 
 Simply add this plugin to the classpath on your Microserver app.
 
