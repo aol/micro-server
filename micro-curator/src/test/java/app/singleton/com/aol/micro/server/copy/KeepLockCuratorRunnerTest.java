@@ -18,14 +18,14 @@ import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver
-public class CuratorRunnerTest {
+public class KeepLockCuratorRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
 	MicroserverApp server;
 	@Before
 	public void startServer() throws IOException{
-		FileUtils.deleteDirectory(new File("/tmp/zookeeper"));
+		FileUtils.deleteDirectory(new File("/tmp/zookeeper/kl"));
 		
 		new  Zookeeper().init();
 		server = new MicroserverApp(()->"simple-app");

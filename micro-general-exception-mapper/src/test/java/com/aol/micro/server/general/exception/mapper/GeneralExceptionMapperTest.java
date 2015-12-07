@@ -3,6 +3,7 @@ package com.aol.micro.server.general.exception.mapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
@@ -12,17 +13,25 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.io.EOFException;
+import java.util.Arrays;
 
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotAcceptableException;
+import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import app.custom.com.aol.micro.server.copy.MyException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import com.sun.xml.internal.ws.server.UnsupportedMediaException;
 
 public class GeneralExceptionMapperTest {
 
@@ -47,12 +56,14 @@ public class GeneralExceptionMapperTest {
 
 	@Test
 	public void whenNotFoundException_thenNotFound() {
-		assertThat(mapper.toResponse(mock(NotFoundException.class)).getStatus(), is(Status.NOT_FOUND.getStatusCode()));
+		assertThat(mapper.toResponse(new NotFoundException()).getStatus(), is(Status.NOT_FOUND.getStatusCode()));
 	}
 
 	@Test
 	public void whenWebApplicationException_thenUnsupportedMediaType() {
-		assertThat(mapper.toResponse(mock(WebApplicationException.class)).getStatus(), is(Status.UNSUPPORTED_MEDIA_TYPE.getStatusCode()));
+		
+		assertThat(mapper.toResponse(new NotSupportedException(Response.status(Status.UNSUPPORTED_MEDIA_TYPE).build()))
+								.getStatus(), is(Status.UNSUPPORTED_MEDIA_TYPE.getStatusCode()));
 	}
 
 	@Test
@@ -65,7 +76,7 @@ public class GeneralExceptionMapperTest {
 	@Test
 	public void whenJacksonException_thenNotInternalServerError_NoErrorsLogged() {
 		mapper=  new GeneralExceptionMapper(mockLogger);
-		assertThat(mapper.toResponse(mock(UnrecognizedPropertyException.class)).getStatus(), is(not(Status.INTERNAL_SERVER_ERROR.getStatusCode())));
+		assertThat(mapper.toResponse(new MyException()).getStatus(), is((Status.INTERNAL_SERVER_ERROR.getStatusCode())));
 		verify(mockLogger, times(0)).error(any(String.class), any(Object[].class));
 		verify(mockLogger, times(0)).error(any(String.class), any(Throwable.class), any(Object[].class));
 	}

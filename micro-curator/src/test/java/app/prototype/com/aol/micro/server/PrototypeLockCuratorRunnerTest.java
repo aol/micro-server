@@ -20,14 +20,14 @@ import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver
-public class CuratorRunnerTest {
+public class PrototypeLockCuratorRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
 	MicroserverApp server;
 	@Before
 	public void startServer() throws IOException{
-		FileUtils.deleteDirectory(new File("/tmp/zookeeper"));
+		FileUtils.deleteDirectory(new File("/tmp/zookeeper/pl"));
 		new  Zookeeper().init();
 		server = new MicroserverApp(()->"simple-app");
 	
@@ -45,7 +45,7 @@ public class CuratorRunnerTest {
 
 		
 		assertThat(rest.get("http://localhost:8080/simple-app/status/ping"),is("got"));
-		assertThat(rest.get("http://localhost:8080/simple-app/status/ping"),is("not"));
+		assertThat(rest.get("http://localhost:8080/simple-app/status/ping"),is("got"));
 		
 		
 	}

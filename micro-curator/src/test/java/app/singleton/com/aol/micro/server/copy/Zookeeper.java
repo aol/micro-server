@@ -20,7 +20,7 @@ public class Zookeeper {
 			
 			Properties startupProperties = new Properties();
 			
-			startupProperties.put("dataDir", "/tmp/zookeeper");
+			startupProperties.put("dataDir", "/tmp/zookeeper/kl");
 			startupProperties.put("clientPort", "12181");
 
 			

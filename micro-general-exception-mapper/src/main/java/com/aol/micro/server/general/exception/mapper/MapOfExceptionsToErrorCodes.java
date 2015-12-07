@@ -26,13 +26,14 @@ public class MapOfExceptionsToErrorCodes {
 	private static final String UNSUPPORTED_MEDIA_TYPE = "UNSUPPORTED_MEDIA_TYPE";
 
 	
-	private volatile static LinkedHashMap<Class<? extends Exception>, Tuple2<String, Status>> mapOfExceptionsToErrorCodes = new LinkedHashMap<>();
+	private volatile static LinkedHashMap<Class<? extends Exception>, Tuple2<String, Status>> mapOfExceptionsToErrorCodes = createMap();
 
-	{
-		mapOfExceptionsToErrorCodes.put(EOFException.class, new Tuple2<String, Status>(EMPTY_REQUEST, Status.BAD_REQUEST));
-		mapOfExceptionsToErrorCodes.put(JsonProcessingException.class, new Tuple2<String, Status>(JSON_PROCESSING_EXCEPTION, Status.BAD_REQUEST));
-		
-
+	private static LinkedHashMap<Class<? extends Exception>, Tuple2<String, Status>> createMap(){
+			LinkedHashMap<Class<? extends Exception>, Tuple2<String, Status>> mapOfExceptionsToErrorCodes = new LinkedHashMap<>();
+			mapOfExceptionsToErrorCodes.put(EOFException.class, new Tuple2<String, Status>(EMPTY_REQUEST, Status.BAD_REQUEST));
+			mapOfExceptionsToErrorCodes.put(JsonProcessingException.class, new Tuple2<String, Status>(JSON_PROCESSING_EXCEPTION, Status.BAD_REQUEST));
+			return mapOfExceptionsToErrorCodes;
+	
 	}
 	private volatile static Optional<ExtensionMapOfExceptionsToErrorCodes> extensions = Optional.empty();
 	
