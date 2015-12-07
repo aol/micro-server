@@ -2,6 +2,9 @@ package com.aol.micro.server.curator.lock;
 
 import java.util.concurrent.TimeUnit;
 
+import lombok.AllArgsConstructor;
+import lombok.experimental.Wither;
+
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessSemaphoreMutex;
 import org.apache.curator.framework.state.ConnectionState;
@@ -11,6 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import com.aol.micro.server.utility.DistributedLockService;
 
+@Wither
+@AllArgsConstructor
 public class DistributedLockServiceCuratorImpl implements DistributedLockService, ConnectionStateListener {
 
 	private volatile boolean acquired;

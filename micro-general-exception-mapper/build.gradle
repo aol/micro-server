@@ -2,6 +2,7 @@ description = 'micro-general-exception-mapper'
 dependencies {
 	
 	compile project(':micro-jersey')
+	compile project(':micro-jackson-configuration')
 	
 	testCompile project(':micro-grizzly-with-jersey')
 

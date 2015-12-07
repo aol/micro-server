@@ -7,6 +7,7 @@ dependencies {
 	compile group: 'org.apache.httpcomponents', name:'httpasyncclient', version:apacheHttpClientVersionAsync
 	
 	compile project(':micro-core')
+	compile project(':micro-jackson-configuration')
 	
 	testCompile group: 'com.google.guava', name: 'guava', version:'18.0'
 	testCompile project(':micro-reactive')

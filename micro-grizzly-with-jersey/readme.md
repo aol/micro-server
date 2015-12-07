@@ -2,7 +2,7 @@
 
 [Example Grizzly & Jersey Apps](https://github.com/aol/micro-server/tree/master/micro-grizzly/src/test/java/app)
 
-Convenience module that packages Grizzly, Jersey and Microserver together
+Convenience module that packages Grizzly, Jersey, Jackson and Microserver together
 
 ## To use
 

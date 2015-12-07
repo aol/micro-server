@@ -3,6 +3,7 @@ dependencies {
 	
 	compile project(':micro-core')
 	
+	
 	compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version:"$jerseyVersion"
 	compile(group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version:"$jerseyVersion") {
 		exclude(module: 'jackson-xc')
@@ -17,7 +18,7 @@ dependencies {
 	compile "org.glassfish.jersey.ext:jersey-bean-validation:$jerseyVersion"
 
 	testCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version:"$jerseyVersion"
-	
+	testCompile project(':micro-jackson-configuration')
 	
 
 }

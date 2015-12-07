@@ -2,7 +2,7 @@
 
 [Example Jersey Apps](https://github.com/aol/micro-server/tree/master/micro-grizzly/src/test/java/app)
 
-Plugin that allows the Jersey to be used as the jax-rs implementation with Microserver
+Plugin that allows the Jersey to be used as the jax-rs implementation with Microserver. (micro-jersey does not include a webserver (such as micro-grizzly, or JSON serializer / deserializer such as micro-jackson-configuration. See micro-grizzly-with-jersey for an end-to-end solution).
 
 ## To use
 
@@ -11,24 +11,16 @@ Plugin that allows the Jersey to be used as the jax-rs implementation with Micro
 Simply add to the classpath
 
 Maven 
-<<<<<<< HEAD
-```xml
-=======
  ```xml
->>>>>>> master
+
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-jersey</artifactId>
         <version>x.yz</version>
      </dependency>
-<<<<<<< HEAD
+
 ```    
 Gradle
 ```groovy
-=======
- ```    
-Gradle
-```gradle
->>>>>>> master
     compile 'com.aol.microservices:micro-jersey:x.yz'
 ```

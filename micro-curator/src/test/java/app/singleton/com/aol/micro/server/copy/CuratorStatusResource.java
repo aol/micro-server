@@ -21,7 +21,7 @@ public class CuratorStatusResource {
 	@GET
 	@Path("/ping")
 	public String ping() {
-		if(service.tryLock("hello"))
+		if(service.tryLock("hello2"))
 			return "got";
 		return "not";
 		
