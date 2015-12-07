@@ -18,11 +18,13 @@ public class EbayCorsFilter implements FilterConfiguration {
 
 	private final Map<String,String> initParameters;
 	private final  boolean simple;
+	
 	@Autowired(required=false)
 	public EbayCorsFilter(@Value("${cors.simple:false}")boolean simple, @Qualifier("ebay-cors-config" ) Map<String,String> initParameters){
 		this.simple=simple;
 		this.initParameters = initParameters;
 	}
+	
 	@Autowired(required=false)
 	public EbayCorsFilter(@Value("${cors.simple:false}")boolean simple){
 		this.simple=simple;
