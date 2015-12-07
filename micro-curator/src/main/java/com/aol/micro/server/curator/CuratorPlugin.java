@@ -5,11 +5,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.aol.micro.server.Plugin;
-import com.aol.micro.server.curator.lock.CuratorDistributorLockServiceProvider;
+import com.aol.micro.server.curator.lock.CuratorDistributedLockServiceProvider;
 
 public class CuratorPlugin implements Plugin {
 	@Override
 	public Set<Class> springClasses() {
-		return new HashSet<>(Arrays.asList(CuratorDistributorLockServiceProvider.class));
+		return new HashSet<>(Arrays.asList(CuratorDistributedLockServiceProvider.class));
 	}
 }

@@ -47,7 +47,7 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
 			curatorLock = new InterProcessSemaphoreMutex(curatorFramework, String.join("/", basePath, key));
 			acquired = acquire();
 			return acquired;
-		} else if (lockName.equals(curatorLock)) {
+		} else if (lockName.equals(key)) {
 			acquired = acquire();
 			return acquired;
 		} else {

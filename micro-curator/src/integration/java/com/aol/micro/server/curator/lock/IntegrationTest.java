@@ -15,7 +15,7 @@ import com.aol.micro.server.utility.DistributedLockService;
 
 public class IntegrationTest {
 
-	private CuratorDistributorLockServiceProvider provider;
+	private CuratorDistributedLockServiceProvider provider;
 
 	private ZooKeeperServerMain zooKeeperServer;
 	
@@ -50,7 +50,7 @@ public class IntegrationTest {
 		}.start();
 		
 		
-		provider = new CuratorDistributorLockServiceProvider("localhost:12181", "1000", "1", "/test");
+		provider = new CuratorDistributedLockServiceProvider("localhost:12181", "1000", "1", "/test");
 	}
 	
 	@Test
