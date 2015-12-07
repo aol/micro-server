@@ -1,4 +1,4 @@
-package app.custom.com.aol.micro.server.copy;
+package app.jackson.com.aol.micro.server.copy;
 
 import java.io.EOFException;
 import java.io.InputStream;

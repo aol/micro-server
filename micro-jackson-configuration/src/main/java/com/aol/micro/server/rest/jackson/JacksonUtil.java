@@ -1,7 +1,9 @@
 package com.aol.micro.server.rest.jackson;
 
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import lombok.Setter;
 
@@ -9,14 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aol.cyclops.invokedynamic.ExceptionSoftener;
-import com.aol.micro.server.PluginLoader;
+import com.aol.cyclops.monad.AnyM;
+import com.aol.micro.server.jackson.CoreJacksonConfigurator;
 import com.aol.micro.server.jackson.JacksonMapperConfigurator;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
 public final class JacksonUtil {
 
@@ -25,14 +25,23 @@ public final class JacksonUtil {
 	private static ObjectMapper mapper = null;
 
 	private static final Logger logger = LoggerFactory.getLogger(JacksonUtil.class);
-	@Setter
-	private volatile static List<JacksonMapperConfigurator>  jacksonConfigurers;
+	
+	private volatile static List<JacksonMapperConfigurator>  jacksonConfigurers = 
+						Arrays.asList(new CoreJacksonConfigurator(Include.NON_NULL));
+	
+	public static void setJacksonConfigurers(List<JacksonMapperConfigurator>  jc  )
+	{
+		jacksonConfigurers = jc;
+		mapper = null;
+		getMapper();
+	}
 
 	private synchronized static ObjectMapper createMapper() {
 		if (mapper == null) {
 			mapper = new ObjectMapper();
 			
-			jacksonConfigurers.forEach(a-> a.accept(mapper));
+			AnyM.<List<JacksonMapperConfigurator>>ofNullable(jacksonConfigurers)
+						.peek(list->list.forEach(a-> a.accept(mapper)));
 			
 
 		}

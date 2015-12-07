@@ -1,4 +1,4 @@
-package app.custom.com.aol.micro.server.copy;
+package app.jackson.com.aol.micro.server.copy;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

@@ -1,6 +1,6 @@
 # Jackson & Jackons Configuration Plugin
 
-[micro-jackson-configuration example apps](https://github.com/aol/micro-server/tree/master/micro-jackson-configuration/src/test/java/app)
+[micro-jackson-configuration example apps](https://github.com/aol/micro-server/tree/master/micro-grizzly/src/test/java/app/jackson)
 
 
 Add Jackson Serialization to Microserver apps & add custom configurations as neccessary.
@@ -11,7 +11,6 @@ properties = default
 
 
 jackons.seriliazation=NON_NULL
-
 
 
 ## Creating your own configuration extensions bean
@@ -34,6 +33,10 @@ public class MapperExtension implements JacksonMapperConfigurator {
 }
 
 ```
+
+## NB Custom Jackson Configuration inside a Spring Context
+
+Custom extensions are  only guaranteed to be available once the configurations have run inside a Spring context. I.e. - to use custom extensions with AsyncRestClient or RestClient in micro-client, please create instances as Spring Beans (or at least don't instantiate your instances until Spring has completed initialisation). (Default configuration will be available via the new keyword).
 
 ## To use
 

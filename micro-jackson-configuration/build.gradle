@@ -2,8 +2,7 @@ description = 'micro-jackson-configuration'
 dependencies {
 	
 	compile project(':micro-core')
-	testCompile project(':micro-grizzly')
-	testCompile project(':micro-jersey')
+	
 }
 
 modifyPom {

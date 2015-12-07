@@ -8,6 +8,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 
@@ -51,5 +52,15 @@ public class RestAgent {
 		return request.post(Entity.entity(JacksonUtil.serializeToJson(payload),MediaType.APPLICATION_JSON), type);
 	}
 	
+	public Response postString(String url, String payload) {
+		Client client = ClientBuilder.newClient();
+
+		WebTarget resource = client.target(url);
+
+		Builder request = resource.request();
+		request.accept(MediaType.APPLICATION_JSON);
+
+		return request.post(Entity.entity(payload,MediaType.APPLICATION_JSON));
+	}
 
 }
