@@ -1,4 +1,4 @@
-description = 'micro-jdbc'
+description = 'micro-transactions'
 dependencies {
 	compile ('org.hibernate:hibernate-validator:'+hibernateValidator) {
 		exclude group: 'org.jboss.logging'
