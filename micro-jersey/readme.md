@@ -11,14 +11,24 @@ Plugin that allows the Jersey to be used as the jax-rs implementation with Micro
 Simply add to the classpath
 
 Maven 
+<<<<<<< HEAD
+```xml
+=======
  ```xml
+>>>>>>> master
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-jersey</artifactId>
         <version>x.yz</version>
      </dependency>
+<<<<<<< HEAD
+```    
+Gradle
+```groovy
+=======
  ```    
 Gradle
 ```gradle
+>>>>>>> master
     compile 'com.aol.microservices:micro-jersey:x.yz'
 ```
