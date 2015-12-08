@@ -1,6 +1,6 @@
 # Application / Service Registry Client Plugin
 
-[micro-application-registry example apps](https://github.com/aol/micro-server/tree/master/micro-application-registry/src/test/java/app)
+[micro-application-register example apps](https://github.com/aol/micro-server/tree/master/micro-application-register/src/test/java/app)
 
 This plugin turns any service into a Service Registry client (and optionally server). A scheduled job will run at configurable intervals (default is every 5 minutes) and post some info on the instance to the Service Registry server (url also configurable). The server will persist data on active services to a configurable location.
 
