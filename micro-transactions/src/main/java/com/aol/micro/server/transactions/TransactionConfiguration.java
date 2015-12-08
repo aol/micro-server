@@ -12,11 +12,16 @@ import org.springframework.transaction.support.TransactionTemplate;
 public class TransactionConfiguration {
 	@Autowired
 	private PlatformTransactionManager ptm;
+	@Bean
+	public TransactionTemplate flowTemplate(){
+		TransactionTemplate transactionTemplate = new TransactionTemplate(ptm);
+		return transactionTemplate;
+	}
 
 	@Bean
 	public TransactionFlow transactionBean(){
-		TransactionTemplate transactionTemplate = new TransactionTemplate(ptm);
-		return TransactionFlow.of(transactionTemplate, Function.identity());
+		
+		return TransactionFlow.of(flowTemplate(), Function.identity());
 	}
 	
 	
