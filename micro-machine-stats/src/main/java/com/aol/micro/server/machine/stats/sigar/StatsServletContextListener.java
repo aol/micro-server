@@ -1,10 +1,17 @@
 package com.aol.micro.server.machine.stats.sigar;
 
+import java.io.File;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import kamon.sigar.SigarProvisioner;
+
+import org.hyperic.sigar.Sigar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.aol.cyclops.invokedynamic.ExceptionSoftener;
 
 
 public class StatsServletContextListener implements ServletContextListener {
@@ -13,11 +20,20 @@ public class StatsServletContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		if(System.getProperty("java.library.path")==null){
+		
 			String workingDir = System.getProperty("user.dir");
 			String destination = workingDir + "/sigar-lib";
 			logger.info("java.library.path is {}", destination);
 			System.setProperty("java.library.path", destination);
+		
+		if(!new File(System.getProperty("java.library.path")).exists()){
+		 final File location = new File(System.getProperty("java.library.path"));
+	        try {
+				SigarProvisioner.provision(location);
+			} catch (Exception e) {
+				throw ExceptionSoftener.throwSoftenedException(e);
+			}
+	       
 		}
 	}
 

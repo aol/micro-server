@@ -1,6 +1,5 @@
 package app.error.com.aol.micro.server;
 
-
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -20,34 +19,30 @@ import com.aol.micro.server.testing.RestAgent;
 public class StatsRunnerTest {
 
 	RestAgent rest = new RestAgent();
-	
+
 	MicroserverApp server;
+
 	@Before
-	public void startServer(){
-		server = new MicroserverApp(ConfigurableModule
-				.builder()
-				.context("simple-app")
-				.build());
-	
+	public void startServer() {
+		server = new MicroserverApp(ConfigurableModule.builder()
+				.context("simple-app").build());
+
 		server.start();
 
 	}
-	
+
 	@After
-	public void stopServer(){
+	public void stopServer() {
 		server.stop();
 	}
-	
+
 	@Test
-	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
+	public void runAppAndBasicTest() throws InterruptedException,
+			ExecutionException {
 
+		assertThat(rest.get("http://localhost:8080/simple-app/stats/machine"),
+				containsString("cpu-stats"));
 
-		if(new File(System.getProperty("java.library.path")).exists())
-			assertThat(rest.get("http://localhost:8080/simple-app/stats/machine"),containsString("cpu-stats"));
-		
-		
 	}
-	
-	
-	
+
 }
