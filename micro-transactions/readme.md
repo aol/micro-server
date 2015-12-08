@@ -53,5 +53,5 @@ Maven
   
 Gradle
 ```gradle
-    compile 'com.aol.microservices:micro-transactionsy:x.yz'
+    compile 'com.aol.microservices:micro-transactions:x.yz'
 ```
