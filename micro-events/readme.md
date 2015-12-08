@@ -84,7 +84,28 @@ or an RxJava Observable.
 	 }
   }
 ``` 
- ##  Capturing Queries
+## Subscribing to scheduled job events
+
+Inject in the micro-events Guava Event Bus to your class as Spring Bean, and implement a method annotated with the Guava @Subscribe annotation that takes SystemData as a single parameter.
+
+ ```java
+
+    public class Subscriber {
+
+	public Subsciber(EventBus eventBus){
+	    bus.register(this);
+	}
+      
+      @Subscribe
+      public void listenForJobEvents(SystemData data){ 
+         
+           logsStats(data);
+      }
+	
+  }
+```
+
+##  Capturing Queries
  
 To capture requests or Queries post a AddQuery event to the configured  Guava event bus when the Query starts, and a RemoveQuery event when it finishes. There are static helper methods on the RequestEvents class to help with this. E.g. 
  ```java
