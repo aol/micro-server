@@ -1,5 +1,7 @@
 # Curator Plugin
 
+[micro-curator example apps](https://github.com/aol/micro-server/tree/master/micro-curator/src/test/java/app)
+
 This adds a facility to use curator locks.
 
 ## To use

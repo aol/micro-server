@@ -1,6 +1,6 @@
 # General Exception Mapper Plugin Plugin
 
-[Example Jersey Apps](https://github.com/aol/micro-server/tree/master/micro-general-exception-mapper/src/test/java/app)
+[Example General Exception Mapper Apps](https://github.com/aol/micro-server/tree/master/micro-general-exception-mapper/src/test/java/app)
 
 Plugin that adds  general exception mapping capability
 

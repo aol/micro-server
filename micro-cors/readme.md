@@ -1,5 +1,7 @@
 # CORS Plugin
 
+[micro-cors example apps](https://github.com/aol/micro-server/tree/master/micro-cors/src/test/java/app)
+
 Set response headers for Cross Domain support via a Servlet Filter. Two CORS Filters are provided - simple and the more advanced Ebay CORS Filter. The Ebay CORS Filter is used by default.
 
 To select between them use the property cors.simple

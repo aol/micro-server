@@ -1,5 +1,7 @@
 # Events Plugin
 
+[micro-events example apps](https://github.com/aol/micro-server/tree/master/micro-events/src/test/java/app)
+
 This adds a facility to capture events such as requests, request execution and scheduled jobs. 
 
 ## To use

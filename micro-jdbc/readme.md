@@ -1,5 +1,7 @@
  # JDBC plugin
 
+[micro-jdbc example apps](https://github.com/aol/micro-server/tree/master/micro-jdbc/src/test/java/app)
+
 Adds Spring JDBC. 
 Creates a DataSource Spring Bean with name "mainDataSource" from v0.63 this will be based on [HikariCP](http://brettwooldridge.github.io/HikariCP/ludicrous.html).
 

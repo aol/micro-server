@@ -1,5 +1,7 @@
 # IP Tracker Plugin
 
+[micro-ip-tracker example apps](https://github.com/aol/micro-server/tree/master/micro-ip-tracker/src/test/java/app)
+
 Capture the IP address on incoming REST Requests via a filter.
 
 The IP Address is stored in a thread local variable & available via QueryIPRetriever.getIPAddress();
