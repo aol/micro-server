@@ -33,7 +33,7 @@ Gradle
 
 
 ## Example output
- ```json
+```json
 {
 	"cpu-stats": {
 		"model": "MacBookPro",
