@@ -1,5 +1,7 @@
 package com.aol.micro.server.events;
 
+import java.util.Optional;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
@@ -63,12 +65,15 @@ public class JobsBeingExecuted {
 	private Object executeScheduledJob(final ProceedingJoinPoint pjp, final String type) throws Throwable {
 		addTypeToStatCounter(type);
 		JobExecutingData data = new JobExecutingData(type, statCounter.count(type));
-		events.active(buildId(type, data.getProcessingThread()), data);
+		String id = buildId(type, data.getProcessingThread());
+		events.active(id, data);
 
 	
 		SystemData retVal = null;
 		try {
-			retVal = (SystemData) pjp.proceed();
+			retVal = Optional.ofNullable(((SystemData) pjp.proceed()))
+							.map(sd ->sd.withCorrelationId(id))
+							.orElse(null);
 			return retVal;
 		} finally {
 			logSystemEvent(pjp, type, data, retVal);
