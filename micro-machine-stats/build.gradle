@@ -7,6 +7,13 @@ dependencies {
 	compile project(':micro-core')
 	compile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.3.3'
 	
+	testCompile project(':micro-grizzly-with-jersey')
+	
+}
+
+test {
+	systemProperty 'java.library.path',"./lib"
+	
 }
 
 sourceSets {
