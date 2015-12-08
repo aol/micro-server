@@ -89,18 +89,18 @@ or an RxJava Observable.
 Inject in the micro-events Guava Event Bus to your class as Spring Bean, and implement a method annotated with the Guava @Subscribe annotation that takes SystemData as a single parameter.
 
  ```java
-
+   
     public class Subscriber {
-
+        @Autowired
 	public Subsciber(EventBus eventBus){
 	    bus.register(this);
 	}
       
-      @Subscribe
-      public void listenForJobEvents(SystemData data){ 
+        @Subscribe
+        public void listenForJobEvents(SystemData data){ 
          
            logsStats(data);
-      }
+        }
 	
   }
 ```
