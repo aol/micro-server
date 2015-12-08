@@ -43,9 +43,9 @@ public class KeepLockCuratorRunnerTest {
 	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
 
 		
-		assertThat(rest.get("http://localhost:8080/simple-app/status/ping"),is("got"));
-		assertThat(rest.get("http://localhost:8080/simple-app/status/ping"),is("got"));
-		
+		assertThat(rest.get("http://localhost:8080/simple-app/status/lock"),is("got"));
+		assertThat(rest.get("http://localhost:8080/simple-app/status/lock"),is("got"));
+		assertThat(rest.get("http://localhost:8080/simple-app/status/lock2"),is("not"));		
 		
 	}
 	

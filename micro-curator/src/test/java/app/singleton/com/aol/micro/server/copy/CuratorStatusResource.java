@@ -14,18 +14,29 @@ import com.aol.micro.server.utility.DistributedLockService;
 public class CuratorStatusResource {
 
 	private final DistributedLockService service;
+	private final DistributedLockService service2;
+	
 	@Autowired
 	public CuratorStatusResource(CuratorDistributedLockServiceProvider provider) {
 		this.service = provider.getDistributedLock(1_000);
+		this.service2 = provider.getDistributedLock(1_000);
 	}
 	@GET
-	@Path("/ping")
-	public String ping() {
+	@Path("/lock")
+	public String lock() {
 		if(service.tryLock("hello2"))
 			return "got";
 		return "not";
 		
 	}
 
+	@GET
+	@Path("/lock2")
+	public String lock2() {
+		if(service2.tryLock("hello2"))
+			return "got";
+		return "not";
+		
+	}
 	
 }
