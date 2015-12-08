@@ -4,6 +4,7 @@ package app.error.com.aol.micro.server;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
+import java.io.File;
 import java.util.concurrent.ExecutionException;
 
 import org.junit.After;
@@ -40,8 +41,9 @@ public class StatsRunnerTest {
 	@Test
 	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
 
-		
-		assertThat(rest.get("http://localhost:8080/simple-app/stats/machine"),containsString("cpu-stats"));
+
+		if(new File(System.getProperty("java.library.path")).exists())
+			assertThat(rest.get("http://localhost:8080/simple-app/stats/machine"),containsString("cpu-stats"));
 		
 		
 	}

@@ -13,10 +13,12 @@ public class StatsServletContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		String workingDir = System.getProperty("user.dir");
-		String destination = workingDir + "/sigar-lib";
-		logger.info("java.library.path is {}", destination);
-		System.setProperty("java.library.path", destination);
+		if(System.getProperty("java.library.path")==null){
+			String workingDir = System.getProperty("user.dir");
+			String destination = workingDir + "/sigar-lib";
+			logger.info("java.library.path is {}", destination);
+			System.setProperty("java.library.path", destination);
+		}
 	}
 
 	@Override

@@ -2,6 +2,7 @@
 /bin/
 # Created by https://www.gitignore.io
 /sigar-lib/
+sigar-lib/
 
 ### Eclipse ###
 *.pydevproject
