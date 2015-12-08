@@ -56,5 +56,5 @@ public class CuratorStatusResource {
 }
  ```
 
-If you'll call one of method, it will be returning "got", if you'll switch to another it will be returning "not" since they are both aiming to the same lock. 
+If you'll call one of method, it will be returning "got", if you'll switch to another it will be returning "not" since they are both aiming to the same lock. DistributedLockService object itself **is a** lock, fact that `service` hold the lock, doesn't grant `service2` in any thread to obtain lock with the same name and vice versa. Despite the fact they use same name, from viewpoint of curator they are different locks.
 Plugin allow you to have multiple number of locks using single connection.
