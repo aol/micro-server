@@ -1,11 +1,9 @@
 package com.aol.micro.server.spring;
 
+import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-
-import lombok.AllArgsConstructor;
-import lombok.experimental.Wither;
+import java.util.stream.Collectors;
 
 import org.pcollections.HashTreePSet;
 import org.pcollections.PSet;
@@ -18,8 +16,11 @@ import com.aol.cyclops.sequence.SequenceM;
 import com.aol.micro.server.ErrorCode;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
-import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Config;
+import com.aol.micro.server.config.Microserver;
+
+import lombok.AllArgsConstructor;
+import lombok.experimental.Wither;
 
 
 @AllArgsConstructor
@@ -32,9 +33,16 @@ public class SpringContextFactory {
 	private final SpringBuilder springBuilder;
 	
 	public SpringContextFactory(Config config, Class c, Set<Class> classes){
-		Set s = new HashSet(classes);
-		s.add(c);
+		Set<Class> s = new HashSet<Class>(classes);
 		s.addAll(config.getClasses());
+		
+		if(c != null) {
+			s.add(c);
+			Microserver microserver = (Microserver) c.getAnnotation(Microserver.class);
+			Set<Class> blacklistedClasses = Arrays.stream(microserver.blacklistedClasses()).collect(Collectors.toSet());
+			s = s.stream().filter(clazz -> !blacklistedClasses.contains(clazz)).collect(Collectors.toSet());
+		}
+		
 		this.classes = HashTreePSet.from(s);
 		this.config = config;
 		
@@ -47,16 +55,7 @@ public class SpringContextFactory {
 	}
 	
 	public SpringContextFactory(Config config, Set<Class> classes) {
-		Set s = new HashSet(classes);
-		s.addAll(config.getClasses());
-		this.classes =  HashTreePSet.from(s);
-		this.config=config;
-		springBuilder = SequenceM
-				.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
-				.filter(m -> m.springBuilder() != null)
-				.map(Plugin::springBuilder)
-				.findFirst()
-				.orElse(new SpringApplicationConfigurator());
+		this(config, null, classes);
 	}
 
 	public ApplicationContext createSpringContext() {
