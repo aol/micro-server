@@ -46,18 +46,7 @@ public class SpringContextFactory {
 				.orElse(new SpringApplicationConfigurator());
 	}
 	
-	public SpringContextFactory(Config config, Set<Class> classes) {
-		Set s = new HashSet(classes);
-		s.addAll(config.getClasses());
-		this.classes =  HashTreePSet.from(s);
-		this.config=config;
-		springBuilder = SequenceM
-				.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
-				.filter(m -> m.springBuilder() != null)
-				.map(Plugin::springBuilder)
-				.findFirst()
-				.orElse(new SpringApplicationConfigurator());
-	}
+	
 
 	public ApplicationContext createSpringContext() {
 		try {

@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 
+import com.aol.micro.server.couchbase.base.ManifestComparator;
 import com.couchbase.client.CouchbaseClient;
 import com.couchbase.client.CouchbaseConnectionFactory;
 import com.couchbase.client.CouchbaseConnectionFactoryBuilder;
@@ -34,6 +35,8 @@ public class ConfigureCouchbase {
 
 	@Value("${couchbasePassword:}")
 	private String couchbasePassword;
+	
+	
 
 	@Setter
 	@Value("${couchbaseClientEnabled:true}")
@@ -43,16 +46,16 @@ public class ConfigureCouchbase {
 	private long opTimeout;
 
 	@SuppressWarnings("rawtypes")
-	@Bean(name = "persistentDistributedInMemoryCache")
-	public SimpleCouchbaseClient simpleCouchbaseClient() throws IOException, URISyntaxException {
+	@Bean(name = "couchbaseDistributedMap")
+	public DistributedMapClient simpleCouchbaseClient() throws IOException, URISyntaxException {
 		if (couchbaseClientEnabled) {
-			return new SimpleCouchbaseClient(couchbaseClient());
+			return new DistributedMapClient(couchbaseClient());
 		} else {
-			return new SimpleCouchbaseClient(null);
+			return new DistributedMapClient(null);
 		}
 	}
 
-	@Bean(name = "persistentCouchbaseClient")
+	@Bean(name = "couchbaseClient")
 	public CouchbaseClient couchbaseClient() throws IOException, URISyntaxException {
 		if (couchbaseClientEnabled) {
 			logger.info("Creating CouchbaseClient for servers: {}", couchbaseServers);
@@ -65,9 +68,18 @@ public class ConfigureCouchbase {
 		return null;
 
 	}
+	@Bean
+	public ManifestComparator couchbaseManifestComparator() throws IOException, URISyntaxException{
+		return new ManifestComparator(this.simpleCouchbaseClient());
+	}
 
 	private List<URI> getServersList() throws URISyntaxException {
 		List<URI> uris = new ArrayList<URI>();
+		if(couchbaseServers.indexOf(',')==-1){
+			uris.add(new URI(couchbaseServers));
+			return uris;
+		}
+			
 		for (String serverHost : StringUtils.split(couchbaseServers, ",")) {
 			uris.add(new URI(serverHost));
 		}

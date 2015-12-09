@@ -8,7 +8,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
 
-import com.aol.micro.server.couchbase.SimpleCouchbaseClient
+import com.aol.micro.server.couchbase.DistributedMapClient
 
 
 
@@ -16,12 +16,12 @@ import com.aol.micro.server.couchbase.SimpleCouchbaseClient
 class ManifestComparatorTest {
 
 	ManifestComparator manifestComparator
-	SimpleCouchbaseClient mock
+	DistributedMapClient mock
 	String key = "key"
 
 	@Before
 	public void setup(){
-		mock = Mockito.mock(SimpleCouchbaseClient)
+		mock = Mockito.mock(DistributedMapClient)
 		manifestComparator  = new ManifestComparator(key,mock)
 	}
 
