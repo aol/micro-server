@@ -1,36 +1,14 @@
-apply plugin: 'groovy'
-
 description = 'micro-machine-stats'
 dependencies {
 	compile 'io.kamon:sigar-loader:1.6.6-rev002'
 	compile group: 'org.fusesource', name: 'sigar', version:'1.6.4'
 	compile group: 'org.fusesource', name: 'sigar', version:'1.6.4', classifier:'native'
 	compile project(':micro-core')
-	compile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.3.3'
 	
 	testCompile project(':micro-grizzly-with-jersey')
 	
 }
 
-test {
-	systemProperty 'java.library.path',"./lib"
-	
-}
-
-sourceSets {
-	main {
-		java { srcDirs = []}
-		groovy { srcDirs = ['src/main/java'] }
-		resources { srcDir 'src/main/resources' }
-	}
-
-	test {
-		java { srcDirs = []}
-		groovy { srcDirs = ['src/test/java'] }
-		resources { srcDir 'src/test/resources' }
-	}
-	
-}
 
 modifyPom {
 	project {
