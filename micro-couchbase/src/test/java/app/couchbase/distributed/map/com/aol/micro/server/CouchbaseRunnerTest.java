@@ -3,6 +3,7 @@ package app.couchbase.distributed.map.com.aol.micro.server;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
+import java.net.BindException;
 import java.util.concurrent.ExecutionException;
 
 import org.couchbase.mock.CouchbaseMock;
@@ -26,7 +27,13 @@ public class CouchbaseRunnerTest {
 
 	@Before
 	public void startServer() {
-		CouchbaseMock.main(new String[]{"-S"});
+		try{
+			//couchbase already running?
+			rest.get("http://localhost:8091/pools");
+		}catch(Exception e){
+			//start mock couchbase
+			CouchbaseMock.main(new String[]{"-S"});
+		}
 		server = new MicroserverApp(ConfigurableModule.builder()
 				.context("simple-app").build());
 

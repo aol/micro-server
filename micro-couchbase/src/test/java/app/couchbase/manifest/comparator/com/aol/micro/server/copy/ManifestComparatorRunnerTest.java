@@ -26,7 +26,13 @@ public class ManifestComparatorRunnerTest {
 
 	@Before
 	public void startServer() {
-		CouchbaseMock.main(new String[]{"-S"});
+		try{
+			//couchbase already running?
+			rest.get("http://localhost:8091/pools");
+		}catch(Exception e){
+			//start mock couchbase
+			CouchbaseMock.main(new String[]{"-S"});
+		}
 		server = new MicroserverApp(ConfigurableModule.builder()
 				.context("simple-app").build());
 
@@ -45,7 +51,7 @@ public class ManifestComparatorRunnerTest {
 		rest.get("http://localhost:8080/simple-app/comparator/increment");
 		
 		assertThat(rest.get("http://localhost:8080/simple-app/comparator/check"),equalTo("true"));
-		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"),equalTo("hello2"));
+		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"),equalTo("hello1"));
 		rest.get("http://localhost:8080/simple-app/comparator/increment");
 		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"),equalTo("hello2"));
 		

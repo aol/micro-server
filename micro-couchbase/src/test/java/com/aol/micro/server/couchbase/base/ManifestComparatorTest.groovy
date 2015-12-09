@@ -9,6 +9,7 @@ import org.junit.Test
 import org.mockito.Mockito
 
 import com.aol.micro.server.couchbase.DistributedMapClient
+import com.fasterxml.jackson.core.JsonParseException
 
 
 
@@ -65,7 +66,7 @@ class ManifestComparatorTest {
 		assert result.get(0) == "hello"
 	}
 
-	@Test(expected=RuntimeException)
+	@Test(expected=JsonParseException)
 	public void testChangeMidLoad() {
 		Mockito.when(mock.get(key)).thenReturn(Optional.of("v1"))
 		Mockito.when(mock.get("v1")).thenReturn(Optional.empty())
