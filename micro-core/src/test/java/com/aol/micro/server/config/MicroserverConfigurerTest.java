@@ -54,13 +54,6 @@ public class MicroserverConfigurerTest {
 
 	}
 	
-	@Test
-	public void blacklistedClasses() {
-		Config config = configurer.buildConfig(MicroserverConfigurerTest.class);
-		System.out.println(config.getClasses());
-		assertThat(config.getClasses(), not(hasItem(String.class)));
-
-	}
 
 	@Test
 	public void selfClass() {

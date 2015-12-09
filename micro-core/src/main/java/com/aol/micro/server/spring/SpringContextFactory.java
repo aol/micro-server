@@ -2,6 +2,7 @@ package com.aol.micro.server.spring;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,8 +40,12 @@ public class SpringContextFactory {
 		if(c != null) {
 			s.add(c);
 			Microserver microserver = (Microserver) c.getAnnotation(Microserver.class);
-			Set<Class> blacklistedClasses = Arrays.stream(microserver.blacklistedClasses()).collect(Collectors.toSet());
-			s = s.stream().filter(clazz -> !blacklistedClasses.contains(clazz)).collect(Collectors.toSet());
+			final Set<Class> immutableS = s;
+			
+			s = Optional.ofNullable(microserver).flatMap(ms -> Optional.ofNullable(ms.blacklistedClasses())).map(bl -> {
+				Set<Class> blacklistedClasses = Arrays.stream(bl).collect(Collectors.toSet());
+				return immutableS.stream().filter(clazz -> !blacklistedClasses.contains(clazz)).collect(Collectors.toSet());
+			}).orElse(immutableS);
 		}
 		
 		this.classes = HashTreePSet.from(s);

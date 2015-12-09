@@ -49,7 +49,6 @@ public class MicroserverConfigurer implements Configurer {
 
 	private List<Class> buildClasses(Class class1, Microserver microserver) {
 		List<Class> classes = new ArrayList();
-		Set<Class> blackList = Arrays.stream(microserver.blacklistedClasses()).collect(Collectors.toSet());
 
 		classes.add(class1);
 		if (microserver.classes() != null)
@@ -58,14 +57,7 @@ public class MicroserverConfigurer implements Configurer {
 		if(modules.size()>0)
 			classes.addAll(SequenceM.fromStream(modules.stream()).flatMap(module -> module.springClasses().stream()).toList());
 		
-		return classes.stream().filter(clazz -> !blackList.contains(clazz)).collect(Collectors.toList());
+		return classes;
 	}
 
-	public Set<Class> getClasses(Class class1,Set<Class> coreClasses) {
-		Microserver microserver = (Microserver) class1.getAnnotation(Microserver.class);
-		if(microserver==null)
-			return coreClasses;
-		Set<Class> blackList = Arrays.stream(microserver.blacklistedClasses()).collect(Collectors.toSet());
-		return coreClasses.stream().filter(clazz -> !blackList.contains(clazz)).collect(Collectors.toSet());
-	}
 }
