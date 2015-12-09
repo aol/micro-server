@@ -54,10 +54,10 @@ public class EmbeddedAppTest {
 		mapper.registerModule(new JavaslangModule());
 		String json = mapper.writer().writeValueAsString(List.of(List.of(1)));
 		
-		System.out.println(mapper.writer().writeValueAsString(new ImmutableEntity("value",List.ofAll("hello","world"))));
+		System.out.println(mapper.writer().writeValueAsString(new ImmutableEntity("value",List.of("hello","world"))));
 
-		System.out.println(JacksonUtil.serializeToJson(new ImmutableEntity("value",List.ofAll("hello","world"))));
-assertThat((List<String>)rest.post("http://localhost:8081/alternative-app/alt-status/ping",new ImmutableEntity("value",List.ofAll("hello","world")),List.class),
+		System.out.println(JacksonUtil.serializeToJson(new ImmutableEntity("value",List.of("hello","world"))));
+assertThat((List<String>)rest.post("http://localhost:8081/alternative-app/alt-status/ping",new ImmutableEntity("value",List.of("hello","world")),List.class),
 				hasItem("hello"));
 	
 	}
@@ -106,7 +106,7 @@ assertThat((List<String>)rest.post("http://localhost:8081/alternative-app/alt-st
 	@Test(expected=NotFoundException.class)
 	public void confirmTestAppCantUseAltAppResources(){
 		
-		assertThat((List<String>)rest.post("http://localhost:8081/test-app/alt-status/ping",new ImmutableEntity("value",List.ofAll("hello","world")),List.class),
+		assertThat((List<String>)rest.post("http://localhost:8081/test-app/alt-status/ping",new ImmutableEntity("value",List.of("hello","world")),List.class),
 				hasItem("hello"));
 	
 	}

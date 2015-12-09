@@ -23,11 +23,11 @@ public class ReactiveStreamsTest implements JavaslangReactive {
 		
 		Stream<Integer> javaslangStream = this.publish(LazyFutureStream.of(1,2,3));
 		
-		assertThat(javaslangStream.toList(),equalTo(List.ofAll(1,2,3)));
+		assertThat(javaslangStream.toList(),equalTo(List.of(1,2,3)));
 	}
 	@Test
 	public void subscribe(){
-		Stream<Integer> stream = Stream.ofAll(1,2,3);
+		Stream<Integer> stream = Stream.of(1,2,3);
 		CyclopsSubscriber<Integer> sub = SequenceM.subscriber();
 		this.subsribe(stream, sub);
 		
@@ -35,7 +35,7 @@ public class ReactiveStreamsTest implements JavaslangReactive {
 	}
 	@Test
 	public void subscribeAsync(){
-		Stream<Integer> stream = Stream.ofAll(1,2,3);
+		Stream<Integer> stream = Stream.of(1,2,3);
 		CyclopsSubscriber<Integer> sub = SequenceM.subscriber();
 		this.subsribe(stream, sub,Executors.newFixedThreadPool(1));
 		

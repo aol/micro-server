@@ -1,6 +1,6 @@
 package com.aol.micro.server.events;
 
-import groovy.transform.ToString;
+
 
 import java.util.Map;
 import java.util.Random;
@@ -8,6 +8,7 @@ import java.util.Random;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.Builder;
 import lombok.experimental.Wither;
 
