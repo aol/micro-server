@@ -23,7 +23,7 @@ public class ConfigureCouchbaseTest {
 	@Test
 	public void createDistributedCacheMemcachedOff() throws IOException, URISyntaxException {
 		config.setCouchbaseClientEnabled(false);
-		SimpleCouchbaseClient<Object> cache = config.simpleCouchbaseClient();
+		DistributedMapClient<Object> cache = config.simpleCouchbaseClient();
 		assertThat(cache.get("hello"), is(Optional.empty()));
 
 	}

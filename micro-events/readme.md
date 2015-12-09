@@ -64,6 +64,17 @@ Active and recently finished events become available at https://hostname::port/c
 
 Any Spring Bean implementing com.aol.micro.server.events.ScheduledJob will have start / completion tracking for the  scheduleAndLog() method. 
 Event details will be added to the eventually consistent ActiveEvents class, and recent & currently active events will be visible via the ActiveResource.
+ ```java
+@Component
+public class Job  implements ScheduledJob<Job>{
+
+	@Override
+	public SystemData<String,String> scheduleAndLog() {
+		return SystemData.<String,String>builder().errors(0).processed(2).build();
+	}
+
+}
+ ```
 
 ### Job metrics
 
@@ -93,7 +104,7 @@ Inject in the micro-events Guava Event Bus to your class as Spring Bean, and imp
  ```java
    
     public class Subscriber {
-        @Autowired
+    @Autowired
 	public Subsciber(EventBus eventBus){
 	    bus.register(this);
 	}

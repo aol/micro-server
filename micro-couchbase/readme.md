@@ -1,10 +1,11 @@
 # Couchbase plugin for BASE microservices
 
+[micro-couchbase example apps](https://github.com/aol/micro-server/tree/master/micro-couchbase/src/test/java/app)
+
 Basically Available Soft statE
 
-* Simple Couchbase Client
+* Simple Couchbase Client (Couchbase bucket as distributed / persistent map)
 * Manifest comparator : Versioned key for loading refreshed state
-* Simple Distributed lock implementation
 
 # Manifest comparison
 
@@ -12,13 +13,129 @@ Manifest comparison stores a manifest along with each value. The manifest contai
 
    
       key : manifest [contains version info]
-      versionedKey : value 
+      versionedKey : key with version 
       
 This allows large immutable datastructures to be stored in as a key/value pair (with separate key/value pairing for version info), and reloaded automatically on change. 
 
-# Distributed Lock
+## Injecting the manifest comparator
 
-A simple distributed lock implementation that could be used to select a single leader from multiple members in a cluster.
+Inject the Spring bean created by micro-couchbase ManifestComparator into your own beans. Customise the key used (allows multiple ManifestComparators to be used)
+
+```java
+public class ManifestComparatorResource {
+	
+
+	private final ManifestComparator<String> comparator;
+	@Autowired
+	public  ManifestComparatorResource(ManifestComparator comparator) {
+		this.comparator = comparator.<String>withKey("test-key");
+	}
+```
+
+## Create a scheduled job
+
+See micro-events, for Microserver help in managing scheduled jobs.
+
+Create a scheduled job to check the manifest for changes & automatically reload data when stale.
+
+In the example below we run the versioned key cleaner once per day, and check for changes every minute.
+
+ ```java
+@Component
+public class DataLoader  implements ScheduledJob<Job>{
+	
+	private final ManifestComparator<String> comparator;
+	@Autowired
+	public  DataLoader(ManifestComparator comparator) {
+		this.comparator = comparator.<String>withKey("test-key");
+	}
+	@Override
+	public SystemData<String,String> scheduleAndLog() {
+		try{
+			boolean changed = comparator.isOutOfDate();
+			comparator.load();
+			return SystemData.<String,String>builder().errors(0).processed(isOutOfDate?1:0).build();
+		}catch(Exception e){
+			return SystemData.<String,String>builder().errors(1).processed(0).build();
+		}
+	}
+
+}
+
+@Component
+public class DataCleaner  implements ScheduledJob<Job>{
+	
+	private final ManifestComparator<String> comparator;
+	@Autowired
+	public  DataCleaner(ManifestComparator comparator) {
+		this.comparator = comparator.<String>withKey("test-key");
+	}
+	@Override
+	public SystemData<String,String> scheduleAndLog() {
+		try{
+			boolean changed = comparator.isOutOfDate();comparator.cleanAll();
+			return SystemData.<String,String>builder().errors(0).processed(1).build();
+		}catch(Exception e){
+			return SystemData.<String,String>builder().errors(1).processed(0).build();
+		}
+		
+	}
+
+}
+
+@Component
+public class Schedular{
+
+     private final DataCleaner cleaner;
+     private final DataLoader loader;
+     
+     public Schedular(DataCleaner cleaner,DataLoader loader){ 
+     	this.cleaner = cleaner;
+        this.loader = loader;
+     }
+ 
+ 
+    @Scheduled(cron = "0 1 1 * * ?")
+	public synchronized void scheduleCleaner(){
+		cleaner.scheduleAndLog();
+	}
+	@Scheduled(cron = "0 * * * * *")
+	public synchronized void scheduleLoader(){
+		loader.scheduleAndLog();
+	}
+
+}
+
+ ```
+
+Elsewhere a single writer service can write data to the store for all services of a type to load. See micro-mysql or micro-curator for a DistributedLock implementation
+
+e.g.
+
+ ```java
+ @Component
+ public class DataWriter {
+ 
+ 	private final DistributedLockService lockService;
+ 	
+ 	private final ManifestComparator<String> comparator;
+	@Autowired
+	public  DataWriter(DistributedLockService lockService,ManifestComparator comparator) {
+	    this.lockService = lockService;
+		this.comparator = comparator.<String>withKey("test-key");
+	} 
+	
+	public void write(Supplier<String> data){
+	   if(lockService.tryLock("single-writer-lock-a") {
+	   		comparator.saveAndIncrement(data.get());
+	   }
+	}
+	
+	
+	
+ }
+ 
+  ```
 
 ## Getting The Microserver Couchbase Plugin
 
@@ -33,5 +150,6 @@ A simple distributed lock implementation that could be used to select a single l
      </dependency>
 ```
 ### Gradle
-
+```groovy
     compile 'com.aol.microservices:micro-couchbase:x.yz'
+ ```

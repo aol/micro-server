@@ -34,7 +34,7 @@ public class TransactionFlow<T,R> {
 	 * An exception in the mapping process will cause Rollback
 	 * Transaction will be completed once the entire flow has completed
 	 * <pre>
-	 * {code
+	 * {@code
 	 * 	Integer result = TransactionFlow.<Integer>of(transactionTemplate)
 										.map(this::load)
 										.map(this::save)

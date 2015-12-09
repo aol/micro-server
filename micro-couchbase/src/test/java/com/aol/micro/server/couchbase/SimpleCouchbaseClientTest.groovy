@@ -14,7 +14,7 @@ class SimpleCouchbaseClientTest  extends spock.lang.Specification {
 			CouchbaseClient mockMemcachedClient = Mock()
 			String aKey = "1,2,3,4"
 	
-			def distributedCache = new SimpleCouchbaseClient(mockMemcachedClient)
+			def distributedCache = new DistributedMapClient(mockMemcachedClient)
 			def result
 	
 			when:
@@ -29,7 +29,7 @@ class SimpleCouchbaseClientTest  extends spock.lang.Specification {
 	
 			CouchbaseClient mockMemcachedClient = Mock()
 			String aKey = "1,2,3,4"
-			def distributedCache = new SimpleCouchbaseClient(mockMemcachedClient)
+			def distributedCache = new DistributedMapClient(mockMemcachedClient)
 			def isPresent
 	
 			when:
@@ -43,7 +43,7 @@ class SimpleCouchbaseClientTest  extends spock.lang.Specification {
 		def "test put with success"() {
 			CouchbaseClient mockMemcachedClient = Mock()
 			String aKey = "1,2,3,4"
-			def distributedCache = new SimpleCouchbaseClient(mockMemcachedClient)
+			def distributedCache = new DistributedMapClient(mockMemcachedClient)
 			def bitset = Mock(MockEntity)
 			def putResult
 	
@@ -59,7 +59,7 @@ class SimpleCouchbaseClientTest  extends spock.lang.Specification {
 	
 			CouchbaseClient mockMemcachedClient = Mock()
 			String aKey = "1,2,3,4"
-			def distributedCache = new SimpleCouchbaseClient(mockMemcachedClient)
+			def distributedCache = new DistributedMapClient(mockMemcachedClient)
 			def bitset = Mock(MockEntity)
 			def putResult
 	
@@ -76,7 +76,7 @@ class SimpleCouchbaseClientTest  extends spock.lang.Specification {
 			def maxRetries = 1
 			CouchbaseClient mockMemcachedClient = Mock()
 			String aKey = "1,2,3,4"
-			def distributedCache = new SimpleCouchbaseClient(mockMemcachedClient)
+			def distributedCache = new DistributedMapClient(mockMemcachedClient)
 			def bitset = Mock(MockEntity)
 			def putResult
 	

@@ -41,7 +41,7 @@ public class JavaslangApp {
 	@Path("/ping")
 	public ImmutableJavaslangEntity ping() {
 		return ImmutableJavaslangEntity.builder().value("value")
-				.list(List.ofAll("hello", "world"))
+				.list(List.of("hello", "world"))
 				.mapOfSets(HashMap.<String,Set>empty().put("key1",HashSet.ofAll(Arrays.asList(1, 2, 3))))
 				.build();
 	}

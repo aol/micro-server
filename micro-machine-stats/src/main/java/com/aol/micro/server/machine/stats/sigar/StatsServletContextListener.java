@@ -7,7 +7,6 @@ import javax.servlet.ServletContextListener;
 
 import kamon.sigar.SigarProvisioner;
 
-import org.hyperic.sigar.Sigar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

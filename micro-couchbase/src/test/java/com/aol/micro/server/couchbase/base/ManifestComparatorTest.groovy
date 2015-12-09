@@ -8,7 +8,8 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
 
-import com.aol.micro.server.couchbase.SimpleCouchbaseClient
+import com.aol.micro.server.couchbase.DistributedMapClient
+import com.fasterxml.jackson.core.JsonParseException
 
 
 
@@ -16,12 +17,12 @@ import com.aol.micro.server.couchbase.SimpleCouchbaseClient
 class ManifestComparatorTest {
 
 	ManifestComparator manifestComparator
-	SimpleCouchbaseClient mock
+	DistributedMapClient mock
 	String key = "key"
 
 	@Before
 	public void setup(){
-		mock = Mockito.mock(SimpleCouchbaseClient)
+		mock = Mockito.mock(DistributedMapClient)
 		manifestComparator  = new ManifestComparator(key,mock)
 	}
 
@@ -65,7 +66,7 @@ class ManifestComparatorTest {
 		assert result.get(0) == "hello"
 	}
 
-	@Test(expected=RuntimeException)
+	@Test(expected=JsonParseException)
 	public void testChangeMidLoad() {
 		Mockito.when(mock.get(key)).thenReturn(Optional.of("v1"))
 		Mockito.when(mock.get("v1")).thenReturn(Optional.empty())
