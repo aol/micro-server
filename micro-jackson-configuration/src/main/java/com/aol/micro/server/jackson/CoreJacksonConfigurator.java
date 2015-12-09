@@ -22,8 +22,8 @@ public class CoreJacksonConfigurator implements JacksonMapperConfigurator {
 	public void accept(ObjectMapper mapper) {
 		JaxbAnnotationModule module = new JaxbAnnotationModule();
 		// configure as necessary
-		mapper.registerModule(module);
 		inc.map(include->mapper.setSerializationInclusion(include));
+		mapper.registerModule(module);
 		PluginLoader.INSTANCE.plugins.get().stream()
 			.filter(m -> m.jacksonModules()!=null)
 			.flatMap(m -> m.jacksonModules().stream())

@@ -2,8 +2,7 @@
  
  [micro-hibernate example apps](https://github.com/aol/micro-server/tree/master/micro-hibernate/src/test/java/app)
 
-Adds Spring Data, Spring JDBC and Hibernate support. 
-Creates a DataSource Spring Bean with name "mainDataSource" from v0.63 this will be based on [HikariCP](http://brettwooldridge.github.io/HikariCP/ludicrous.html).
+Adds Spring Data, and Hibernate support. 
 
 ## To use
 
@@ -16,7 +15,7 @@ Maven
 
      <dependency>
         <groupId>com.aol.microservices</groupId>  
-        <artifactId>micro-data</artifactId>
+        <artifactId>micro-hibernate</artifactId>
         <version>x.yz</version>
      </dependency>
      

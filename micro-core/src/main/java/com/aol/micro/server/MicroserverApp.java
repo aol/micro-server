@@ -53,7 +53,7 @@ public class MicroserverApp {
 		Class c =extractClass();
 		springContext = new SpringContextFactory(new MicroserverConfigurer().buildConfig(
 				c), extractClass(),
-				new MicroserverConfigurer().getClasses(c,modules[0].getSpringConfigurationClasses()))
+				modules[0].getSpringConfigurationClasses())
 				.createSpringContext();
 
 	}
@@ -72,7 +72,7 @@ public class MicroserverApp {
 		this.modules = Arrays.asList(modules);
 		springContext = new SpringContextFactory(
 				new MicroserverConfigurer().buildConfig(c), c,
-				new MicroserverConfigurer().getClasses(c,modules[0].getSpringConfigurationClasses()))
+				modules[0].getSpringConfigurationClasses())
 				.createSpringContext();
 
 	}

@@ -1,9 +1,8 @@
- # JDBC plugin
+ # HikariCP plugin
 
-[micro-jdbc example apps](https://github.com/aol/micro-server/tree/master/micro-jdbc/src/test/java/app)
+[micro-hikaricp example apps](https://github.com/aol/micro-server/tree/master/micro-jdbc/src/test/java/app)
 
-Adds Spring JDBC. 
-This plugin needs either micro-hikaricp or micro-dbcp2 plugin at runtime to provide mainDataSource
+Creates a DataSource Spring Bean with name "mainDataSource". This will be based on [HikariCP](http://brettwooldridge.github.io/HikariCP/ludicrous.html).
 
 ## To use
 
@@ -16,13 +15,13 @@ Maven
 
      <dependency>
         <groupId>com.aol.microservices</groupId>  
-        <artifactId>micro-jdbc</artifactId>
+        <artifactId>micro-hikaricp</artifactId>
         <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-jdbc:x.yz'
+    compile 'com.aol.microservices:micro-hikaricp:x.yz'
 
 # Configuring a data source
 
@@ -35,6 +34,9 @@ A datasource can be configured by setting the following properties in applicatio
 	 db.connection.dialect:  (e.g. org.hibernate.dialect.HSQLDialect)
 	 db.connection.hibernate.showsql: (e.g. true | false)
 	 db.connection.ddl.auto: (e.g. create-drop)
+	 hikaricp.db.connection.max.pool.size (e.g. 30)
+	 hikaricp.db.connection.min.idle (e.g. 2)
+	 hikaricp.db.connection.idle.timeout (e.g. 1800000)
 
 The Microserver annotation can also be used to set some default properties, or they can be set in an application.properties or instance.properties file ([see wiki for more details](https://github.com/aol/micro-server/wiki/Defining-Properties)).
 
@@ -48,44 +50,4 @@ The important properties for us to set are the datasource properties
 	public class MyMainClass {
      
      
-    }
-
-
-
- # Plain ol' JDBC
- 
-[JDBC Template Exmaple App](https://github.com/aol/micro-server/tree/master/micro-data/src/test/java/app/jdbc/com/aol/micro/server)
-
-The micro-data plugin also facilitate JDBC use via the Spring JDBCTemplate. A Spring called SQL will be created that contains a JDBCTemplate, simply inject SQL into your classes.
- 
- e.g.
- 
-    @Rest
-    @Path("/persistence")
-    public class PersistentResource  {
-
-	    private final SQL dao;
-
-	    @Autowired
-	    public PersistentResource(SQL dao) {
-
-	    	this.dao = dao;
-    	}
-
-    	@GET    
-    	@Produces("text/plain")
-    	@Path("/create")
-    	public String createEntity() {
-    		dao.getJdbc().update("insert into t_jdbc VALUES (1,'hello','world',1)");
-
-    		return "ok";
-    	}
-
-    	@GET
-    	@Produces("application/json")    
-    	@Path("/get")
-	    public JdbcEntity get() {
-	    	return dao.getJdbc().<JdbcEntity> queryForObject("select * from t_jdbc", new BeanPropertyRowMapper(JdbcEntity.class));
-	    }
-
     }

@@ -4,8 +4,8 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import lombok.AllArgsConstructor;
-import lombok.experimental.Builder;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Builder;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +16,13 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 @NoArgsConstructor
 @AllArgsConstructor
-public class DataDataSourceBuilder {
-
+public class HikariCPDataSourceBuilder {
+	
 	@Resource(name = "mainEnv")
-	private JdbcConfig env;
+	private JdbcConfig mainEnv;
+
+	@Resource(name = "hikariCPEnv")
+	private HikariCPConfig hikariCPEnv;
 
 	@Bean(destroyMethod = "close", name = "mainDataSource")
 	public DataSource mainDataSource() {
@@ -29,13 +32,13 @@ public class DataDataSourceBuilder {
 	private DataSource getDataSource() {
 		HikariDataSource ds = new HikariDataSource();
 
-		ds.setDriverClassName(env.getDriverClassName());
-		ds.setJdbcUrl(env.getUrl());
-		ds.setUsername(env.getUsername());
-		ds.setPassword(env.getPassword());
-		ds.setMaximumPoolSize(env.getMaxPoolSize());
-		ds.setMinimumIdle(env.getMinimumIdle());
-		ds.setIdleTimeout(env.getIdleTimeout());
+		ds.setDriverClassName(mainEnv.getDriverClassName());
+		ds.setJdbcUrl(mainEnv.getUrl());
+		ds.setUsername(mainEnv.getUsername());
+		ds.setPassword(mainEnv.getPassword());
+		ds.setMaximumPoolSize(hikariCPEnv.getMaxPoolSize());
+		ds.setMinimumIdle(hikariCPEnv.getMinimumIdle());
+		ds.setIdleTimeout(hikariCPEnv.getIdleTimeout());
 
 		return ds;
 	}

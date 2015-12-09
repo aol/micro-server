@@ -29,15 +29,12 @@ public class JdbcConfig {
 	private final Properties properties;
 	private final String name;
 	private final String generateDdl;
-	private final int maxPoolSize;
-	private final int minimumIdle;
-	private final long idleTimeout;
 
 	public JdbcConfig(@Value("${db.connection.driver:}") String driverClassName, @Value("${db.connection.url:}") String url,
 			@Value("${db.connection.username:}") String username, @Value("${db.connection.password:}") String password,
 			@Value("${db.connection.hibernate.showsql:false}") String showSql, @Value("${db.connection.dialect:}") String dialect,
 			@Value("${db.connection.ddl.auto:#{null}}") String ddlAuto) {
-		this(driverClassName, url, username, password, showSql, dialect, ddlAuto, new Properties(), "db", "false", 30, 2, 600000);
+		this(driverClassName, url, username, password, showSql, dialect, ddlAuto, new Properties(), "db", "false");
 
 	}
 
@@ -46,9 +43,7 @@ public class JdbcConfig {
 			@Value("${db.connection.username:}") String username, @Value("${db.connection.password:}") String password,
 			@Value("${db.connection.hibernate.showsql:false}") String showSql, @Value("${db.connection.dialect:}") String dialect,
 			@Value("${db.connection.ddl.auto:#{null}}") String ddlAuto, @Qualifier("propertyFactory") Properties properties,
-			@Value("${internal.not.use.microserver:#{null}}") String name, @Value("${db.connection.generate.ddl:false}") String generateDdl,
-			@Value("${db.connection.max.pool.size:30}") int maxPoolSize, @Value("${db.connection.min.idle:2}") int minimumIdle,
-			@Value("${db.connection.idle.timeout:600000}") long idleTimeout) {
+			@Value("${internal.not.use.microserver:#{null}}") String name, @Value("${db.connection.generate.ddl:false}") String generateDdl) {
 		this.properties = properties;
 		this.name = UsefulStaticMethods.either(name, new ConfigAccessor().get().getDefaultDataSourceName());
 		this.driverClassName = UsefulStaticMethods.either(driverClassName, extract("connection.driver"));
@@ -58,14 +53,10 @@ public class JdbcConfig {
 		this.showSql = UsefulStaticMethods.either(showSql, extract("connection.showsql"));
 		this.dialect = UsefulStaticMethods.either(dialect, extract("connection.dialect"));
 		this.ddlAuto = UsefulStaticMethods.either(ddlAuto, extract("connection.ddl.auto"));
-		this.generateDdl = UsefulStaticMethods.either(generateDdl, extract("connection.generate.ddl"));
-		this.maxPoolSize = maxPoolSize;
-		this.minimumIdle = minimumIdle;
-		this.idleTimeout = idleTimeout;
+		this.generateDdl = UsefulStaticMethods.either(generateDdl, extract("connection.generate.ddl"));		
 	}
 
 	private String extract(String suffix) {
-
 		return properties.getProperty(name + "." + suffix);
 	}
 

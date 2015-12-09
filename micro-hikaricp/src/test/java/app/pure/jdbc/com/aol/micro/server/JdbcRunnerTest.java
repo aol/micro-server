@@ -43,9 +43,7 @@ public class JdbcRunnerTest {
 	}
 	
 	@Test
-	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
-		
-		
+	public void runAppAndBasicTest() throws InterruptedException, ExecutionException {		
 		
 		assertThat(rest.get("http://localhost:8080/jdbc-app/persistence/create"),is("ok"));
 		assertThat(listClient.get("http://localhost:8080/jdbc-app/persistence/get").get(),is(JdbcEntity.class));

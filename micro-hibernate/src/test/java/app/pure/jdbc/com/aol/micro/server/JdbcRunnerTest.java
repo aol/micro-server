@@ -10,8 +10,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import app.pure.jdbc.com.aol.micro.server.JdbcEntity;
-
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.client.nio.AsyncRestClient;
@@ -45,13 +43,10 @@ public class JdbcRunnerTest {
 	}
 	
 	@Test
-	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
-		
-		
+	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{		
 		
 		assertThat(rest.get("http://localhost:8080/jdbc-app/persistence/create"),is("ok"));
-		assertThat(listClient.get("http://localhost:8080/jdbc-app/persistence/get").get(),is(JdbcEntity.class));
-		
+		assertThat(listClient.get("http://localhost:8080/jdbc-app/persistence/get").get(),is(JdbcEntity.class));	
 		
 	}
 	
