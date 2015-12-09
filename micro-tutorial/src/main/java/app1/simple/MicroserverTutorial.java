@@ -2,12 +2,6 @@ package app1.simple;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.spring.HibernatePlugin;
-import com.aol.micro.server.spring.datasource.DataDataSourceBuilder;
-import com.aol.micro.server.spring.datasource.JdbcConfig;
-import com.aol.micro.server.spring.datasource.hibernate.HibernateConfig;
-import com.aol.micro.server.spring.datasource.hibernate.SpringDataConfig;
-import com.aol.micro.server.spring.datasource.jdbc.SQL;
 
 @Microserver(entityScan = "app1.simple", propertiesName="tutorial.properties")
 public class MicroserverTutorial {
