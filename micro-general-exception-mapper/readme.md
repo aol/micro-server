@@ -48,7 +48,7 @@ Maven
      </dependency>
 ``     
 Gradle
+
 ```groovy
     compile 'com.aol.microservices:micro-general-exception-mapper:x.yz'
-    ```
 ```
