@@ -9,8 +9,8 @@ import com.aol.micro.server.events.SystemData;
 public class Job  implements ScheduledJob<Job>{
 
 	@Override
-	public SystemData scheduleAndLog() {
-		return SystemData.builder().errors(0).processed(2).build();
+	public SystemData<String,String> scheduleAndLog() {
+		return SystemData.<String,String>builder().errors(0).processed(2).build();
 	}
 
 }

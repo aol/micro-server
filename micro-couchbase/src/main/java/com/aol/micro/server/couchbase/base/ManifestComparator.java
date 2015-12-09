@@ -113,7 +113,7 @@ public class ManifestComparator<T> {
 	 * @param key Key to store data with
 	 * @return new ManifestComparator that targets specified key
 	 */
-	public ManifestComparator<T> withKey(String key){
+	public <T> ManifestComparator<T> withKey(String key){
 		return new ManifestComparator<>(key, connection);
 	}
 

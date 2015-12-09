@@ -17,10 +17,10 @@ public class ManifestComparatorResource {
 	
 
 	private volatile int count = 1;
-	private final ManifestComparator comparator;
+	private final ManifestComparator<String> comparator;
 	@Autowired
 	public  ManifestComparatorResource(ManifestComparator comparator) {
-		this.comparator = comparator.withKey("test-key");
+		this.comparator = comparator.<String>withKey("test-key");
 	}
 	@GET
 	@Path("/increment")
