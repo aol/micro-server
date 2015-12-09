@@ -1,6 +1,6 @@
 package com.aol.micro.server.events;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
@@ -70,6 +70,21 @@ public class JobsBeingExecutedTest {
 		jobs.aroundScheduledJob(pjp);
 		verify(pjp,times(1)).proceed();
 		assertThat( incoming,is(notNullValue()));
+		
+		
+	}
+	@Test
+	public void testExecuteId() throws Throwable {
+		Signature sig = Mockito.mock( Signature.class);
+		when(pjp.getSignature()).thenReturn(sig);
+		when(sig.getDeclaringType()).thenReturn(String.class);
+		when(pjp.proceed()).thenReturn(data);
+		when(pjp.getTarget()).thenReturn(this);
+		jobs.aroundScheduledJob(pjp);
+		verify(pjp,times(1)).proceed();
+
+		
+		assertThat(incoming.getCorrelationId(),containsString("id_java.lang.String"));
 	}
 	@Test
 	public void testOverflow() throws Throwable {
