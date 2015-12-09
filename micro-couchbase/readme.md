@@ -73,7 +73,7 @@ public class DataCleaner  implements ScheduledJob<Job>{
 	@Override
 	public SystemData<String,String> scheduleAndLog() {
 		try{
-			boolean changed = comparator.isOutOfDate();comparator.cleanAll();
+		        comparator.cleanAll();
 			return SystemData.<String,String>builder().errors(0).processed(1).build();
 		}catch(Exception e){
 			return SystemData.<String,String>builder().errors(1).processed(0).build();
