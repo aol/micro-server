@@ -2,7 +2,6 @@ package com.aol.micro.server.spring;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -10,28 +9,19 @@ import javax.servlet.ServletContextListener;
 
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.servers.model.ServerData;
-import com.aol.micro.server.spring.datasource.JdbcConfig;
-import com.aol.micro.server.spring.datasource.jdbc.SQL;
+import com.aol.micro.server.spring.datasource.HikariCPConfig;
+import com.aol.micro.server.spring.datasource.HikariCPDataSourceBuilder;
 
 /**
  * 
- * Collections of Spring configuration classes (Classes annotated with @Configuration)
- * that configure various useful pieces of functionality - such as property file loading,
- * datasources, scheduling etc
- * 
- * @author johnmcclean
+ * @author kewang
  *
  */
-public class JdbcPlugin implements Plugin {
-
-	@Override
-	public Optional<SpringDBConfig> springDbConfigurer() {
-		return Optional.of(new SpringConfigurer());
-	}
+public class HikariCPPlugin implements Plugin {
 
 	@Override
 	public Set<Class> springClasses() {
-		return new HashSet<>(Arrays.asList(JdbcConfig.class, SQL.class));
+		return new HashSet<>(Arrays.asList(HikariCPConfig.class, HikariCPDataSourceBuilder.class));
 	}
 
 	@Override

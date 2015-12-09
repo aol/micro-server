@@ -10,7 +10,6 @@ import javax.servlet.ServletContextListener;
 
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.servers.model.ServerData;
-import com.aol.micro.server.spring.datasource.DataDataSourceBuilder;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.aol.micro.server.spring.datasource.hibernate.HibernateConfig;
 import com.aol.micro.server.spring.datasource.hibernate.SpringDataConfig;
@@ -34,7 +33,7 @@ public class HibernatePlugin implements Plugin {
 
 	@Override
 	public Set<Class> springClasses() {
-		return new HashSet<>(Arrays.asList(JdbcConfig.class, DataDataSourceBuilder.class, SQL.class, SpringDataConfig.class, HibernateConfig.class));
+		return new HashSet<>(Arrays.asList(JdbcConfig.class, SQL.class, SpringDataConfig.class, HibernateConfig.class));
 	}
 
 	@Override
