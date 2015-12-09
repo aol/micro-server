@@ -10,6 +10,7 @@ dependencies {
 	compile group: 'org.springframework', name: 'spring-orm', version:"${springVersion}"
 	
 	compile project(':micro-jdbc')
+	compile project(':micro-hikaricp')
 	testCompile project(':micro-jackson-configuration')
 	testCompile project(':micro-client')
 	testCompile project(':micro-grizzly')
