@@ -28,7 +28,8 @@ Create and run a simple app
 ```
 
 Browse to *http://localhost:8080/test-app/test*
-Response  *hello world!*
+
+See the response  *hello world!*
 
 Add plugins by adding them to your build file - rerun the app to get new end points, Spring beans and more!
 
