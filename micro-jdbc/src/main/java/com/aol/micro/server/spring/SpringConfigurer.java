@@ -10,7 +10,6 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.config.Config;
-import com.aol.micro.server.spring.datasource.DataDataSourceBuilder;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 
 public class SpringConfigurer implements SpringDBConfig {
@@ -26,27 +25,15 @@ public class SpringConfigurer implements SpringDBConfig {
 	@Setter
 	private AnnotationConfigWebApplicationContext rootContext;
 
-	
 	public void createSpringApp(String name) {
-
 		JdbcConfig jdbc = buildJdbcProperties(rootContext, name);
-		if(rootContext.containsBean(name+"dataSource"))
-			dataSource = (DataSource)rootContext.getBean(name+"dataSource");
-		else
-			dataSource = buildDataSource(name, jdbc);
-		beanFactory.registerSingleton(name + "DataSource", dataSource);
-		
-		
-		
-	}
-
-	private DataSource buildDataSource(String name, JdbcConfig jdbc) {
-		return DataDataSourceBuilder.builder().env(jdbc).build().mainDataSource();
+		if (rootContext.containsBean(name + "dataSource")) {
+			dataSource = (DataSource) rootContext.getBean(name + "dataSource");
+		}
 	}
 
 	private JdbcConfig buildJdbcProperties(AnnotationConfigWebApplicationContext rootContext, String name) {
 		return JdbcConfig.builder().properties((Properties) rootContext.getBean("propertyFactory")).name(name).build();
 	}
 
-	
 }

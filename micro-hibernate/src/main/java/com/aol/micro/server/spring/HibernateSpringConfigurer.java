@@ -12,7 +12,6 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.aol.micro.server.config.Config;
-import com.aol.micro.server.spring.datasource.DataDataSourceBuilder;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.aol.micro.server.spring.datasource.hibernate.HibernateSessionBuilder;
 
@@ -36,18 +35,13 @@ public class HibernateSpringConfigurer implements SpringDBConfig {
 		DataSource dataSource = null;
 		if(rootContext.containsBean(name+"dataSource"))
 			dataSource = (DataSource)rootContext.getBean(name+"dataSource");
-		else
-			dataSource = buildDataSource(name, jdbc);
+		
 		SessionFactory sessionFactory = buildSession(name, config, dataSource, jdbc);
 		
 		beanFactory.registerSingleton(name + "SessionFactory", sessionFactory);
 		beanFactory.registerSingleton(name + "HibernateTransactionManager", buildTransactionManager(name, config, dataSource, jdbc));
 
-	}
-
-	private DataSource buildDataSource(String name, JdbcConfig jdbc) {
-		return DataDataSourceBuilder.builder().env(jdbc).build().mainDataSource();
-	}
+	}	
 
 	private JdbcConfig buildJdbcProperties(AnnotationConfigWebApplicationContext rootContext, String name) {
 		return JdbcConfig.builder().properties((Properties) rootContext.getBean("propertyFactory")).name(name).build();
