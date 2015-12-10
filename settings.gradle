@@ -25,4 +25,4 @@ include ':micro-general-exception-mapper'
 include ':micro-jackson-configuration'
 include ':micro-tutorial'
 include ':micro-hikaricp'
-
+include ':micro-dbcp'
