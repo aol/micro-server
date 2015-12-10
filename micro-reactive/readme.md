@@ -33,18 +33,18 @@ implement com.aol.micro.server.reactive.Reactive to add Reactive functionality v
 **sync** synchronous execution of a FutureStream, but not on the calling thread (i.e. can be non-blocking to the calling thread via the run method). Would get it's own thread to execute on from a pool.
 
 Find active queries (making use of @Suspended AsyncResponse asyncResponse NIO Rest interface)
-
+```java
     this.sync(lr-> lr.of((type == null ? "default" : type))
 							.map(typeToUse->activeQueries.get(typeToUse).toString())
 							.peek(result->asyncResponse.resume(result)))
 							.run();
-
+```
 ## multi-threaded (optionally non blocking)
 
 **IOStream** for creating IO bound Streams. The first action is be async (i.e. tasks passed to task executor), subsequent tasks can execute synchronously on the calling thread, via the sync operator. Note the first action doesn't have to be IO related, the first stage being async distributes the work to separate workers. Users can manually change this behaviour via async / sync operators on FutureStreams. (Can be non-blocking to the calling thread)
 
 Load a Resource from the classpath  (making use of @Suspended AsyncResponse asyncResponse NIO Rest interface)
-
+```java
     this.ioStream().of("/META-INF/MANIFEST.MF")
                    	.sync()
 			.map(url->context.getResourceAsStream(url))
@@ -52,17 +52,17 @@ Load a Resource from the classpath  (making use of @Suspended AsyncResponse asyn
 			.peek(result->asyncResponse.resume(result))
 			.run();
  
-
+```
 **cpuStream** for creating CPU bound streams, would probably reuse the common ForkJoinPool, first action would be async (i.e. tasks passed to a task executor to distribute the work load), subsequent tasks could execute synchronously on the calling thread via the sync operator. Users can manually change this behaviour via async / sync operators on FutureStreams. (Can be non-blocking to the calling thread) 
 
 Find active jobs currently running (making use of @Suspended AsyncResponse asyncResponse NIO Rest interface)
-
+```java
     this.cpuStream().of(this.activeJobs)
     			.sync()
 			.then(JobsBeingExecuted::toString)
 			.then(str->asyncResponse.resume(str))
 			.run();
-
+```
 **switchIO** could be used to switch a Stream optimised for CPU bound execution into one optimised for IO Bound execution
 
 **switchCPU** could be used to switch a Stream optimised for IO bound execution into one optimised for CPU Bound execution
