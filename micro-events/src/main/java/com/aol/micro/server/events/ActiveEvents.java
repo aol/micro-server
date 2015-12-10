@@ -2,43 +2,43 @@ package com.aol.micro.server.events;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Deque;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
-import org.pcollections.ConsPStack;
-import org.pcollections.HashTreePMap;
-import org.pcollections.PMap;
-import org.pcollections.PStack;
-
-import com.aol.micro.server.rest.jackson.JacksonUtil;
-
 public class ActiveEvents<T extends BaseEventInfo> {
 
-	private Map<String, T> active = new ConcurrentHashMap<>();
-	private volatile PStack<Map> recentlyFinished=  ConsPStack.empty();
-	private volatile int events = 0;
-	private volatile int added = 0;
-	private volatile int removed = 0;
+	private final Map<String, T> active = new ConcurrentHashMap<>();
+	private final Deque<Map> recentlyFinished=  new ConcurrentLinkedDeque<>();
+	private final AtomicInteger events = new AtomicInteger(0);
+	private final AtomicInteger added = new AtomicInteger(0);
+	private final AtomicInteger removed = new AtomicInteger(0);
 
 	public void active(String key, T data) {
 		active.put(key, data);
-		events++;
-		added++;
+		events.incrementAndGet();
+		added.incrementAndGet();
 	}
 	public  void finished(String key) {
 		finished(key,ImmutableMap.of());
 	}
 	public void finished(String key, ImmutableMap data) {
-		recentlyFinished =recentlyFinished.plus(wrapInMap(active.get(key),data));
-		active.remove(key);
-		removed++;
-		if(recentlyFinished.size()>10)
-			recentlyFinished.minus(recentlyFinished.size()-1);
-			
+		synchronized (key) {
+			recentlyFinished.push(wrapInMap(active.get(key), data));
+			active.remove(key);
+		}
+		removed.incrementAndGet();
 		
+		if(recentlyFinished.size()>10)
+			synchronized (this) {
+				recentlyFinished.pollFirst();
+			}
 	}
 	
 	private Map wrapInMap(T event, ImmutableMap data){
@@ -61,16 +61,16 @@ public class ActiveEvents<T extends BaseEventInfo> {
 
 	private Map toMap() {
 		Map result = Maps.newHashMap();
-		result.put("events", events);
+		result.put("events", events.get());
 		result.put("active", active);
-		result.put("added",added);
-		result.put("removed",removed);
-		result.put("recently-finished",recentlyFinished);
+		result.put("added",added.get());
+		result.put("removed",removed.get());
+		result.put("recently-finished", recentlyFinished);
 		return result;
 	}
 	
 	public int events(){
-		return events;
+		return events.get();
 	}
 
 	public int size() {
