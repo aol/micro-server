@@ -1,13 +1,13 @@
- # HikariCP plugin
+ # DBCP plugin
 
-[micro-hikaricp example apps](https://github.com/aol/micro-server/tree/master/micro-hikaricp/src/test/java/app)
+[micro-dbcp example apps](https://github.com/aol/micro-server/tree/master/micro-dbcp/src/test/java/app)
 
-Creates a DataSource Spring Bean with name "mainDataSource". This will be based on [HikariCP](http://brettwooldridge.github.io/HikariCP/ludicrous.html).
+Creates a DataSource Spring Bean with name "mainDataSource". This will be based on [DBCP2](https://commons.apache.org/proper/commons-dbcp/).
 
 ## To use
 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-hikaricp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-hikaricp)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-dbcp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-dbcp)
 
 Simply add to the classpath
 
@@ -15,13 +15,13 @@ Maven
 
      <dependency>
         <groupId>com.aol.microservices</groupId>  
-        <artifactId>micro-hikaricp</artifactId>
+        <artifactId>micro-dbcp</artifactId>
         <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-hikaricp:x.yz'
+    compile 'com.aol.microservices:micro-dbcp:x.yz'
 
 # Configuring a data source
 
@@ -34,9 +34,15 @@ A datasource can be configured by setting the following properties in applicatio
 	 db.connection.dialect:  (e.g. org.hibernate.dialect.HSQLDialect)
 	 db.connection.hibernate.showsql: (e.g. true | false)
 	 db.connection.ddl.auto: (e.g. create-drop)
-	 hikaricp.db.connection.max.pool.size (e.g. 30)
-	 hikaricp.db.connection.min.idle (e.g. 2)
-	 hikaricp.db.connection.idle.timeout (e.g. 1800000)
+	 dbcp.db.test.on.borrow: (e.g. true | false)
+	 dbcp.db.validation.query: (e.g. SELECT 1)
+	 dbcp.db.max.total: (e.g. -1)
+	 dbcp.db.min.evictable.idle.time: (e.g. 1800000)
+	 dbcp.db.time.between.eviction.runs: (e.g. 1800000)
+	 dbcp.db.num.tests.per.eviction.run: (e.g. 3)
+	 dbcp.db.test.while.idle: (e.g. true | false)
+	 dbcp.db.test.on.return: (e.g. true | false)
+	 
 
 The Microserver annotation can also be used to set some default properties, or they can be set in an application.properties or instance.properties file ([see wiki for more details](https://github.com/aol/micro-server/wiki/Defining-Properties)).
 

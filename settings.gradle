@@ -27,5 +27,5 @@ include ':micro-hikaricp'
 include ':micro-tomcat'
 include ':micro-tomcat-with-jersey'
 include ':micro-tutorial'
-
+include ':micro-dbcp'
 
