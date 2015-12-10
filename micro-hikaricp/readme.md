@@ -1,13 +1,13 @@
  # HikariCP plugin
 
-[micro-hikaricp example apps](https://github.com/aol/micro-server/tree/master/micro-jdbc/src/test/java/app)
+[micro-hikaricp example apps](https://github.com/aol/micro-server/tree/master/micro-hikaricp/src/test/java/app)
 
 Creates a DataSource Spring Bean with name "mainDataSource". This will be based on [HikariCP](http://brettwooldridge.github.io/HikariCP/ludicrous.html).
 
 ## To use
 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-data/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-jdbc)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-hikaricp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-hikaricp)
 
 Simply add to the classpath
 

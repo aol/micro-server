@@ -1,13 +1,13 @@
  # DBCP plugin
 
-[micro-hikaricp example apps](https://github.com/aol/micro-server/tree/master/micro-jdbc/src/test/java/app)
+[micro-dbcp example apps](https://github.com/aol/micro-server/tree/master/micro-dbcp/src/test/java/app)
 
 Creates a DataSource Spring Bean with name "mainDataSource". This will be based on [DBCP2](https://commons.apache.org/proper/commons-dbcp/).
 
 ## To use
 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-data/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-jdbc)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-dbcp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-dbcp)
 
 Simply add to the classpath
 

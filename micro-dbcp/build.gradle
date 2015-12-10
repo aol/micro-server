@@ -1,7 +1,7 @@
 description = 'micro-dbcp'
 dependencies {
 		
-	compile group: 'org.apache.commons', name: 'commons-dbcp2', version:'2.1'
+	compile 'org.apache.commons:commons-dbcp2:'+dbcp2Version	
 	compile project(':micro-core')
 	compile project(':micro-jdbc')
 	
