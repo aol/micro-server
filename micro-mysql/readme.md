@@ -17,5 +17,6 @@ Autowire com.aol.micro.server.utility.DistributedLockService into your beans to 
      </dependency>
 ```
 ### Gradle
-
+```groovy
     compile 'com.aol.microservices:micro-mysql:x.yz'
+```

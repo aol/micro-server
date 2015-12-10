@@ -26,13 +26,16 @@ public class JaxRsServletConfigurer {
 		}
 		
 		RestConfiguration config = restConfigList.get(0);
-		javax.servlet.ServletRegistration.Dynamic servletRegistration = webappContext.addServlet(config.getName(),config.getServlet());
+		javax.servlet.ServletRegistration.Dynamic servletRegistration = webappContext.addServlet(config.getName()
+					+"-"+serverData.getModule().getContext(),config.getServlet());
 		Map<String,String> initParams = config.getInitParams();
 		for(String key : initParams.keySet()){
 			servletRegistration.setInitParameter(key,initParams.get(key));
 		}
+		servletRegistration.setAsyncSupported(true);
 		servletRegistration.setInitParameter("javax.ws.rs.Application", serverData.getModule().getJaxWsRsApplication());
 		servletRegistration.setInitParameter(config.getProvidersName(), serverData.getModule().getProviders());
+		servletRegistration.setInitParameter("context", serverData.getModule().getContext());
 		servletRegistration.setLoadOnStartup(1);
 		servletRegistration.addMapping(serverData.getBaseUrlPattern());
 	}

@@ -23,6 +23,9 @@ include ':micro-transactions'
 include ':micro-curator'
 include ':micro-general-exception-mapper'
 include ':micro-jackson-configuration'
-include ':micro-tutorial'
 include ':micro-hikaricp'
+include ':micro-tomcat'
+include ':micro-tomcat-with-jersey'
+include ':micro-tutorial'
+
 

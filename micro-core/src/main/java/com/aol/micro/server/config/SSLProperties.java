@@ -1,5 +1,9 @@
 package com.aol.micro.server.config;
 
+import java.util.Optional;
+
+import com.aol.cyclops.monad.AnyM;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Builder;
@@ -13,4 +17,33 @@ public class SSLProperties {
 	private final String keyStorePass;
 	private final String trustStoreFile;
 	private final String trustStorePass;
+	private final String keyStoreType;
+	private final String keyStoreProvider;
+	private final String trustStoreType;
+	private final String trustStoreProvider;
+	private final String clientAuth;
+	private final String ciphers;
+	private final String protocol;
+	
+	public AnyM<String> getKeyStoreType() {
+		return AnyM.ofNullable(keyStoreType);
+	}
+	public AnyM<String> getKeyStoreProvider() {
+		return AnyM.ofNullable(keyStoreProvider);
+	}
+	public AnyM<String> getTrustStoreType() {
+		return AnyM.ofNullable(trustStoreType);
+	}
+	public AnyM<String> getTrustStoreProvider() {
+		return AnyM.ofNullable(trustStoreProvider);
+	}
+	public AnyM<String> getClientAuth() {
+		return AnyM.ofNullable(clientAuth);
+	}
+	public AnyM<String> getCiphers() {
+		return AnyM.ofNullable(ciphers);
+	}
+	public AnyM<String> getProtocol() {
+		return AnyM.ofNullable(protocol);
+	}
 }
