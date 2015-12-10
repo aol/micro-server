@@ -38,6 +38,7 @@ public class PersistentResource  {
 	@Produces("text/plain")
 	@Path("/create")
 	public String createEntity() {
+		
 		flow.map(name->dao.getJdbc().update("insert into t_jdbc VALUES (1,'"+name+"+','world',1)"))
 			.execute("hello");
 		
