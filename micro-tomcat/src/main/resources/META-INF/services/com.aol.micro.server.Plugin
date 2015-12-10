@@ -1,1 +1,1 @@
-com.aol.micro.server.servers.grizzly.plugin.TomcatPlugin
+com.aol.micro.server.servers.tomcat.plugin.TomcatPlugin

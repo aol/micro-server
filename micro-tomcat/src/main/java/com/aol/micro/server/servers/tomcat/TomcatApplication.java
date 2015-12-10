@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
@@ -15,11 +14,13 @@ import lombok.Getter;
 import lombok.experimental.Wither;
 
 import org.apache.catalina.LifecycleException;
+import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.StandardContext;
-import org.apache.catalina.realm.RealmBase;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.valves.AccessLogValve;
 import org.apache.catalina.valves.Constants;
+import org.apache.coyote.ProtocolHandler;
+import org.apache.coyote.http11.AbstractHttp11JsseProtocol;
 import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,6 @@ import com.aol.micro.server.module.WebServerProvider;
 import com.aol.micro.server.servers.AccessLogLocationBean;
 import com.aol.micro.server.servers.JaxRsServletConfigurer;
 import com.aol.micro.server.servers.ServerApplication;
-import com.aol.micro.server.servers.ServletContextListenerConfigurer;
 import com.aol.micro.server.servers.model.AllData;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
@@ -62,8 +62,10 @@ public class TomcatApplication implements ServerApplication {
 	}
 
 	public void run(CompletableFuture start,  JaxRsServletConfigurer jaxRsConfigurer, CompletableFuture end) {
-		 Tomcat tomcat = new Tomcat();
-		 tomcat.setPort(serverData.getPort());
+		Tomcat tomcat = new Tomcat();
+		tomcat.setPort(serverData.getPort());
+		tomcat.getHost().setAutoDeploy(false);
+		tomcat.getEngine().setBackgroundProcessorDelay(-1);
 		 File docBase = new File(".");
 		 StandardContext context =(StandardContext)tomcat.addContext("", docBase.getAbsolutePath());
 		context.addServletContainerInitializer(new TomcatListener(jaxRsConfigurer, serverData, filterData, servletData, servletContextListenerData, servletRequestListenerData), 
@@ -72,13 +74,27 @@ public class TomcatApplication implements ServerApplication {
 	
 		serverData.getModule().getServerConfigManager().accept(new WebServerProvider(tomcat));
 		
-	
+		if(SSLProperties!=null){
+			addSSL(tomcat.getConnector(),SSLProperties);	
+		}
 
 		startServer( tomcat, start, end);
 	}
 
+	private void addSSL(Connector connector,SSLProperties sslProperties) {
+		ProtocolHandler handler = connector.getProtocolHandler();
+		if(handler instanceof AbstractHttp11JsseProtocol){
+			new SSLConfigurationBuilder().build((AbstractHttp11JsseProtocol)handler,sslProperties);
+			connector.setScheme("https");
+			connector.setSecure(true);
+			
+		}
+		
+		
+	}
+
 	private void startServer( Tomcat httpServer, CompletableFuture start, CompletableFuture end) {
-		//webappContext.deploy(httpServer);
+		
 		try {
 			logger.info("Starting application {} on port {}", serverData.getModule().getContext(), serverData.getPort());
 			logger.info("Browse to http://localhost:{}/{}/application.wadl", serverData.getPort(), serverData.getModule().getContext());
