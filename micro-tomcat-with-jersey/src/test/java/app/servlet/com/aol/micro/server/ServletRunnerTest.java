@@ -24,10 +24,11 @@ public class ServletRunnerTest {
 	
 	MicroserverApp server;
 	@Before
-	public void startServer(){
+	public void startServer() throws InterruptedException{
 		Map<String, Servlet> servlets = new HashMap<>();
 		servlets.put("/configured", new ConfiguredServlet());
 		server = new MicroserverApp( AppRunnerLocalMain.class, ConfigurableModule.builder().context("test-app").servlets(servlets  ).build());
+		Thread.sleep(1000);
 		server.start();
 
 	}

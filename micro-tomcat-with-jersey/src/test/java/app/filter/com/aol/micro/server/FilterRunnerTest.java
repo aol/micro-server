@@ -27,12 +27,13 @@ public class FilterRunnerTest {
 	
 	MicroserverApp server;
 	@Before
-	public void startServer(){
+	public void startServer() throws InterruptedException{
 		Map<String, Filter> filters = HashMapBuilder.<String, Filter>map("/filter-app/status/ping2",new ConfiguredFilter()).build();
 		server = new MicroserverApp(ConfigurableModule.builder()
 													.context("filter-app")
 													.filters(filters )
 													.requestListeners(Arrays.asList(new org.springframework.web.context.request.RequestContextListener())).build());
+		Thread.sleep(1000);
 		server.start();
 
 	}

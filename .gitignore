@@ -3,6 +3,8 @@
 # Created by https://www.gitignore.io
 /sigar-lib/
 sigar-lib/
+tomcat.8080/
+tomcat.8081/
 
 ### Eclipse ###
 *.pydevproject

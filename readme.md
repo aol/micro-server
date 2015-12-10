@@ -3,14 +3,18 @@
 
 [![Join the chat at https://gitter.im/aol/micro-server](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aol/micro-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-A convenient modular engine for Microservices. Microserver plugins offer seamless integration with Spring (core), Jersey, Guava, Grizzly, reactive programming, Hibernate & Spring Data, Codahale Metrics, Swagger and more to come!
+A convenient modular engine for Microservices. Microserver plugins offer seamless integration with Spring (core), Jersey, Guava, Tomcat, Grizzly, reactive programming, Hibernate & Spring Data, Codahale Metrics, Swagger and more to come!
 
 ## Quick start
 
 Install Microserver with Grizzly, Jackson and Jersey (Gradle config below)
-
+```groovy
     compile group: 'com.aol.microservices', name:'micro-grizzly-with-jersey', version:'x.yz'
- 
+```   
+Install Microserver with Tomcat, Jackson and Jersey (Gradle config below)
+ ```groovy
+    compile group: 'com.aol.microservices', name:'micro-tomcat-with-jersey', version:'x.yz'    
+ ```
 Create and run a simple app 
  ```java
     @Rest
@@ -60,6 +64,8 @@ Microserver is a zero configuration, standards based, battle hardened library to
 
 * micro-grizzly-with-jersey
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-grizzly-with-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-grizzly-with-jersey)
+* micro-tomcat-with-jersey
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-tomcat-with-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-tomcat-with-jersey)
 * micro-core 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-core)
 * micro-boot 
@@ -84,11 +90,11 @@ Microserver is a zero configuration, standards based, battle hardened library to
 
 ### Maven dependency
 
-Microserver core 
+Microserver Grizzly with Jersey
  ```xml
     <dependency>
       <groupId>com.aol.microservices</groupId>
-      <artifactId>micro-core</artifactId>
+      <artifactId>micro-grizzly-with-jersey</artifactId>
       <version>x.yz</version>
     </dependency>
 ```

@@ -27,9 +27,11 @@ public class ValidationAppTest {
 	SimpleReactStream stream;
 
 	@Before
-	public void startServer() {
-		stream = simpleReact.react(
-				() -> server = new MicroserverApp(() -> "guava-app")).then(server -> server.start());
+	public void startServer() throws InterruptedException {
+		 server = new MicroserverApp(() -> "guava-app");
+		 Thread.sleep(1000);
+		 server.start();
+		
 
 		entity = ImmutableEntity.builder().value("value").build();
 
@@ -46,7 +48,9 @@ public class ValidationAppTest {
 	public void confirmError() throws InterruptedException,
 			ExecutionException {
 
-		stream.block();
+		
+		//stream.block();
+		
 		rest.post(
 				"http://localhost:8080/guava-app/status/ping", null,
 				ImmutableEntity.class);
@@ -57,7 +61,7 @@ public class ValidationAppTest {
 	public void confirmNoError() throws InterruptedException,
 			ExecutionException {
 
-		stream.block();
+		//stream.block();
 		rest.post(
 				"http://localhost:8080/guava-app/status/ping", entity,
 				ImmutableEntity.class);

@@ -13,6 +13,7 @@ import javax.ws.rs.NotFoundException;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
@@ -21,6 +22,7 @@ import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.module.EmbeddedModule;
 import com.aol.micro.server.testing.RestAgent;
 
+@Ignore //embedded - micro-monolith style doesn't work with Tomcat due to MBean naming collisions
 public class EmbeddedAppTest {
 	
 	RestAgent rest = new RestAgent();
