@@ -21,7 +21,7 @@ Maven
  ```    
 Gradle
  ```groovy
-    compile 'com.aol.microservices:micro-reactive:0.62'
+    compile 'com.aol.microservices:micro-reactive:x.yz'
  ```
  
 ## Reactive mixin
