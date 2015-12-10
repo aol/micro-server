@@ -1,0 +1,15 @@
+127.0.0.1 - - [09/Dec/2015:23:46:11 +0000] "GET /simple-app/status/ping HTTP/1.1" 200 2
+127.0.0.1 - - [09/Dec/2015:23:46:14 +0000] "GET /simple-app/single/ping HTTP/1.1" 200 2
+127.0.0.1 - - [09/Dec/2015:23:46:14 +0000] "GET /simple-app/status/ping HTTP/1.1" 200 2
+127.0.0.1 - - [09/Dec/2015:23:52:06 +0000] "GET /simple-app/status/ping HTTP/1.1" 200 2
+127.0.0.1 - - [09/Dec/2015:23:52:17 +0000] "GET /simple-app/status/ping HTTP/1.1" 200 18
+127.0.0.1 - - [09/Dec/2015:23:52:18 +0000] "GET /simple-app/single/ping HTTP/1.1" 200 2
+127.0.0.1 - - [09/Dec/2015:23:52:19 +0000] "GET /simple-app/status/ping HTTP/1.1" 200 2
+127.0.0.1 - - [09/Dec/2015:23:52:20 +0000] "POST /simple-app/status/ping HTTP/1.1" 500 8841
+127.0.0.1 - - [09/Dec/2015:23:55:35 +0000] "GET /simple-app/status/ping HTTP/1.1" 200 2
+127.0.0.1 - - [09/Dec/2015:23:55:38 +0000] "GET /simple-app/single/ping HTTP/1.1" 200 2
+127.0.0.1 - - [09/Dec/2015:23:55:38 +0000] "GET /simple-app/status/ping HTTP/1.1" 200 2
+127.0.0.1 - - [09/Dec/2015:23:55:38 +0000] "POST /simple-app/status/ping HTTP/1.1" 500 8841
+127.0.0.1 - - [09/Dec/2015:23:56:25 +0000] "GET /simple-app/status/ping HTTP/1.1" 200 2
+127.0.0.1 - - [09/Dec/2015:23:56:28 +0000] "GET /simple-app/single/ping HTTP/1.1" 200 2
+127.0.0.1 - - [09/Dec/2015:23:56:28 +0000] "GET /simple-app/status/ping HTTP/1.1" 200 2

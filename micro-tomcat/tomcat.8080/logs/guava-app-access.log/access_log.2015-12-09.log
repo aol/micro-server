@@ -1,0 +1,17 @@
+127.0.0.1 - - [09/Dec/2015:23:46:10 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:46:45 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:47:00 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:47:58 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:48:32 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:49:06 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:49:15 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:49:23 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:50:46 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:51:19 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:51:44 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:52:03 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:52:05 +0000] "POST /guava-app/status/ping HTTP/1.1" 400 139
+127.0.0.1 - - [09/Dec/2015:23:55:34 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:55:35 +0000] "POST /guava-app/status/ping HTTP/1.1" 400 139
+127.0.0.1 - - [09/Dec/2015:23:56:23 +0000] "POST /guava-app/status/ping HTTP/1.1" 200 17
+127.0.0.1 - - [09/Dec/2015:23:56:25 +0000] "POST /guava-app/status/ping HTTP/1.1" 400 139
