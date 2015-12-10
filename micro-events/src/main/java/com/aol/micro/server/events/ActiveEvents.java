@@ -3,6 +3,7 @@ package com.aol.micro.server.events;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -16,14 +17,14 @@ import com.aol.micro.server.rest.jackson.JacksonUtil;
 
 public class ActiveEvents<T extends BaseEventInfo> {
 
-	private volatile PMap<String, T> active = HashTreePMap.empty();
+	private Map<String, T> active = new ConcurrentHashMap<>();
 	private volatile PStack<Map> recentlyFinished=  ConsPStack.empty();
 	private volatile int events = 0;
 	private volatile int added = 0;
 	private volatile int removed = 0;
 
 	public void active(String key, T data) {
-		active = active.plus(key, data);
+		active.put(key, data);
 		events++;
 		added++;
 	}
@@ -32,7 +33,7 @@ public class ActiveEvents<T extends BaseEventInfo> {
 	}
 	public void finished(String key, ImmutableMap data) {
 		recentlyFinished =recentlyFinished.plus(wrapInMap(active.get(key),data));
-		active=active.minus(key);
+		active.remove(key);
 		removed++;
 		if(recentlyFinished.size()>10)
 			recentlyFinished.minus(recentlyFinished.size()-1);
