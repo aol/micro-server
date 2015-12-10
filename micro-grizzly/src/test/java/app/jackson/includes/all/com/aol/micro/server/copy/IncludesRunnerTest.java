@@ -19,7 +19,7 @@ import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.testing.RestAgent;
 
-@Microserver(properties={"jackson.seriliazation","ALWAYS"})
+@Microserver(properties={"jackson.serialization","ALWAYS"})
 public class IncludesRunnerTest {
 
 	RestAgent rest = new RestAgent();

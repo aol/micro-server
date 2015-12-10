@@ -1,6 +1,7 @@
 package com.aol.micro.server.rest.jersey;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Consumer;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 
+import com.aol.cyclops.monad.AnyM;
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.module.JaxRsProvider;
@@ -57,7 +59,7 @@ public class JerseyRestApplication extends ResourceConfig {
         packages.stream().forEach( e -> packages(e));
 		resources.stream().forEach( e -> register(e));
 		
-		this.resourceConfigManager.get(ServerThreadLocalVariables.getContext().get()).accept(new JaxRsProvider<>(this));
+		Optional.ofNullable(this.resourceConfigManager.get(ServerThreadLocalVariables.getContext().get())).ifPresent(e->e.accept(new JaxRsProvider<>(this)));
 
 	}
 
