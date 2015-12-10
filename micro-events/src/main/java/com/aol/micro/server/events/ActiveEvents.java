@@ -29,10 +29,8 @@ public class ActiveEvents<T extends BaseEventInfo> {
 		finished(key,ImmutableMap.of());
 	}
 	public void finished(String key, ImmutableMap data) {
-		synchronized (key) {
-			recentlyFinished.push(wrapInMap(active.get(key), data));
-			active.remove(key);
-		}
+		recentlyFinished.push(wrapInMap(active.get(key), data));
+		active.remove(key);
 		removed.incrementAndGet();
 		
 		if(recentlyFinished.size()>10)
