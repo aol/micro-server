@@ -11,9 +11,9 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.context.ApplicationContext;
 
-import com.aol.micro.server.servers.grizzly.TomcatApplication;
 import com.aol.micro.server.servers.model.AllData;
 import com.aol.micro.server.servers.model.ServerData;
+import com.aol.micro.server.servers.tomcat.TomcatApplication;
 
 
 
