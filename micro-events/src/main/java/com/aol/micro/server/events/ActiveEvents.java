@@ -37,7 +37,8 @@ public class ActiveEvents<T extends BaseEventInfo> {
 		
 		if(recentlyFinished.size()>10)
 			synchronized (this) {
-				recentlyFinished.pollFirst();
+				if(recentlyFinished.size()>10)
+					recentlyFinished.pollFirst();
 			}
 	}
 	
