@@ -28,9 +28,10 @@ public class SpringRunnerTest {
 	
 	MicroserverApp server;
 	@Before
-	public void startServer(){
+	public void startServer() throws InterruptedException{
 		
 		server = new MicroserverApp( SpringRunnerTest.class, ()-> "spring-app");
+		Thread.sleep(1000);
 		server.start();
 
 	}

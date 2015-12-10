@@ -3,7 +3,6 @@ package app.couchbase.distributed.map.com.aol.micro.server;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 
-import java.net.BindException;
 import java.util.concurrent.ExecutionException;
 
 import org.couchbase.mock.CouchbaseMock;
@@ -46,7 +45,7 @@ public class CouchbaseRunnerTest {
 		server.stop();
 	}
 
-	@Test
+	@Test 
 	public void runAppAndBasicTest() throws InterruptedException,
 			ExecutionException {
 		rest.get("http://localhost:8080/simple-app/couchbase/put");

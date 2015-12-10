@@ -118,15 +118,21 @@ public class TomcatApplication implements ServerApplication {
 		} finally {
 			try {
 				httpServer.stop();
+				httpServer.getConnector().destroy();
+				httpServer.getEngine().destroy();
 				httpServer.destroy();
 				
-					Thread.sleep(3_000);
+				
 				
 			} catch (LifecycleException e) {
-				
-			}catch (InterruptedException e) {
+			}
+				try{
+					Thread.sleep(5_000);
+				}
+			catch (InterruptedException e) {
 				
 			}
+			
 		}
 	}
 

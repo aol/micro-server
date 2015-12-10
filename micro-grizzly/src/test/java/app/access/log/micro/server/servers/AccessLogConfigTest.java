@@ -1,10 +1,12 @@
-package app.micro.server.servers;
+package app.access.log.micro.server.servers;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.io.File;
+import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,10 +22,10 @@ public class AccessLogConfigTest {
 	File logFile;
 
 	@Before
-	public void startServer() {
+	public void startServer() throws IOException {
 
 		logFile = new File(System.getProperty("user.home") + "/access-log-app-access.log");
-		logFile.delete();
+		FileUtils.forceDelete(logFile);
 
 		assertThat(logFile.exists(), is(false));
 

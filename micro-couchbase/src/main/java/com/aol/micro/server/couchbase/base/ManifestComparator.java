@@ -18,7 +18,7 @@ import com.aol.micro.server.couchbase.DistributedMapClient;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 
 /**
- * Manifest comparator for use with a distributed map
+ * Manifest comparator for use with a distributed map -assumes single producer / multiple consumers
  * 
  * Uses to entries in the map
  * 

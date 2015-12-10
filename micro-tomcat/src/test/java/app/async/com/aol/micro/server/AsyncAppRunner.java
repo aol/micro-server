@@ -27,6 +27,7 @@ public class AsyncAppRunner {
 	public void startServer() throws InterruptedException{
 		
 		server = new MicroserverApp( ()-> "async-app");
+		Thread.sleep(1000);
 		server.start();
 
 	}

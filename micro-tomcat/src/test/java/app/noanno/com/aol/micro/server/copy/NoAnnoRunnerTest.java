@@ -21,9 +21,10 @@ public class NoAnnoRunnerTest {
 	
 	MicroserverApp server;
 	@Before
-	public void startServer(){
+	public void startServer() throws InterruptedException{
 		
 		server = new MicroserverApp(()-> "simple-app");
+		Thread.sleep(1000);
 		server.start();
 
 	}

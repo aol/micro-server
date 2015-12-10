@@ -28,12 +28,13 @@ public class SingleClassTest implements RestResource{
 	boolean called;
 	MicroserverApp server;
 	@Before
-	public void startServer(){
+	public void startServer() throws InterruptedException{
 		called = false;
 		server = new MicroserverApp( ConfigurableModule.builder()
 				.context("hello")
 				.serverConfigManager(server->called=true)
 				.build());
+		Thread.sleep(1000);
 		server.start();
 
 	}

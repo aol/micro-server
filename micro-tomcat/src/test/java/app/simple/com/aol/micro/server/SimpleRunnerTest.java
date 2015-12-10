@@ -24,13 +24,13 @@ public class SimpleRunnerTest {
 	
 	MicroserverApp server;
 	@Before
-	public void startServer(){
+	public void startServer() throws InterruptedException{
 		server = new MicroserverApp(ConfigurableModule
 				.builder()
 				.context("simple-app")
 				.defaultResources(Arrays.asList(MultiPartFeature.class))
 				.build());
-	//	server = new MicroserverApp(()-> "simple-app");
+		Thread.sleep(1000);
 		server.start();
 
 	}

@@ -1,6 +1,6 @@
 package app.couchbase.manifest.comparator.com.aol.micro.server.copy;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 import java.util.concurrent.ExecutionException;
@@ -45,7 +45,7 @@ public class ManifestComparatorRunnerTest {
 		server.stop();
 	}
 
-	@Test
+	@Test 
 	public void runAppAndBasicTest() throws InterruptedException,
 			ExecutionException {
 		rest.get("http://localhost:8080/simple-app/comparator/increment");

@@ -26,9 +26,10 @@ public class SingleClassTest implements RestResource{
 	
 	MicroserverApp server;
 	@Before
-	public void startServer(){
+	public void startServer() throws InterruptedException{
 		
 		server = new MicroserverApp( SingleClassTest.class, ()-> "simple-app");
+		Thread.sleep(1000);
 		server.start();
 
 	}

@@ -24,10 +24,11 @@ public class ServletRunnerTest {
 	
 	MicroserverApp server;
 	@Before
-	public void startServer(){
+	public void startServer() throws InterruptedException{
 		Map<String, Servlet> servlets = new HashMap<>();
 		servlets.put("/configured", new ConfiguredServlet());
 		server = new MicroserverApp( AppRunnerLocalMain.class, ConfigurableModule.builder().context("test-app").servlets(servlets  ).build());
+		Thread.sleep(1000);
 		server.start();
 
 	}
@@ -41,24 +42,12 @@ public class ServletRunnerTest {
 	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
 		
 		assertThat(rest.get("http://localhost:8080/test-app/servlet/ping"),is("ok"));
-	
-	}
-	
-	@Test
-	public void autoDiscoveredServletTest() throws InterruptedException, ExecutionException{
-		
-		
 		assertThat(rest.get("http://localhost:8080/servlet"),is("hello world"));
-	
-	}
-	
-	@Test
-	public void configuredServletTest() throws InterruptedException, ExecutionException{
-		
-		
 		assertThat(rest.get("http://localhost:8080/configured"),is("configured servlet"));
 	
 	}
+	
+	
 	
 	
 }
