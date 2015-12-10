@@ -16,7 +16,7 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 public class CoreJacksonConfigurator implements JacksonMapperConfigurator {
 	private final Optional<Include> inc;
 	@Autowired
-	public CoreJacksonConfigurator(@Value("${jackson.seriliazation:NON_NULL}")Include inc){
+	public CoreJacksonConfigurator(@Value("${jackson.serialization:NON_NULL}")Include inc){
 		this.inc = Optional.ofNullable(inc);
 	}
 	public void accept(ObjectMapper mapper) {
