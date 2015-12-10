@@ -26,10 +26,9 @@ public class JacksonFeature implements Feature {
 		});
        
         
-        context.register(JacksonJaxbJsonProvider.class, MessageBodyReader.class, MessageBodyWriter.class);
         JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
      		provider.setMapper(JacksonUtil.getMapper());
-            context.register(provider);
+            context.register(provider, new Class[]{MessageBodyReader.class, MessageBodyWriter.class});
      
         return true;
     }
