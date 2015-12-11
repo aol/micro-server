@@ -18,6 +18,7 @@ import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.client.AsyncRequestCallback;
 import org.springframework.web.client.AsyncRestTemplate;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 
@@ -254,7 +255,12 @@ public class NIORestClient {
 
 			@Override
 			public void onFailure(Throwable t) {
-				completable.completeExceptionally(t);
+				if(t instanceof HttpClientErrorException) {
+					String message = ((HttpClientErrorException)t).getResponseBodyAsString();
+					completable.completeExceptionally(new IllegalArgumentException(message, t));
+				} else {
+					completable.completeExceptionally(t);
+				}
 			}
 		});
 		return completable;
