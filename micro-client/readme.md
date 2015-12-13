@@ -47,7 +47,7 @@ public class EndPoint {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	private final EventBus bus;
 	private final NIORestClient restClient;
-	private final String iURL;
+	private final String URL;
 	private final AtomicLong correlationId = new AtomicLong(0);
 	@Autowired
 	public EndPoint(NIORestClient restClient,EventBus bus, @Value("${url:}") String URL){
