@@ -34,8 +34,57 @@ public class Example{
 	
 }
 ```
-## Example RestClient
+
+## Example NIORestClient
+
+Example using simple-react to manage the returned CompletableFuture object from the NIO Rest Client.
+
  ```java
+@Path("/query")
+@Rest
+public class EndPoint {
+
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final EventBus bus;
+	private final NIORestClient restClient;
+	private final String iURL;
+	private final AtomicLong correlationId = new AtomicLong(0);
+	@Autowired
+	public EndPoint(NIORestClient restClient,EventBus bus, @Value("${url:}") String URL){
+	
+		this.bus = bus;
+		this.URL = URL;
+		this.restClient=restClient;
+	}
+	
+	private final SimpleReact builder = new SimpleReact();
+	
+		
+	
+	@POST
+	@Consumes("application/json")
+	@Produces("application/json")
+    public void async(RequestType query,@Suspended AsyncResponse asyncResponse){
+		
+		
+		 final long correlationId = this.correlationId.incrementAndGet();
+		 bus.post(RequestEvents.start(query, correlationId,"standard-query",HashMapBuilder.of("ip",QueryIPRetriever.getIpAddress())));
+	     builder.from(this.restClient.postForEntity(URL, new HttpEntity(JacksonUtil.serializeToJson(convertList(query)),headers),String.class))
+	     		.sync()
+	     		.capture(e->logger.error(e.getMessage(), e))
+	     		.then(re-> JacksonUtil.convertFromJson(re.getBody(), Result.class))
+	     		.then(this::process)
+				.then(action->asyncResponse.resume(action))
+				.onFail(error-> asyncResponse.resume(error.getCause()))
+				.peek( status->bus.post(RequestEvents.finish(query, correlationId)));
+	     
+	
+		
+	}
+}
+```
+## Example RestClient
+```java
 public class Example{
 
 
