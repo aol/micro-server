@@ -45,9 +45,9 @@ public class ActiveEvents<T extends BaseEventInfo> {
 		Long time = System.currentTimeMillis();
 		DateFormat format = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
 		String formatted = format.format(time);
-		Long change = Runtime.getRuntime().freeMemory() - Optional.ofNullable(event)
-																.map(e->e.getFreeMemory())
-																.orElse(0l);
+		String change = Optional.ofNullable(event).map(e -> 
+			Long.toString(Runtime.getRuntime().freeMemory() - e.getFreeMemory())).orElse("unknown");
+				
 		return ImmutableMap.builder().putAll(data)
 				.putAll(ImmutableMap.of("event",event,"completed",time,"completed-formated",formatted,"time-taken",time-event.getStartedAt()
 						,"memory-change",change )).build();
