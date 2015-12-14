@@ -25,10 +25,6 @@ public class AutodiscoveredListener  implements ServletContextListener {
 		
 	}
 	
-	
-
-	
-
 
 	
 

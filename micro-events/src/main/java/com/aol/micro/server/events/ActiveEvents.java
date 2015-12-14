@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Deque;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -44,7 +45,9 @@ public class ActiveEvents<T extends BaseEventInfo> {
 		Long time = System.currentTimeMillis();
 		DateFormat format = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
 		String formatted = format.format(time);
-		Long change = Runtime.getRuntime().freeMemory() - event.getFreeMemory();
+		Long change = Runtime.getRuntime().freeMemory() - Optional.ofNullable(event)
+																.map(e->e.getFreeMemory())
+																.orElse(0l);
 		return ImmutableMap.builder().putAll(data)
 				.putAll(ImmutableMap.of("event",event,"completed",time,"completed-formated",formatted,"time-taken",time-event.getStartedAt()
 						,"memory-change",change )).build();
