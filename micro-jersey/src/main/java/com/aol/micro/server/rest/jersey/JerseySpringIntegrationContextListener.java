@@ -24,7 +24,7 @@ public class JerseySpringIntegrationContextListener implements ServletContextLis
 		JerseyRestApplication.getPackages().put(serverData.getModule().getContext(), serverData.getModule().getDefaultJaxRsPackages());
 		JerseyRestApplication.getResourcesClasses().put(serverData.getModule().getContext(), serverData.getModule().getDefaultResources());
 		JerseyRestApplication.getResourceConfigManager().put(serverData.getModule().getContext(), serverData.getModule().getResourceConfigManager());
-
+		JerseyRestApplication.getServerPropertyMap().put(serverData.getModule().getContext(), serverData.getModule().getServerProperties());
 	}
 
 }

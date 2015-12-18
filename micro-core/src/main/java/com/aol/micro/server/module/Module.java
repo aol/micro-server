@@ -29,6 +29,10 @@ import com.aol.micro.server.servers.model.ServerData;
 
 public interface Module {
 	
+	default Map<String, Object> getServerProperties() {		
+		return new HashMap<>();		
+	}
+	
 	default <T> Consumer<WebServerProvider<T>> getServerConfigManager(){
 		return server->{};
 	}
