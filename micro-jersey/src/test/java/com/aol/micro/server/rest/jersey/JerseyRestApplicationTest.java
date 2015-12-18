@@ -7,12 +7,12 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
 
 import com.aol.micro.server.rest.jackson.JacksonFeature;
 import com.aol.micro.server.servers.ServerThreadLocalVariables;
@@ -25,16 +25,13 @@ public class JerseyRestApplicationTest {
 		JerseyRestApplication.getResourcesMap().put(Thread.currentThread().getName(), Arrays.asList(new ServletStatusResource()));
 		JerseyRestApplication.getPackages().put(Thread.currentThread().getName(), Arrays.asList());
 		JerseyRestApplication.getResourcesClasses().put(Thread.currentThread().getName(), Arrays.asList(JacksonFeature.class));
+		JerseyRestApplication.getServerPropertyMap().put(Thread.currentThread().getName(), new HashMap<>());
 	}
 
 		@Test
-		public void testDefaultConstructor() {
-			
-			
+		public void testDefaultConstructor() {			
 			JerseyRestApplication app = new JerseyRestApplication();
-			assertTrue(app.isRegistered(ServletStatusResource.class));
-			
-				
+			assertTrue(app.isRegistered(ServletStatusResource.class));				
 			assertThat(	app.getApplication().getClasses().stream().map(c -> c.getName()).collect(Collectors.toSet()),hasItem("com.aol.micro.server.rest.jackson.JacksonFeature".intern()));
 			
 		}
@@ -53,7 +50,7 @@ public class JerseyRestApplicationTest {
 		public void testConstructor() {
 			JerseyRestApplication.getResourcesMap().clear();
 			JerseyRestApplication app = new JerseyRestApplication(Arrays.asList(new ServletStatusResource()),
-					Arrays.asList(),Arrays.asList(JacksonFeature.class));
+					Arrays.asList(),Arrays.asList(JacksonFeature.class), new HashMap<>());
 			assertThat(app.getApplication().getClasses().size(),is(1));
 			assertTrue(app.isRegistered(ServletStatusResource.class));
 		}
