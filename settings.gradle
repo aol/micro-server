@@ -28,4 +28,4 @@ include ':micro-tomcat'
 include ':micro-tomcat-with-jersey'
 include ':micro-tutorial'
 include ':micro-dbcp'
-
+include ':micro-log4j'
