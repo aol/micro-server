@@ -5,7 +5,7 @@
 micro-log4j plugin can be used in two ways:
 
 1. Rest resources provided by this plugin can be used to manually control logging levels
-2. Log4jRootLoggerChecker can be used to automatically bring logging level to a specified one
+2. Log4jRootLoggerChecker can be used to automatically bring logging level to a specified one for rootLogger
 
 ## To use
 
