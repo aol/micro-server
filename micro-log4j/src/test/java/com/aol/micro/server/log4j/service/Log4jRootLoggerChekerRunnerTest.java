@@ -30,18 +30,18 @@ public class Log4jRootLoggerChekerRunnerTest {
 
 	@Test
 	public void testChecker() throws InterruptedException {
-		assertThat(rest.get("http://localhost:8080/log4j/rootlogger/change/to/warn"), is("WARN"));
+		assertThat(rest.get("http://localhost:8080/log4j/log4j/rootlogger/change/to/warn"), is("WARN"));
 		Thread.sleep(2000l);
-		assertThat(rest.get("http://localhost:8080/log4j/rootlogger/get/level"), is("INFO"));
+		assertThat(rest.get("http://localhost:8080/log4j/log4j/rootlogger/get/level"), is("INFO"));
 		
-		assertThat(rest.get("http://localhost:8080/log4j/rootlogger/checker/level/DEBUG"), is("DEBUG"));
+		assertThat(rest.get("http://localhost:8080/log4j/log4j/rootlogger/checker/level/DEBUG"), is("DEBUG"));
 		Thread.sleep(2000l);
-		assertThat(rest.get("http://localhost:8080/log4j/rootlogger/get/level"), is("DEBUG"));
+		assertThat(rest.get("http://localhost:8080/log4j/log4j/rootlogger/get/level"), is("DEBUG"));
 		
-		assertThat(rest.get("http://localhost:8080/log4j/rootlogger/checker/is/false"), is("false"));
-		assertThat(rest.get("http://localhost:8080/log4j/rootlogger/checker/level/ERROR"), is("ERROR"));
+		assertThat(rest.get("http://localhost:8080/log4j/log4j/rootlogger/checker/is/false"), is("false"));
+		assertThat(rest.get("http://localhost:8080/log4j/log4j/rootlogger/checker/level/ERROR"), is("ERROR"));
 		Thread.sleep(2000l);
-		assertThat(rest.get("http://localhost:8080/log4j/rootlogger/get/level"), is("DEBUG"));
+		assertThat(rest.get("http://localhost:8080/log4j/log4j/rootlogger/get/level"), is("DEBUG"));
 	}
 	
 

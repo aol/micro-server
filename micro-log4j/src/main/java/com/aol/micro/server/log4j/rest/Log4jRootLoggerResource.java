@@ -16,7 +16,7 @@ import com.aol.micro.server.auto.discovery.SingletonRestResource;
 import com.aol.micro.server.log4j.service.Log4jRootLoggerChecker;
 
 @Component
-@Path("/rootlogger")
+@Path("/log4j/rootlogger")
 public class Log4jRootLoggerResource implements SingletonRestResource {
 	
 	@Autowired
