@@ -27,6 +27,8 @@ Gradle
 ```
 # Configuring Log4jRootLoggerChecker
 
+This is a scheduled job that periodically enforces a specified log level. For example, you can be sure that any attempt at changing the log level to DEBUG or TRACE via a Rest call is purely temporary and will be reset to INFO by the checker.
+
 Log4jRootLoggerChecker can be configured by setting the following properties in application.properties, instance.properties or via the Microserver annotation
 
      log4j.root.logger.checker.active: (e.g. true | false)
