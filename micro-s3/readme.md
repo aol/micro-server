@@ -24,3 +24,17 @@ Gradle
 This plugin simply provide AmazonS3Client implementation bean. You should just fill properties
 s3.accessKey, s3.secretKey and s3.sessionToken (optionally - only for short term keys)
 [AmazonS3Client](http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/AmazonS3Client.html)
+
+```java
+@Component
+public class S3DAO{
+
+     private final AmazonS3Client client;
+     
+     public S3DAO(AmazonS3Client client){
+         this.client = client;
+     }
+     
+     
+}
+```
