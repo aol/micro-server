@@ -12,7 +12,7 @@ public class LogbackRootLoggerResourceTest {
 
 	@Before
 	public void setUp() {
-		logbackResource = new LogbackRootLoggerResource();
+		logbackResource = new LogbackRootLoggerResource(null);
 	}
 
 	@Test

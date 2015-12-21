@@ -7,6 +7,7 @@ import java.util.Set;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.logback.rest.LogbackLoggerResource;
 import com.aol.micro.server.logback.rest.LogbackRootLoggerResource;
+import com.aol.micro.server.logback.service.LogbackRootLoggerChecker;
 
 /**
  * 
@@ -16,7 +17,7 @@ import com.aol.micro.server.logback.rest.LogbackRootLoggerResource;
 public class LogbackPlugin implements Plugin {
 	@Override
 	public Set<Class> springClasses() {
-		return new HashSet<>(Arrays.asList(LogbackRootLoggerResource.class, LogbackLoggerResource.class));
+		return new HashSet<>(Arrays.asList(LogbackRootLoggerResource.class, LogbackRootLoggerChecker.class, LogbackLoggerResource.class));
 	}
 
 }

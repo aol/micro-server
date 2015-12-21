@@ -1,4 +1,4 @@
-package com.aol.micro.server.log4j.service;
+package com.aol.micro.server.logback.service;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -7,6 +7,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.aol.micro.server.log4j.service.Log4jRootLoggerChecker;
 
 
 
