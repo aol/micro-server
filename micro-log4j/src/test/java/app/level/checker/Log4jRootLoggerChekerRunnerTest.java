@@ -1,4 +1,4 @@
-package com.aol.micro.server.log4j.service;
+package app.level.checker;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

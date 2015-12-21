@@ -24,5 +24,29 @@ Gradle
 
     compile 'com.aol.microservices:micro-logback:x.yz'
 
+# Configuration endpoints
 
+## For Root Logger
+
+* /logback/rootlogger/get/level
+* /logback/rootlogger/change/to/all
+* /logback/rootlogger/change/to/debug
+* /logback/rootlogger/change/to/error
+* /logback/rootlogger/change/to/fatal
+* /logback/rootlogger/change/to/info
+* /logback/rootlogger/change/to/of
+* /logback/rootlogger/change/to/trace
+* /logback/rootlogger/change/to/warn
+
+## For a 'targetable' logger
+
+* /logback/logger/get/level/{loggerName}   
+* /logback/rootlogger/change/to/all/{loggerName}  
+* /logback/rootlogger/change/to/debug/{loggerName}  
+* /logback/rootlogger/change/to/error/{loggerName}  
+* /logback/rootlogger/change/to/fatal/{loggerName}  
+* /logback/rootlogger/change/to/info/{loggerName}  
+* /logback/rootlogger/change/to/of/{loggerName}  
+* /logback/rootlogger/change/to/trace/{loggerName}  
+* /logback/rootlogger/change/to/warn/{loggerName} 
 
