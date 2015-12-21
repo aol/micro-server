@@ -14,17 +14,17 @@ micro-log4j plugin can be used in two ways:
 Simply add to the classpath
 
 Maven 
-
+```xml
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-log4j</artifactId>
         <version>x.yz</version>
      </dependency>
-     
+```     
 Gradle
-
+```groovy
     compile 'com.aol.microservices:micro-log4j:x.yz'
-
+```
 # Configuring Log4jRootLoggerChecker
 
 Log4jRootLoggerChecker can be configured by setting the following properties in application.properties, instance.properties or via the Microserver annotation
