@@ -91,6 +91,7 @@ public class LogbackLoggerResource implements SingletonRestResource {
 
 	private void changeLevel(Logger logger, Level newLevel) {
 		logger.warn("Changing logging level from " + logger.getLevel() + " to " + newLevel);
+		logger.setLevel(newLevel);
 	}
 	
 }
