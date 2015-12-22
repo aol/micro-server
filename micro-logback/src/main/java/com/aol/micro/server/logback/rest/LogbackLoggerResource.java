@@ -31,7 +31,7 @@ public class LogbackLoggerResource implements SingletonRestResource {
 	@Path("/change/to/all/{loggerName}")
 	public String changeToAll(@PathParam("loggerName") final String loggerName) {
 		Logger logger = (Logger) LoggerFactory.getLogger(loggerName);
-		logger.setLevel(Level.ALL);
+		changeLevel(logger, Level.ALL);
 		return getLevel(loggerName);
 	}
 
@@ -40,7 +40,7 @@ public class LogbackLoggerResource implements SingletonRestResource {
 	@Path("/change/to/debug/{loggerName}")
 	public String changeToDebug(@PathParam("loggerName") final String loggerName) {
 		Logger logger = (Logger) LoggerFactory.getLogger(loggerName);
-		logger.setLevel(Level.DEBUG);
+		changeLevel(logger, Level.DEBUG);
 		return getLevel(loggerName);
 	}
 
@@ -49,7 +49,7 @@ public class LogbackLoggerResource implements SingletonRestResource {
 	@Path("/change/to/error/{loggerName}")
 	public String changeToError(@PathParam("loggerName") final String loggerName) {
 		Logger logger = (Logger) LoggerFactory.getLogger(loggerName);
-		logger.setLevel(Level.ERROR);
+		changeLevel(logger, Level.ERROR);
 		return getLevel(loggerName);
 	}
 
@@ -58,7 +58,7 @@ public class LogbackLoggerResource implements SingletonRestResource {
 	@Path("/change/to/info/{loggerName}")
 	public String changeToInfo(@PathParam("loggerName") final String loggerName) {
 		Logger logger = (Logger) LoggerFactory.getLogger(loggerName);
-		logger.setLevel(Level.INFO);
+		changeLevel(logger, Level.INFO);
 		return getLevel(loggerName);
 	}
 
@@ -67,7 +67,7 @@ public class LogbackLoggerResource implements SingletonRestResource {
 	@Path("/change/to/off/{loggerName}")
 	public String changeToOff(@PathParam("loggerName") final String loggerName) {
 		Logger logger = (Logger) LoggerFactory.getLogger(loggerName);
-		logger.setLevel(Level.OFF);
+		changeLevel(logger, Level.OFF);
 		return getLevel(loggerName);
 	}
 
@@ -76,7 +76,7 @@ public class LogbackLoggerResource implements SingletonRestResource {
 	@Path("/change/to/trace/{loggerName}")
 	public String changeToTrace(@PathParam("loggerName") final String loggerName) {
 		Logger logger = (Logger) LoggerFactory.getLogger(loggerName);
-		logger.setLevel(Level.TRACE);
+		changeLevel(logger, Level.TRACE);
 		return getLevel(loggerName);
 	}
 
@@ -85,8 +85,13 @@ public class LogbackLoggerResource implements SingletonRestResource {
 	@Path("/change/to/warn/{loggerName}")
 	public String changeToWarn(@PathParam("loggerName") final String loggerName) {
 		Logger logger = (Logger) LoggerFactory.getLogger(loggerName);
-		logger.setLevel(Level.WARN);
+		changeLevel(logger, Level.WARN);
 		return getLevel(loggerName);
 	}
 
+	private void changeLevel(Logger logger, Level newLevel) {
+		logger.warn("Changing logging level from " + logger.getLevel() + " to " + newLevel);
+		logger.setLevel(newLevel);
+	}
+	
 }
