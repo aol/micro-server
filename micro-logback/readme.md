@@ -1,10 +1,12 @@
 # Logback plugin for Microserver
 
-[Example micro-logback Apps](https://github.com/aol/micro-server/tree/master/micro-logback/src/test/java/com/aol/micro/server/logback/rest)
+[Example micro-logback Apps](https://github.com/aol/micro-server/tree/master/micro-log4j/src/test/java/app)
 
-micro-logback plugin can be used in the following way:
+micro-logback plugin can be used in two ways:
 
-Rest resources provided by this plugin can be used to manually control logging levels
+1. Rest resources provided by this plugin can be used to manually control logging levels
+2. LogbackRootLoggerChecker can be used to automatically bring logging level to a specified one for rootLogger
+
 
 ## To use
 
@@ -14,15 +16,17 @@ Simply add to the classpath
 
 Maven 
 
+```xml
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-logback</artifactId>
         <version>x.yz</version>
      </dependency>
-     
+```   
 Gradle
-
+```groovy
     compile 'com.aol.microservices:micro-logback:x.yz'
+```
 
 # Configuration endpoints
 
@@ -50,3 +54,20 @@ Gradle
 * /logback/rootlogger/change/to/trace/{loggerName}  
 * /logback/rootlogger/change/to/warn/{loggerName} 
 
+# Configuring LogbackRootLoggerChecker
+
+This is a scheduled job that periodically enforces a specified log level. For example, you can be sure that any attempt at changing the log level to DEBUG or TRACE via a Rest call is purely temporary and will be reset to INFO by the checker.
+
+LogbackRootLoggerChecker can be configured by setting the following properties in application.properties, instance.properties or via the Microserver annotation
+
+     logback.root.logger.checker.active: (e.g. true | false)
+     logback.root.logger.checker.correct.level: (e.g. INFO)
+     logback.root.logger.checker.fixed.rate: (e.g. 5000)
+     
+Users can also use LogbackRootLoggerResource to change either logback.root.logger.checker.active or logback.root.logger.checker.correct.level at runtime
+
+## Checker endpoints
+
+
+* /logback/rootlogger/checker/is/{active}  = true | false
+* /logback/rootlogger/checker/level/{correctLevelStr} = all | debug |  error | info | warn | fatal | trace

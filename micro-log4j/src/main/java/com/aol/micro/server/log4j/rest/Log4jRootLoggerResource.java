@@ -19,11 +19,16 @@ import com.aol.micro.server.log4j.service.Log4jRootLoggerChecker;
 @Path("/log4j/rootlogger")
 public class Log4jRootLoggerResource implements SingletonRestResource {
 	
-	@Autowired
-	Log4jRootLoggerChecker checker;
+	
+	private final Log4jRootLoggerChecker checker;
+	@Autowired 
+	public Log4jRootLoggerResource(Log4jRootLoggerChecker checker ){
+		
+		this.checker = checker;
+	}
 
-	public Log4jRootLoggerResource() {
-		BasicConfigurator.configure();
+	Log4jRootLoggerResource() {
+		this.checker = null;
 	}
 
 	@GET

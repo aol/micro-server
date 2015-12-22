@@ -3,8 +3,10 @@ package com.aol.micro.server.log4j.rest;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import org.apache.log4j.BasicConfigurator;
 import org.junit.Before;
 import org.junit.Test;
+
 
 public class Log4jRootLoggerResourceTest {
 
@@ -12,6 +14,7 @@ public class Log4jRootLoggerResourceTest {
 
 	@Before
 	public void setUp() {
+		BasicConfigurator.configure();
 		log4jResource = new Log4jRootLoggerResource();
 	}
 
