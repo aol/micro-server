@@ -47,18 +47,21 @@ public class ConfigurableModule implements Module{
 	private final List<String> defaultJaxRsPackages;
 	private final Consumer<WebServerProvider<?>> serverConfigManager;
 	private final Consumer<JaxRsProvider<?>> resourceConfigManager;
+	private final Map<String, Object> serverProperties;
 	final boolean resetAll;
 	
 	
 	public <T> ConfigurableModule withResourceConfigManager(Consumer<JaxRsProvider<T>> resourceConfigManager){
 		return new ConfigurableModule(restResourceClasses,restAnnotationClasses, defaultResources,
 				listeners, requestListeners,filters,servlets, jaxWsRsApplication,providers,
-				context, springConfigurationClasses, propertyOverrides,defaultJaxRsPackages,serverConfigManager,(Consumer)resourceConfigManager,resetAll);
+				context, springConfigurationClasses, propertyOverrides,defaultJaxRsPackages,serverConfigManager,
+				(Consumer)resourceConfigManager,serverProperties, resetAll);
 	}
 	public <T> ConfigurableModule withServerConfigManager(Consumer<WebServerProvider<?>> serverConfigManager){
 		return new ConfigurableModule(restResourceClasses,restAnnotationClasses, defaultResources,
 				listeners, requestListeners,filters,servlets, jaxWsRsApplication,providers,
-				context, springConfigurationClasses, propertyOverrides,defaultJaxRsPackages,(Consumer)serverConfigManager,resourceConfigManager,resetAll);
+				context, springConfigurationClasses, propertyOverrides,defaultJaxRsPackages,
+				(Consumer)serverConfigManager,resourceConfigManager, serverProperties, resetAll);
 	}
 	
 	@Override
@@ -179,7 +182,14 @@ public class ConfigurableModule implements Module{
 		return Module.super.getSpringConfigurationClasses();
 	}
 
-	
+	@Override
+	public Map<String, Object> getServerProperties() {	
+		if(serverProperties != null) {
+			return HashMapBuilder.from(serverProperties).putAll(extractMap(() -> Module.super.getServerProperties())).build();
+		} else {
+			return Module.super.getServerProperties();
+		}
+	}
 
 	
 }
