@@ -47,6 +47,9 @@ public class ConfigurableModuleTest {
 	private Set<Class> springConfigurationClasses;
 	private List<String> defaultJaxRsPackages;
 	
+	private Map<String, Object> serverProperties = HashMapBuilder.<String, Object>map(SERVER_PROPERTIES_KEY, 1).build();
+
+	
 	private static final String SERVER_PROPERTIES_KEY = "serverPropertiesKey";
 	
 	private Module m = () -> "module";
@@ -68,7 +71,6 @@ public class ConfigurableModuleTest {
 		servlets = new HashMap<>();
 		springConfigurationClasses = HashTreePSet.singleton(this.getClass());
 		
-		Map<String, Object> serverProperties = HashMapBuilder.<String, Object>map(SERVER_PROPERTIES_KEY, 1).build();
 		
 		module = ConfigurableModule.builder()
 									.serverConfigManager((Consumer)serverConfigManager )
@@ -327,6 +329,11 @@ public class ConfigurableModuleTest {
 	@Test
 	public void testGetServerProperties() {
 		Assert.assertEquals(1, module.getServerProperties().get(SERVER_PROPERTIES_KEY));
+	}
+	
+	@Test
+	public void testGetServerPropertiesResetAll() {
+		Assert.assertThat(module.withResetAll(true).getServerProperties(), is(serverProperties));
 	}
 
 }
