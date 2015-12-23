@@ -2,7 +2,6 @@ package com.aol.micro.server.module;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -21,6 +20,7 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.pcollections.HashTreePSet;
@@ -46,6 +46,11 @@ public class ConfigurableModuleTest {
 	private Map<String, Servlet> servlets;
 	private Set<Class> springConfigurationClasses;
 	private List<String> defaultJaxRsPackages;
+	
+	private Map<String, Object> serverProperties = HashMapBuilder.<String, Object>map(SERVER_PROPERTIES_KEY, 1).build();
+
+	
+	private static final String SERVER_PROPERTIES_KEY = "serverPropertiesKey";
 	
 	private Module m = () -> "module";
 	Consumer<WebServerProvider<HttpServer>> serverConfigManager = server-> {};
@@ -80,6 +85,7 @@ public class ConfigurableModuleTest {
 									.restResourceClasses(resourceClasses)
 									.servlets(servlets)
 									.springConfigurationClasses(springConfigurationClasses)
+									.serverProperties(serverProperties)
 									.build();
 		
 		unchanged = ConfigurableModule.builder()
@@ -318,6 +324,16 @@ public class ConfigurableModuleTest {
 	public void testWithSpringConfigurationClasses() {
 		assertThat(unchanged.withSpringConfigurationClasses(this.springConfigurationClasses).getSpringConfigurationClasses(),is(module.getSpringConfigurationClasses()));
 
+	}
+	
+	@Test
+	public void testGetServerProperties() {
+		Assert.assertEquals(1, module.getServerProperties().get(SERVER_PROPERTIES_KEY));
+	}
+	
+	@Test
+	public void testGetServerPropertiesResetAll() {
+		Assert.assertThat(module.withResetAll(true).getServerProperties(), is(serverProperties));
 	}
 
 }
