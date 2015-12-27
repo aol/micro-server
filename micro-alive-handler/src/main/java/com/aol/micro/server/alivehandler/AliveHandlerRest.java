@@ -16,7 +16,7 @@ import com.aol.micro.server.auto.discovery.RestResource;
 @Path("/{name}")
 public class AliveHandlerRest implements RestResource {
 
-	private AliveHandlerControllerRepository repository;
+	private final AliveHandlerControllerRepository repository;
 
 	@Autowired
 	public AliveHandlerRest(AliveHandlerControllerRepository repository) {
