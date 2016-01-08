@@ -10,7 +10,7 @@ public class S3Plugin implements Plugin{
 	
 	@Override
 	public Set<Class> springClasses() {
-		return new HashSet<>(Arrays.asList(S3Configuration.class));
+		return new HashSet<>(Arrays.asList(S3Configuration.class, S3ClientProvider.class));
 	}
 
 }
