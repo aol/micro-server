@@ -34,6 +34,12 @@ public class S3RunnerTest {
 
 		AmazonS3Client s3client = server.getSpringContext().getBean(AmazonS3Client.class);
 		assertThat(s3client != null, is(true));
+		
+		S3Configuration s3Configuration = server.getSpringContext().getBean(S3Configuration.class);
+		assertThat(s3Configuration.getAccessKey(), is(""));
+		assertThat(s3Configuration.getSecretKey(), is(""));
+		assertThat(s3Configuration.getSessionToken() == null, is(true));
+		assertThat(s3Configuration.getRegion() == null, is(true));
 
 	}
 
