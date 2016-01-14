@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.BasicSessionCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
 
 @Configuration
@@ -26,7 +28,14 @@ public class S3ClientProvider {
 			credentials = new BasicSessionCredentials(s3Configuration.getAccessKey(), s3Configuration.getSecretKey(),
 					s3Configuration.getSessionToken());
 		}
+		
+		AmazonS3Client amazonS3Client = new AmazonS3Client(credentials);
+		
+		if (s3Configuration.getRegion() != null) {
+			Region region = Region.getRegion(Regions.fromName(s3Configuration.getRegion()));
+			amazonS3Client.setRegion(region);		
+		}
 
-		return new AmazonS3Client(credentials);
+		return amazonS3Client;
 	}
 }
