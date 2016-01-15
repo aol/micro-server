@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 import org.couchbase.mock.CouchbaseMock;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
@@ -45,7 +46,7 @@ public class CouchbaseRunnerTest {
 		server.stop();
 	}
 
-	@Test 
+	@Test @Ignore
 	public void runAppAndBasicTest() throws InterruptedException,
 			ExecutionException {
 		rest.get("http://localhost:8080/simple-app/couchbase/put");

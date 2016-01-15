@@ -28,9 +28,8 @@ public class AliveHandlerControllerTest {
 
 	@Before
 	public void startServer() throws InterruptedException {
-		server = new MicroserverApp(ConfigurableModule.builder().context("simple-app")
-				.restResourceClasses(Collections.singletonList(AliveHandlerRest.class))
-				.defaultResources(Arrays.asList(MultiPartFeature.class)).build());
+		server = new MicroserverApp(()->"simple-app");
+				
 		Thread.sleep(1000);
 		server.start();
 	}
@@ -83,6 +82,10 @@ public class AliveHandlerControllerTest {
 	@Test
 	public void dead() throws Exception {
 		Assert.assertEquals(404, getStatusCode("http://localhost:8080/simple-app/wrong_ping"));
+	}
+	@Test
+	public void alt() throws Exception {
+		Assert.assertEquals(200, getStatusCode("http://localhost:8080/simple-app/status/ping"));
 	}
 	
 	private int getStatusCode(String urlString) throws Exception {
