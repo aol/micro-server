@@ -17,10 +17,11 @@ dependencies {
 	compile "org.glassfish.jersey.media:jersey-media-multipart:$jerseyVersion"
 	compile "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion"
 	compile "org.glassfish.jersey.ext:jersey-bean-validation:$jerseyVersion"
+	compile project(':micro-jackson-configuration')
 
 	testCompile 'org.springframework.boot:spring-boot-starter-test:'+springBootVersion
 	testCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version:"$jerseyVersion"
-	testCompile project(':micro-jackson-configuration')
+	
 	
 	
       
@@ -31,6 +32,9 @@ dependencies {
 	testCompile project(':micro-metrics')
 
 
+}
+test {
+	forkEvery = 1
 }
 
 modifyPom {
@@ -64,6 +68,17 @@ modifyPom {
 				name 'John McClean'
 				email 'john.mcclean@teamaol.com'
 			}
+			developer {
+				id 'earlzero'
+				name 'Nikita Sapozhnikov'
+				email 'nikita.sapozhnikov@teamaol.com'
+			}
+			developer {
+				id 'kewangie'
+				name 'Ke Wang'
+				email 'ke.wang@teamaol.com'
+			}
+		 
 		}
 	}
 }
