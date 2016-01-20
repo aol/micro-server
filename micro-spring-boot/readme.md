@@ -1,8 +1,9 @@
 # Spring Boot entry point for Microserver
 
-[micro-boot example apps](https://github.com/aol/micro-server/tree/master/micro-boot/src/test/java/app)
+[micro-spring-boot example apps](https://github.com/aol/micro-server/tree/master/micro-spring-boot/src/test/java/app)
 
-Micro-boot allows Microserver front ends to use Spring Boot backends. To use full-stack Spring Boot with Microserver (and Jersey) see the micro-spring-boot plugin. 
+Micro-spring-boot allows Microserver Jersey annotations and Microserver plugins to be used on applications where the full-stack is managed by Spring Boot. To use Microserver front-ends and Spring Boot backes see the micro-boot plugin.
+
 
 ## A simple example with one resource
 
@@ -14,7 +15,8 @@ Micro-boot allows Microserver front ends to use Spring Boot backends. To use ful
 
 
 ```java
-@Microboot //configure this package as the base for autoscan
+
+@MicroSpringBoot //configure this package as the base for autoscan
 //optionally use @Microserver here for more configuration options
 public class SimpleExample {
 
@@ -23,7 +25,7 @@ public class SimpleExample {
 	
 	public static void main (String[] args){
 		
-		new MicroserverApp(()-> "simple-app").start();
+		new MicroserverApp(()-> "simple-app"); //note unlike traditional microserver apps, there is no need to call start or run here
 		
 		assertThat(rest.get("http://localhost:8080/simple-app/status/ping"),equalTo("ok"));
 		
@@ -54,43 +56,30 @@ public class SimpleResource{
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-boot)
 
-Add micro-boot to the classpath
+Add micro-spring-boot to the classpath
 
 Maven
 
     <dependency>
        <groupId>com.aol.microservices</groupId>  
-       <artifactId>micro-boot</artifactId>
+       <artifactId>micro-spring-boot</artifactId>
        <version>x.yz</version>
     </dependency>
 
 Gradle
 
-    compile 'com.aol.microservices:micro-boot:x.yz'
+    compile 'com.aol.microservices:micro-spring-boot:x.yz'
 
-And also add Grizzly and Jersey (micro-grizzly-with-jersey will add both)
-
-Maven
-
-    <dependency>
-       <groupId>com.aol.microservices</groupId>
-       <artifactId>micro-grizzly-with-jersey</artifactId>
-       <version>x.yz</version>
-    </dependency>
-
-Gradle
-
-    compile 'com.aol.microservices:micro-grizzly-with-jersey:x.yz'
 
 
 ## Create a simple server
 ```java
-@Microboot
+@MicroSpringBoot
 @Path("/simple")
 public class SimpleApp {
 
         public static void main(String[] args){
-            new MicroserverApp(()->"test-app").run();
+            new MicroserverApp(()->"test-app");
         }
         
         @GET
@@ -99,12 +88,9 @@ public class SimpleApp {
         }
 }
 ```
-# Relationship to Microserver and Spring Boot
-
-micro-boot allows you to use Microserver plugins & jax-rs support with Spring Boot back ends.
 
 
-@Microboot is simply syntax sugar for 
+@MicroSpringBoot is simply syntax sugar for 
 
  ```java
 @Component

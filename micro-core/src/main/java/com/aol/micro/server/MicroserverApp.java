@@ -21,6 +21,7 @@ import com.aol.micro.server.servers.ApplicationRegister;
 import com.aol.micro.server.servers.ServerApplication;
 import com.aol.micro.server.servers.ServerApplicationFactory;
 import com.aol.micro.server.servers.ServerRunner;
+import com.aol.micro.server.spring.SpringBuilder;
 import com.aol.micro.server.spring.SpringContextFactory;
 
 /**
@@ -50,6 +51,7 @@ public class MicroserverApp {
 	 */
 	public MicroserverApp(Module... modules) {
 		this.modules = Arrays.asList(modules);
+		initSpringProperties(modules[0]);
 		Class c =extractClass();
 		springContext = new SpringContextFactory(new MicroserverConfigurer().buildConfig(
 				c), extractClass(),
@@ -57,6 +59,7 @@ public class MicroserverApp {
 				.createSpringContext();
 
 	}
+	
 
 	/**
 	 * This will construct a Spring context for this Microserver instance.
@@ -70,6 +73,7 @@ public class MicroserverApp {
 	public MicroserverApp(Class c, Module... modules) {
 
 		this.modules = Arrays.asList(modules);
+		initSpringProperties(modules[0]);
 		springContext = new SpringContextFactory(
 				new MicroserverConfigurer().buildConfig(c), c,
 				modules[0].getSpringConfigurationClasses())
@@ -77,7 +81,11 @@ public class MicroserverApp {
 
 	}
 
-	
+	private void initSpringProperties(Module m){
+		
+		System.setProperty("server.contextPath", "/"+m.getContext());
+		
+	}
 
 	private Class extractClass() {
 		try {
