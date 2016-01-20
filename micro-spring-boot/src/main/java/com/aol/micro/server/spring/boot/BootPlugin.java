@@ -13,6 +13,7 @@ import org.glassfish.jersey.CommonProperties;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.rest.jersey.JerseyRestApplication;
 import com.aol.micro.server.spring.SpringBuilder;
+import com.aol.micro.server.spring.boot.web.DelegatingContextListener;
 import com.aol.micro.server.utility.HashMapBuilder;
 
 /**
@@ -32,7 +33,7 @@ public class BootPlugin implements Plugin{
 
 	@Override
 	public Set<Class> springClasses() {
-		return new HashSet<>(Arrays.asList(JerseyRestApplication.class));
+		return new HashSet<>(Arrays.asList(JerseyRestApplication.class,DelegatingContextListener.class));
 	}
 
 	

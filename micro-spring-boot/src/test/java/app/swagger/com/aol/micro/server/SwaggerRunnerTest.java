@@ -15,21 +15,23 @@ import org.springframework.context.annotation.Configuration;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.testing.RestAgent;
+import com.aol.micro.server.module.Module;
 import com.aol.micro.server.spring.boot.MicroSpringBoot;
 
 @Configuration
 @ComponentScan(basePackages = { "app.swagger.com.aol.micro.server" })
-@MicroSpringBoot @Ignore // needs some work for spring-boot
-public class SwaggerRunnerTest {
+@MicroSpringBoot // needs some work for spring-boot
+public class SwaggerRunnerTest implements Module{
 
 
+	
 	RestAgent rest = new RestAgent();
 	
 	MicroserverApp server;
 	@Before
 	public void startServer(){
 		
-		server = new MicroserverApp( SwaggerRunnerTest.class, ()-> "swagger-app");
+		server = new MicroserverApp( SwaggerRunnerTest.class,this);
 		
 
 	}
@@ -42,6 +44,12 @@ public class SwaggerRunnerTest {
 		
 		assertThat(rest.getJson("http://localhost:8080/swagger-app/api-docs/stats"),containsString("Make a ping call"));
 	
+	}
+
+
+	@Override
+	public String getContext() {
+		return "swagger-app";
 	}
 	
 	
