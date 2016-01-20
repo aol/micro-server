@@ -1,24 +1,24 @@
-description = 'micro-machine-stats'
+description = 'micro-reactive-events'
 dependencies {
-	compile 'io.kamon:sigar-loader:1.6.6-rev002'
-	compile group: 'org.fusesource', name: 'sigar', version:'1.6.4'
-	compile group: 'org.fusesource', name: 'sigar', version:'1.6.4', classifier:'native'
-	compile project(':micro-core')
 	
-	testCompile project(':micro-grizzly-with-jersey')
+	compile project(':micro-reactive')
+	compile project(':micro-events')
 	
+	testCompile project(':micro-core')
+	testCompile project(':micro-grizzly')
+	testCompile project(':micro-jersey')
+	testCompile project(':micro-jackson-configuration')
 }
-
 
 modifyPom {
 	project {
-		name 'Microserver machine stats'
+		name 'Microserver reactive events'
 		description 'Opinionated rest microservices'
 		url 'https://github.com/aol/micro-server'
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'micro-machine-stats'
+		artifactId 'micro-reactive-events'
 		version "$version" 
 		
 		
@@ -37,16 +37,15 @@ modifyPom {
 		}
 
 		developers {
-			
-			developer {
-				id 'kewangie'
-				name 'Ke Wang'
-				email 'ke.wang@teamaol.com'
-			}
 			developer {
 				id 'johnmcclean-aol'
 				name 'John McClean'
 				email 'john.mcclean@teamaol.com'
+			}
+			developer {
+				id 'kewangie'
+				name 'Ke Wang'
+				email 'ke.wang@teamaol.com'
 			}
 			developer {
 				id 'earlzero'
