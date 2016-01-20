@@ -56,6 +56,25 @@ public class SpringContextFactory {
 				.findFirst()
 				.orElse(new SpringApplicationConfigurator());
 	}
+	public SpringContextFactory(SpringBuilder builder,Config config, Class c, Set<Class> classes){
+		Set<Class> s = new HashSet<Class>(classes);
+		s.addAll(config.getClasses());
+		
+		s.add(c);
+		Microserver microserver = (Microserver) c.getAnnotation(Microserver.class);
+		final Set<Class> immutableS = s;
+		
+		s = Optional.ofNullable(microserver).flatMap(ms -> Optional.ofNullable(ms.blacklistedClasses())).map(bl -> {
+			Set<Class> blacklistedClasses = Arrays.stream(bl).collect(Collectors.toSet());
+			return immutableS.stream().filter(clazz -> !blacklistedClasses.contains(clazz)).collect(Collectors.toSet());
+		}).orElse(immutableS);
+		
+		this.classes = HashTreePSet.from(s);
+		this.config = config;
+		
+		springBuilder = builder;
+			
+	}
 
 	public ApplicationContext createSpringContext() {
 		try {

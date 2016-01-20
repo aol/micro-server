@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
+import lombok.Setter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -24,6 +26,7 @@ import com.aol.micro.server.config.ConfigAccessor;
 @Configuration
 public class PropertyFileConfig {
 
+	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	public PropertyFileConfig(){
 		
@@ -35,7 +38,7 @@ public class PropertyFileConfig {
 	@Bean
 	public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {
 
-		List<Resource> resources = loadPropertyResource();
+	
 
 		PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
 		Properties props = propertyFactory();
@@ -52,7 +55,6 @@ public class PropertyFileConfig {
 		factory.setLocations(resources.toArray(new Resource[resources.size()]));
 		factory.afterPropertiesSet();
 		Properties props = factory.getObject();
-
 		props.putAll(new ConfigAccessor().get().getProperties());
 		return props;
 	}
