@@ -20,7 +20,7 @@ public class JerseyRestApplication extends ResourceConfig {
 
 	@Autowired(required=false)
 	public JerseyRestApplication(ApplicationContext context){
-		this(context, ()->"default");
+		this(context, ()->"");
 	}
 	
 	@Autowired(required=false)
