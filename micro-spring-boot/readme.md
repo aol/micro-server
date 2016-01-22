@@ -98,3 +98,9 @@ public class SimpleApp {
  ```
 
 You can also define your own SpringBoot configuration if required.
+
+## A note on overriding Module properties
+
+1. micro-spring-boot currently only uses the context provided in the Module passed to MicroserverApp, all other properties aren't used at that stage.
+2. To pass a Module with overrides into micro-spring-boot, you need to make the Module a Spring Bean. The easiest way to do this is have your main class implement Module and override getContext(), then pass an instance to MicroserverApp
+3. See https://github.com/aol/micro-server/blob/master/micro-spring-boot/src/test/java/app/swagger/com/aol/micro/server/SwaggerRunnerTest.java for an example
