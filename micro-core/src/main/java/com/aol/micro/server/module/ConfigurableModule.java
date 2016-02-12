@@ -5,6 +5,7 @@ import static com.aol.micro.server.utility.UsefulStaticMethods.concat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,6 +24,7 @@ import lombok.experimental.Wither;
 import org.pcollections.ConsPStack;
 import org.pcollections.HashTreePSet;
 
+import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.utility.HashMapBuilder;
 
@@ -99,7 +101,7 @@ public class ConfigurableModule implements Module{
 	@Override
 	public List<Class> getRestResourceClasses() {
 		if(restResourceClasses!=null)
-			return  ConsPStack.from(concat(restResourceClasses, extract(() -> Module.super.getRestResourceClasses())));
+			return  ConsPStack.from(concat(restResourceClasses, extract(() -> Collections.singletonList(CommonRestResource.class))));
 		
 		return Module.super.getRestResourceClasses();
 	}
