@@ -30,6 +30,8 @@ JobExecutor executor = new JobExecutor(ex);
 executor.schedule("* * * * * ?", myJob)
 				.connect()
 				.debounce(1,TimeUnit.DAYS)
+				.futureOperations(Executors.newSingleThreadExecutor())
 				.forEach(this::logToDB);
 
 ```
+without futureOperations it will be use same thread for executing tasks.
