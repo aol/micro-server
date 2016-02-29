@@ -25,6 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pcollections.HashTreePSet;
 
+import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.servers.model.ServerData;
@@ -129,7 +130,7 @@ public class ConfigurableModuleTest {
 	}
 	@Test
 	public void testGetRestResourceClasses() {
-		assertThat(module.getRestResourceClasses(),hasItem(RestResource.class));
+		assertThat(module.getRestResourceClasses(),hasItem(CommonRestResource.class));
 	}
 
 	@Test
