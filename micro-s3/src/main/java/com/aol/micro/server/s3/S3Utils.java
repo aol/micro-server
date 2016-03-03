@@ -5,15 +5,20 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 
+@Component
 public class S3Utils {
 
 	private final AmazonS3Client client;
 
+	@Autowired
 	public S3Utils(AmazonS3Client client) {
 		this.client = client;
 	}
