@@ -2,11 +2,11 @@ package com.aol.micro.server.reactive;
 
 import java.util.Optional;
 
-import com.aol.cyclops.sequence.SequenceM;
-import com.aol.simple.react.async.Adapter;
-import com.aol.simple.react.async.pipes.LazyReactors;
-import com.aol.simple.react.async.subscription.Subscription;
-import com.aol.simple.react.stream.traits.LazyFutureStream;
+import com.aol.cyclops.control.ReactiveSeq;
+import com.aol.cyclops.data.async.Adapter;
+import com.aol.cyclops.react.async.pipes.LazyReactors;
+import com.aol.cyclops.react.async.subscription.Subscription;
+import com.aol.cyclops.types.futurestream.LazyFutureStream;
 
 /**
  * Store for Pipes for cross-thread communication
@@ -14,7 +14,7 @@ import com.aol.simple.react.stream.traits.LazyFutureStream;
  * @author johnmcclean
  *
  */
-public class Pipes extends com.aol.simple.react.async.pipes.Pipes{
+public class Pipes extends com.aol.cyclops.react.async.pipes.Pipes{
 	
 
 	/**
@@ -23,7 +23,7 @@ public class Pipes extends com.aol.simple.react.async.pipes.Pipes{
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <K,V> Optional<Adapter<V>> get(K key){
-		return com.aol.simple.react.async.pipes.Pipes.get(key);
+		return com.aol.cyclops.react.async.pipes.Pipes.get(key);
 	}
 	/**
 	 * Register a Queue, and get back a listening SequenceM
@@ -45,8 +45,8 @@ public class Pipes extends com.aol.simple.react.async.pipes.Pipes{
 	 * @param adapter
 	 * @return LazyFutureStream from supplied Queue, optimisied for CPU bound operation
 	 */
-	public static <V> SequenceM<V> registerForSequential(Object key, Adapter<V> adapter){
-		com.aol.simple.react.async.pipes.Pipes.register(key, adapter);
+	public static <V> ReactiveSeq<V> registerForSequential(Object key, Adapter<V> adapter){
+		com.aol.cyclops.react.async.pipes.Pipes.register(key, adapter);
 		return adapter.stream();
 	}
 	
@@ -69,7 +69,7 @@ public class Pipes extends com.aol.simple.react.async.pipes.Pipes{
 	 * @return LazyFutureStream from supplied Queue, optimisied for CPU bound operation
 	 */
 	public static <V> LazyFutureStream<V> registerForCPU(Object key, Adapter<V> adapter){
-		com.aol.simple.react.async.pipes.Pipes.register(key, adapter);
+		com.aol.cyclops.react.async.pipes.Pipes.register(key, adapter);
 		Subscription sub = new Subscription();
 		return LazyReactors.cpuReact.from(adapter.stream(sub)).withSubscription(sub);
 	}
@@ -92,7 +92,7 @@ public class Pipes extends com.aol.simple.react.async.pipes.Pipes{
 	 * @return LazyFutureStream from supplied Queue
 	 */
 	public static <V> LazyFutureStream<V> registerForIO(Object key, Adapter<V> adapter){
-		com.aol.simple.react.async.pipes.Pipes.register(key, adapter);
+		com.aol.cyclops.react.async.pipes.Pipes.register(key, adapter);
 		Subscription sub = new Subscription();
 		return LazyReactors.ioReact.from(adapter.stream(sub)).withSubscription(sub);
 	}
@@ -101,7 +101,7 @@ public class Pipes extends com.aol.simple.react.async.pipes.Pipes{
 	 * @return LazyFutureStream that reads from specified Queue
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static <V> SequenceM<V> stream(Object key){
+	public static <V> ReactiveSeq<V> stream(Object key){
 		return Pipes.<Object,V>get(key).get().stream();
 	}
 	/**

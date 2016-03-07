@@ -1,9 +1,6 @@
 package com.aol.micro.server.machine.stats.sigar.plugin;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.machine.stats.sigar.MachineStatsChecker;
 import com.aol.micro.server.machine.stats.sigar.StatsServletContextListener;
@@ -22,10 +19,10 @@ import com.aol.micro.server.machine.stats.sigar.rest.StatsResource;
 public class MachineStatsPlugin implements Plugin{
 	
 	@Override
-	public Set<Class> springClasses() {
-		return new HashSet<>(Arrays.asList(
+	public PSetX<Class> springClasses() {
+		return PSetX.of(
 				StatsResource.class, MachineStatsChecker.class
-				,StatsServletContextListener.class));
+				,StatsServletContextListener.class);
 	}
 
 	

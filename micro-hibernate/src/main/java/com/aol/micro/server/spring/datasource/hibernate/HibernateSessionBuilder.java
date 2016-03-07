@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
-import com.aol.cyclops.invokedynamic.ExceptionSoftener;
+import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 
 @Builder

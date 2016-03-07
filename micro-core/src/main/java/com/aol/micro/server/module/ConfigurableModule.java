@@ -2,7 +2,6 @@ package com.aol.micro.server.module;
 
 import static com.aol.micro.server.utility.UsefulStaticMethods.concat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,8 +21,10 @@ import lombok.experimental.Builder;
 import lombok.experimental.Wither;
 
 import org.pcollections.ConsPStack;
-import org.pcollections.HashTreePSet;
 
+import com.aol.cyclops.data.collections.extensions.persistent.PMapX;
+import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.utility.HashMapBuilder;
@@ -82,9 +83,9 @@ public class ConfigurableModule implements Module{
 	}
 	
 	@Override
-	public List<String> getDefaultJaxRsPackages() {
+	public PStackX<String> getDefaultJaxRsPackages() {
 		if(defaultJaxRsPackages!=null)
-			return ConsPStack.from(concat(defaultJaxRsPackages,extract(()->Module.super.getDefaultJaxRsPackages())));
+			return PStackX.fromCollection(concat(defaultJaxRsPackages,extract(()->Module.super.getDefaultJaxRsPackages())));
 		
 		return Module.super.getDefaultJaxRsPackages();
 	}
@@ -99,59 +100,59 @@ public class ConfigurableModule implements Module{
 		return HashMapBuilder.of();
 	}
 	@Override
-	public List<Class> getRestResourceClasses() {
+	public PStackX<Class> getRestResourceClasses() {
 		if(restResourceClasses!=null)
-			return  ConsPStack.from(concat(restResourceClasses, extract(() -> Collections.singletonList(CommonRestResource.class))));
+			return  PStackX.fromCollection(concat(restResourceClasses, extract(() -> Collections.singletonList(CommonRestResource.class))));
 		
 		return Module.super.getRestResourceClasses();
 	}
 	
 	@Override
-	public List<Class> getRestAnnotationClasses() {
+	public PStackX<Class> getRestAnnotationClasses() {
 		if(restAnnotationClasses!=null)
-			return  new ArrayList<>(concat(restAnnotationClasses, extract(() -> Module.super.getRestAnnotationClasses())));
+			return  PStackX.fromCollection(concat(restAnnotationClasses, extract(() -> Module.super.getRestAnnotationClasses())));
 		
 		return Module.super.getRestAnnotationClasses();
 	}
 	
 	@Override
-	public List<Class> getDefaultResources() {
+	public PStackX<Class> getDefaultResources() {
 		if(this.defaultResources!=null){
-			return ConsPStack.from(concat(this.defaultResources,extract(()->Module.super.getDefaultResources())));
+			return PStackX.fromCollection((concat(this.defaultResources,extract(()->Module.super.getDefaultResources()))));
 		}
 			
 		return Module.super.getDefaultResources();
 	}
 
 	@Override
-	public List<ServletContextListener> getListeners(ServerData data) {
+	public PStackX<ServletContextListener> getListeners(ServerData data) {
 		if(listeners!=null)
-			return  ConsPStack.from(concat(this.listeners, extract(()->Module.super.getListeners(data))));
+			return  PStackX.fromCollection((concat(this.listeners, extract(()->Module.super.getListeners(data)))));
 		
 		return Module.super.getListeners(data);
 	}
 
 	@Override
-	public List<ServletRequestListener> getRequestListeners(ServerData data) {
+	public PStackX<ServletRequestListener> getRequestListeners(ServerData data) {
 		if(requestListeners!=null)
-			return  ConsPStack.from(concat(this.requestListeners,
+			return  PStackX.fromCollection(concat(this.requestListeners,
 					                                      extract(()->Module.super.getRequestListeners(data))));
 
 		return Module.super.getRequestListeners(data);
 	}
 
 	@Override
-	public Map<String, Filter> getFilters(ServerData data) {
+	public PMapX<String, Filter> getFilters(ServerData data) {
 		if(filters!=null)
-			return  HashMapBuilder.from(filters).putAll(extractMap(()->Module.super.getFilters(data))).build();
+			return  PMapX.fromMap(filters).plusAll(extractMap(()->Module.super.getFilters(data)));
 			
 		return Module.super.getFilters(data);
 	}
 
 	@Override
-	public Map<String, Servlet> getServlets(ServerData data) {
+	public PMapX<String, Servlet> getServlets(ServerData data) {
 		if(servlets!=null)
-			return  HashMapBuilder.from(servlets).putAll(extractMap(()->Module.super.getServlets(data))).build();
+			return  PMapX.fromMap(servlets).plusAll(extractMap(()->Module.super.getServlets(data)));
 			
 		return Module.super.getServlets(data);
 	}
@@ -177,17 +178,17 @@ public class ConfigurableModule implements Module{
 	}
 
 	@Override
-	public Set<Class> getSpringConfigurationClasses() {
+	public PSetX<Class> getSpringConfigurationClasses() {
 		if(this.springConfigurationClasses!=null)
-			return HashTreePSet.from(concat(this.springConfigurationClasses, extract(()->Module.super.getSpringConfigurationClasses())));
+			return PSetX.fromCollection(concat(this.springConfigurationClasses, extract(()->Module.super.getSpringConfigurationClasses())));
 			
 		return Module.super.getSpringConfigurationClasses();
 	}
 
 	@Override
-	public Map<String, Object> getServerProperties() {	
+	public PMapX<String, Object> getServerProperties() {	
 		if(serverProperties != null) {
-			return HashMapBuilder.from(serverProperties).putAll(extractMap(() -> Module.super.getServerProperties())).build();
+			return PMapX.fromMap(serverProperties).plusAll(extractMap(() -> Module.super.getServerProperties()));
 		} else {
 			return Module.super.getServerProperties();
 		}

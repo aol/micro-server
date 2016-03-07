@@ -5,7 +5,8 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import com.aol.cyclops.sequence.SequenceM;
+import com.aol.cyclops.control.ReactiveSeq;
+import com.aol.cyclops.util.stream.StreamUtils;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.module.IncorrectJaxRsPluginsException;
@@ -15,9 +16,10 @@ import com.aol.micro.server.servers.model.ServerData;
 public class JaxRsServletConfigurer {
 	public  void addServlet(ServerData serverData, ServletContext webappContext) {
 		
-		List<RestConfiguration> restConfigList = SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
+		List<RestConfiguration> restConfigList = ReactiveSeq.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
 				.filter(module -> module.restServletConfiguration()!=null)
-				.flatMapOptional(Plugin::restServletConfiguration)
+				.map(Plugin::restServletConfiguration)
+				.flatMap(StreamUtils::optionalToStream)
 				.toList();
 		if(restConfigList.size()>1) {
 			throw new IncorrectJaxRsPluginsException("ERROR!  Multiple jax-rs application plugins found " + restConfigList);

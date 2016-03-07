@@ -5,8 +5,8 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot:'+springBootVersion
 	compile 'org.springframework.boot:spring-boot-autoconfigure:'+springBootVersion
 	compile project(':micro-core')
-	testCompile group: 'com.google.guava', name: 'guava', version:'18.0'
-
+	testCompile group: 'com.google.guava', name: 'guava', version:guavaVersion
+	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:hamcrestVersion
     testCompile project(':micro-jackson-configuration')	
 	testCompile project(':micro-grizzly')
 	testCompile project(':micro-swagger')

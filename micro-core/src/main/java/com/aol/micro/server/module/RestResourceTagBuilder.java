@@ -12,7 +12,8 @@ import org.pcollections.ConsPStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.invokedynamic.ExceptionSoftener;
+import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
+import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.micro.server.auto.discovery.CommonRestResource;
 
 
@@ -21,13 +22,13 @@ public class RestResourceTagBuilder {
 	private final static Logger logger = LoggerFactory.getLogger(RestResourceTagBuilder.class);
 	
 	@Setter
-	private static List<Class> defaultTags= ConsPStack.singleton(CommonRestResource.class);
+	private static PStackX<Class> defaultTags= PStackX.of(CommonRestResource.class);
 	
-	public static List<Class> restResourceTags(String... classes){
-		return ConsPStack.from(concat(Stream.of(classes).map(cl -> toClass(cl)).collect(Collectors.toList()),defaultTags));
+	public static PStackX<Class> restResourceTags(String... classes){
+		return PStackX.fromCollection(concat(Stream.of(classes).map(cl -> toClass(cl)).collect(Collectors.toList()),defaultTags));
 	}
-	public static List<Class> restResourceTags(Class... classes){
-		return ConsPStack.from(concat(Stream.of(classes).collect(Collectors.toList()),defaultTags));
+	public static PStackX<Class> restResourceTags(Class... classes){
+		return PStackX.fromCollection(concat(Stream.of(classes).collect(Collectors.toList()),defaultTags));
 	}
 
 	private static Class toClass(String cl) {

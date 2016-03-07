@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.invokedynamic.ExceptionSoftener;
+import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.micro.server.servers.ApplicationRegister;
 import com.aol.micro.server.servers.model.ServerData;
 

@@ -15,6 +15,7 @@ import org.pcollections.PStack;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
+import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
@@ -24,12 +25,12 @@ public class ModuleDataExtractor {
 
 	private final Module module;
 	
-	public  PStack getRestResources( ApplicationContext rootContext){
+	public  PStackX getRestResources( ApplicationContext rootContext){
 		
 			List resources = new ArrayList<>();
 			module.getRestResourceClasses().forEach(it -> resources.addAll(rootContext.getBeansOfType(it).values()));
 			module.getRestAnnotationClasses().forEach(it -> resources.addAll(rootContext.getBeansWithAnnotation(it).values()));
-			return ConsPStack.from(resources);
+			return PStackX.fromCollection(resources);
 		
 	}
 	

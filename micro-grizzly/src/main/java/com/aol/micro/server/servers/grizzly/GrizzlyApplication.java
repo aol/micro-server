@@ -20,7 +20,7 @@ import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.invokedynamic.ExceptionSoftener;
+import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.micro.server.ErrorCode;
 import com.aol.micro.server.config.SSLProperties;
 import com.aol.micro.server.module.WebServerProvider;
@@ -97,12 +97,12 @@ public class GrizzlyApplication implements ServerApplication {
 			end.get();
 
 		} catch (IOException e) {
-			ExceptionSoftener.throwSoftenedException(e);
+			throw ExceptionSoftener.throwSoftenedException(e);
 		} catch (ExecutionException e) {
-			ExceptionSoftener.throwSoftenedException(e);
+			throw ExceptionSoftener.throwSoftenedException(e);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
-			ExceptionSoftener.throwSoftenedException(e);
+			throw ExceptionSoftener.throwSoftenedException(e);
 		} finally {
 			httpServer.stop();
 		}

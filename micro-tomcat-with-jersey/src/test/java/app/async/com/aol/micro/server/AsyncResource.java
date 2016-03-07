@@ -11,11 +11,11 @@ import javax.ws.rs.container.Suspended;
 
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.sequence.SequenceM;
+import com.aol.cyclops.control.ReactiveSeq;
+import com.aol.cyclops.control.SimpleReact;
+import com.aol.cyclops.types.futurestream.LazyFutureStream;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.testing.RestAgent;
-import com.aol.simple.react.stream.simple.SimpleReact;
-import com.aol.simple.react.stream.traits.LazyFutureStream;
 
 @Path("/async")
 @Component
@@ -42,7 +42,7 @@ public class AsyncResource implements RestResource{
 					.convertToSimpleReact()
 					.<String,Boolean>allOf(data -> {
 						System.out.println(data);
-							return asyncResponse.resume(SequenceM.fromIterable(data).join(";")); });
+							return asyncResponse.resume(ReactiveSeq.fromIterable(data).join(";")); });
         }
         
         @GET

@@ -1,9 +1,9 @@
 package app.reactive.pipes.com.aol.micro.server;
 
+import com.aol.cyclops.data.async.QueueFactories;
+import com.aol.cyclops.types.futurestream.LazyFutureStream;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.reactive.Pipes;
-import com.aol.simple.react.async.factories.QueueFactories;
-import com.aol.simple.react.stream.traits.LazyFutureStream;
 
 /**
  * Example using simple-react queue backed by an Agrona ManyToOneConcurrentArrayQueue

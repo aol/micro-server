@@ -10,8 +10,8 @@ import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.aol.cyclops.control.SimpleReact;
 import com.aol.micro.server.rest.client.nio.NIORestClient;
-import com.aol.simple.react.stream.simple.SimpleReact;
 @Component
 @Path("/test-status")
 public class TestAppResource implements TestAppRestResource {

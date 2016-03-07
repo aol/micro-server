@@ -5,8 +5,8 @@ dependencies {
 	compile project(':micro-grizzly')
 	compile project(':micro-jersey')
 	compile project(':micro-jackson-configuration')
+	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:hamcrestVersion
 	
-	testCompile group: 'com.aol.simplereact', name:'simple-react', version:"${simpleReactVersion}"
 	
 
 }

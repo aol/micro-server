@@ -9,10 +9,12 @@ import java.util.stream.Collectors;
 
 
 
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
+import com.aol.cyclops.control.ReactiveSeq;
 import com.aol.micro.server.servers.model.ServerData;
 
 public class ServerDataTest {
@@ -48,15 +50,14 @@ public class ServerDataTest {
 	@Test
 	public void testExtractResourceClassName(){
 		
-		
-		assertThat(serverData.extractResources().collect(Collectors.toList()).get(0).v1(),is(ServletStatusResource.class.getName()));
+		assertThat(serverData.extractResources().toList().get(0).v1(),is(ServletStatusResource.class.getName()));
 		
 	}
 	@Test
 	public void testExtractResourcePath(){
 		
 		
-		assertThat(serverData.extractResources().collect(Collectors.toList()).get(0).v2(),is("/servlet"));
+		assertThat(serverData.extractResources().toList().get(0).v2(),is("/servlet"));
 		
 	}
 

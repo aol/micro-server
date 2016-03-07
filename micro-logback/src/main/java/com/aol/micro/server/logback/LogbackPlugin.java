@@ -1,9 +1,6 @@
 package com.aol.micro.server.logback;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.logback.rest.LogbackLoggerResource;
 import com.aol.micro.server.logback.rest.LogbackRootLoggerResource;
@@ -16,8 +13,8 @@ import com.aol.micro.server.logback.service.LogbackRootLoggerChecker;
  */
 public class LogbackPlugin implements Plugin {
 	@Override
-	public Set<Class> springClasses() {
-		return new HashSet<>(Arrays.asList(LogbackRootLoggerResource.class, LogbackRootLoggerChecker.class, LogbackLoggerResource.class));
+	public PSetX<Class> springClasses() {
+		return PSetX.of(LogbackRootLoggerResource.class, LogbackRootLoggerChecker.class, LogbackLoggerResource.class);
 	}
 
 }

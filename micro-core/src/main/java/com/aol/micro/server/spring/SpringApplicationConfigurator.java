@@ -8,7 +8,8 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-import com.aol.cyclops.sequence.SequenceM;
+import com.aol.cyclops.control.ReactiveSeq;
+import com.aol.cyclops.util.stream.StreamUtils;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.config.Config;
@@ -45,9 +46,10 @@ public class SpringApplicationConfigurator implements SpringBuilder {
 	
 	private List<SpringDBConfig> getConfig(Config config, AnnotationConfigWebApplicationContext rootContext, ConfigurableListableBeanFactory beanFactory) {
 		List<SpringDBConfig> result = 
-				SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
+				ReactiveSeq.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
 				.filter(module -> module.springDbConfigurer()!=null)
-				.flatMapOptional(Plugin::springDbConfigurer)
+				.map(Plugin::springDbConfigurer)
+				.flatMap(StreamUtils::optionalToStream)
 				.toList();
 		result.forEach( next -> {
 			

@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
+import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.utility.HashMapBuilder;
 
@@ -39,7 +40,7 @@ public class ModuleDataExtractorTest {
 									.build();
 		extractor = new ModuleDataExtractor(module);
 		rootContext = mock(AnnotationConfigWebApplicationContext.class);
-		data = ServerData.builder().resources(Arrays.asList()).module(module).build();
+		data = ServerData.builder().resources(PStackX.of()).module(module).build();
 		
 	}
 	

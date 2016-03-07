@@ -1,9 +1,6 @@
 package com.aol.micro.server.transactions;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
 
 /**
@@ -14,8 +11,8 @@ import com.aol.micro.server.Plugin;
 public class TransactionsPlugin implements Plugin{
 	
 	@Override
-	public Set<Class> springClasses() {
-		return new HashSet<>(Arrays.asList(TransactionConfiguration.class));
+	public PSetX<Class> springClasses() {
+		return PSetX.of(TransactionConfiguration.class);
 	}
 
 	

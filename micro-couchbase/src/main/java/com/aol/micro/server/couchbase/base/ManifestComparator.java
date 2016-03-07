@@ -10,10 +10,8 @@ import lombok.experimental.Wither;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.cyclops.invokedynamic.ExceptionSoftener;
-import com.aol.micro.server.auto.discovery.Rest;
+import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.micro.server.couchbase.DistributedMapClient;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 

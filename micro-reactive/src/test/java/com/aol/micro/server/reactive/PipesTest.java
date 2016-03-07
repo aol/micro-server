@@ -10,8 +10,8 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.simple.react.async.Queue;
-import com.aol.simple.react.stream.traits.LazyFutureStream;
+import com.aol.cyclops.data.async.Queue;
+import com.aol.cyclops.types.futurestream.LazyFutureStream;
 
 public class PipesTest {
 	@Before

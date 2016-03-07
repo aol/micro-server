@@ -11,12 +11,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.aol.cyclops.data.async.Queue;
+import com.aol.cyclops.types.futurestream.LazyFutureStream;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.reactive.Pipes;
 import com.aol.micro.server.testing.RestAgent;
-import com.aol.simple.react.async.Queue;
-import com.aol.simple.react.stream.traits.LazyFutureStream;
 
 @Microserver
 public class PipesRunnerTest {

@@ -1,14 +1,8 @@
 package com.aol.micro.server.javaslang;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
-
-
-
 import javaslang.jackson.datatype.JavaslangModule;
 
+import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
 import com.fasterxml.jackson.databind.Module;
 
@@ -25,8 +19,8 @@ public class JavaslangPlugin implements Plugin{
 	
 	
 	@Override
-	public Set<Module> jacksonModules(){
-		return new HashSet<>(Arrays.asList(new JavaslangModule()));
+	public PSetX<Module> jacksonModules(){
+		return PSetX.of(new JavaslangModule());
 	}
 
 	

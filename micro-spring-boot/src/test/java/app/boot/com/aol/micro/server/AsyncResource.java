@@ -11,9 +11,9 @@ import javax.ws.rs.container.Suspended;
 
 import org.springframework.stereotype.Component;
 
+import com.aol.cyclops.control.SimpleReact;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.rest.client.nio.AsyncRestClient;
-import com.aol.simple.react.stream.simple.SimpleReact;
 import com.google.common.collect.ImmutableList;
 
 @Path("/async")

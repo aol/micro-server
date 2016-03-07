@@ -5,15 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response.Status;
 
 import org.jooq.lambda.tuple.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.monad.AnyM;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @Component
@@ -40,8 +37,8 @@ public class MapOfExceptionsToErrorCodes {
 	public static Map<Class<? extends Exception>, Tuple2<String, Status>> getMergedMappings(){
 		Map<Class<? extends Exception>, Tuple2<String, Status>> result = new LinkedHashMap<>();
 		result.putAll(mapOfExceptionsToErrorCodes);
-		AnyM.fromOptional(extensions)
-			.peek(ext->result.putAll(ext.getErrorMappings()));
+		extensions
+			.ifPresent(ext->result.putAll(ext.getErrorMappings()));
 		return result;
 	}
 	

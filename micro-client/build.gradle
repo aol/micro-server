@@ -8,8 +8,8 @@ dependencies {
 	
 	compile project(':micro-core')
 	compile project(':micro-jackson-configuration')
-	
-	testCompile group: 'com.google.guava', name: 'guava', version:'18.0'
+	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:hamcrestVersion
+	testCompile group: 'com.google.guava', name: 'guava', version:guavaVersion
 	testCompile project(':micro-reactive')
 	testCompile project(':micro-grizzly')
 	testCompile project(':micro-jersey')
