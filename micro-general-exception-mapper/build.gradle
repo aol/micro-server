@@ -3,7 +3,7 @@ dependencies {
 	
 	compile project(':micro-jersey')
 	compile project(':micro-jackson-configuration')
-	
+	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:hamcrestVersion
 	testCompile project(':micro-grizzly-with-jersey')
 
 	testCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version:"$jerseyVersion"

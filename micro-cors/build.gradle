@@ -4,7 +4,7 @@ dependencies {
 	compile project(':micro-core')
 	compile 'org.ebaysf.web:cors-filter:'+ebayCORSVersion
 	testCompile project(':micro-grizzly-with-jersey')
-	
+	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:hamcrestVersion
 	
 	
 
