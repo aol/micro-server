@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.aol.cyclops.sequence.SequenceM;
+import com.aol.cyclops.control.ReactiveSeq;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.module.Module;
@@ -19,11 +19,11 @@ public class ClientModuleTest {
 		//test MyPlugin working
 		
 		System.out.println(new ModuleImpl().getProviders());
-		String additional = SequenceM
+		String additional = ReactiveSeq
 				.fromStream(
 						Arrays.<Plugin>asList(new TestPlugin())
 								.stream()).filter(module -> module.providers()!=null)
-								.flatMapCollection(Plugin::providers)
+								.flatMapIterable(Plugin::providers)
 								.join(",");
 		
 		assertThat(additional, equalTo(""));

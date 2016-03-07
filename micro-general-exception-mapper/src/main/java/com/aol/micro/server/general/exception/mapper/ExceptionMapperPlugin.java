@@ -3,6 +3,7 @@ package com.aol.micro.server.general.exception.mapper;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
 
 /**
@@ -17,18 +18,14 @@ import com.aol.micro.server.Plugin;
 public class ExceptionMapperPlugin implements Plugin{
 
 	@Override
-	public Set<String> jaxRsPackages() {
-		Set<String> set = new HashSet<>();
-		set.add("com.aol.micro.server.general.exception.mapper");
-		return set;
+	public PSetX<String> jaxRsPackages() {
+		return PSetX.of("com.aol.micro.server.general.exception.mapper");
+		
 	}
 
 	@Override
-	public Set<Class> springClasses() {
-		Set<Class> set = new HashSet<>();
-		set.add(MapOfExceptionsToErrorCodes.class);
-		return set;
-		
+	public PSetX<Class> springClasses() {
+		return PSetX.of(MapOfExceptionsToErrorCodes.class);	
 	}
 	
 	

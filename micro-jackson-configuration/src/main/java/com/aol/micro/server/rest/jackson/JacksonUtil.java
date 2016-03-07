@@ -5,13 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import lombok.Setter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.invokedynamic.ExceptionSoftener;
-import com.aol.cyclops.monad.AnyM;
+import com.aol.cyclops.control.AnyM;
+import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.micro.server.jackson.CoreJacksonConfigurator;
 import com.aol.micro.server.jackson.JacksonMapperConfigurator;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -40,8 +38,8 @@ public final class JacksonUtil {
 		if (mapper == null) {
 			mapper = new ObjectMapper();
 			
-			AnyM.<List<JacksonMapperConfigurator>>ofNullable(jacksonConfigurers)
-						.peek(list->list.forEach(a-> a.accept(mapper)));
+			Optional.<List<JacksonMapperConfigurator>>ofNullable(jacksonConfigurers)
+						.ifPresent(list->list.forEach(a-> a.accept(mapper)));
 			
 
 		}

@@ -3,10 +3,8 @@ package com.aol.micro.server;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 
 import javax.servlet.Filter;
@@ -15,6 +13,9 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 import javax.ws.rs.core.FeatureContext;
 
+import com.aol.cyclops.data.collections.extensions.persistent.PMapX;
+import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.rest.RestConfiguration;
 import com.aol.micro.server.servers.ServerApplicationFactory;
 import com.aol.micro.server.servers.model.ServerData;
@@ -49,8 +50,8 @@ public interface Plugin {
 	/**
 	 * @return Jackson feature properties
 	 */
-	default Function<FeatureContext, Map<String, Object>> jacksonFeatureProperties(){
-		return context->HashMapBuilder.of();
+	default Function<FeatureContext, PMapX<String, Object>> jacksonFeatureProperties(){
+		return context->PMapX.empty();
 	}
 	/**
 	 * @return jax-rs Application name
@@ -67,20 +68,20 @@ public interface Plugin {
 	/**
 	 * @return Jackson modules for this plugin
 	 */
-	default Set<Module> jacksonModules(){
-		return new HashSet<>();
+	default PSetX<Module> jacksonModules(){
+		return PSetX.empty();
 	}
 	/**
 	 * @return jax-rs Resources for this plugin
 	 */
-	default Set<Class> jaxRsResources(){
-		return new HashSet<>();
+	default PSetX<Class> jaxRsResources(){
+		return PSetX.empty();
 	}
 	/**
 	 * @return  jax-rs Packages for this plugin
 	 */
-	default Set<String> jaxRsPackages(){
-		return new HashSet<>();
+	default PSetX<String> jaxRsPackages(){
+		return  PSetX.empty();
 	}
 	/**
 	 * @return Used for configuring Data Beans (or other Beans) directly into the ApplicationContext
@@ -91,44 +92,44 @@ public interface Plugin {
 	/**
 	 * @return Spring configuration classes for this plugin
 	 */
-	default Set<Class> springClasses(){
-		return new HashSet<>();
+	default PSetX<Class> springClasses(){
+		return PSetX.empty();
 	}
 	/**
 	 * @return Servlet Context Listeners for this plugin
 	 */
-	default Set<Function<ServerData,ServletContextListener>> servletContextListeners(){
-		return new HashSet<>();
+	default PSetX<Function<ServerData,ServletContextListener>> servletContextListeners(){
+		return PSetX.empty();
 	}
 	/**
 	 * @return Servlet Request Listeners for this plugin
 	 */
-	default Set<Function<ServerData,ServletRequestListener>> servletRequestListeners(){
-		return new HashSet<>();
+	default PSetX<Function<ServerData,ServletRequestListener>> servletRequestListeners(){
+		return PSetX.empty();
 	}
 	/**
 	 * @return Filters for this plugin
 	 */
-	default Function<ServerData,Map<String,Filter>> filters(){
-		return serverData -> new HashMap<>();
+	default Function<ServerData,PMapX<String,Filter>> filters(){
+		return serverData -> PMapX.empty();
 	}
 	/**
 	 * @return Servlets for this plugin
 	 */
-	default Function<ServerData,Map<String,Servlet>> servlets(){
-		return serverData -> new HashMap<>();
+	default Function<ServerData,PMapX<String,Servlet>> servlets(){
+		return serverData -> PMapX.empty();
 	}
 	/**
 	 * @return jax-rs Providers for this plugin
 	 */
-	default List<String> providers(){
-		return new ArrayList<>();
+	default PStackX<String> providers(){
+		return PStackX.empty();
 	}
 	
 	/**
 	 * @return Jersey server properties for this plugin
 	 */
-	default Map<String, Object> getServerProperties() {		
-		return new HashMap<>();		
+	default PMapX<String, Object> getServerProperties() {		
+		return PMapX.empty();	
 	}
 }

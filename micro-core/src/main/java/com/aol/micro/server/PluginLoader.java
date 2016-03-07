@@ -1,23 +1,24 @@
 package com.aol.micro.server;
 
-import java.util.List;
 import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import com.aol.cyclops.functions.caching.Memoize;
-import com.aol.cyclops.sequence.SequenceM;
+import com.aol.cyclops.control.FluentFunctions;
+import com.aol.cyclops.control.ReactiveSeq;
+import com.aol.cyclops.data.collections.extensions.standard.ListX;
 
 @NoArgsConstructor(access=AccessLevel.PRIVATE)
 public class PluginLoader {
 
 	public final static PluginLoader INSTANCE = new PluginLoader();
 	
-	public final Supplier<List<Plugin>> plugins = Memoize.memoizeSupplier(this::load);
+	public final Supplier<ListX<Plugin>> plugins = FluentFunctions.of(this::load)
+																 .memoize();
 
-	private List<Plugin> load(){
-		 return  SequenceM.fromIterable(ServiceLoader.load(Plugin.class)).toList();
+	private ListX<Plugin> load(){
+		 return  ReactiveSeq.fromIterable(ServiceLoader.load(Plugin.class)).toListX();
 	}
 }

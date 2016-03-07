@@ -1,7 +1,6 @@
 package app.embedded.com.aol.micro.server;
 
-import java.util.Arrays;
-
+import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.module.EmbeddedModule;
@@ -13,8 +12,8 @@ public class EmbeddedAppLocalMain {
 	public static void main(String[] args) throws InterruptedException {
 		
 		new MicroserverApp(
-				new EmbeddedModule(Arrays.asList(TestAppRestResource.class),"test-app"),
-				new EmbeddedModule(Arrays.asList(AltAppRestResource.class),"alternative-app")).start();
+				new EmbeddedModule(PStackX.of(TestAppRestResource.class),"test-app"),
+				new EmbeddedModule(PStackX.of(AltAppRestResource.class),"alternative-app")).start();
 
 		
 

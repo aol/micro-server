@@ -4,7 +4,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -19,6 +18,7 @@ import org.junit.Test;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
+import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.module.EmbeddedModule;
 import com.aol.micro.server.testing.RestAgent;
@@ -32,8 +32,8 @@ public class EmbeddedAppTest {
 	@Before
 	public void startServer(){
 		server = new MicroserverApp(EmbeddedAppLocalMain.class, 
-				new EmbeddedModule(Arrays.asList(TestAppRestResource.class),"test-app"),
-				new EmbeddedModule(Arrays.asList(AltAppRestResource.class),"alternative-app"));
+				new EmbeddedModule(PStackX.of(TestAppRestResource.class),"test-app"),
+				new EmbeddedModule(PStackX.of(AltAppRestResource.class),"alternative-app"));
 		server.start();
 	}
 	

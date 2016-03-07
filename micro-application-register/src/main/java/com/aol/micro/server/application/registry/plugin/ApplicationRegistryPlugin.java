@@ -1,9 +1,6 @@
 package com.aol.micro.server.application.registry.plugin;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.application.registry.ApplicationRegisterImpl;
 import com.aol.micro.server.application.registry.Cleaner;
@@ -16,10 +13,10 @@ import com.aol.micro.server.application.registry.ServiceRegistryResource;
 public class ApplicationRegistryPlugin implements Plugin {
 
 	@Override
-	public Set<Class> springClasses() {
-		return new HashSet<Class>(Arrays.asList(ApplicationRegisterImpl.class,
+	public PSetX<Class> springClasses() {
+		return PSetX.of(ApplicationRegisterImpl.class,
 				Cleaner.class,Register.class, ServiceRegistryResource.class,
-				RegisterConfig.class,Job.class, Finder.class));
+				RegisterConfig.class,Job.class, Finder.class);
 	}
 
 }

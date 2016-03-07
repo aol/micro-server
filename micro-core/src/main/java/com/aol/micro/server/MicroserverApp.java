@@ -12,8 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
-import com.aol.cyclops.invokedynamic.ExceptionSoftener;
-import com.aol.cyclops.sequence.SequenceM;
+import com.aol.cyclops.control.ReactiveSeq;
+import com.aol.cyclops.util.ExceptionSoftener;
+import com.aol.cyclops.util.stream.StreamUtils;
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.MicroserverConfigurer;
 import com.aol.micro.server.module.Module;
@@ -21,7 +22,6 @@ import com.aol.micro.server.servers.ApplicationRegister;
 import com.aol.micro.server.servers.ServerApplication;
 import com.aol.micro.server.servers.ServerApplicationFactory;
 import com.aol.micro.server.servers.ServerRunner;
-import com.aol.micro.server.spring.SpringBuilder;
 import com.aol.micro.server.spring.SpringContextFactory;
 
 /**
@@ -92,9 +92,9 @@ public class MicroserverApp {
 			return Class.forName(new Exception().getStackTrace()[2]
 					.getClassName());
 		} catch (ClassNotFoundException e) {
-			ExceptionSoftener.throwSoftenedException(e);
+			throw ExceptionSoftener.throwSoftenedException(e);
 		}
-		return null; // unreachable normally
+		
 	}
 
 	
@@ -129,10 +129,12 @@ public class MicroserverApp {
 	}
 
 	private ServerApplication createServer(Module module) {
-		List<ServerApplicationFactory> applications = SequenceM
+		StreamUtils.optionalToStream(null);
+		List<ServerApplicationFactory> applications = ReactiveSeq
 				.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
 				.filter(m -> m.serverApplicationFactory() != null)
-				.flatMapOptional(Plugin::serverApplicationFactory)
+				.map(Plugin::serverApplicationFactory)
+				.flatMap(StreamUtils::optionalToStream)
 				.toList();
 		if(applications.size()>1){
 			logger.error("ERROR!  Multiple server application factories found ",applications);

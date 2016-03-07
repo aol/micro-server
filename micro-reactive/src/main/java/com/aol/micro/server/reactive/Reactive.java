@@ -1,18 +1,15 @@
 package com.aol.micro.server.reactive;
 
 import java.util.Optional;
-import java.util.function.Function;
 
-import com.aol.cyclops.sequence.SequenceM;
-import com.aol.cyclops.trycatch.Failure;
-import com.aol.cyclops.trycatch.Success;
-import com.aol.cyclops.trycatch.Try;
-import com.aol.simple.react.async.Adapter;
-import com.aol.simple.react.async.pipes.LazyReactors;
-import com.aol.simple.react.stream.lazy.LazyReact;
-import com.aol.simple.react.stream.traits.LazyFutureStream;
-import com.aol.simple.react.threads.ParallelElasticPools;
-import com.aol.simple.react.threads.SequentialElasticPools;
+import com.aol.cyclops.control.LazyReact;
+import com.aol.cyclops.control.ReactiveSeq;
+import com.aol.cyclops.control.Try;
+import com.aol.cyclops.control.Try.Failure;
+import com.aol.cyclops.control.Try.Success;
+import com.aol.cyclops.data.async.Adapter;
+import com.aol.cyclops.react.async.pipes.LazyReactors;
+import com.aol.cyclops.types.futurestream.LazyFutureStream;
 
 /**
  * Mixin / Trait for Reactive behaviour via simple-react
@@ -42,7 +39,7 @@ public interface Reactive {
 	default <K,T> LazyFutureStream<T> ioFutureStream(K key){
 		return Pipes.futureStreamIOBound(key);
 	}
-	default <K,T> SequenceM<T> sequentialStream(K key){
+	default <K,T> ReactiveSeq<T> sequentialStream(K key){
 		return Pipes.stream(key);
 	}
 	default <K,T> LazyFutureStream<T> cpuFutureStream(K key){
@@ -56,8 +53,8 @@ public interface Reactive {
 		return LazyReactors.cpuReact;
 	}
 	
-	default <T> SequenceM<T> switchToSequential(LazyFutureStream<T> stream){
-		return SequenceM.fromStream(stream);
+	default <T> ReactiveSeq<T> switchToSequential(LazyFutureStream<T> stream){
+		return stream.stream();
 	}
 	
 	/**

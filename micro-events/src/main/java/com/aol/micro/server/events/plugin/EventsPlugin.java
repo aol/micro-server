@@ -1,9 +1,6 @@
 package com.aol.micro.server.events.plugin;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.events.ConfigureActiveJobsAspect;
 import com.aol.micro.server.rest.resources.ConfigureResources;
@@ -21,10 +18,10 @@ import com.aol.micro.server.rest.resources.ConfigureResources;
 public class EventsPlugin implements Plugin{
 	
 	@Override
-	public Set<Class> springClasses() {
-		return new HashSet<>(Arrays.asList(
+	public PSetX<Class> springClasses() {
+		return PSetX.of(
 				ConfigureActiveJobsAspect.class,
-				ConfigureResources.class));
+				ConfigureResources.class);
 	}
 
 	

@@ -12,11 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.spring.properties.PropertyFileConfig;
 import com.aol.micro.server.testing.RestAgent;
-import com.aol.simple.react.stream.traits.LazyFutureStream;
 
 @Microserver
 public class AsyncAppRunner {

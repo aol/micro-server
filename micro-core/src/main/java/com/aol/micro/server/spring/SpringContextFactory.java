@@ -6,22 +6,22 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import lombok.AllArgsConstructor;
+import lombok.experimental.Wither;
+
 import org.pcollections.HashTreePSet;
 import org.pcollections.PSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
-import com.aol.cyclops.invokedynamic.ExceptionSoftener;
-import com.aol.cyclops.sequence.SequenceM;
+import com.aol.cyclops.control.ReactiveSeq;
+import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.micro.server.ErrorCode;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.Microserver;
-
-import lombok.AllArgsConstructor;
-import lombok.experimental.Wither;
 
 
 @AllArgsConstructor
@@ -49,7 +49,7 @@ public class SpringContextFactory {
 		this.classes = HashTreePSet.from(s);
 		this.config = config;
 		
-		springBuilder = SequenceM
+		springBuilder = ReactiveSeq
 				.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
 				.filter(m -> m.springBuilder() != null)
 				.map(Plugin::springBuilder)

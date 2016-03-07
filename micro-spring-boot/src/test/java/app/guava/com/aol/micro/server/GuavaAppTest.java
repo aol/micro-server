@@ -8,22 +8,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
-import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.aol.cyclops.control.SimpleReact;
+import com.aol.cyclops.types.futurestream.SimpleReactStream;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
+import com.aol.micro.server.spring.boot.MicroSpringBoot;
 import com.aol.micro.server.testing.RestAgent;
-import com.aol.simple.react.stream.simple.SimpleReact;
-import com.aol.simple.react.stream.traits.SimpleReactStream;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
-import com.aol.micro.server.spring.boot.MicroSpringBoot;
 @Microserver @MicroSpringBoot
 public class GuavaAppTest {
 

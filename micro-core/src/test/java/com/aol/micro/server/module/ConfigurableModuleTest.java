@@ -25,9 +25,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pcollections.HashTreePSet;
 
+import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.utility.HashMapBuilder;
 
@@ -63,8 +63,8 @@ public class ConfigurableModuleTest {
 		defaultResources =  new ArrayList<>();
 		filters =   HashMapBuilder.<String,Filter>map("/*1",new DummyQueryIPRetriever()).build();
 		jaxWsRsApplication = "jaxRsApp2";
-		listeners = m.getListeners(ServerData.builder().resources(Arrays.asList()).build());
-		requestListeners = m.getRequestListeners(ServerData.builder().resources(Arrays.asList()).build());
+		listeners = m.getListeners(ServerData.builder().resources(PStackX.empty()).build());
+		requestListeners = m.getRequestListeners(ServerData.builder().resources(PStackX.empty()).build());
 		providers = "providers2";
 		Module m = () -> "hello";
 		resourceClasses =new ArrayList<>();
@@ -174,59 +174,60 @@ public class ConfigurableModuleTest {
 
 	@Test
 	public void testGetListeners() {
-		assertThat(module.getListeners(ServerData.builder().resources(Arrays.asList()).build()).size(),
-				is(m.getListeners(ServerData.builder().resources(Arrays.asList()).build()).size()*2)); //doubled
+		assertThat(module.getListeners(ServerData.builder().resources(PStackX.of()).build()).size(),
+				is(m.getListeners(ServerData.builder().resources(PStackX.of()).build()).size()*2)); //doubled
 	}
 	@Test
 	public void testGetListenersReset() {
-		assertThat(module.withResetAll(true).getListeners(ServerData.builder().resources(Arrays.asList()).build()),is(this.listeners));
+		assertThat(module.withResetAll(true).getListeners(ServerData.builder().resources(PStackX.of()).build()),is(this.listeners));
 	}
 	@Test
 	public void testGetListenersUnchanged() {
-		assertThat(unchanged.getListeners(ServerData.builder().resources(Arrays.asList()).build()).size() ,
-				is(m.getListeners(ServerData.builder().resources(Arrays.asList()).build()).size()));
+		assertThat(unchanged.getListeners(ServerData.builder().resources(PStackX.empty()).build()).size() ,
+				is(m.getListeners(ServerData.builder().resources(PStackX.empty()).build()).size()));
 	}
 	@Test
 	public void testGetRequestListeners() {
-		assertThat(module.getRequestListeners(ServerData.builder().resources(Arrays.asList()).build()).size(),
-				is(m.getRequestListeners(ServerData.builder().resources(Arrays.asList()).build()).size()*2)); //doubled
+		assertThat(module.getRequestListeners(ServerData.builder().resources(PStackX.of()).build()).size(),
+				is(m.getRequestListeners(ServerData.builder().resources(PStackX.of()).build()).size()*2)); //doubled
 	}
 	@Test
 	public void testGetRequestListenersReset() {
-		assertThat(module.withResetAll(true).getRequestListeners(ServerData.builder().resources(Arrays.asList()).build()),is(this.requestListeners));
+		assertThat(module.withResetAll(true).getRequestListeners(ServerData.builder().resources(PStackX.of()).build()),is(this.requestListeners));
 	}
 	@Test
 	public void testGetRequestListenersUnchanged() {
-		assertThat(unchanged.getRequestListeners(ServerData.builder().resources(Arrays.asList()).build()).size() ,
-				is(m.getRequestListeners(ServerData.builder().resources(Arrays.asList()).build()).size()));
+		assertThat(unchanged.getRequestListeners(ServerData.builder().resources(PStackX.of()).build()).size() ,
+				is(m.getRequestListeners(ServerData.builder().resources(PStackX.of()).build()).size()));
 	}
 
 	@Test
 	public void testGetFilters() {
-			assertThat(module.getFilters(ServerData.builder().resources(Arrays.asList()).build()).size(),
+			assertThat(module.getFilters(ServerData.builder().resources(PStackX.of()).build()).size(),
 				is(1  ));
 	}
 	@Test
 	public void testGetFiltersReset() {
-		assertThat(module.withResetAll(true).getFilters(ServerData.builder().resources(Arrays.asList()).build()),is(this.filters));
+		assertThat(module.withResetAll(true).getFilters(ServerData.builder().resources(PStackX.of()).build()),is(this.filters));
 	}
 	
 	@Test
 	public void testGetFiltersUnchanged() {
-		assertThat(unchanged.getFilters(ServerData.builder().resources(Arrays.asList()).build()).size(),
-				equalTo(m.getFilters( ServerData.builder().resources(Arrays.asList()).build() ).size()));
+		
+		assertThat(unchanged.getFilters(ServerData.builder().resources(PStackX.of()).build()).size(),
+				equalTo(m.getFilters( ServerData.builder().resources(PStackX.of()).build() ).size()));
 	}
 
 	
 	
 	@Test
 	public void testGetServlets() {
-		assertThat(module.getServlets(ServerData.builder().resources(Arrays.asList()).build()),is(this.servlets));
+		assertThat(module.getServlets(ServerData.builder().resources(PStackX.of()).build()),is(this.servlets));
 	}
 	
 	@Test
 	public void testGetServletsUnchanged() {
-		assertThat(unchanged.getServlets(ServerData.builder().resources(Arrays.asList()).build()),is(m.getServlets(ServerData.builder().resources(Arrays.asList()).build())));
+		assertThat(unchanged.getServlets(ServerData.builder().resources(PStackX.of()).build()),is(m.getServlets(ServerData.builder().resources(PStackX.of()).build())));
 	}
 
 	@Test
@@ -286,21 +287,21 @@ public class ConfigurableModuleTest {
 	
 	@Test
 	public void testWithListeners() {
-		assertThat(unchanged.withListeners(this.listeners).getListeners(ServerData.builder().resources(Arrays.asList()).build()).size(),
-				is(module.getListeners(ServerData.builder().resources(Arrays.asList()).build()).size()));
+		assertThat(unchanged.withListeners(this.listeners).getListeners(ServerData.builder().resources(PStackX.of()).build()).size(),
+				is(module.getListeners(ServerData.builder().resources(PStackX.of()).build()).size()));
 	}
 
 	
 	@Test
 	public void testWithFilters() {
-		assertThat(unchanged.withFilters(this.filters).getFilters(ServerData.builder().resources(Arrays.asList()).build()).size(),
-				is(module.getFilters(ServerData.builder().resources(Arrays.asList()).build()).size()));
+		assertThat(unchanged.withFilters(this.filters).getFilters(ServerData.builder().resources(PStackX.of()).build()).size(),
+				is(module.getFilters(ServerData.builder().resources(PStackX.of()).build()).size()));
 	}
 
 	@Test
 	public void testWithServlets() {
-		assertThat(unchanged.withServlets(this.servlets).getServlets(ServerData.builder().resources(Arrays.asList()).build()).size(),
-				is(m.getServlets(ServerData.builder().resources(Arrays.asList()).build()).size()));
+		assertThat(unchanged.withServlets(this.servlets).getServlets(ServerData.builder().resources(PStackX.of()).build()).size(),
+				is(m.getServlets(ServerData.builder().resources(PStackX.of()).build()).size()));
 
 	}
 

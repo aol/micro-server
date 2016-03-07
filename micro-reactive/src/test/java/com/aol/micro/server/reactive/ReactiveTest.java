@@ -1,7 +1,8 @@
 package com.aol.micro.server.reactive;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,12 +13,10 @@ import lombok.Getter;
 
 import org.junit.Test;
 
-import com.aol.cyclops.trycatch.Try;
+import com.aol.cyclops.control.Try;
+import com.aol.cyclops.data.async.Queue;
+import com.aol.cyclops.types.futurestream.LazyFutureStream;
 import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.reactive.Pipes;
-import com.aol.micro.server.reactive.Reactive;
-import com.aol.simple.react.async.Queue;
-import com.aol.simple.react.stream.traits.LazyFutureStream;
 public class ReactiveTest {
 
 	@Test

@@ -6,7 +6,7 @@ dependencies {
 	compile project(':micro-jersey')
 	compile project(':micro-jackson-configuration')
 	
-	testCompile group: 'com.aol.simplereact', name:'simple-react', version:"${simpleReactVersion}"
+	
 	
 
 }

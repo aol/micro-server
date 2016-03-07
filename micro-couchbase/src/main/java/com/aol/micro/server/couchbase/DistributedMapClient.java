@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.invokedynamic.ExceptionSoftener;
+import com.aol.cyclops.util.ExceptionSoftener;
 import com.couchbase.client.CouchbaseClient;
 
 public class DistributedMapClient<V> {

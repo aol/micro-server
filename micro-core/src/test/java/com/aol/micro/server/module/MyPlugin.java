@@ -1,12 +1,10 @@
 package com.aol.micro.server.module;
 
-import java.util.Arrays;
-import java.util.List;
-
+import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.Plugin;
 
 public class MyPlugin implements Plugin{
-	public List<String> providers(){
-		return Arrays.asList("com.my.new.provider","com.my.new.provider2");
+	public PStackX<String> providers(){
+		return PStackX.of("com.my.new.provider","com.my.new.provider2");
 	}
 }

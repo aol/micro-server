@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import org.pcollections.HashTreePMap;
 
-import com.aol.cyclops.trycatch.Try;
+import com.aol.cyclops.control.Try;
 
 public class Environment {
 

@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.pcollections.HashTreePMap;
 import org.pcollections.HashTreePSet;
 
-import com.aol.cyclops.sequence.SequenceM;
+import com.aol.cyclops.control.ReactiveSeq;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
-import com.nurkiewicz.lazyseq.LazySeq;
 
 public class MicroserverConfigurer implements Configurer {
 
@@ -42,8 +40,9 @@ public class MicroserverConfigurer implements Configurer {
 	}
 
 	private Map<String, String> buildProperties(Microserver microserver) {
-		Map<String, String> properties = LazySeq.of(microserver.properties()).grouped(2).stream()
-				.collect(Collectors.toMap(prop -> prop.get(0), prop -> prop.get(1)));
+		Map<String, String> properties = ReactiveSeq.of(microserver.properties())
+													.grouped(2)
+													.toMap(prop -> prop.get(0), prop -> prop.get(1));
 		return properties;
 	}
 
@@ -55,7 +54,7 @@ public class MicroserverConfigurer implements Configurer {
 			classes.addAll(Arrays.asList(microserver.classes()));
 		List<Plugin> modules = PluginLoader.INSTANCE.plugins.get();
 		if(modules.size()>0)
-			classes.addAll(SequenceM.fromStream(modules.stream()).flatMap(module -> module.springClasses().stream()).toList());
+			classes.addAll(ReactiveSeq.fromStream(modules.stream()).flatMap(module -> module.springClasses().stream()).toList());
 		
 		return classes;
 	}

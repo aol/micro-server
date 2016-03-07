@@ -6,7 +6,8 @@ import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
-import com.aol.cyclops.sequence.SequenceM;
+
+import com.aol.cyclops.control.ReactiveSeq;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
@@ -17,7 +18,7 @@ public class JacksonFeature implements Feature {
     @Override
     public boolean configure(final FeatureContext context) {
         
-    	SequenceM.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
+    	PluginLoader.INSTANCE.plugins.get().stream()
 		.filter(module -> module.jacksonFeatureProperties()!=null)
 		.map(Plugin::jacksonFeatureProperties)
 		.map(fn->fn.apply(context))

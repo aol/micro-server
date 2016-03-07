@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.aol.cyclops.sequence.SequenceM;
+import com.aol.cyclops.control.ReactiveSeq;
 import com.aol.micro.server.Plugin;
 public class ModuleTest {
 
@@ -17,11 +17,11 @@ public class ModuleTest {
 		assertThat("com.aol.micro.server.rest.providers,com.my.new.provider,com.my.new.provider2",
 				equalTo(ConfigurableModule.builder().build().getProviders()));
 		System.out.println(new ModuleImpl().getProviders());
-		String additional = SequenceM
+		String additional = ReactiveSeq
 				.fromStream(
 						Arrays.asList(new MyPlugin())
 								.stream()).filter(module -> module.providers()!=null)
-								.flatMapCollection(Plugin::providers)
+								.flatMapIterable(Plugin::providers)
 								.join(",");
 		
 		assertThat(additional, equalTo("com.my.new.provider,com.my.new.provider2"));

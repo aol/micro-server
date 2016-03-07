@@ -11,11 +11,11 @@ import org.junit.Test;
 
 import app.guava.com.aol.micro.server.ImmutableGuavaEntity;
 
+import com.aol.cyclops.control.SimpleReact;
+import com.aol.cyclops.types.futurestream.SimpleReactStream;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
-import com.aol.simple.react.stream.simple.SimpleReact;
-import com.aol.simple.react.stream.traits.SimpleReactStream;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;

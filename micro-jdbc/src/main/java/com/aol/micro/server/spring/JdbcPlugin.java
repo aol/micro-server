@@ -1,15 +1,9 @@
 package com.aol.micro.server.spring;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
 
-import javax.servlet.ServletContextListener;
-
+import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
-import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.aol.micro.server.spring.datasource.jdbc.SQL;
 
@@ -30,23 +24,9 @@ public class JdbcPlugin implements Plugin {
 	}
 
 	@Override
-	public Set<Class> springClasses() {
-		return new HashSet<>(Arrays.asList(JdbcConfig.class, SQL.class));
+	public PSetX<Class> springClasses() {
+		return PSetX.of(JdbcConfig.class, SQL.class);
 	}
 
-	@Override
-	public Set<Function<ServerData, ServletContextListener>> servletContextListeners() {
-		return null;
-	}
-
-	@Override
-	public Set<Class> jaxRsResources() {
-		return null;
-	}
-
-	@Override
-	public Set<String> jaxRsPackages() {
-		return null;
-	}
 
 }
