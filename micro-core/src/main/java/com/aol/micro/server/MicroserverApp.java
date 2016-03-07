@@ -129,7 +129,7 @@ public class MicroserverApp {
 	}
 
 	private ServerApplication createServer(Module module) {
-		StreamUtils.optionalToStream(null);
+		
 		List<ServerApplicationFactory> applications = ReactiveSeq
 				.fromStream(PluginLoader.INSTANCE.plugins.get().stream())
 				.filter(m -> m.serverApplicationFactory() != null)
