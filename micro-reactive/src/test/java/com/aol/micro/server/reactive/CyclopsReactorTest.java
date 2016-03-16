@@ -5,25 +5,21 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
-import com.aol.cyclops.Reducers;
 import com.aol.cyclops.control.FutureW;
 import com.aol.cyclops.control.LazyReact;
 import com.aol.cyclops.control.Maybe;
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.cyclops.data.collections.extensions.standard.ListX;
 import com.aol.cyclops.types.anyM.AnyMSeq;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public class CyclopsReactorTest {
 
 	@Test
 	public void testFrom() {
 		AnyMSeq<String> flux = CyclopsReactor.from(Flux.just("hello","world","c"));
-		Flux<Integer> f = null;
-		f.map(PStackX::of).reduce(Reducers.toPStackX());
-		f.collect(ListX::empty, ListX::add);
+	
 		System.out.println(Flux.just("hello","world")
 							   .map(a->a+"!")
 							   .toList().get());

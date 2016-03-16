@@ -86,7 +86,7 @@ ListX.fromPublisher(Flux.just(1,2,3));
  From a Flux to a ListX 2
  
 ```java
-Flux.just(1,2,3).collect(ListX::empty,ListX::add);
+Flux.just(1,2,3).collect(ListX::empty,(l,e)->l.add(e));
  ```  
  
  From a Flux to a PStackX

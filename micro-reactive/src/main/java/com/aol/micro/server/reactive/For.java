@@ -22,7 +22,7 @@ public interface For {
 		/**
 		 * Perform a four level nested internal iteration over the provided Publishers
 		 * 
-		 * @param stream1
+		 * @param publisher2
 		 *            Nested Stream to iterate over
 		 
 		 * @param yieldingFunction
@@ -30,23 +30,23 @@ public interface For {
 		 *            Streams that generates the new elements
 		 * @return SequenceM with elements generated via nested iteration
 		 */
-		static <T1,T2,T3,R1,R2, R3, R> AnyMSeq< R> each(Publisher<? extends T1> publisher,
-											Function<? super T1, ? extends Publisher<R1>> stream1, 
-											BiFunction<? super T1, ? super R1,? extends Publisher<R2>> stream2, 
-											TriFunction<? super T1, ? super R1,? super R2,? extends Publisher<R3>> stream3, 
+		static <T1,T2,T3,R1,R2, R3, R> AnyMSeq< R> each4(Publisher<? extends T1> publisher,
+											Function<? super T1, ? extends Publisher<R1>> publisher2, 
+											BiFunction<? super T1, ? super R1,? extends Publisher<R2>> publisher3, 
+											TriFunction<? super T1, ? super R1,? super R2,? extends Publisher<R3>> publisher4, 
 										    QuadFunction<? super T1,? super R1, ? super R2,? super R3,? extends R> yieldingFunction){
 			
 			return Do.add(from(publisher))
-							.withAnyM(stream1.andThen( p->from(p) ) )
-							.withAnyM(a->b->stream2.andThen( p->from(p) ).apply(a,b) )
-							.withAnyM(a->b->c->from(stream3.apply(a,b,c)) )
+							.withAnyM(publisher2.andThen( p->from(p) ) )
+							.withAnyM(a->b->publisher3.andThen( p->from(p) ).apply(a,b) )
+							.withAnyM(a->b->c->from(publisher4.apply(a,b,c)) )
 							.yield(yieldingFunction);
 					
 		}
 		/**
 		 * Perform a four level nested internal iteration over the provided Publishers
 		 * 
-		 * @param stream1
+		 * @param publisher2
 		 *            Nested Stream to iterate over
 		 * @param filterFunction
 		 *            Filter to apply over elements before passing non-filtered
@@ -56,17 +56,17 @@ public interface For {
 		 *            Streams that generates the new elements
 		 * @return SequenceM with elements generated via nested iteration
 		 */
-		static <T1,T2,T3,R1,R2, R3, R> AnyMSeq< R> each(Publisher<? extends T1> publisher,
-											Function<? super T1, ? extends Publisher<R1>> stream1, 
-											BiFunction<? super T1, ? super R1,? extends Publisher<R2>> stream2, 
-											TriFunction<? super T1, ? super R1,? super R2,? extends Publisher<R3>> stream3, 
+		static <T1,T2,T3,R1,R2, R3, R> AnyMSeq< R> each4(Publisher<? extends T1> publisher,
+											Function<? super T1, ? extends Publisher<R1>> publisher2, 
+											BiFunction<? super T1, ? super R1,? extends Publisher<R2>> publisher3, 
+											TriFunction<? super T1, ? super R1,? super R2,? extends Publisher<R3>> publisher4, 
 											QuadFunction<? super T1,? super R1,? super R2,? super R3, Boolean> filterFunction,
 										    QuadFunction<? super T1,? super R1, ? super R2,? super R3,? extends R> yieldingFunction){
 			
 			return Do.add(from(publisher))
-							.withAnyM(stream1.andThen( p->from(p) ) )
-							.withAnyM(a->b->stream2.andThen( p->from(p) ).apply(a,b) )
-							.withAnyM(a->b->c->from(stream3.apply(a,b,c)) )
+							.withAnyM(publisher2.andThen( p->from(p) ) )
+							.withAnyM(a->b->publisher3.andThen( p->from(p) ).apply(a,b) )
+							.withAnyM(a->b->c->from(publisher4.apply(a,b,c)) )
 							.filter(a->b->c->d->filterFunction.apply(a,b,c,d))
 							.yield(yieldingFunction);
 					
@@ -75,7 +75,7 @@ public interface For {
 		/**
 		 * Perform a three level nested internal iteration over the provided Publishers
 		 * 
-		 * @param stream1
+		 * @param publisher1
 		 *            Nested Stream to iterate over
 		
 		 * @param yieldingFunction
@@ -83,21 +83,21 @@ public interface For {
 		 *            Streams that generates the new elements
 		 * @return SequenceM with elements generated via nested iteration
 		 */
-		static <T1,T2,R1,R2, R> AnyMSeq< R> each(Publisher<? extends T1> publisher,
-											Function<? super T1, ? extends Publisher<R1>> stream1, 
-											BiFunction<? super T1, ? super R1,? extends Publisher<R2>> stream2, 
+		static <T1,T2,R1,R2, R> AnyMSeq< R> each3(Publisher<? extends T1> publisher,
+											Function<? super T1, ? extends Publisher<R1>> publisher1, 
+											BiFunction<? super T1, ? super R1,? extends Publisher<R2>> publisher2, 
 										    TriFunction<? super T1,? super R1, ? super R2,? extends R> yieldingFunction){
 			
 			return Do.add(from(publisher))
-							.withAnyM(stream1.andThen( p->from(p) ) )
-							.withAnyM(a->b->stream2.andThen( p->from(p) ).apply(a,b) )
+							.withAnyM(publisher1.andThen( p->from(p) ) )
+							.withAnyM(a->b->publisher2.andThen( p->from(p) ).apply(a,b) )
 							.yield(yieldingFunction);
 					
 		}
 		/**
 		 * Perform a three level nested internal iteration over the provided Publishers
 		 * 
-		 * @param stream1
+		 * @param publisher2
 		 *            Nested Stream to iterate over
 		 * @param filterFunction
 		 *            Filter to apply over elements before passing non-filtered
@@ -107,15 +107,15 @@ public interface For {
 		 *            Streams that generates the new elements
 		 * @return SequenceM with elements generated via nested iteration
 		 */
-		static <T1,T2,R1,R2, R> AnyMSeq< R> each(Publisher<? extends T1> publisher,
-											Function<? super T1, ? extends Publisher<R1>> stream1, 
-											BiFunction<? super T1, ? super R1,? extends Publisher<R2>> stream2, 
+		static <T1,T2,R1,R2, R> AnyMSeq< R> each3(Publisher<? extends T1> publisher,
+											Function<? super T1, ? extends Publisher<R1>> publisher2, 
+											BiFunction<? super T1, ? super R1,? extends Publisher<R2>> publisher3,
 											TriFunction<? super T1,? super R1,? super R2, Boolean> filterFunction,
 										    TriFunction<? super T1,? super R1, ? super R2,? extends R> yieldingFunction){
 			
 			return Do.add(from(publisher))
-							.withAnyM(stream1.andThen( p->from(p) ) )
-							.withAnyM(a->b->stream2.andThen( p->from(p) ).apply(a,b) )
+							.withAnyM(publisher2.andThen( p->from(p) ) )
+							.withAnyM(a->b->publisher3.andThen( p->from(p) ).apply(a,b) )
 							.filter(a->b->c->filterFunction.apply(a,b,c))
 							.yield(yieldingFunction);
 					
@@ -124,19 +124,19 @@ public interface For {
 		/**
 		 * Perform a two level nested internal iteration over the provided Publishers
 		 * 
-		 * @param stream1
+		 * @param publisher2
 		 *            Nested Stream to iterate over
 		 * @param filterFunction
 		 *            Filter to apply over elements before passing non-filtered
 		 *            values to the yielding function
 		 * @return SequenceM with elements generated via nested iteration
 		 */
-		static <T,R1, R> AnyMSeq< R> each(Publisher<? extends T> publisher,
-											Function<? super T, ? extends Publisher<R1>> stream1, 
+		static <T,R1, R> AnyMSeq< R> each2(Publisher<? extends T> publisher,
+											Function<? super T, ? extends Publisher<R1>> publisher2, 
 										    BiFunction<? super T,? super R1, ? extends R> yieldingFunction){
 			
 			return Do.add(from(publisher))
-							.withAnyM(stream1.andThen( p->from(p) ) )
+							.withAnyM(publisher2.andThen( p->from(p) ) )
 							.yield(yieldingFunction);
 					
 		}
@@ -144,7 +144,7 @@ public interface For {
 		/**
 		 * Perform a two level nested internal iteration over the provided Publishers
 		 * 
-		 * @param stream1
+		 * @param publisher2
 		 *            Nested Stream to iterate over
 		 * @param filterFunction
 		 *            Filter to apply over elements before passing non-filtered
@@ -154,13 +154,13 @@ public interface For {
 		 *            Streams that generates the new elements
 		 * @return SequenceM with elements generated via nested iteration
 		 */
-		static <T,R1, R> AnyMSeq< R> each(Publisher<? extends T> publisher,
-											Function<? super T, ? extends Publisher<R1>> stream1, 
+		static <T,R1, R> AnyMSeq< R> each2(Publisher<? extends T> publisher,
+											Function<? super T, ? extends Publisher<R1>> publisher2, 
 											BiFunction<? super T,? super R1, Boolean> filterFunction,
 										    BiFunction<? super T,? super R1, ? extends R> yieldingFunction){
 			
 			return Do.add(from(publisher))
-							.withAnyM(stream1.andThen( p->from(p) ) )
+							.withAnyM(publisher2.andThen( p->from(p) ) )
 							.filter(a->b->filterFunction.apply(a,b))
 							.yield(yieldingFunction);
 					
