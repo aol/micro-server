@@ -18,13 +18,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.aol.cyclops.control.ReactiveSeq;
+import com.aol.micro.server.WorkerThreads;
 import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.auto.discovery.SingletonRestResource;
-import com.aol.micro.server.reactive.Reactive;
 
 @Path("/manifest")
 @Component
-public class ManifestResource implements CommonRestResource, SingletonRestResource,  Reactive{
+public class ManifestResource implements CommonRestResource, SingletonRestResource{
 
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -35,11 +36,12 @@ public class ManifestResource implements CommonRestResource, SingletonRestResour
 	@Produces("application/json")
 	public void mainfest(@Suspended AsyncResponse asyncResponse, @Context ServletContext context) {
 		
-		this.ioStreamBuilder().of("/META-INF/MANIFEST.MF")
+		ReactiveSeq.of("/META-INF/MANIFEST.MF")
 					.map(url->context.getResourceAsStream(url))
 					.map(this::getManifest)
-					.peek(result->asyncResponse.resume(result))
-					.run();
+					.futureOperations(WorkerThreads.ioExecutor.get())
+					.forEach(result->asyncResponse.resume(result));
+					
 		
 	}
 

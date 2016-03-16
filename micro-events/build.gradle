@@ -1,7 +1,6 @@
 description = 'micro-events'
 dependencies {
 	compile project(':micro-core')
-	compile project(':micro-reactive')
 	compile project(':micro-guava')
 	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:hamcrestVersion
 	testCompile project(':micro-grizzly')

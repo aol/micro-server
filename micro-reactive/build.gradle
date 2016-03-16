@@ -2,8 +2,9 @@ description = 'micro-reactive'
 dependencies {
 	
 
-
+	compile 'io.projectreactor:reactor-core:2.5.0.M2'
 	compile project(':micro-core')
+	compile project(':micro-events')
 	testCompile project(':micro-grizzly')
 	testCompile project(':micro-jersey')
 	testCompile project(':micro-jackson-configuration')

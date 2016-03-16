@@ -42,7 +42,7 @@ public class GuavaAppTest {
 		if(run)
 			return;
 		run =true;
-		stream = simpleReact.react(
+		stream = simpleReact.ofAsync(
 				() -> server = new MicroserverApp(GuavaAppTest.class,
 						() -> "guava-app"));
 

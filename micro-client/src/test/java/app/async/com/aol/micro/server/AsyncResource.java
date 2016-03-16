@@ -33,7 +33,7 @@ public class AsyncResource implements RestResource,Reactive{
         @Produces("text/plain")
         public void expensive(@Suspended AsyncResponse asyncResponse){
   
-        	this.ioStreamBuilder().fromStream(urls.stream()
+        	this.ioStreamBuilder().fromStreamFutures(urls.stream()
 					.<CompletableFuture<String>>map(it ->  client.get(it)))
 					.onFail(it -> "")
 					.peek(it -> 
