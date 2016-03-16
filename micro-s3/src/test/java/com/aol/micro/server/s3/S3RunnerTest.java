@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.transfer.TransferManager;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 
@@ -40,6 +41,14 @@ public class S3RunnerTest {
 		assertThat(s3Configuration.getSecretKey(), is(""));
 		assertThat(s3Configuration.getSessionToken() == null, is(true));
 		assertThat(s3Configuration.getRegion() == null, is(true));
+		assertThat(s3Configuration.getUploadThreads(), is(5));
+		assertThat(s3Configuration.getUploadThreadNamePrefix(), is("s3-transfer-manager-worker-"));
+		
+		S3Utils s3Utils = server.getSpringContext().getBean(S3Utils.class);
+		assertThat(s3Utils != null, is(true));
+		
+		TransferManager tm = server.getSpringContext().getBean(TransferManager.class);
+		assertThat(tm != null, is(true));
 
 	}
 
