@@ -137,13 +137,13 @@ public class MicroserverApp {
 				.flatMap(StreamUtils::optionalToStream)
 				.toList();
 		if(applications.size()>1){
-			logger.error("ERROR!  Multiple server application factories found ",applications);
-			System.err.println("ERROR!  Multiple server application factories found "+applications);
-			throw new IncorrectNumberOfServersConfiguredException("Multiple server application factories found "+applications);
+			logger.error("ERROR!  Multiple server application factories found : The solution is remove one these plugins from your classpath ",applications);
+			System.err.println("ERROR!  Multiple server application factories found : The solution is remove one these plugins from your classpath "+applications);
+			throw new IncorrectNumberOfServersConfiguredException("Multiple server application factories found : The solution is remove one these plugins from your classpath "+applications);
 		}else if(applications.size()==0){
-			logger.error("ERROR!  No server application factories found.");
-			System.err.println("ERROR!  No server application factories found.");
-			throw new IncorrectNumberOfServersConfiguredException("No server application factories found. ");
+			logger.error("ERROR!  No server application factories found. A possible solution is add one of micro-grizzly or micro-tomcat to the classpath.");
+			System.err.println("ERROR!  No server application factories found. A possible solution is add one of micro-grizzly or micro-tomcat to the classpath.");
+			throw new IncorrectNumberOfServersConfiguredException("No server application factories found. A possible solution is add one of micro-grizzly or micro-tomcat to the classpath. ");
 			
 		}
 		

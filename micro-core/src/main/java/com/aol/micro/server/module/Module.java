@@ -136,11 +136,11 @@ public interface Module {
 		.flatMap(StreamUtils::optionalToStream)
 		.toList();
 		if(jaxRsApplications.size()>1) {
-			throw new IncorrectJaxRsPluginsException("ERROR!  Multiple jax-rs application plugins found " + jaxRsApplications);
+			throw new IncorrectJaxRsPluginsException("ERROR!  Multiple jax-rs application plugins found,  a possible solution is to remove micro-jackson or other jax-rs application provider from your classpath. " + jaxRsApplications);
 			
 			
 		}else if(jaxRsApplications.size()==0){
-			throw new IncorrectJaxRsPluginsException("ERROR!  No jax-rs application plugins found ");
+			throw new IncorrectJaxRsPluginsException("ERROR!  No jax-rs application plugins found, a possible solution is to add micro-jackson to your classpath. ");
 			
 			
 		}
