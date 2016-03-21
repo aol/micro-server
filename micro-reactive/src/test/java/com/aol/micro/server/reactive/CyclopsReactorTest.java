@@ -59,7 +59,7 @@ public class CyclopsReactorTest {
 	@Test
 	public void testFutureW() {
 		assertThat(CyclopsReactor.futureW(Mono.just(2))
-				 .toMaybe(),equalTo(FutureW.ofResult(2)));
+				 .toMaybe(),equalTo(Maybe.just(2)));
 	}
 
 }
