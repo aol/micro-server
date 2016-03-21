@@ -14,6 +14,21 @@ import com.aol.cyclops.types.futurestream.LazyFutureStream;
 import com.aol.cyclops.types.stream.reactive.SeqSubscriber;
 import com.aol.cyclops.types.stream.reactive.ValueSubscriber;
 
+/**
+ * Type conversion tier for cyclops-react and Reactor.
+ * Note both cyclops-react and Reactor data types can generally be constructed from another
+ * reactive-streams publisher.
+ * e.g.
+ * <pre>
+ * {@code 
+ *  ListX.fromPublisher(Flux.just(1,2,3));
+ *  Flux.from(SetX.of(1,2,3));
+ * }</pre>
+ * 
+ * 
+ * @author johnmcclean
+ *
+ */
 public interface CyclopsReactor {
 	
 	static <T> AnyMSeq<T> from(Publisher<? extends T> t){

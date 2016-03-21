@@ -2,8 +2,10 @@ package com.aol.micro.server.reactive;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +19,7 @@ import com.aol.cyclops.control.Maybe;
 import com.aol.cyclops.control.ReactiveSeq;
 import com.aol.cyclops.control.monads.transformers.MaybeT;
 import com.aol.cyclops.data.async.QueueFactories;
+
 
 public class EventQueueManagerTest {
 	EventQueueManager<String> manager;
@@ -46,7 +49,7 @@ public class EventQueueManagerTest {
 		System.out.println(recieved);
 		assertThat(recieved,equalTo("world"));
 	}
-
+	
 	@Test
 	public void testStream() throws InterruptedException {
 		manager.stream("2")
@@ -70,19 +73,39 @@ public class EventQueueManagerTest {
 					.futureOperations(ex)
 					.forEach(n->manager.push("lazy",n));
 					
-		Eval<Maybe<String>> lazy = manager.lazyMaybe("lazy");
+		Eval<String> lazy = manager.lazy("lazy");
 		
-		MaybeT<String> maybeT = MaybeT.of(AnyM.fromEval(lazy));
-
-
-		MaybeT<String> mapped = maybeT.map(in->in+"-message!")
-									  .map(in->in+"!");
-		
-		Eval<Maybe<String>> lazyMapped = mapped.unwrap().unwrap();
+		lazy = lazy.map(in->in+"-message!")
+				   .map(in->in+"!");
 		
 		
 		
-		assertThat(lazyMapped.get().get(),equalTo("input-message!!"));
+		
+		
+		assertThat(lazy.get(),equalTo("input-message!!"));
+		assertThat(lazy.get(),equalTo("input-message!!"));
+			 
+       
+	}
+	volatile int count =0;
+	@Test
+	public void testMaybe() {
+		 count =0;
+		ReactiveSeq.generate(()->"input")
+					.onePer(1,TimeUnit.SECONDS)
+					.map(s->s+":"+(count++))
+					.futureOperations(ex)
+					.forEach(n->manager.push("lazy",n));
+					
+		Maybe<String> lazy1 = manager.maybe("lazy");
+		Maybe<String> lazy2 = manager.maybe("lazy");
+		
+		
+		
+		
+		
+		assertThat(lazy1.get(),equalTo("input:1"));
+		assertThat(lazy2.get(),equalTo("input:2"));
 			 
        
 	}

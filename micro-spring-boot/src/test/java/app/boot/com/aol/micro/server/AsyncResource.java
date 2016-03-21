@@ -38,7 +38,7 @@ public class AsyncResource implements RestResource{
 					.onFail(it -> "")
 					.peek(it -> 
 					System.out.println(it))
-					.<String,Boolean>allOf(data -> {
+					.allOf(data -> {
 						System.out.println(data);
 							return asyncResponse.resume(String.join(";", (List<String>)data)); });
         	
