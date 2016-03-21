@@ -41,7 +41,7 @@ public class AsyncResource implements RestResource{
 					.peek(it -> 
 					System.out.println(it))
 					.convertToSimpleReact()
-					.<String,Boolean>allOf(data -> {
+					.allOf(data -> {
 						System.out.println(data);
 							return asyncResponse.resume(ReactiveSeq.fromIterable(data).join(";")); });
         }

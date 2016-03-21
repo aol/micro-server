@@ -3,7 +3,6 @@ dependencies {
 	
 	compile 'org.apache.commons:commons-io:1.3.2'
 	compile project(':micro-core')
-	compile project(':micro-reactive')
 	compile project(':micro-client')
 	compile project(':micro-ip-tracker')
 	testCompile project(':micro-grizzly-with-jersey')

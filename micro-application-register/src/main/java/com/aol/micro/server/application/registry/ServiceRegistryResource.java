@@ -1,7 +1,6 @@
 package com.aol.micro.server.application.registry;
 
 import java.util.Arrays;
-import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -15,14 +14,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.aol.cyclops.control.ReactiveSeq;
+import com.aol.micro.server.WorkerThreads;
 import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.reactive.Reactive;
 import com.aol.micro.server.utility.HashMapBuilder;
 
 
 @Rest
 @Path("/service-registry")
-public class ServiceRegistryResource  implements Reactive{
+public class ServiceRegistryResource{
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final Cleaner cleaner;
 	private final Finder finder;
@@ -42,7 +42,9 @@ public class ServiceRegistryResource  implements Reactive{
 	@Path("/list")
 	@Produces("application/json")
 	public void list(@Suspended AsyncResponse response) {
-		this.ioStreamBuilder().of(this).forEach(next -> {
+		ReactiveSeq.of(this)
+				.futureOperations(WorkerThreads.ioExecutor.get())
+				.forEach(next -> {
 			try{
 				cleaner.clean();
 				response.resume(finder.find());
@@ -59,7 +61,9 @@ public class ServiceRegistryResource  implements Reactive{
 	@Consumes("application/json")
 	@Produces("application/json")
 	public void schedule(@Suspended AsyncResponse response) {
-		this.ioStreamBuilder().of(this).forEach(next -> {
+		ReactiveSeq.of(this)
+				  .futureOperations(WorkerThreads.ioExecutor.get())
+				  .forEach(next -> {
 			try{
 				job.schedule();
 				response.resume(HashMapBuilder.of("status", "success"));
@@ -76,7 +80,9 @@ public class ServiceRegistryResource  implements Reactive{
 	@Consumes("application/json")
 	@Produces("application/json")
 	public void register(@Suspended AsyncResponse response,RegisterEntry entry) {
-		this.ioStreamBuilder().of(this).forEach(next -> {
+		ReactiveSeq.of(this)
+			.futureOperations(WorkerThreads.ioExecutor.get())
+			.forEach(next -> {
 			try{
 				register.register(entry);
 				response.resume(HashMapBuilder.of("status", "complete"));

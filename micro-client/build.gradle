@@ -10,7 +10,6 @@ dependencies {
 	compile project(':micro-jackson-configuration')
 	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:hamcrestVersion
 	testCompile group: 'com.google.guava', name: 'guava', version:guavaVersion
-	testCompile project(':micro-reactive')
 	testCompile project(':micro-grizzly')
 	testCompile project(':micro-jersey')
 	testCompile project(':micro-events')

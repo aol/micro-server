@@ -36,7 +36,7 @@ public class ValidationAppTest {
 
 	@Before
 	public void startServer() {
-		stream = simpleReact.react(
+		stream = simpleReact.ofAsync(
 				() -> server = new MicroserverApp(ValidationAppTest.class,
 						() -> "guava-app")).then(server -> server.start());
 

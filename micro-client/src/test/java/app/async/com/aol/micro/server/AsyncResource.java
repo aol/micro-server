@@ -12,13 +12,13 @@ import javax.ws.rs.container.Suspended;
 
 import org.springframework.stereotype.Component;
 
+import com.aol.cyclops.control.LazyReact;
 import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.reactive.Reactive;
 import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 
 @Path("/async")
 @Component
-public class AsyncResource implements RestResource,Reactive{
+public class AsyncResource implements RestResource{
 
 	
 	private final List<String> urls =Arrays.asList("http://localhost:8080/async-app/async/ping2",
@@ -33,13 +33,13 @@ public class AsyncResource implements RestResource,Reactive{
         @Produces("text/plain")
         public void expensive(@Suspended AsyncResponse asyncResponse){
   
-        	this.ioStreamBuilder().fromStream(urls.stream()
+        	new LazyReact().fromStreamFutures(urls.stream()
 					.<CompletableFuture<String>>map(it ->  client.get(it)))
 					.onFail(it -> "")
 					.peek(it -> 
 					System.out.println(it))
 					.convertToSimpleReact()
-					.<String,Boolean>allOf(data -> {
+					.allOf(data -> {
 						System.out.println(data);
 							return asyncResponse.resume(String.join(";", (List<String>)data)); })
 							.convertToLazyStream().run();

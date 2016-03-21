@@ -99,7 +99,7 @@ public class MyRestEndPoint {
      @Produces("application/json")
 	 @ApiOperation(value = "Do Expensive operation", response = List.class)
      public void expensiveDb(@Suspended AsyncResponse asyncResponse){
-     		new LazyReact(1,10).react(()-> dataService.findAll("time"))
+     		new LazyReact(1,10).ofAsync(()-> dataService.findAll("time"))
      						.map(list -> JacksonUtil.serializeToJson(list))
      						.peek(asyncResponse::resume);
      		
