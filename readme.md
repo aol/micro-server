@@ -44,7 +44,7 @@ Add plugins by adding them to your build file - rerun the app to get new end poi
 [Tutoiral code](https://github.com/aol/micro-server/tree/master/micro-tutorial)
 
 ## Note on Fat Jars
-Microserver (& Cyclops) have a plugin architecture and make use of the Java Service Laoder mechanism. Make sure your Far Jar implementation is configured to aggreagate services. With the Gradle Shadow Jar you do this with
+Microserver (& Cyclops) have a plugin architecture and make use of the Java Service Laoder mechanism. Make sure your Fat Jar implementation is configured to aggreagate services. With the Gradle Shadow Jar you do this with
  ```groovy
     shadowJar {
       mergeServiceFiles()  

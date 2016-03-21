@@ -42,7 +42,12 @@ public class HibernateSessionBuilder {
 
 		if (env.getDdlAuto() != null)
 			p.setProperty("hibernate.hbm2ddl.auto", env.getDdlAuto());
-
+		
+		if(env.getInitializationFile() != null) {
+			p.setProperty("hibernate.hbm2ddl.import_files", env.getInitializationFile());
+			
+		}
+		
 		logger.info("Hibernate properties [  hibernate.dialect : {} ; hibernate.hbm2ddl.auto : {} ]", env.getDialect(), env.getDdlAuto());
 
 		sessionFactoryBean.setHibernateProperties(p);
