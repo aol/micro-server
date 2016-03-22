@@ -2,7 +2,7 @@
 
 [micro-boot example apps](https://github.com/aol/micro-server/tree/master/micro-boot/src/test/java/app)
 
-Micro-boot allows Microserver front ends to use Spring Boot backends. To use full-stack Spring Boot with Microserver (and Jersey) see the micro-spring-boot plugin. 
+**micro-boot** allows Microserver front ends to use Spring Boot backends (in other words it adds Spring Boot as a plugin to Microserver). To use full-stack Spring Boot with Microserver (and Jersey) see the [micro-spring-boot plugin](https://github.com/aol/micro-server/tree/master/micro-spring-boot) (in other words to use Microserver as a plugin to Spring Boot use micro-sprint-boot rather than this plugin). 
 
 ## A simple example with one resource
 
