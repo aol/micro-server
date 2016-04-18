@@ -286,7 +286,7 @@ Microserver application properties loading is configured by the class PropertyFi
 
 ##Embed and colocate Microservices
 
-Microserver supports the embedding of multiple microservices within a single Microserver. All Microservices will share a single Spring context, so some care needs to be taken when authoring such Microservices to avoid conflicts. This does mean that they can share resources (such as database connections) where it makes sense to do so.
+Microserver supports the embedding of multiple microservices within a single Microserver, this is not the default mode of operation and involves a little more work to setup. All Microservices will share a single Spring context, so some care needs to be taken when authoring such Microservices to avoid conflicts. This does mean that they can share resources (such as database connections) where it makes sense to do so.
 
 Embedded microservices should be collated at '''runtime only'''. There should be no compile time dependency between embedded microservices (otherwise you are not building microservices but a monolithc application).
 
