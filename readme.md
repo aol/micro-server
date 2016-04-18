@@ -186,11 +186,11 @@ If you find you need configuration options for your application you have two opt
 
 The core of Microserver is a Spring 4.x Dependency Injection container which is used to store all the main classes of your Microservice (s). The Spring Dependency Injection container can be configured by the @Microservice Annotation on your main class, or by the Config object (optionally passed as a parameter to startup).
 
-Each Microservice is a Jersey REST Application. Multiple Microservices can run on the same server, by adding them to the classpath at runtime. They share a common Spring Dependency Injection container (as they are smaller services, we feel it makes sense to share resources such as ThreadPools, Datasources etc), but act as totally separate Rest applications. 
-
-When creating embedded Microservices (multiple services colocated on the same JVM and Spring container), development project should be independent, but the colocated instances should be tested as they will be depolyed in production. There will be more info to follow on the wiki, on how and why we have implemented and scaled this pattern (the goal is to achieve both the benefits of a full Microservice architecture, but minimise the costs as articulated by Robert (Uncle Bob) C. Martin and others - e.g. [here: Microservices and Jars](http://blog.cleancoder.com/uncle-bob/2014/09/19/MicroServicesAndJars.html) .
-
 ### Micro-monolith Architectural Overview
+
+Each Microservice is a Jersey REST Application, these can deployed independently as pure Microservices or together as a micro-monolith. Multiple Microservices can run on the same server, by adding them to the classpath at runtime. They share a common Spring Dependency Injection container (as they are smaller services, we feel it makes sense to share resources such as ThreadPools, Datasources etc), but act as totally separate Rest applications. 
+
+When creating embedded Microservices (multiple services colocated on the same JVM and Spring container), the development project should be independent, but the colocated instances should be tested as they will be depolyed in production. There will be more info to follow on the wiki, on how and why we have implemented and scaled this pattern (the goal is to achieve both the benefits of a full Microservice architecture, but minimise the costs as articulated by Robert (Uncle Bob) C. Martin and others - e.g. [here: Microservices and Jars](http://blog.cleancoder.com/uncle-bob/2014/09/19/MicroServicesAndJars.html) .
 
 Jersey REST Applications are configured by the Module interface (at least one of which must be specified on startup).
 
