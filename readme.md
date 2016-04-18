@@ -37,6 +37,12 @@ See the response  *hello world!*
 
 Add plugins by adding them to your build file - rerun the app to get new end points, Spring beans and more!
 
+# Why Microserver?
+
+Microserver is a plugin engine for building Spring and Spring Boot based microservices. Microserver supports pure microservice and micro-monolith development styles. The micro-monolith style involves packaging multiple services into a single deployment - offering developers the productivity of microservice development without the operational risk. This can help teams adopt a Microservices architecture on projects that are currently monoliths.
+
+Microserver plugins are orthogonal to Microservices. They solve a common problem in Microservice development where by services are broken up and deployed separately but code remains entangled in a monolithic common library. By making use of a plugin system that follows the same modular archictectural principals as microservice development, teams can keep cross-service concerns and infrastructure in properly size, coherent and cohesive plugin modules.
+
 # Tutorial and overview
 
 [Tutorial](https://github.com/aol/micro-server/wiki/Getting-started-:-Tutorial) 
@@ -74,8 +80,10 @@ Microserver is a zero configuration, standards based, battle hardened library to
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-tomcat-with-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-tomcat-with-jersey)
 * micro-core 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-core)
-* micro-boot 
+* micro-boot  : Microserver driving Spring Boot
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-boot)
+* micro-spring-boot  : Spring Boot driving Microserver
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-spring-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-spring-boot)
 
 
 ##Info
@@ -108,7 +116,7 @@ Microserver Spring Boot
  ```xml
     <dependency>
       <groupId>com.aol.microservices</groupId>
-      <artifactId>micro-boot</artifactId>
+      <artifactId>micro-spring-boot</artifactId>
       <version>x.yz</version>
     </dependency>
  ```
@@ -122,7 +130,7 @@ Microserver core
  ```	 
 Microserver Spring Boot 
  ```groovy	 
-	  compile group: 'com.aol.microservices', name:'micro-boot', version:'x.yz'
+	  compile group: 'com.aol.microservices', name:'micro-spring-boot', version:'x.yz'
  ```
 ##Tech Stack
 
@@ -203,6 +211,7 @@ e.g.
 ####Configurable Options
 
 Module provides the following default methods, that clients can override
+
  ```java
     default Map<String,String> getPropertyOverrides(){
 		return Maps.newHashMap();
