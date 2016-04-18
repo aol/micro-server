@@ -190,6 +190,8 @@ Each Microservice is a Jersey REST Application. Multiple Microservices can run o
 
 When creating embedded Microservices (multiple services colocated on the same JVM and Spring container), development project should be independent, but the colocated instances should be tested as they will be depolyed in production. There will be more info to follow on the wiki, on how and why we have implemented and scaled this pattern (the goal is to achieve both the benefits of a full Microservice architecture, but minimise the costs as articulated by Robert (Uncle Bob) C. Martin and others - e.g. [here: Microservices and Jars](http://blog.cleancoder.com/uncle-bob/2014/09/19/MicroServicesAndJars.html) .
 
+### Micro-monolith Architectural Overview
+
 Jersey REST Applications are configured by the Module interface (at least one of which must be specified on startup).
 
 ![high level architecture](https://cloud.githubusercontent.com/assets/9964792/6375067/a6e4f65a-bd0c-11e4-85dc-82ae0d95d44b.png)
