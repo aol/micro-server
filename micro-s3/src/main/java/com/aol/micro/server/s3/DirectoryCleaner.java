@@ -19,7 +19,7 @@ public class DirectoryCleaner {
 
 	@Autowired
 	public DirectoryCleaner(@Value("${s3.temp.dir:#{null}") String temporaryDirectory,
-			@Value("${s3.temp.cleanupOnStart:false") boolean cleanupOnStart) {
+			@Value("${s3.temp.clean.on.start:false") boolean cleanupOnStart) {
 		this.temporaryDirectory = temporaryDirectory;
 		this.cleanupOnStart = cleanupOnStart;
 	}
