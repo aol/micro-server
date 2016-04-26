@@ -1,5 +1,6 @@
 package com.aol.micro.server.s3;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -15,18 +16,15 @@ import org.springframework.stereotype.Component;
 public class DirectoryCleaner {
 
 	private final String temporaryDirectory;
-	private final boolean cleanupOnStart;
 
 	@Autowired
-	public DirectoryCleaner(@Value("${s3.temp.dir:#{null}") String temporaryDirectory,
-			@Value("${s3.temp.clean.on.start:false") boolean cleanupOnStart) {
+	public DirectoryCleaner(@Value("${s3.temp.dir:#{null}") String temporaryDirectory) {
 		this.temporaryDirectory = temporaryDirectory;
-		this.cleanupOnStart = cleanupOnStart;
 	}
 
 	@PostConstruct
 	public void clean() throws IOException {
-		if (cleanupOnStart) {
+		if (temporaryDirectory != null && new File(temporaryDirectory).exists()) {
 			Path directory = FileSystems.getDefault().getPath(temporaryDirectory);
 			Files.walkFileTree(directory, new CleanupFileVisitor(directory));
 		}
