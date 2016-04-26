@@ -10,11 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import org.apache.commons.io.FileUtils;
-import org.jooq.lambda.tuple.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -61,9 +58,8 @@ public class S3Utils {
 		return result;
 	}
 
-	public <T> Stream<T> getSummariesStream(ListObjectsRequest req, Function<S3ObjectSummary, T> processor) {
-		Iterable<S3ObjectSummary> iterable = () -> new S3ObjectSummaryIterator(client, req);
-		return StreamSupport.stream(iterable.spliterator(), false).map(processor);
+	public <T> ReactiveSeq<T> getSummariesStream(ListObjectsRequest req, Function<S3ObjectSummary, T> processor) {
+		return ReactiveSeq.fromIterator(new S3ObjectSummaryIterator(client, req)).map(processor);
 	}
 
 	public void delete(String bucketName, List<KeyVersion> objects) {

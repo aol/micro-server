@@ -14,7 +14,7 @@ public class DirectoryCleanerTest {
 		
 		
 		Path dir = Files.createTempDirectory("test");
-		DirectoryCleaner cleaner = new DirectoryCleaner(dir.toString(), true);
+		DirectoryCleaner cleaner = new DirectoryCleaner(dir.toString());
 		Path file  = Files.createTempFile(dir, "a", "b");
 		Assert.assertTrue(Files.exists(file));
 		cleaner.clean();
