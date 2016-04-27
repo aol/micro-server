@@ -5,15 +5,12 @@ repositories {
 description = 'micro-javaslang'
 dependencies {
 	
-	compile "com.javaslang:javaslang:$javaslangVersion"
-	compile project(':micro-jackson-configuration')
-	
-	compile "com.javaslang:javaslang-jackson:$javaslangDatatypeVersion"
 	compile 'com.aol.cyclops:cyclops-javaslang:'+cyclopsVersion
+	compile project(':micro-jackson-configuration')
+	compile "io.javaslang:javaslang-jackson:$javaslangDatatypeVersion"
 	compile project(':micro-core')
 	testCompile project(':micro-grizzly')
-	testCompile project(':micro-jersey')
-	testCompile group: 'com.aol.simplereact', name:'simple-react', version:"${simpleReactVersion}"
+	testCompile project(':micro-jersey')	
 	
 }
 

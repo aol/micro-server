@@ -1,10 +1,10 @@
 package com.aol.micro.server.javaslang;
 
-import javaslang.jackson.datatype.JavaslangModule;
-
 import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
 import com.fasterxml.jackson.databind.Module;
+
+import javaslang.jackson.datatype.JavaslangModule;
 
 /**
  * 

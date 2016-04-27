@@ -7,23 +7,23 @@ import static org.junit.Assert.assertThat;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
-import javaslang.collection.HashMap;
-import javaslang.collection.HashSet;
-import javaslang.collection.List;
-import javaslang.collection.Set;
-import javaslang.control.Option;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.aol.cyclops.control.SimpleReact;
+import com.aol.cyclops.types.futurestream.SimpleReactStream;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
-import com.aol.simple.react.stream.simple.SimpleReact;
-import com.aol.simple.react.stream.traits.SimpleReactStream;
+
+import javaslang.collection.HashMap;
+import javaslang.collection.HashSet;
+import javaslang.collection.List;
+import javaslang.collection.Set;
+import javaslang.control.Option;
 
 @Microserver(basePackages = { "app.guava.com.aol.micro.server" })
 public class JavaslangAppTest {
@@ -41,7 +41,7 @@ public class JavaslangAppTest {
 
 	@Before
 	public void startServer() {
-		stream = simpleReact.react(
+		stream = simpleReact.ofAsync(
 				() -> server = new MicroserverApp(JavaslangAppTest.class,
 						() -> "guava-app")).then(server -> server.start());
 		

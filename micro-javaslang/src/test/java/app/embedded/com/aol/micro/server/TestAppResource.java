@@ -1,16 +1,16 @@
 package app.embedded.com.aol.micro.server;
 
-import javaslang.collection.List;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import org.springframework.stereotype.Component;
 
+import com.aol.cyclops.control.SimpleReact;
+import com.aol.cyclops.types.futurestream.LazyFutureStream;
 import com.aol.micro.server.testing.RestAgent;
-import com.aol.simple.react.stream.simple.SimpleReact;
-import com.aol.simple.react.stream.traits.LazyFutureStream;
+
+import javaslang.collection.List;
 @Component
 @Path("/test-status")
 public class TestAppResource implements TestAppRestResource {

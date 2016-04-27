@@ -1,7 +1,7 @@
 description = 'micro-tomcat'
 dependencies {
-	compile 'org.apache.tomcat.embed:tomcat-embed-core:8.0.29'
-	compile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.29'
+	compile 'org.apache.tomcat.embed:tomcat-embed-core:'+tomcatVersion
+	compile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:'+tomcatVersion
 	
 	
 	compile project(':micro-core')

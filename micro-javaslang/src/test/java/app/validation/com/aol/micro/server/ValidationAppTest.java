@@ -5,23 +5,22 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.BadRequestException;
 
-import javaslang.collection.HashMap;
-import javaslang.collection.HashSet;
-import javaslang.collection.List;
-import javaslang.collection.Set;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import app.javaslang.com.aol.micro.server.ImmutableJavaslangEntity;
-
+import com.aol.cyclops.control.SimpleReact;
+import com.aol.cyclops.types.futurestream.SimpleReactStream;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
-import com.aol.simple.react.stream.simple.SimpleReact;
-import com.aol.simple.react.stream.traits.SimpleReactStream;
+
+import app.javaslang.com.aol.micro.server.ImmutableJavaslangEntity;
+import javaslang.collection.HashMap;
+import javaslang.collection.HashSet;
+import javaslang.collection.List;
+import javaslang.collection.Set;
 
 
 @Microserver(basePackages = { "app.validation.com.aol.micro.server" })
@@ -39,7 +38,7 @@ public class ValidationAppTest {
 
 	@Before
 	public void startServer() {
-		stream = simpleReact.react(
+		stream = simpleReact.ofAsync(
 				() -> server = new MicroserverApp(ValidationAppTest.class,
 						() -> "validation-app")).then(server -> server.start());
 

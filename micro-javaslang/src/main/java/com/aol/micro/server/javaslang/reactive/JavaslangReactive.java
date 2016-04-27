@@ -1,24 +1,17 @@
 package com.aol.micro.server.javaslang.reactive;
 
-import java.util.Optional;
-import java.util.concurrent.Executor;
 
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
-import javaslang.collection.Stream;
-import javaslang.control.Failure;
-import javaslang.control.Success;
-import javaslang.control.Try;
+import com.aol.cyclops.control.LazyReact;
+import com.aol.cyclops.javaslang.Javaslang;
+import com.aol.cyclops.types.futurestream.LazyFutureStream;
+import com.aol.cyclops.types.stream.reactive.SeqSubscriber;
 
-import com.aol.cyclops.javaslang.FromSimpleReact;
-import com.aol.cyclops.javaslang.reactivestreams.JavaslangReactiveStreamsPublisher;
-import com.aol.cyclops.javaslang.reactivestreams.JavaslangReactiveStreamsSubscriber;
-import com.aol.simple.react.async.Adapter;
-import com.aol.simple.react.async.pipes.LazyReactors;
-import com.aol.simple.react.async.pipes.Pipes;
-import com.aol.simple.react.stream.lazy.LazyReact;
-import com.aol.simple.react.stream.traits.LazyFutureStream;
+import javaslang.Value;
+import javaslang.collection.Stream;
+import javaslang.collection.Traversable;
 
 /**
  * Mixin / Trait for Reactive behaviour via simple-react
@@ -26,35 +19,30 @@ import com.aol.simple.react.stream.traits.LazyFutureStream;
  * @author johnmcclean
  *
  */
-public interface JavaslangReactive {
-	/**
-	 * Add a value to an simple-react Async.Queue
-	 * 
-	 * @see Pipes#register(Object, com.aol.simple.react.async.Adapter)
-	 * 
-	 * @param key : identifier for registered Queue
-	 * @param value : value to add to Queue
-	 */
-	default<K,V> Try<Boolean> enqueue(K key,V value){
-		Optional<Adapter<V>> queue = JavaslangPipes.get(key);
-		queue.map(adapter -> adapter.offer(value));
+public class JavaslangReactive {
 	
-		
-		return queue.isPresent() ? new Success<>(true) : 
-						new Failure<>(new RuntimeException("Missing queue for key : " + key.toString()));
-		
-		
+	
+	
+	static <T> LazyFutureStream<T> futureStream(Traversable<T> seq, LazyReact lazyReact){
+		return lazyReact.fromIterable(seq);
 	}
+	
+	
+	
 	/**
 	 * Publish a reactive-streams publisher to a new Javaslang Stream
 	 * 
 	 * @param publisher to publish
 	 * @return Stream subscribed to publisher
 	 */
-	default <T> Stream<T> publish(Publisher<T> publisher){
-		JavaslangReactiveStreamsSubscriber<T> sub = new JavaslangReactiveStreamsSubscriber<>();
+	public static <T> Stream<T> publishStream(Publisher<T> publisher){
+		SeqSubscriber<T> sub=  SeqSubscriber.subscriber();
 		publisher.subscribe(sub);
-		return sub.getStream();
+		return Stream.ofAll(sub.stream());
+	}
+	public static <T> void subsribeToValue(Value<T> s, Subscriber<T> sub){
+		Javaslang.value(s).subscribe(sub);
+		
 	}
 	/**
 	 * Have a reactive-stream subscriber subscribe to a Javaslang Stream.
@@ -62,94 +50,9 @@ public interface JavaslangReactive {
 	 * @param s Stream to subscribe to
 	 * @param sub Subscriber
 	 */
-	default <T> void subsribe(Stream<T> s, Subscriber<T> sub){
-		JavaslangReactiveStreamsPublisher<T> pub = JavaslangReactiveStreamsPublisher.ofSync(s);
-		pub.subscribe(sub);
+	public static <T> void subsribeToTraversable(Traversable<T> s, Subscriber<T> sub){
+		Javaslang.traversable(s).subscribe(sub);
+		
 	}
-	/**
-	 * Have a reactive-stream subscriber subscribe to a Javaslang Stream asynchronously.
-	 * 
-	 * @param s Stream to subscribe to
-	 * @param sub Subscriber
-	 * @param exec task executor for async operations
-	 */
-	default <T> void subsribe(Stream<T> s, Subscriber<T> sub,Executor exec){
-		JavaslangReactiveStreamsPublisher<T> pub = JavaslangReactiveStreamsPublisher.ofAsync(s,exec);
-		pub.subscribe(sub);
-	}
-	/**
-	 * Get a LazyFutureStream optimized for IO operations,
-	 * connected to the adapter cached in JavaslangPipes with the specified key
-	 * 
-	 * @param key of Adapter in JavaslangPipes
-	 * @return IO Optimized LazyFutureStream
-	 */
-	default <K,T> LazyFutureStream<T> ioFutureStream(K key){
-		return JavaslangPipes.futureStreamIOBound(key);
-	}
-	/**
-	 * Get a Javaslang Stream connected to the adapter cached in JavaslangPipes with the specified key
-	 * 
-	 * @param key of Adapter in JavaslangPipes
-	 * @return Javaslang Stream connected to adapter
-	 */
-	default <K,T> Stream<T> sequentialStream(K key){
-		return JavaslangPipes.<T>stream(key);
-	}
-	/**
-	 *  Get a LazyFutureStream optimized for CPU operations,
-	 *  connected to the adapter cached in JavaslangPipes with the specified key
-	 *  
-	 * @param key of Adapter in JavaslangPipes
-	 * @return  Javaslang Stream connected to adapter
-	 */
-	default <K,T> LazyFutureStream<T> cpuFutureStream(K key){
-		return JavaslangPipes.futureStreamCPUBound(key);
-	}
-	/**
-	 * @return LazyReact Stream builder optimized for IO Operations
-	 */
-	default  LazyReact ioStreamBuilder(){
-		return LazyReactors.ioReact;
-	}
-	
-	/**
-	 * @return LazyReact Stream builder optimized for CPU Operations
-	 */
-	default LazyReact cpuStreamBuilder(){
-		return LazyReactors.cpuReact;
-	}
-	
-	/**
-	 * Switch a LazyFutureStream to a Javaslang Stream
-	 * 
-	 * @param stream LazyFutureStream to convert
-	 * @return Javaslang Stream
-	 */
-	default <T> Stream<T> switchToSequential(LazyFutureStream<T> stream){
-		return FromSimpleReact.fromSimpleReact(stream);
-	}
-	
-	/**
-	 * Switch LazyFutureStream into execution mode suitable for IO (reuse ioReactors task executor)
-	 * 
-	 * @param stream to convert to IO mode
-	 * @return LazyFutureStream in IO mode
-	 */
-	default <T> LazyFutureStream<T> switchToIO(LazyFutureStream<T> stream){
-		LazyReact react = LazyReactors.ioReact;
-		return stream.withTaskExecutor(react.getExecutor()).withRetrier(react.getRetrier());
-	}
-	/**
-	 *  Switch LazyFutureStream into execution mode suitable for CPU bound execution (reuse cpuReactors task executor)
-	 * 
-	 * @param stream to convert to CPU bound mode
-	 * @return LazyFutureStream in CPU bound mode
-	 */
-	default <T> LazyFutureStream<T> switchToCPU(LazyFutureStream<T> stream){
-		LazyReact react = LazyReactors.cpuReact;
-		return stream.withTaskExecutor(react.getExecutor()).withRetrier(react.getRetrier());
-	}
-	
 	
 }

@@ -33,8 +33,16 @@ public class EventQueueManagerTest {
 		manager.push("hello", "world");
 	}
 
+	public void handleEvent(String e){
+		
+	}
 	@Test
 	public void testConfigure() throws InterruptedException {
+		String data = "";
+		manager.forEach("bus-a",this::handleEvent);
+		
+		manager.push("bus-a", data);
+		
 	
 		manager.forEach("hello",a->recieved= a);
 		
@@ -45,9 +53,22 @@ public class EventQueueManagerTest {
 		System.out.println(recieved);
 		assertThat(recieved,equalTo("world"));
 	}
-	
+	public String process(String s){
+		return null;
+	}
 	@Test
 	public void testStream() throws InterruptedException {
+		
+		manager.stream("bus-b")
+		       .map(this::process)
+			   .futureOperations(ex)
+               .forEach(this::handleEvent);
+		
+		manager.flux("bus-c")
+			   .map(this::process)
+			   .consume(this::handleEvent);
+
+		
 		manager.stream("2")
 		        .futureOperations(ex)
 		        .forEach(a->recieved= a);
@@ -106,9 +127,19 @@ public class EventQueueManagerTest {
 			 
        
 	}
+	
+	public String restCall(String in){
+		return "hello";
+	}
 
 	@Test
 	public void testIoFutureStream() throws InterruptedException {
+		
+		manager.ioFutureStream("futureStream")
+			   .map(this::restCall)
+			   .run();
+		
+		
 		manager.ioFutureStream("futureStream")
         	   .peek(a->recieved= a)
         	   .run();
