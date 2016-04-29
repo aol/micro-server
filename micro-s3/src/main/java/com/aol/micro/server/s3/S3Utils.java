@@ -44,6 +44,13 @@ public class S3Utils {
 		this.tmpDirectory = tmpDirectory;
 	}
 
+	
+	/**
+	 * Method returns list of all <b>S3ObjectSummary</b> objects, subject to <i>req</i> parameters. 
+	 * Multiple S3 calls will be performed if there are more than 1000 elements there
+	 * @param req - ListObjectRequest to be used.
+	 * @return List of S3ObjectSummary from bucket, 
+	 */
 	public List<S3ObjectSummary> getAllSummaries(ListObjectsRequest req) {
 		List<S3ObjectSummary> result = new ArrayList<>();
 		String marker = null;
@@ -58,10 +65,23 @@ public class S3Utils {
 		return result;
 	}
 
+	/**
+	 * Method return stream of S3ObjectSummary objects, subject to <i>req</i> parameters
+	 * Method will perform one query for every 1000 elements (current s3 limitation). 
+	 * It is lazy, so there would be no unnecesarry calls
+	 * @param req - ListObjectRequest to be used.
+	 * @param processor - Function that convert S3ObjectSummary to any object
+	 * @return ReactiveSeq of converted S3Object summary elements.
+	 */
 	public <T> ReactiveSeq<T> getSummariesStream(ListObjectsRequest req, Function<S3ObjectSummary, T> processor) {
 		return ReactiveSeq.fromIterator(new S3ObjectSummaryIterator(client, req)).map(processor);
 	}
 
+	/**
+	 * Method delete all <i>objects</i> from <i>bucketName</i> in groups by 1000 elements
+	 * @param bucketName
+	 * @param objects
+	 */
 	public void delete(String bucketName, List<KeyVersion> objects) {
 		ReactiveSeq.fromList(objects).grouped(1000).forEach(l -> {
 			DeleteObjectsRequest req = new DeleteObjectsRequest(bucketName);
@@ -70,6 +90,19 @@ public class S3Utils {
 		});
 	}
 
+	/**
+	 * Method returns InputStream from S3Object. Multi-part download is used to get file.
+	 * s3.tmp.dir property used to store temporary files. You can specify temporary file name by
+	 * using tempFileSupplier object.
+	 * @param bucketName 
+	 * @param key - 
+	 * @param tempFileSupplier - Supplier providing temporary filenames
+	 * @return InputStream of 
+	 * @throws AmazonServiceException
+	 * @throws AmazonClientException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
 	public InputStream getInputStream(String bucketName, String key, Supplier<File> tempFileSupplier)
 			throws AmazonServiceException, AmazonClientException, InterruptedException, IOException {
 		File file = tempFileSupplier.get();
@@ -82,6 +115,17 @@ public class S3Utils {
 		}
 	}
 
+	/**
+	 * Method returns InputStream from S3Object. Multi-part download is used to get file.
+	 * s3.tmp.dir property used to store temporary files.
+	 * @param bucketName
+	 * @param key
+	 * @return
+	 * @throws AmazonServiceException
+	 * @throws AmazonClientException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
 	public InputStream getInputStream(String bucketName, String key)
 			throws AmazonServiceException, AmazonClientException, InterruptedException, IOException {
 		Supplier<File> tempFileSupplier = ExceptionSoftener.softenSupplier(() -> Files
