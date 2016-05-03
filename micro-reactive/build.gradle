@@ -2,7 +2,7 @@ description = 'micro-reactive'
 dependencies {
 	
 
-	compile 'io.projectreactor:reactor-core:2.5.0.M2'
+	compile 'com.aol.cyclops:cyclops-reactor:'+cyclopsVersion
 	compile project(':micro-core')
 	compile project(':micro-events')
 	testCompile project(':micro-grizzly')

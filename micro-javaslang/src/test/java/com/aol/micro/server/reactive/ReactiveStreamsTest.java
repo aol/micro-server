@@ -6,39 +6,31 @@ import static org.junit.Assert.assertThat;
 import java.util.Arrays;
 import java.util.concurrent.Executors;
 
+import org.junit.Test;
+
+import com.aol.cyclops.types.futurestream.LazyFutureStream;
+import com.aol.micro.server.javaslang.reactive.JavaslangReactive;
+import com.aol.micro.server.javaslang.reactive.JavaslangSubscriber;
+
 import javaslang.collection.List;
 import javaslang.collection.Stream;
 
-import org.junit.Test;
-
-import com.aol.cyclops.sequence.SequenceM;
-import com.aol.cyclops.sequence.reactivestreams.CyclopsSubscriber;
-import com.aol.micro.server.javaslang.reactive.JavaslangReactive;
-import com.aol.simple.react.stream.traits.LazyFutureStream;
-
-public class ReactiveStreamsTest implements JavaslangReactive {
-
+public class ReactiveStreamsTest   {
+	
 	@Test
 	public void publish(){
 		
-		Stream<Integer> javaslangStream = this.publish(LazyFutureStream.of(1,2,3));
+		Stream<Integer> javaslangStream = JavaslangReactive.publishStream(LazyFutureStream.of(1,2,3));
 		
 		assertThat(javaslangStream.toList(),equalTo(List.of(1,2,3)));
 	}
 	@Test
 	public void subscribe(){
 		Stream<Integer> stream = Stream.of(1,2,3);
-		CyclopsSubscriber<Integer> sub = SequenceM.subscriber();
-		this.subsribe(stream, sub);
+		JavaslangSubscriber<Integer> sub = JavaslangSubscriber.subscriber();
+		JavaslangReactive.subsribeToTraversable(stream, sub);
 		
-		assertThat(sub.sequenceM().toList(),equalTo(Arrays.asList(1,2,3)));
+		assertThat(sub.list().toJavaList(),equalTo(Arrays.asList(1,2,3)));
 	}
-	@Test
-	public void subscribeAsync(){
-		Stream<Integer> stream = Stream.of(1,2,3);
-		CyclopsSubscriber<Integer> sub = SequenceM.subscriber();
-		this.subsribe(stream, sub,Executors.newFixedThreadPool(1));
-		
-		assertThat(sub.sequenceM().toList(),equalTo(Arrays.asList(1,2,3)));
-	}
+	
 }

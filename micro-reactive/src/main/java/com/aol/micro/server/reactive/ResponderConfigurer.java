@@ -13,7 +13,7 @@ import com.aol.cyclops.data.async.QueueFactories;
 import com.aol.cyclops.data.async.QueueFactory;
 
 @Configuration
-public class ResponderConfigurer {
+public class ResponderConfigurer<T> {
 
 	
 	@Value("${responder.threads:0}")
@@ -22,11 +22,11 @@ public class ResponderConfigurer {
 	
 	@Autowired(required=false)
 	@Qualifier(value="responderQueueFactory")
-	QueueFactory factory;
+	private QueueFactory<T> factory;
 	
 	
 	@Bean
-	public EventQueueManager responder(){
+	public EventQueueManager<T> responder(){
 		if(threads==0)
 			threads= Runtime.getRuntime().availableProcessors();
 		if(threads==-1)

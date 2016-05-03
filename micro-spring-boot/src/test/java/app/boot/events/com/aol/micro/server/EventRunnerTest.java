@@ -18,7 +18,8 @@ import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.micro.server.testing.RestAgent;
 import com.aol.micro.server.spring.boot.MicroSpringBoot;
 
-@Microserver @MicroSpringBoot
+@Microserver 
+@MicroSpringBoot
 public class EventRunnerTest {
 
 	RestAgent rest = new RestAgent();

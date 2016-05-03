@@ -28,8 +28,15 @@ public class ScheduledJobTest {
 		}
 		
 	};
+	
+	public void saveRecord(Object o){
+		
+	}
 	@Test
 	public void cronDebounceTest() throws InterruptedException{
+		
+
+		
 		
 		assertThat(executor.schedule("* * * * * ?", myJob)
 				.connect()
