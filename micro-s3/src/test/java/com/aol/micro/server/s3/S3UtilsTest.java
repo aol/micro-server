@@ -1,20 +1,33 @@
 package com.aol.micro.server.s3;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
+import org.junit.Assert;
 import org.junit.Test;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest.KeyVersion;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.services.s3.transfer.Download;
+import com.amazonaws.services.s3.transfer.TransferManager;
 
 public class S3UtilsTest {
 
@@ -33,7 +46,7 @@ public class S3UtilsTest {
 				answer = false;
 			}
 		});
-		S3Utils utils = new S3Utils(client);
+		S3Utils utils = new S3Utils(client, null, null);
 		utils.getAllSummaries(new ListObjectsRequest());
 		verify(objectListing, times(2)).getObjectSummaries();
 	}
@@ -42,7 +55,11 @@ public class S3UtilsTest {
 	public void getSummariesStream() {
 		answer = true;
 		AmazonS3Client client = mock(AmazonS3Client.class);
+		
+		
 		ObjectListing objectListing = mock(ObjectListing.class);
+		
+		when(objectListing.getObjectSummaries()).thenReturn(createSummaries());
 		when(client.listObjects(any(ListObjectsRequest.class))).thenReturn(objectListing);
 		when(objectListing.isTruncated()).thenAnswer(__ -> {
 			try {
@@ -53,16 +70,65 @@ public class S3UtilsTest {
 		});
 		// when(objectListing.getObjectSummaries()).thenReturn(summaries);
 
-		S3Utils utils = new S3Utils(client);
+		S3Utils utils = new S3Utils(client, null, null);
 		verify(objectListing, times(0)).getObjectSummaries();
-		utils.getSummariesStream(new ListObjectsRequest(), s -> s.getKey());
-		verify(objectListing, times(2)).getObjectSummaries();
+		Stream<String> stream = utils.getSummariesStream(new ListObjectsRequest(), s -> {
+			return s.getKey();
+		});
+
+		assertEquals(500, stream.limit(500).count());
+		
+		verify(objectListing, times(1)).getObjectSummaries();
+		
+	}
+	
+	@Test
+	public void getSummariesStreamFull() {
+		answer = true;
+		AmazonS3Client client = mock(AmazonS3Client.class);
+		
+		
+		ObjectListing objectListing = mock(ObjectListing.class);
+		
+		when(objectListing.getObjectSummaries()).thenReturn(createSummaries());
+		when(client.listObjects(any(ListObjectsRequest.class))).thenReturn(objectListing);
+		when(objectListing.isTruncated()).thenAnswer(__ -> {
+			try {
+				return answer;
+			} finally {
+				answer = false;
+			}
+		});
+		// when(objectListing.getObjectSummaries()).thenReturn(summaries);
+
+		S3Utils utils = new S3Utils(client, null, null);
+		verify(objectListing, times(0)).getObjectSummaries();
+		Stream<String> stream = utils.getSummariesStream(new ListObjectsRequest(), s -> {
+			return s.getKey();
+		});
+
+		assertEquals(2000,stream.limit(2000).count());
+		
+	}
+	
+	
+	
+	private List<S3ObjectSummary> createSummaries() {
+		List<S3ObjectSummary> summaries = new ArrayList<>();
+
+		for (int i = 0; i < 1000; i++) {
+			S3ObjectSummary summary = new S3ObjectSummary();
+			summary.setKey("" + i);
+			summaries.add(summary);
+		}
+
+		return summaries;
 	}
 
 	@Test
 	public void deleteObjects() {
 		AmazonS3Client client = mock(AmazonS3Client.class);
-		S3Utils utils = new S3Utils(client);
+		S3Utils utils = new S3Utils(client, null, null);
 		List<KeyVersion> keys = new ArrayList<>();
 		for (int i = 0; i < 2000; i++) {
 			keys.add(new KeyVersion(""));
@@ -72,4 +138,37 @@ public class S3UtilsTest {
 		
 		verify(client, times(2)).deleteObjects(any());
 	}
+	
+	@Test
+	public void getInputStreamSupplier()
+			throws AmazonServiceException, AmazonClientException, InterruptedException, IOException {
+		AmazonS3Client client = mock(AmazonS3Client.class);
+		TransferManager transferManager = mock(TransferManager.class);
+		Download download = mock(Download.class);
+		
+		when(transferManager.download(anyString(), anyString(), any())).thenReturn(download);
+		
+		File file = Files.createTempFile("micro-s3", "test").toFile();
+		Assert.assertTrue(file.exists());
+		S3Utils utils = new S3Utils(client, transferManager, "test");
+		
+		utils.getInputStream("", "", () -> file);
+
+		Assert.assertFalse(file.exists());
+	}
+	
+	@Test
+	public void getInputStreamDefaultSupplier()
+			throws AmazonServiceException, AmazonClientException, InterruptedException, IOException {
+		AmazonS3Client client = mock(AmazonS3Client.class);
+		TransferManager transferManager = mock(TransferManager.class);
+		Download download = mock(Download.class);
+		
+		when(transferManager.download(anyString(), anyString(), any())).thenReturn(download);
+		
+		S3Utils utils = new S3Utils(client, transferManager, System.getProperty("java.io.tmpdir"));
+		utils.getInputStream("", "");
+		verify(download).waitForCompletion();
+	}
+	
 }
