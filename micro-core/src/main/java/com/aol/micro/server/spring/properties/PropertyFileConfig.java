@@ -27,7 +27,8 @@ import com.aol.micro.server.config.ConfigAccessor;
 public class PropertyFileConfig {
 
 	
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final static Logger logger = LoggerFactory.getLogger(PropertyFileConfig.class);
+	
 	public PropertyFileConfig(){
 		
 	}
@@ -36,7 +37,7 @@ public class PropertyFileConfig {
 			new Config().set(); //make sure config instance is set
 	}
 	@Bean
-	public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {
+	public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {
 
 	
 
@@ -49,7 +50,7 @@ public class PropertyFileConfig {
 	}
 
 	@Bean
-	public Properties propertyFactory() throws IOException {
+	public static Properties propertyFactory() throws IOException {
 		List<Resource> resources = loadPropertyResource();
 		PropertiesFactoryBean factory = new PropertiesFactoryBean();
 		factory.setLocations(resources.toArray(new Resource[resources.size()]));
@@ -59,7 +60,7 @@ public class PropertyFileConfig {
 		return props;
 	}
 
-	private List<Resource> loadPropertyResource() {
+	private static List<Resource> loadPropertyResource() {
 		List<Resource> resources = new ArrayList<>();
 		String applicationPropertyFileName = new ConfigAccessor().get().getPropertiesName();
 		loadProperties(applicationPropertyFileName,"application").ifPresent(it -> resources.add(it));
@@ -75,7 +76,7 @@ public class PropertyFileConfig {
 		return resources;
 	}
 
-	private Optional<Resource> loadProperties(String applicationPropertyFileName, String type) {
+	private static Optional<Resource> loadProperties(String applicationPropertyFileName, String type) {
 
 		
 
@@ -86,14 +87,14 @@ public class PropertyFileConfig {
 			logger.info("./" + applicationPropertyFileName + " added");
 		}
 
-		URL urlResource = getClass().getClassLoader().getResource(applicationPropertyFileName);
+		URL urlResource = PropertyFileConfig.class.getClassLoader().getResource(applicationPropertyFileName);
 		if (urlResource != null) {
 			resource = Optional.of(new UrlResource(urlResource));
 			logger.info(applicationPropertyFileName + " added");
 		}
 
 		if (System.getProperty(type+".env") != null) {
-			URL envResource = getClass().getClassLoader().getResource(createEnvBasedPropertyFileName(applicationPropertyFileName));
+			URL envResource = PropertyFileConfig.class.getClassLoader().getResource(createEnvBasedPropertyFileName(applicationPropertyFileName));
 			if (envResource != null) {
 				resource = Optional.of(new UrlResource(envResource));
 				logger.info(createEnvBasedPropertyFileName(applicationPropertyFileName) + " added");
@@ -108,7 +109,7 @@ public class PropertyFileConfig {
 		return resource;
 	}
 
-	private String createEnvBasedPropertyFileName(String applicationPropertyFileName) {
+	private static String createEnvBasedPropertyFileName(String applicationPropertyFileName) {
 		return applicationPropertyFileName.substring(0, applicationPropertyFileName.lastIndexOf(".")) + "-" + System.getProperty("application.env")
 				+ ".properties";
 	}

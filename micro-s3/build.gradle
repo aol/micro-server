@@ -5,7 +5,7 @@ dependencies {
 	compile 'com.amazonaws:aws-java-sdk:' + s3Version
 	compile project(':micro-core')
 	
-	testCompile 'commons-io:commons-io:2.4'
+	compile 'commons-io:commons-io:'+commonsIOVersion
 	testCompile project(':micro-grizzly-with-jersey')
 }
 
