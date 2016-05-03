@@ -59,15 +59,7 @@ public class EventQueueManagerTest {
 	@Test
 	public void testStream() throws InterruptedException {
 		
-		manager.stream("bus-b")
-		       .map(this::process)
-			   .futureOperations(ex)
-               .forEach(this::handleEvent);
-		
-		manager.flux("bus-c")
-			   .map(this::process)
-			   .consume(this::handleEvent);
-
+	
 		
 		manager.stream("2")
 		        .futureOperations(ex)
@@ -135,9 +127,7 @@ public class EventQueueManagerTest {
 	@Test
 	public void testIoFutureStream() throws InterruptedException {
 		
-		manager.ioFutureStream("futureStream")
-			   .map(this::restCall)
-			   .run();
+		
 		
 		
 		manager.ioFutureStream("futureStream")

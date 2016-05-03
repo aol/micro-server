@@ -35,11 +35,7 @@ public class ScheduledJobTest {
 	@Test
 	public void cronDebounceTest() throws InterruptedException{
 		
-		executor.schedule("0 10 * * * ?", myJob)
-				.connect()
-				.debounce(1,TimeUnit.DAYS)
-				.forEach(this::saveRecord);
-		
+
 		
 		
 		assertThat(executor.schedule("* * * * * ?", myJob)
