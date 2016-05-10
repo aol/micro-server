@@ -12,7 +12,7 @@ buildscript {
 
 	dependencies {
 		classpath 'com.bmuschko:gradle-nexus-plugin:2.2'
-		classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.0'
+	//	classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.0'
 		classpath 'com.github.lkishalmi.gradle:gradle-bom-plugin:0.3'
 		
 	}
@@ -20,11 +20,13 @@ buildscript {
 
 
 
-
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.3'
+}
 
 subprojects {
 	apply plugin:'java'
-	apply plugin: 'com.github.johnrengelman.shadow'
+//	apply plugin: 'com.github.johnrengelman.shadow'
 	apply plugin: 'com.bmuschko.nexus'
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8

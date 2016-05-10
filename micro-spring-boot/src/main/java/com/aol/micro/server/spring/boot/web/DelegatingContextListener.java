@@ -32,10 +32,12 @@ public class DelegatingContextListener implements ServletContextListener{
 	}
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
+	
 		if(listeners==null)
 			return;
 		listeners.stream().forEachWithError(l->l.contextInitialized(sce),
 				e->logger.error(e.getMessage(),e));
+				
 		
 	}
 

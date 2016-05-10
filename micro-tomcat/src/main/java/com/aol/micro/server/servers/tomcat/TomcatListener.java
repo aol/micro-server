@@ -38,7 +38,6 @@ public class TomcatListener implements ServletContainerInitializer {
 			throws ServletException {
 		try {
 			ServerThreadLocalVariables.getContext().set(serverData.getModule().getContext());
-			new ServletContextListenerConfigurer(serverData, servletContextListenerData, servletRequestListenerData);
 		     
 			jaxRsConfigurer.addServlet(this.serverData,webappContext);
 

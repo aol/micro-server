@@ -18,23 +18,28 @@ public class EbayCorsFilter implements FilterConfiguration {
 
 	private final Map<String,String> initParameters;
 	private final  boolean simple;
+	private final String mapping;
 	
 	@Autowired(required=false)
-	public EbayCorsFilter(@Value("${cors.simple:false}")boolean simple, @Qualifier("ebay-cors-config" ) Map<String,String> initParameters){
+	public EbayCorsFilter(@Value("${cors.simple:false}")boolean simple, 
+								@Qualifier("ebay-cors-config" ) Map<String,String> initParameters,
+								@Value("${cors.mapping:/*}")String mapping){
 		this.simple=simple;
 		this.initParameters = initParameters;
+		this.mapping = mapping;
 	}
 	
 	@Autowired(required=false)
-	public EbayCorsFilter(@Value("${cors.simple:false}")boolean simple){
+	public EbayCorsFilter(@Value("${cors.simple:false}")boolean simple,@Value("${cors.mapping:/*}")String mapping){
 		this.simple=simple;
 		this.initParameters = new HashMap<>();
+		this.mapping = mapping;
 	}
 	
 	@Override
 	public String[] getMapping() {
 		if(!simple)
-			return new String[] { "/*" };
+			return new String[] {mapping };
 		else
 			return new String[0];
 	}
