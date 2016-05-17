@@ -23,7 +23,7 @@ public class CrossDomainFilterTest {
 
 	@Before
 	public void init() {
-		this.crossDomainFilter = new CrossDomainFilter(true);
+		this.crossDomainFilter = new CrossDomainFilter(true,"/*");
 	}
 
 	@Test
@@ -46,7 +46,7 @@ public class CrossDomainFilterTest {
 	}
 	@Test
 	public void testFilterFalse() throws IOException, ServletException {
-		this.crossDomainFilter = new CrossDomainFilter(false);
+		this.crossDomainFilter = new CrossDomainFilter(false,"/*");
 		assertTrue(this.crossDomainFilter.getMapping().length==0);
 		
 	}

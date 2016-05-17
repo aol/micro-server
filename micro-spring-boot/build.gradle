@@ -24,8 +24,10 @@ dependencies {
 	
 	
 	
-      
-	testCompile project(':micro-tomcat')
+	testCompile 'org.apache.tomcat.embed:tomcat-embed-core:'+tomcatVersion
+	testCompile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:'+tomcatVersion
+
+	testCompile project(':micro-cors')
 	testCompile project(':micro-swagger')
 	testCompile project(':micro-client')
 	testCompile project(':micro-events')

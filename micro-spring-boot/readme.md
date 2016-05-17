@@ -2,7 +2,7 @@
 
 [micro-spring-boot example apps](https://github.com/aol/micro-server/tree/master/micro-spring-boot/src/test/java/app)
 
-Micro-spring-boot allows Microserver Jersey annotations and Microserver plugins to be used on applications where the full-stack is managed by Spring Boot. To use Microserver front-ends and Spring Boot backes see the micro-boot plugin.
+Micro-spring-boot allows Microserver Jersey annotations and Microserver plugins to be used on applications where the full-stack is managed by Spring Boot. To use Microserver front-ends and Spring Boot backends see the micro-boot plugin.
 
 
 ## A simple example with one resource
@@ -73,7 +73,9 @@ Gradle
 
 
 ## Create a simple server
+
 ```java
+
 @MicroSpringBoot
 @Path("/simple")
 public class SimpleApp {
@@ -87,12 +89,14 @@ public class SimpleApp {
             return "ok";
         }
 }
+
 ```
 
 
 @MicroSpringBoot is simply syntax sugar for 
 
  ```java
+ 
 @Component
 @SpringBootApplication(exclude = SpringDataWebAutoConfiguration.class)
  ```

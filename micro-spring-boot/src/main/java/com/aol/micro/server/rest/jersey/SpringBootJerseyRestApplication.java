@@ -14,17 +14,15 @@ import com.aol.micro.server.module.JaxRsProvider;
 import com.aol.micro.server.module.Module;
 import com.aol.micro.server.module.ModuleDataExtractor;
 
-public class JerseyRestApplication extends ResourceConfig {
-
-	
+public class SpringBootJerseyRestApplication extends ResourceConfig {
 
 	@Autowired(required=false)
-	public JerseyRestApplication(ApplicationContext context){
+	public SpringBootJerseyRestApplication(ApplicationContext context){
 		this(context, ()->"");
 	}
 	
 	@Autowired(required=false)
-	public JerseyRestApplication(ApplicationContext context,Module module){
+	public SpringBootJerseyRestApplication(ApplicationContext context,Module module){
 		ModuleDataExtractor extractor = new ModuleDataExtractor(module);
 		
 		List allResources = extractor.getRestResources(context);
@@ -38,8 +36,7 @@ public class JerseyRestApplication extends ResourceConfig {
 					register(next.getClass());
 			}
 		}
-		
-		
+				
 		if (serverProperties.isEmpty()) {
 			property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
 	        //http://stackoverflow.com/questions/25755773/bean-validation-400-errors-are-returning-default-error-page-html-instead-of-re
@@ -57,8 +54,6 @@ public class JerseyRestApplication extends ResourceConfig {
 		module.getResourceConfigManager().accept(new JaxRsProvider<>(this));
 	}
 	
-	
-
 
 	private boolean isSingleton(Object next) {
 		if(next instanceof RestResource)

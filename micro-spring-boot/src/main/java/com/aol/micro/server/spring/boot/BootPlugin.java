@@ -10,7 +10,7 @@ import com.aol.cyclops.data.collections.extensions.persistent.PMapX;
 import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.cyclops.data.collections.extensions.standard.MapXs;
 import com.aol.micro.server.Plugin;
-import com.aol.micro.server.rest.jersey.JerseyRestApplication;
+import com.aol.micro.server.rest.jersey.SpringBootJerseyRestApplication;
 import com.aol.micro.server.spring.SpringBuilder;
 import com.aol.micro.server.spring.boot.web.DelegatingContextListener;
 
@@ -31,7 +31,7 @@ public class BootPlugin implements Plugin{
 
 	@Override
 	public PSetX<Class> springClasses() {
-		return PSetX.of(JerseyRestApplication.class,DelegatingContextListener.class);
+		return PSetX.of(SpringBootJerseyRestApplication.class);//,DelegatingContextListener.class);
 	}
 
 	
