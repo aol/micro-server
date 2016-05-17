@@ -7,7 +7,7 @@ public class S3Plugin implements Plugin{
 	
 	@Override
 	public PSetX<Class> springClasses() {
-		return PSetX.of(S3Configuration.class, S3ClientProvider.class, S3Utils.class, S3TransferManagerProvider.class);
+		return PSetX.of(S3Configuration.class, S3ClientProvider.class, S3Utils.class, S3TransferManagerProvider.class, DirectoryCleaner.class);
 	}
 
 }
