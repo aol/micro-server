@@ -170,5 +170,15 @@ public class S3UtilsTest {
 		utils.getInputStream("", "");
 		verify(download).waitForCompletion();
 	}
+
+	@Test
+	public void emptyInputStream() throws IOException {
+		assertEquals(0, S3Utils.emptyInputStream().available());
+	}
+	
+	@Test(expected = IOException.class)
+	public void emptyInputStreamException() throws IOException {
+		S3Utils.emptyInputStream().read();
+	}
 	
 }

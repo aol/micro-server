@@ -32,6 +32,8 @@ import com.aol.cyclops.util.ExceptionSoftener;
 @Component
 public class S3Utils {
 
+	private static final InputStream emptyInputStream = new EmptyInputStream();
+	
 	private final AmazonS3Client client;
 	private final TransferManager transferManager;
 	private final String tmpDirectory;
@@ -132,5 +134,17 @@ public class S3Utils {
 				.createTempFile(FileSystems.getDefault().getPath(tmpDirectory), "micro-s3", "file").toFile());
 		return getInputStream(bucketName, key, tempFileSupplier);
 	}
+	
+	/** Provide empty InputStream.
+	 * <p>
+	 * This implementation can be convenient 
+	 * if you need to place some empty value to s3 bucket.
+	 *  
+	 * @return empty InputStream
+	 */
+	public static InputStream emptyInputStream() {
+		return emptyInputStream;
+	}
+	
 
 }
