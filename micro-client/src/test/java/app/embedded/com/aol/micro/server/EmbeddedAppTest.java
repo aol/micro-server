@@ -32,8 +32,8 @@ public class EmbeddedAppTest {
 	@Before
 	public void startServer(){
 		server = new MicroserverApp(EmbeddedAppLocalMain.class, 
-				new EmbeddedModule(PStackX.of(TestAppRestResource.class),"test-app"),
-				new EmbeddedModule(PStackX.of(AltAppRestResource.class),"alternative-app"));
+				EmbeddedModule.tagInterfaceModule(PStackX.of(TestAppRestResource.class),"test-app"),
+				EmbeddedModule.tagInterfaceModule(PStackX.of(AltAppRestResource.class),"alternative-app"));
 		server.start();
 	}
 	

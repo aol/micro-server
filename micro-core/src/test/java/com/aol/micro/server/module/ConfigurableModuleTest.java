@@ -7,6 +7,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import org.junit.Test;
 import org.pcollections.HashTreePSet;
 
 import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
+import com.aol.cyclops.data.collections.extensions.standard.SetX;
 import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.servers.model.ServerData;
@@ -36,16 +38,16 @@ public class ConfigurableModuleTest {
 	ConfigurableModule module;
 	ConfigurableModule unchanged;
 	private String context;
-	private List<Class> defaultResources;
+	private List<Class<?>> defaultResources;
 	private Map<String, Filter> filters;
 	private String jaxWsRsApplication;
 	private List<ServletContextListener> listeners;
 	private List<ServletRequestListener> requestListeners;
 	private String providers;
-	private List<Class> resourceClasses;
-	private List<Class> resourceAnnotationClasses;
+	private Set<Class<?>> resourceClasses;
+	private Set<Class<? extends Annotation>> resourceAnnotationClasses;
 	private Map<String, Servlet> servlets;
-	private Set<Class> springConfigurationClasses;
+	private Set<Class<?>> springConfigurationClasses;
 	private List<String> defaultJaxRsPackages;
 	
 	private Map<String, Object> serverProperties = HashMapBuilder.<String, Object>map(SERVER_PROPERTIES_KEY, 1).build();
@@ -67,8 +69,8 @@ public class ConfigurableModuleTest {
 		requestListeners = m.getRequestListeners(ServerData.builder().resources(PStackX.empty()).build());
 		providers = "providers2";
 		Module m = () -> "hello";
-		resourceClasses =new ArrayList<>();
-		resourceAnnotationClasses = Arrays.asList(Rest.class);
+		resourceClasses = SetX.empty();
+		resourceAnnotationClasses = SetX.of(Rest.class);
 		servlets = new HashMap<>();
 		springConfigurationClasses = HashTreePSet.singleton(this.getClass());
 		
@@ -139,6 +141,7 @@ public class ConfigurableModuleTest {
 	}
 	@Test
 	public void testGetRestAnnotationClassesResetAll() {
+		
 		assertThat(module.withResetAll(true).getRestAnnotationClasses(),is(resourceAnnotationClasses));
 	}
 	@Test
@@ -271,7 +274,9 @@ public class ConfigurableModuleTest {
 
 	@Test
 	public void testWithResourceAnnotationClasses() {
-		assertThat(unchanged.withRestAnnotationClasses(this.resourceClasses).getRestAnnotationClasses(),is(module.getRestAnnotationClasses()));
+		System.out.println(this.resourceAnnotationClasses);
+		System.out.println(unchanged.withRestAnnotationClasses(this.resourceAnnotationClasses).getRestAnnotationClasses());
+		assertThat(unchanged.withRestAnnotationClasses(this.resourceAnnotationClasses).getRestAnnotationClasses(),is(module.getRestAnnotationClasses()));
 	}
 
 	@Test

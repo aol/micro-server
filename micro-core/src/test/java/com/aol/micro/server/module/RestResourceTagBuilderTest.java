@@ -30,5 +30,6 @@ public class RestResourceTagBuilderTest {
 	public void testRestResourceTagClassesDefaults() {
 		assertThat(RestResourceTagBuilder.restResourceTags(RestResourceTagBuilderTest.class), hasItem( CommonRestResource.class));
 	}
+	
 
 }

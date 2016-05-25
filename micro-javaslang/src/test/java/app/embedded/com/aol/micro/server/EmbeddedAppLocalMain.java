@@ -13,8 +13,8 @@ public class EmbeddedAppLocalMain {
 	public static void main(String[] args) throws InterruptedException {
 		
 		new MicroserverApp(
-				new EmbeddedModule(Arrays.asList(TestAppRestResource.class),"test-app"),
-				new EmbeddedModule(Arrays.asList(AltAppRestResource.class),"alternative-app")).start();
+				EmbeddedModule.tagInterfaceModule(Arrays.asList(TestAppRestResource.class),"test-app"),
+				EmbeddedModule.tagInterfaceModule(Arrays.asList(AltAppRestResource.class),"alternative-app")).start();
 
 		
 

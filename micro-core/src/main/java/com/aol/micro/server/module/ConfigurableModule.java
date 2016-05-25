@@ -2,6 +2,7 @@ package com.aol.micro.server.module;
 
 import static com.aol.micro.server.utility.UsefulStaticMethods.concat;
 
+import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -16,12 +17,6 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
-import lombok.AllArgsConstructor;
-import lombok.experimental.Builder;
-import lombok.experimental.Wither;
-
-import org.pcollections.ConsPStack;
-
 import com.aol.cyclops.data.collections.extensions.persistent.PMapX;
 import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
@@ -29,15 +24,19 @@ import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.utility.HashMapBuilder;
 
+import lombok.AllArgsConstructor;
+import lombok.experimental.Builder;
+import lombok.experimental.Wither;
+
 
 @Builder
 @AllArgsConstructor
 @Wither
 public class ConfigurableModule implements Module{
 	
-	private final List<Class> restResourceClasses;
-	private final List<Class> restAnnotationClasses;
-	private final List<Class> defaultResources;
+	private final Set<Class<?>> restResourceClasses;
+	private final Set<Class<? extends Annotation>> restAnnotationClasses;
+	private final List<Class<?>> defaultResources;
 	private final List<ServletContextListener> listeners;
 	private final List<ServletRequestListener> requestListeners;
 	private final Map<String, Filter> filters;
@@ -45,7 +44,7 @@ public class ConfigurableModule implements Module{
 	private final String jaxWsRsApplication;
 	private final String providers;
 	private final String context;
-	private final Set<Class> springConfigurationClasses;
+	private final Set<Class<?>> springConfigurationClasses;
 	private final Map<String,String> propertyOverrides;
 	private final List<String> defaultJaxRsPackages;
 	private final Consumer<WebServerProvider<?>> serverConfigManager;
@@ -83,11 +82,11 @@ public class ConfigurableModule implements Module{
 	}
 	
 	@Override
-	public PStackX<String> getDefaultJaxRsPackages() {
+	public List<String> getDefaultJaxRsPackages() {
 		if(defaultJaxRsPackages!=null)
 			return PStackX.fromCollection(concat(defaultJaxRsPackages,extract(()->Module.super.getDefaultJaxRsPackages())));
 		
-		return Module.super.getDefaultJaxRsPackages();
+		return PStackX.fromCollection(Module.super.getDefaultJaxRsPackages());
 	}
 	private <T> Collection<T> extract(Supplier<Collection<T>> s) {
 		if(!resetAll)
@@ -100,23 +99,23 @@ public class ConfigurableModule implements Module{
 		return HashMapBuilder.of();
 	}
 	@Override
-	public PStackX<Class> getRestResourceClasses() {
+	public Set<Class<?>> getRestResourceClasses() {
 		if(restResourceClasses!=null)
-			return  PStackX.fromCollection(concat(restResourceClasses, extract(() -> Collections.singletonList(CommonRestResource.class))));
+			return  PSetX.fromCollection(concat(restResourceClasses, extract(() -> Collections.singletonList(CommonRestResource.class))));
 		
 		return Module.super.getRestResourceClasses();
 	}
 	
 	@Override
-	public PStackX<Class> getRestAnnotationClasses() {
+	public Set<Class<? extends Annotation>> getRestAnnotationClasses() {
 		if(restAnnotationClasses!=null)
-			return  PStackX.fromCollection(concat(restAnnotationClasses, extract(() -> Module.super.getRestAnnotationClasses())));
+			return  PSetX.fromCollection(concat(restAnnotationClasses, extract(() -> Module.super.getRestAnnotationClasses())));
 		
 		return Module.super.getRestAnnotationClasses();
 	}
 	
 	@Override
-	public PStackX<Class> getDefaultResources() {
+	public List<Class<?>> getDefaultResources() {
 		if(this.defaultResources!=null){
 			return PStackX.fromCollection((concat(this.defaultResources,extract(()->Module.super.getDefaultResources()))));
 		}
@@ -125,7 +124,7 @@ public class ConfigurableModule implements Module{
 	}
 
 	@Override
-	public PStackX<ServletContextListener> getListeners(ServerData data) {
+	public List<ServletContextListener> getListeners(ServerData data) {
 		if(listeners!=null)
 			return  PStackX.fromCollection((concat(this.listeners, extract(()->Module.super.getListeners(data)))));
 		
@@ -133,7 +132,7 @@ public class ConfigurableModule implements Module{
 	}
 
 	@Override
-	public PStackX<ServletRequestListener> getRequestListeners(ServerData data) {
+	public List<ServletRequestListener> getRequestListeners(ServerData data) {
 		if(requestListeners!=null)
 			return  PStackX.fromCollection(concat(this.requestListeners,
 					                                      extract(()->Module.super.getRequestListeners(data))));
@@ -142,7 +141,7 @@ public class ConfigurableModule implements Module{
 	}
 
 	@Override
-	public PMapX<String, Filter> getFilters(ServerData data) {
+	public Map<String, Filter> getFilters(ServerData data) {
 		if(filters!=null)
 			return  PMapX.fromMap(filters).plusAll(extractMap(()->Module.super.getFilters(data)));
 			
@@ -150,7 +149,7 @@ public class ConfigurableModule implements Module{
 	}
 
 	@Override
-	public PMapX<String, Servlet> getServlets(ServerData data) {
+	public Map<String, Servlet> getServlets(ServerData data) {
 		if(servlets!=null)
 			return  PMapX.fromMap(servlets).plusAll(extractMap(()->Module.super.getServlets(data)));
 			
@@ -178,7 +177,7 @@ public class ConfigurableModule implements Module{
 	}
 
 	@Override
-	public PSetX<Class> getSpringConfigurationClasses() {
+	public Set<Class<?>> getSpringConfigurationClasses() {
 		if(this.springConfigurationClasses!=null)
 			return PSetX.fromCollection(concat(this.springConfigurationClasses, extract(()->Module.super.getSpringConfigurationClasses())));
 			
@@ -186,7 +185,7 @@ public class ConfigurableModule implements Module{
 	}
 
 	@Override
-	public PMapX<String, Object> getServerProperties() {	
+	public Map<String, Object> getServerProperties() {	
 		if(serverProperties != null) {
 			return PMapX.fromMap(serverProperties).plusAll(extractMap(() -> Module.super.getServerProperties()));
 		} else {

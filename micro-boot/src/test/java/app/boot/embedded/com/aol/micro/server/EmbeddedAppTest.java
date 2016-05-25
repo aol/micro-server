@@ -31,8 +31,8 @@ public class EmbeddedAppTest {
 	@Before
 	public void startServer(){
 		server = new MicroserverApp(EmbeddedAppLocalMain.class, 
-				new EmbeddedModule(Arrays.asList(TestAppRestResource.class),"test-app"),
-				new EmbeddedModule(Arrays.asList(AltAppRestResource.class),"alternative-app"));
+				EmbeddedModule.annotationModule(Arrays.asList(TestAppRestResource.class),"test-app"),
+				EmbeddedModule.annotationModule(Arrays.asList(AltAppRestResource.class),"alternative-app"));
 		server.start();
 	}
 	

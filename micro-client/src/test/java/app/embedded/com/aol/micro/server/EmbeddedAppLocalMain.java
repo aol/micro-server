@@ -12,8 +12,8 @@ public class EmbeddedAppLocalMain {
 	public static void main(String[] args) throws InterruptedException {
 		
 		new MicroserverApp(
-				new EmbeddedModule(PStackX.of(TestAppRestResource.class),"test-app"),
-				new EmbeddedModule(PStackX.of(AltAppRestResource.class),"alternative-app")).start();
+				EmbeddedModule.tagInterfaceModule(PStackX.of(TestAppRestResource.class),"test-app"),
+				EmbeddedModule.tagInterfaceModule(PStackX.of(AltAppRestResource.class),"alternative-app")).start();
 
 		
 

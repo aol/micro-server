@@ -38,7 +38,7 @@ public class SwaggerPlugin implements Plugin{
 	}
 
 	@Override
-	public PSetX<Class> jaxRsResources() {
+	public PSetX<Class<?>> jaxRsResources() {
 		return PSetX.of(ApiListingResourceJSON.class,JerseyApiDeclarationProvider.class,
 				JerseyResourceListingProvider.class);
 	}
