@@ -12,7 +12,8 @@ public class EmbeddedModuleTest {
 	EmbeddedModule module;
 	@Before
 	public void setup(){
-		module = EmbeddedModule.annotationModule(restAnnotations("com.aol.micro.server.module.EmbeddedModuleTest.Anno"),"test");
+		
+		module = EmbeddedModule.annotationModule(restAnnotations(Anno.class),"test");
 	}
 	
 	@Test

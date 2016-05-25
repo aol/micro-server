@@ -39,7 +39,8 @@ public class RestResourceTagBuilder {
 
 	private static Class<?> toClass(String cl) {
 		try {
-			return Class.forName(cl);
+			
+			return Class.forName(cl,true,RestResourceTagBuilder.class.getClassLoader());
 		} catch (ClassNotFoundException e) {
 			logger.error("Class not found for {}", cl);
 			ExceptionSoftener.throwSoftenedException(e);
