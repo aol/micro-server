@@ -28,8 +28,7 @@ public class BinderDirectTest {
 		
 		
 		server = new MicroserverApp(ConfigurableModule.builder().context("binder").build().<ResourceConfig>withResourceConfigManager(rc->rc.getJaxRsConfig().register(new CustomBinder4())));
-	
-		server.start();
+
 
 	}
 	

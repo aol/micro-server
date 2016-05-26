@@ -28,7 +28,7 @@ public class BinderTest {
 		
 		server = new MicroserverApp(ConfigurableModule.builder().context("binder").jaxRsResourceObjects(PSetX.of(new CustomBinder3())).build());
 	
-		server.start();
+	
 
 	}
 	

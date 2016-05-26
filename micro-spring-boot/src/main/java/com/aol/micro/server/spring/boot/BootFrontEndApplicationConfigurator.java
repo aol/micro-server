@@ -55,6 +55,7 @@ public class BootFrontEndApplicationConfigurator  extends SpringBootServletIniti
 	
 	@Component
 	static class MyWebAppInitializer implements ServletContextInitializer{
+	
 		private final Environment environment;
 		private final Module module;
 		private final ApplicationContext rootContext;

@@ -145,7 +145,7 @@ public class MicroserverApp {
 		}else if(applications.size()==0){
 			logger.error("ERROR!  No server application factories found. If you using micro-spring-boot don't call MicroserverApp.start() method. A possible solution is add one of micro-grizzly or micro-tomcat to the classpath.");
 			System.err.println("ERROR!  No server application factories found. If you using micro-spring-boot don't call MicroserverApp.start() method. A possible solution is add one of micro-grizzly or micro-tomcat to the classpath.");
-			throw new IncorrectNumberOfServersConfiguredException("No server application factories found. A possible solution is add one of micro-grizzly or micro-tomcat to the classpath. ");
+			throw new IncorrectNumberOfServersConfiguredException("No server application factories found. If you using micro-spring-boot don't call MicroserverApp.start() method. A possible solution is add one of micro-grizzly or micro-tomcat to the classpath. ");
 			
 		}
 		

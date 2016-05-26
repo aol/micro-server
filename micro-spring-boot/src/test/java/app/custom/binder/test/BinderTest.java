@@ -25,7 +25,7 @@ public class BinderTest {
 	public void startServer(){
 		server = new MicroserverApp(()->"binder");
 	
-		server.start();
+	
 
 	}
 	
