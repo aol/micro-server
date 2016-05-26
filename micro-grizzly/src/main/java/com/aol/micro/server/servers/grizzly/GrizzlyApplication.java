@@ -89,8 +89,8 @@ public class GrizzlyApplication implements ServerApplication {
 			logger.info("Starting application {} on port {}", serverData.getModule().getContext(), serverData.getPort());
 			logger.info("Browse to http://localhost:{}/{}/application.wadl", serverData.getPort(), serverData.getModule().getContext());
 			logger.info("Configured resource classes :-");
-			serverData.extractResources().forEach(
-					t -> logger.info(t.v1() + " : " + "http://localhost:" + serverData.getPort() + "/" + serverData.getModule().getContext() + t.v2()));
+			serverData.extractResources()
+					.forEach(t -> logger.info(t.v1() + " : " + "http://localhost:" + serverData.getPort() + "/" + serverData.getModule().getContext() + t.v2()));
 			;
 			httpServer.start();
 			start.complete(true);

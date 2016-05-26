@@ -1,5 +1,6 @@
 package com.aol.micro.server.rest.jersey;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -23,7 +24,7 @@ public class JerseyPlugin implements Plugin{
 		return Optional.of(new ConfigureMainServlet().servletConfig());
 	}
 	@Override
-	public Function<FeatureContext,PMapX<String,Object>> jacksonFeatureProperties(){
+	public Function<FeatureContext,Map<String,Object>> jacksonFeatureProperties(){
 		return context->PMapX.fromMap(MapXs.of(  CommonProperties.MOXY_JSON_FEATURE_DISABLE + '.'
                 + context.getConfiguration().getRuntimeType().name().toLowerCase(),true));
 	}

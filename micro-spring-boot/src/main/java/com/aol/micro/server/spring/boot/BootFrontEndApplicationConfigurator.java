@@ -55,6 +55,7 @@ public class BootFrontEndApplicationConfigurator  extends SpringBootServletIniti
 	
 	@Component
 	static class MyWebAppInitializer implements ServletContextInitializer{
+	
 		private final Environment environment;
 		private final Module module;
 		private final ApplicationContext rootContext;
@@ -84,8 +85,8 @@ public class BootFrontEndApplicationConfigurator  extends SpringBootServletIniti
 			new ServletConfigurer(serverData, PStackX.fromIterable(servletDataList)).addServlets(webappContext);
 
 			new FilterConfigurer(serverData, PStackX.fromIterable(filterDataList)).addFilters(webappContext);
-			PStack<ServletContextListener> servletContextListenerData = module.getListeners(serverData).filter(i->!(i instanceof ContextLoader));
-		    PStack<ServletRequestListener> servletRequestListenerData =	module.getRequestListeners(serverData);
+			PStack<ServletContextListener> servletContextListenerData = PStackX.fromCollection(module.getListeners(serverData)).filter(i->!(i instanceof ContextLoader));
+		    PStack<ServletRequestListener> servletRequestListenerData =	PStackX.fromCollection(module.getRequestListeners(serverData));
 			
 			new ServletContextListenerConfigurer(serverData, servletContextListenerData, servletRequestListenerData).addListeners(webappContext);
 			

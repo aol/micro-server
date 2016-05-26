@@ -7,7 +7,7 @@ import com.aol.micro.server.rest.jackson.JacksonFeature;
 public class JacksonPlugin implements Plugin {
 
 	@Override
-	public PSetX<Class> jaxRsResources() {
+	public PSetX<Class<?>> jaxRsResources() {
 
 		return PSetX.of(JacksonFeature.class);
 		

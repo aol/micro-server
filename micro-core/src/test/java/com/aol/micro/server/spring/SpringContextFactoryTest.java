@@ -23,13 +23,13 @@ import com.aol.micro.server.config.Microserver;
 public class SpringContextFactoryTest {
 
 
-	@SuppressWarnings("rawtypes")
+	
 	@Test
 	public void blacklisting() {
 						
 		SpringBuilder springBuilder = mock(SpringBuilder.class);
 		
-		Set<Class> classes = new HashSet<>();
+		Set<Class<?>> classes = new HashSet<>();
 		classes.add(Integer.class);
 		classes.add(String.class);
 		Config config = Config.instance().withBasePackages(new String[] {"com.aol.micro.server.spring"}).set();

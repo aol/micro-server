@@ -1,5 +1,6 @@
 package com.aol.micro.server.spring.boot;
 
+import java.util.Map;
 import java.util.function.Function;
 
 import javax.ws.rs.core.FeatureContext;
@@ -12,7 +13,6 @@ import com.aol.cyclops.data.collections.extensions.standard.MapXs;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.rest.jersey.SpringBootJerseyRestApplication;
 import com.aol.micro.server.spring.SpringBuilder;
-import com.aol.micro.server.spring.boot.web.DelegatingContextListener;
 
 /**
  * 
@@ -31,12 +31,12 @@ public class BootPlugin implements Plugin{
 
 	@Override
 	public PSetX<Class> springClasses() {
-		return PSetX.of(SpringBootJerseyRestApplication.class);//,DelegatingContextListener.class);
+		return PSetX.of(SpringBootJerseyRestApplication.class);
 	}
 
 	
 	@Override
-	public Function<FeatureContext,PMapX<String,Object>> jacksonFeatureProperties(){
+	public Function<FeatureContext,Map<String,Object>> jacksonFeatureProperties(){
 		return context->PMapX.fromMap(MapXs.of(  CommonProperties.MOXY_JSON_FEATURE_DISABLE + '.'
                 + context.getConfiguration().getRuntimeType().name().toLowerCase(),true));
 	}

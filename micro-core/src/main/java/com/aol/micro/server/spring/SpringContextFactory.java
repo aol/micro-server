@@ -33,7 +33,7 @@ public class SpringContextFactory {
 	@Wither
 	private final SpringBuilder springBuilder;
 	
-	public SpringContextFactory(Config config, Class c, Set<Class> classes){
+	public SpringContextFactory(Config config, Class<?> c, Set<Class<?>> classes){
 		Set<Class> s = new HashSet<Class>(classes);
 		s.addAll(config.getClasses());
 		
@@ -56,7 +56,7 @@ public class SpringContextFactory {
 				.findFirst()
 				.orElse(new SpringApplicationConfigurator());
 	}
-	public SpringContextFactory(SpringBuilder builder,Config config, Class c, Set<Class> classes){
+	public SpringContextFactory(SpringBuilder builder,Config config, Class<?> c, Set<Class<?>> classes){
 		Set<Class> s = new HashSet<Class>(classes);
 		s.addAll(config.getClasses());
 		

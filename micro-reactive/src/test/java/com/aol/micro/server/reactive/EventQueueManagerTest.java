@@ -1,14 +1,13 @@
 package com.aol.micro.server.reactive;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,73 +16,10 @@ import com.aol.cyclops.control.Eval;
 import com.aol.cyclops.control.Maybe;
 import com.aol.cyclops.control.ReactiveSeq;
 import com.aol.cyclops.data.async.QueueFactories;
-import com.aol.cyclops.data.collections.extensions.standard.ListX;
-import com.aol.cyclops.data.collections.extensions.standard.QueueX;
-import com.aol.cyclops.data.collections.extensions.standard.SetX;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
 
 public class EventQueueManagerTest {
 	
-	@Test
-	public void streamMap(){
-		
-		Stream.of(1)
-			  .map(i->i*2);
-		
-		//Stream[2]
-		
-		
-		Optional.of(1)
-				.map(i->i*2);
-		
-		//Optional[2]              
-		
-		
-		
-		
-		
-		CompletableFuture.completedFuture(1)
-						 .thenApply(i->i*2);
-		
-		//CompletableFuture[2]                             
-		
-		
-		Arrays.asList(1)
-			  .stream()
-		      .map(i->i*2)
-		      .collect(Collectors.toList());
 	
-		//ArrayList[2]
-		
-		
-		ListX.of(1,2)
-			 .map(i->i*2);
-		
-		//ListX[2,4]
-		
-		
-		SetX.of(10,20,30,40,50)
-			.grouped(2)
-			.printOut();
-		
-		
-		
-		
-	
-		QueueX.of(1,2,3,4,5)
-		      .schedule("0 20 * * *",Executors.newScheduledThreadPool(1))
-		      .connect()
-		      .map(this::processJob)
-		      .map(status->"Job complete : " + status)
-		      .printOut();
-		
-		
-		
-		
-		
-	}
 	private String processJob(int in){
 		return null;
 	}

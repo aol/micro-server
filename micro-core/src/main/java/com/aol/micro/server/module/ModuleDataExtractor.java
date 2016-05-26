@@ -8,17 +8,17 @@ import java.util.stream.Collectors;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 
-import lombok.AllArgsConstructor;
-
-import org.pcollections.ConsPStack;
-import org.pcollections.PStack;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
+import com.aol.micro.server.auto.discovery.JaxRsResource;
+import com.aol.micro.server.auto.discovery.JaxRsResourceWrapper;
 import com.aol.micro.server.servers.model.FilterData;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
+
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class ModuleDataExtractor {
@@ -30,6 +30,9 @@ public class ModuleDataExtractor {
 			List resources = new ArrayList<>();
 			module.getRestResourceClasses().forEach(it -> resources.addAll(rootContext.getBeansOfType(it).values()));
 			module.getRestAnnotationClasses().forEach(it -> resources.addAll(rootContext.getBeansWithAnnotation(it).values()));
+			rootContext.getBeansWithAnnotation(JaxRsResource.class).forEach((n,it)->resources.add(it));
+			rootContext.getBeansOfType(JaxRsResourceWrapper.class).forEach((n,it)->resources.add(it.getResource()));
+			resources.addAll(module.getJaxRsResourceObjects());
 			return PStackX.fromCollection(resources);
 		
 	}

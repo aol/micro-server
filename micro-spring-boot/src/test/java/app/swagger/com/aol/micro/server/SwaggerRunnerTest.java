@@ -42,8 +42,9 @@ public class SwaggerRunnerTest implements Module{
 		
 		
 		
-		assertThat(rest.getJson("http://localhost:8080/swagger-app/api-docs/stats"),containsString("Make a ping call"));
-	
+		assertThat(rest.getJson("http://localhost:8080/swagger-app/stats/ping"),containsString("1"));
+		assertThat(rest.getJson("http://localhost:8080/swagger-app/api-docs"),containsString("apiVersion"));
+		
 	}
 
 

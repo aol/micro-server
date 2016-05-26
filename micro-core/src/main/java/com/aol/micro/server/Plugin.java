@@ -1,10 +1,9 @@
 package com.aol.micro.server;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 import javax.servlet.Filter;
@@ -21,7 +20,6 @@ import com.aol.micro.server.servers.ServerApplicationFactory;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.spring.SpringBuilder;
 import com.aol.micro.server.spring.SpringDBConfig;
-import com.aol.micro.server.utility.HashMapBuilder;
 import com.fasterxml.jackson.databind.Module;
 
 /**
@@ -50,7 +48,7 @@ public interface Plugin {
 	/**
 	 * @return Jackson feature properties
 	 */
-	default Function<FeatureContext, PMapX<String, Object>> jacksonFeatureProperties(){
+	default Function<FeatureContext, Map<String, Object>> jacksonFeatureProperties(){
 		return context->PMapX.empty();
 	}
 	/**
@@ -65,22 +63,29 @@ public interface Plugin {
 	default Optional<ServerApplicationFactory> serverApplicationFactory(){
 		return Optional.empty();
 	}
+	
 	/**
 	 * @return Jackson modules for this plugin
 	 */
-	default PSetX<Module> jacksonModules(){
+	default Set<Module> jacksonModules(){
 		return PSetX.empty();
 	}
 	/**
-	 * @return jax-rs Resources for this plugin
+	 *  @return jax-rs Resources (Objects) for this plugin
 	 */
-	default PSetX<Class> jaxRsResources(){
+	default Set<Object> jaxRsResourceObjects(){
+		return PSetX.empty();
+	}
+	/**
+	 * @return jax-rs Resources (Classes) for this plugin
+	 */
+	default Set<Class<?>> jaxRsResources(){
 		return PSetX.empty();
 	}
 	/**
 	 * @return  jax-rs Packages for this plugin
 	 */
-	default PSetX<String> jaxRsPackages(){
+	default Set<String> jaxRsPackages(){
 		return  PSetX.empty();
 	}
 	/**
@@ -92,44 +97,44 @@ public interface Plugin {
 	/**
 	 * @return Spring configuration classes for this plugin
 	 */
-	default PSetX<Class> springClasses(){
+	default Set<Class> springClasses(){
 		return PSetX.empty();
 	}
 	/**
 	 * @return Servlet Context Listeners for this plugin
 	 */
-	default PSetX<Function<ServerData,ServletContextListener>> servletContextListeners(){
+	default Set<Function<ServerData,ServletContextListener>> servletContextListeners(){
 		return PSetX.empty();
 	}
 	/**
 	 * @return Servlet Request Listeners for this plugin
 	 */
-	default PSetX<Function<ServerData,ServletRequestListener>> servletRequestListeners(){
+	default Set<Function<ServerData,ServletRequestListener>> servletRequestListeners(){
 		return PSetX.empty();
 	}
 	/**
 	 * @return Filters for this plugin
 	 */
-	default Function<ServerData,PMapX<String,Filter>> filters(){
+	default Function<ServerData,Map<String,Filter>> filters(){
 		return serverData -> PMapX.empty();
 	}
 	/**
 	 * @return Servlets for this plugin
 	 */
-	default Function<ServerData,PMapX<String,Servlet>> servlets(){
+	default Function<ServerData,Map<String,Servlet>> servlets(){
 		return serverData -> PMapX.empty();
 	}
 	/**
 	 * @return jax-rs Providers for this plugin
 	 */
-	default PStackX<String> providers(){
+	default List<String> providers(){
 		return PStackX.empty();
 	}
 	
 	/**
 	 * @return Jersey server properties for this plugin
 	 */
-	default PMapX<String, Object> getServerProperties() {		
+	default Map<String, Object> getServerProperties() {		
 		return PMapX.empty();	
 	}
 }

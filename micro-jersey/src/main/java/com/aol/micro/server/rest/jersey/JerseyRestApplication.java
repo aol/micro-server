@@ -26,7 +26,7 @@ public class JerseyRestApplication extends ResourceConfig {
 	private static  final  ConcurrentMap<String, List<String>> packages = new ConcurrentHashMap<>();
 	
 	@Getter
-	private static final  ConcurrentMap<String, List<Class>> resourcesClasses = new ConcurrentHashMap<>();
+	private static final  ConcurrentMap<String, List<Class<?>>> resourcesClasses = new ConcurrentHashMap<>();
 	
 	@Getter
 	private static final  ConcurrentMap<String, Consumer<JaxRsProvider<Object>>> resourceConfigManager = new ConcurrentHashMap<>();
@@ -41,7 +41,7 @@ public class JerseyRestApplication extends ResourceConfig {
 		        serverPropertyMap.get(ServerThreadLocalVariables.getContext().get()));		
 	}
 
-	public JerseyRestApplication(List<Object> allResources,List<String> packages, List<Class> resources, Map<String, Object> serverProperties) {
+	public JerseyRestApplication(List<Object> allResources,List<String> packages, List<Class<?>> resources, Map<String, Object> serverProperties) {
 		
 		if (allResources != null) {
 			for (Object next : allResources) {
@@ -74,7 +74,7 @@ public class JerseyRestApplication extends ResourceConfig {
 			return ((RestResource)next).isSingleton();
 		Rest rest = next.getClass().getAnnotation(Rest.class);
 		if(rest == null)
-			return false;
+			return !(next instanceof Class);
 		return rest.isSingleton();
 	}
 

@@ -1,10 +1,12 @@
 package com.aol.micro.server.module;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import javax.servlet.Filter;
@@ -21,6 +23,7 @@ import com.aol.cyclops.data.collections.extensions.persistent.PMapX;
 import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.cyclops.data.collections.extensions.standard.ListX;
+import com.aol.cyclops.data.collections.extensions.standard.SetX;
 import com.aol.cyclops.util.stream.StreamUtils;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
@@ -31,7 +34,14 @@ import com.aol.micro.server.servers.model.ServerData;
 
 public interface Module {
 	
-	default PMapX<String, Object> getServerProperties() {		
+	default Set<Object> getJaxRsResourceObjects(){
+		return PluginLoader.INSTANCE.plugins.get()
+				.flatMap(Plugin::jaxRsResourceObjects)
+				.toPSetX();
+	}
+	
+	
+	default Map<String, Object> getServerProperties() {		
 		return PMapX.empty();	
 	}
 	
@@ -41,25 +51,25 @@ public interface Module {
 	default <T> Consumer<JaxRsProvider<T>> getResourceConfigManager(){
 		return rc->{};
 	}
-	default PStackX<String> getPackages(){
+	default List<String> getPackages(){
 		return PStackX.empty();
 	}
 	
-	default PMapX<String,String> getPropertyOverrides(){
+	default Map<String,String> getPropertyOverrides(){
 		return PMapX.empty();
 	}
-	default PSetX<Class> getSpringConfigurationClasses(){
+	default Set<Class<?>> getSpringConfigurationClasses(){
 		return PSetX.of(Classes.CORE_CLASSES.getClasses());
 	}
-	default PStackX<Class> getRestResourceClasses() {
-		return PStackX.of(RestResource.class);
+	default Set<Class<?>> getRestResourceClasses() {
+		return PSetX.of(RestResource.class);
 	}
-	default PStackX<Class> getRestAnnotationClasses() {
-		return PStackX.of(Rest.class);
+	default Set<Class<? extends Annotation>> getRestAnnotationClasses() {
+		return SetX.of(Rest.class);
 	}
 	
 	
-	default PStackX<String> getDefaultJaxRsPackages(){
+	default List<String> getDefaultJaxRsPackages(){
 		
 		return PluginLoader.INSTANCE.plugins.get().stream()
 				.filter(module -> module.servletContextListeners()!=null)
@@ -69,15 +79,14 @@ public interface Module {
 		
 	}
 	
-	default PStackX<Class> getDefaultResources(){
+	default List<Class<?>> getDefaultResources(){
 		return PluginLoader.INSTANCE.plugins.get().stream()
-				.filter(module -> module.servletContextListeners()!=null)
 				.flatMapIterable(Plugin::jaxRsResources)
 				.toPStackX();
 		
 	}
 	
-	default PStackX<ServletContextListener> getListeners(ServerData data){
+	default List<ServletContextListener> getListeners(ServerData data){
 		List<ServletContextListener> list= new ArrayList<>();
 		if(data.getRootContext() instanceof WebApplicationContext){
 			list.add(new ContextLoaderListener((WebApplicationContext)data
@@ -94,7 +103,7 @@ public interface Module {
 		
 		return listeners.plusAll(list);
 	}
-	default PStackX<ServletRequestListener> getRequestListeners(ServerData data){
+	default List<ServletRequestListener> getRequestListeners(ServerData data){
 		
 		return PluginLoader.INSTANCE.plugins.get().stream()
 						   .filter(module -> module.servletRequestListeners()!=null)
@@ -104,7 +113,7 @@ public interface Module {
 		
 		
 	}
-	default PMapX<String,Filter> getFilters(ServerData data) {
+	default Map<String,Filter> getFilters(ServerData data) {
 		Map<String, Filter> map = new HashMap<>();
 		
 		ReactiveSeq
@@ -116,7 +125,8 @@ public interface Module {
 				.forEach(pluginMap -> map.putAll(pluginMap));
 		return PMapX.fromMap(map);
 	}
-	default PMapX<String,Servlet> getServlets(ServerData data) {
+	
+	default Map<String,Servlet> getServlets(ServerData data) {
 		Map<String, Servlet> map = new HashMap<>();
 		ReactiveSeq
 				.fromStream(
