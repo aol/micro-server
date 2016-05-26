@@ -1,11 +1,10 @@
-package app.custom.binder.test;
+package app.custom.binder.noanno;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.spi.internal.ResourceMethodInvocationHandlerProvider;
 
 import com.aol.micro.server.auto.discovery.JaxRsResource;
 
-@JaxRsResource
-public class CustomBinder extends AbstractBinder {
+public class CustomBinder2 extends AbstractBinder {
 
     @Override
     protected void configure() {

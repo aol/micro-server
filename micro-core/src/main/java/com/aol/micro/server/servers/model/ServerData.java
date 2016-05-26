@@ -45,7 +45,9 @@ public class ServerData {
 	public ReactiveSeq<Tuple2<String,String>> extractResources() {
 		
 		
-		return resources.stream().peek(resource -> logMissingPath(resource)).map(resource -> Tuple.tuple(resource.getClass().getName(), 
+		return resources.stream().peek(resource -> logMissingPath(resource))
+								.filter(resource-> resource.getClass().getAnnotation(Path.class)!=null)
+								.map(resource -> Tuple.tuple(resource.getClass().getName(), 
 										resource.getClass().getAnnotation(Path.class).value()));
 		
 
@@ -53,8 +55,8 @@ public class ServerData {
 
 	private void logMissingPath(Object resource) {
 		if(resource.getClass().getAnnotation(Path.class)==null){
-			logger.error("Missing path attribute for resource " + resource);
-			throw new RestResourceMissingPathException("Missing path attribute for resource " + resource);
+			logger.info("Resource with no path  " + resource);
+			
 		}
 	}
 

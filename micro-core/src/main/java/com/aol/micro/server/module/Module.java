@@ -3,6 +3,7 @@ package com.aol.micro.server.module;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +33,13 @@ import com.aol.micro.server.config.Classes;
 import com.aol.micro.server.servers.model.ServerData;
 
 public interface Module {
+	
+	default Set<Object> getJaxRsResourceObjects(){
+		return PluginLoader.INSTANCE.plugins.get()
+				.flatMap(Plugin::jaxRsResourceObjects)
+				.toPSetX();
+	}
+	
 	
 	default Map<String, Object> getServerProperties() {		
 		return PMapX.empty();	
@@ -73,7 +81,6 @@ public interface Module {
 	
 	default List<Class<?>> getDefaultResources(){
 		return PluginLoader.INSTANCE.plugins.get().stream()
-				.filter(module -> module.servletContextListeners()!=null)
 				.flatMapIterable(Plugin::jaxRsResources)
 				.toPStackX();
 		
@@ -118,6 +125,7 @@ public interface Module {
 				.forEach(pluginMap -> map.putAll(pluginMap));
 		return PMapX.fromMap(map);
 	}
+	
 	default Map<String,Servlet> getServlets(ServerData data) {
 		Map<String, Servlet> map = new HashMap<>();
 		ReactiveSeq

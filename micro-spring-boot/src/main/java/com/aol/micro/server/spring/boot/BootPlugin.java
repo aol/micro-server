@@ -31,7 +31,7 @@ public class BootPlugin implements Plugin{
 
 	@Override
 	public PSetX<Class> springClasses() {
-		return PSetX.of(SpringBootJerseyRestApplication.class);//,DelegatingContextListener.class);
+		return PSetX.of(SpringBootJerseyRestApplication.class);
 	}
 
 	

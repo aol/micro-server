@@ -34,7 +34,7 @@ public class FilterTest {
 	public void startServer(){
 		
 		server = new MicroserverApp( FilterTest.class, ()-> "simple-app");
-		server.start();
+		
 
 	}
 	

@@ -3,11 +3,13 @@ package com.aol.micro.server.rest.jersey;
 import java.util.List;
 import java.util.Map;
 
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
+import com.aol.micro.server.GlobalState;
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.module.JaxRsProvider;
@@ -18,7 +20,7 @@ public class SpringBootJerseyRestApplication extends ResourceConfig {
 
 	@Autowired(required=false)
 	public SpringBootJerseyRestApplication(ApplicationContext context){
-		this(context, ()->"");
+		this(context, GlobalState.state.getModules().firstValue());
 	}
 	
 	@Autowired(required=false)
@@ -27,6 +29,7 @@ public class SpringBootJerseyRestApplication extends ResourceConfig {
 		
 		List allResources = extractor.getRestResources(context);
 		
+		System.out.println("Resources " + allResources);
 		Map<String, Object> serverProperties = module.getServerProperties();
 		if (allResources != null) {
 			for (Object next : allResources) {
@@ -47,6 +50,9 @@ public class SpringBootJerseyRestApplication extends ResourceConfig {
 			}
 		}
 		
+		context.getBeansOfType(AbstractBinder.class).forEach((n,e)->register(e));
+		
+		
 		module.getDefaultJaxRsPackages().stream().forEach( e -> packages(e));
 		module.getDefaultResources().stream().forEach( e -> register(e));
 		
@@ -60,9 +66,10 @@ public class SpringBootJerseyRestApplication extends ResourceConfig {
 			return ((RestResource)next).isSingleton();
 		Rest rest = next.getClass().getAnnotation(Rest.class);
 		if(rest == null)
-			return false;
+			return !(next instanceof Class);
 		return rest.isSingleton();
 	}
+
 
 	
 

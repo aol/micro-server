@@ -63,6 +63,7 @@ public interface Plugin {
 	default Optional<ServerApplicationFactory> serverApplicationFactory(){
 		return Optional.empty();
 	}
+	
 	/**
 	 * @return Jackson modules for this plugin
 	 */
@@ -70,7 +71,13 @@ public interface Plugin {
 		return PSetX.empty();
 	}
 	/**
-	 * @return jax-rs Resources for this plugin
+	 *  @return jax-rs Resources (Objects) for this plugin
+	 */
+	default Set<Object> jaxRsResourceObjects(){
+		return PSetX.empty();
+	}
+	/**
+	 * @return jax-rs Resources (Classes) for this plugin
 	 */
 	default Set<Class<?>> jaxRsResources(){
 		return PSetX.empty();

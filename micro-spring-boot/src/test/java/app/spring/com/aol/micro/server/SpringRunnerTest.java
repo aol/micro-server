@@ -16,8 +16,7 @@ import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.spring.boot.MicroSpringBoot;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
-/**@Configuration
-@ComponentScan(basePackages = { "app.spring.com.aol.micro.server" })**/
+
 @Microserver @MicroSpringBoot
 public class SpringRunnerTest {
 

@@ -1,9 +1,9 @@
-package app.custom.binder.test;
+package app.custom.binder.direct;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-public class MyIncovationHandler implements InvocationHandler {
+public class DirectMyIncovationHandler implements InvocationHandler {
 
 	public static volatile boolean captured= false;
     @Override

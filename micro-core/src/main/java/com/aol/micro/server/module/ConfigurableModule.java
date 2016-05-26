@@ -6,6 +6,7 @@ import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +35,7 @@ import lombok.experimental.Wither;
 @Wither
 public class ConfigurableModule implements Module{
 	
+	private final Set<Object> jaxRsResourceObjects;
 	private final Set<Class<?>> restResourceClasses;
 	private final Set<Class<? extends Annotation>> restAnnotationClasses;
 	private final List<Class<?>> defaultResources;
@@ -54,18 +56,23 @@ public class ConfigurableModule implements Module{
 	
 	
 	public <T> ConfigurableModule withResourceConfigManager(Consumer<JaxRsProvider<T>> resourceConfigManager){
-		return new ConfigurableModule(restResourceClasses,restAnnotationClasses, defaultResources,
+		return new ConfigurableModule(jaxRsResourceObjects,restResourceClasses,restAnnotationClasses, defaultResources,
 				listeners, requestListeners,filters,servlets, jaxWsRsApplication,providers,
 				context, springConfigurationClasses, propertyOverrides,defaultJaxRsPackages,serverConfigManager,
 				(Consumer)resourceConfigManager,serverProperties, resetAll);
 	}
 	public <T> ConfigurableModule withServerConfigManager(Consumer<WebServerProvider<?>> serverConfigManager){
-		return new ConfigurableModule(restResourceClasses,restAnnotationClasses, defaultResources,
+		return new ConfigurableModule(jaxRsResourceObjects,restResourceClasses,restAnnotationClasses, defaultResources,
 				listeners, requestListeners,filters,servlets, jaxWsRsApplication,providers,
 				context, springConfigurationClasses, propertyOverrides,defaultJaxRsPackages,
 				(Consumer)serverConfigManager,resourceConfigManager, serverProperties, resetAll);
 	}
-	
+	@Override
+	public Set<Object> getJaxRsResourceObjects(){
+		if(this.jaxRsResourceObjects!=null)
+			return PSetX.fromCollection(concat(this.jaxRsResourceObjects, extract(() -> Module.super.getJaxRsResourceObjects())));
+		return Module.super.getJaxRsResourceObjects();
+	}
 	@Override
 	public <T> Consumer<WebServerProvider<T>> getServerConfigManager(){
 		if(serverConfigManager!=null)

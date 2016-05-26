@@ -74,7 +74,7 @@ public class JerseyRestApplication extends ResourceConfig {
 			return ((RestResource)next).isSingleton();
 		Rest rest = next.getClass().getAnnotation(Rest.class);
 		if(rest == null)
-			return false;
+			return !(next instanceof Class);
 		return rest.isSingleton();
 	}
 

@@ -13,6 +13,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
 import com.aol.cyclops.control.ReactiveSeq;
+import com.aol.cyclops.data.collections.extensions.standard.ListX;
 import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.cyclops.util.stream.StreamUtils;
 import com.aol.micro.server.config.Config;
@@ -34,7 +35,7 @@ import com.aol.micro.server.spring.SpringContextFactory;
 public class MicroserverApp {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	private final List<Module> modules;
+	private final ListX<Module> modules;
 	private final CompletableFuture end = new CompletableFuture();
 	
 
@@ -50,7 +51,8 @@ public class MicroserverApp {
 	 * @param modules Multiple Microservice end points that can be deployed within a single Spring context
 	 */
 	public MicroserverApp(Module... modules) {
-		this.modules = Arrays.asList(modules);
+		this.modules = ListX.of(modules);
+		GlobalState.state.setModules(this.modules);
 		initSpringProperties(modules[0]);
 		Class c =extractClass();
 		springContext = new SpringContextFactory(new MicroserverConfigurer().buildConfig(
@@ -72,7 +74,8 @@ public class MicroserverApp {
 	 */
 	public MicroserverApp(Class c, Module... modules) {
 
-		this.modules = Arrays.asList(modules);
+		this.modules = ListX.of(modules);
+		GlobalState.state.setModules(this.modules);
 		initSpringProperties(modules[0]);
 		springContext = new SpringContextFactory(
 				new MicroserverConfigurer().buildConfig(c), c,
@@ -112,9 +115,8 @@ public class MicroserverApp {
 
 	public List<Thread> start() {
 
-		List<ServerApplication> apps = modules
-				.stream()
-				.map(module -> createServer(module)).collect(Collectors.toList());
+		List<ServerApplication> apps = modules.map(module -> createServer(module));
+				
 
 		ServerRunner runner;
 		try {
@@ -141,8 +143,8 @@ public class MicroserverApp {
 			System.err.println("ERROR!  Multiple server application factories found : The solution is remove one these plugins from your classpath "+applications);
 			throw new IncorrectNumberOfServersConfiguredException("Multiple server application factories found : The solution is remove one these plugins from your classpath "+applications);
 		}else if(applications.size()==0){
-			logger.error("ERROR!  No server application factories found. A possible solution is add one of micro-grizzly or micro-tomcat to the classpath.");
-			System.err.println("ERROR!  No server application factories found. A possible solution is add one of micro-grizzly or micro-tomcat to the classpath.");
+			logger.error("ERROR!  No server application factories found. If you using micro-spring-boot don't call MicroserverApp.start() method. A possible solution is add one of micro-grizzly or micro-tomcat to the classpath.");
+			System.err.println("ERROR!  No server application factories found. If you using micro-spring-boot don't call MicroserverApp.start() method. A possible solution is add one of micro-grizzly or micro-tomcat to the classpath.");
 			throw new IncorrectNumberOfServersConfiguredException("No server application factories found. A possible solution is add one of micro-grizzly or micro-tomcat to the classpath. ");
 			
 		}
