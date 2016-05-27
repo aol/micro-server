@@ -62,6 +62,8 @@ To configure the application register to use the callers ip (rather than the sen
 	
 ### Configure a target address (e.g. a VIP or load balancer)
 
-Use the property target.endpoint to define an end point which should be used to communicate with the service being registered
+Use the property target.endpoint to define an end point which should be used to communicate with the service being registered.
+
+I.e. this is not the service registry URL (see above), this is a Load balancer that should be used instead of the host that is registring itself own end point. If you have 4 services of the same type behind a load balancer, each will register their host addresses, but you can also configure a common target address, that let's clients of the service registry know not to communicate directly to each host but to use their target (or load balancer address instead).
 
      target.endpoint=https://www.myendpoint.com/api	
