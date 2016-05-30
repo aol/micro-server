@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.utility.DistributedLockService;
+import com.aol.micro.server.distlock.DistributedLockService;
 
 @Component
 public class DistributedLockServiceMySqlImpl implements DistributedLockService {

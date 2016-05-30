@@ -1,7 +1,12 @@
 package com.aol.micro.server.curator.lock;
 
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.api.CreateBuilder;
 import org.apache.curator.framework.api.ExistsBuilder;
@@ -9,8 +14,7 @@ import org.apache.curator.framework.api.ProtectACLCreateModePathAndBytesable;
 import org.apache.zookeeper.data.Stat;
 import org.junit.Test;
 
-import com.aol.micro.server.curator.lock.DistributedLockServiceCuratorImpl;
-import com.aol.micro.server.utility.DistributedLockService;
+import com.aol.micro.server.distlock.DistributedLockService;
 
 public class DistributedLockServiceCuratorImplTest {
 	@Test

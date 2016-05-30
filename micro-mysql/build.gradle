@@ -2,7 +2,7 @@ description = 'micro-mysql'
 dependencies {
 	compile group: 'org.springframework', name: 'spring-jdbc', version:"${springVersion}"
 	compile 'com.zaxxer:HikariCP:'+hikariCPVersion
-	compile project(':micro-core')
+	compile project(':micro-distributed-lock')
 	testCompile project(':micro-grizzly-with-jersey')
 	testCompile group: 'org.hsqldb', name:'hsqldb', version:'2.0.0'
 	

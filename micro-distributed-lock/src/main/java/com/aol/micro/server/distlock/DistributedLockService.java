@@ -1,5 +1,5 @@
 
-package com.aol.micro.server.utility;
+package com.aol.micro.server.distlock;
 
 
 public interface DistributedLockService {

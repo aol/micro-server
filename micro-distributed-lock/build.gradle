@@ -1,46 +1,19 @@
-description = 'micro-curator'
-sourceSets {
-    integTest {
-        java {
-		compileClasspath += main.output + test.output
-		runtimeClasspath += main.output + test.output
-		srcDir file('src/integration/java')
-	}
-        resources.srcDir file('src/integration/resources')
-    }
-}
-
-task integTest(type: Test) {
-    testClassesDir = sourceSets.integTest.output.classesDir
-    classpath = sourceSets.integTest.runtimeClasspath
-}
-
-check.dependsOn integTest
-integTest.dependsOn test
-
+description = 'micro-distributed-lock'
 dependencies {
-	compile 'org.apache.curator:curator-framework:' + curatorVersion
-	compile 'org.apache.curator:curator-recipes:' + curatorVersion
-	compile project(':micro-distributed-lock')
-	
-	testCompile 'commons-io:commons-io:2.4'
 	testCompile project(':micro-grizzly-with-jersey')
-	integTestCompile sourceSets.main.output		
-	integTestCompile sourceSets.test.output 
+	testCompile group: 'org.hsqldb', name:'hsqldb', version:'2.0.0'
 	
-	integTestCompile configurations.testCompile
-	integTestRuntime configurations.testRuntime	
 }
 
 modifyPom {
 	project {
-		name 'Microserver curator integration'
+		name 'Microserver Distributed Lock'
 		description 'Opinionated rest microservices'
 		url 'https://github.com/aol/micro-server'
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'micro-curator'
+		artifactId 'micro-distributed-lock'
 		version "$version" 
 		
 		
@@ -59,6 +32,16 @@ modifyPom {
 		}
 
 		developers {
+			developer {
+				id 'johnmcclean-aol'
+				name 'John McClean'
+				email 'john.mcclean@teamaol.com'
+			}
+			developer {
+				id 'kewangie'
+				name 'Ke Wang'
+				email 'ke.wang@teamaol.com'
+			}
 			developer {
 				id 'earlzero'
 				name 'Nikita Sapozhnikov'

@@ -2,9 +2,6 @@ package com.aol.micro.server.curator.lock;
 
 import java.util.concurrent.TimeUnit;
 
-import lombok.AllArgsConstructor;
-import lombok.experimental.Wither;
-
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessSemaphoreMutex;
 import org.apache.curator.framework.state.ConnectionState;
@@ -12,7 +9,10 @@ import org.apache.curator.framework.state.ConnectionStateListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.micro.server.utility.DistributedLockService;
+import com.aol.micro.server.distlock.DistributedLockService;
+
+import lombok.AllArgsConstructor;
+import lombok.experimental.Wither;
 
 @Wither
 @AllArgsConstructor
