@@ -1,8 +1,6 @@
 description = 'micro-distributed-lock'
 dependencies {
-	testCompile project(':micro-grizzly-with-jersey')
-	testCompile group: 'org.hsqldb', name:'hsqldb', version:'2.0.0'
-	
+	compile project(':micro-core')	
 }
 
 modifyPom {
