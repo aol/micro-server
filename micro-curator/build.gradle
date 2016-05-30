@@ -21,7 +21,7 @@ integTest.dependsOn test
 dependencies {
 	compile 'org.apache.curator:curator-framework:' + curatorVersion
 	compile 'org.apache.curator:curator-recipes:' + curatorVersion
-	compile project(':micro-core')
+	compile project(':micro-distributed-lock')
 	
 	testCompile 'commons-io:commons-io:2.4'
 	testCompile project(':micro-grizzly-with-jersey')

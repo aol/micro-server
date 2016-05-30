@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.utility.DistributedLockService;
+import com.aol.micro.server.distlock.DistributedLockService;
 
 @Component
 public class CuratorDistributedLockServiceProvider {
