@@ -1,6 +1,6 @@
 # Distributed lock plugin
 
-This plugin provides some common code for distributed lock. Clients only use it only need to provide key/keys. If multiple keys are provided, the concatenated key will be used.
+This plugin provides some common code for distributed lock. Clients use it only need to provide key/keys. If multiple keys are provided, the concatenated key will be used.
 
 This plugin needs to be used in conjunction with a concrete distributed lock plugin i.e. micro-mysql plugin.
 
