@@ -6,7 +6,7 @@ This plugin needs to be used in conjunction with a concrete distributed lock plu
 
 This plugin also provides rest end points which can be used to check if a process is main process.
 
-## Getting The Microserver Distributed lock Plugin
+## Getting The Microserver Distributed Lock Plugin
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-dist-lock/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-dist-lock)
 
