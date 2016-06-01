@@ -18,7 +18,7 @@ public class DirectoryCleaner {
 	private final String temporaryDirectory;
 
 	@Autowired
-	public DirectoryCleaner(@Value("${s3.temp.dir:#{null}") String temporaryDirectory) {
+	public DirectoryCleaner(@Value("${s3.temp.dir:#{null}}") String temporaryDirectory) {
 		this.temporaryDirectory = temporaryDirectory;
 	}
 
