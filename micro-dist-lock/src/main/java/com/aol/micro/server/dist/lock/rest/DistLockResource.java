@@ -27,14 +27,14 @@ public class DistLockResource implements SingletonRestResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/is/main/process")
+	@Path("/own/lock")
 	public boolean isMainProcess() {
 		return lockController.acquire();		
 	}	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/is/main/process/with/{key}")
+	@Path("/own/lock/with/{key}")
 	public boolean changeToInfo(@PathParam("key") final String key) {
 		return Optional.ofNullable(lock).map(service -> service.tryLock(key)).orElse(false);
 	}
