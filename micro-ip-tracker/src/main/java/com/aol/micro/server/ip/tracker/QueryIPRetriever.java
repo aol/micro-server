@@ -18,22 +18,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.aol.micro.server.auto.discovery.FilterConfiguration;
-
 
 @Component
-public class QueryIPRetriever implements FilterConfiguration,Filter {
+public class QueryIPRetriever implements Filter {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	
-	private static String ipForwardingHeader;
+	private  String ipForwardingHeader;
 	
-	private static String[] mappings;
+	private String[] mappings;
 	
-	@Autowired
-	public QueryIPRetriever(@Value("${load.balancer.ip.forwarding.header:X-LB-Client-IP}") String ipForwardingHeaderValue, 
-							@Value("${ip.tracker.mappings:/*}") String[] mappingsValue){
+	
+	public QueryIPRetriever(String ipForwardingHeaderValue, 
+							String[] mappingsValue){
 		ipForwardingHeader = ipForwardingHeaderValue;
 		mappings = mappingsValue;
 	}
@@ -103,11 +101,7 @@ public class QueryIPRetriever implements FilterConfiguration,Filter {
 		return true;
 	}
 
-	@Override
-	public String[] getMapping() {
-		return mappings;
-	}
-
+	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		

@@ -9,16 +9,17 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.auto.discovery.FilterConfiguration;
+import com.aol.cyclops.control.Xor;
+import com.aol.micro.server.auto.discovery.AutoFilterConfiguration;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Component
-public class AutodiscoveredFilter  implements Filter, FilterConfiguration {
+public class AutodiscoveredFilter  implements AutoFilterConfiguration {
 
 	@Autowired
 	Bean bean;
@@ -33,9 +34,9 @@ public class AutodiscoveredFilter  implements Filter, FilterConfiguration {
 	public String[] getMapping() {
 		return new String[] { "/*" };
 	}
-	public Class<? extends Filter> getFilter(){
+	public Xor<Class<? extends Filter>,Filter> getFilter(){
 
-		return org.springframework.web.filter.DelegatingFilterProxy.class;
+		return Xor.secondary(org.springframework.web.filter.DelegatingFilterProxy.class);
 
 	}
 	public String getName(){
