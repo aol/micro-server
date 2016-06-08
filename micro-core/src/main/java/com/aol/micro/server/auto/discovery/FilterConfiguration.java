@@ -8,6 +8,15 @@ import org.pcollections.HashTreePMap;
 
 import com.aol.cyclops.control.Xor;
 
+/**
+ * If creating a Plugin, create a FilterConfiguration Spring Bean rather than a Filter Spring Bean
+ * This is because Spring Boot may also create a Filter based of any Filter Beans (but exposed on all URLS)
+ * 
+ * 
+ * 
+ * @author johnmcclean
+ *
+ */
 public interface FilterConfiguration {
 	
 	/**

@@ -8,7 +8,10 @@ import org.pcollections.HashTreePMap;
 
 import com.aol.cyclops.control.Xor;
 
-
+/*
+* If creating a Plugin, create a ServletConfiguration Spring Bean rather than a Servlet Spring Bean
+* This is because Spring Boot may also create a Servlet based of any Filter Beans (but exposed on all URLS)
+*/
 public interface ServletConfiguration {
 	/**
 	 * @return An array of URL mapping this servlet should target
