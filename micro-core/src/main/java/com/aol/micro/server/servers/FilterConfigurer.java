@@ -31,6 +31,25 @@ public class FilterConfigurer {
 
 	}
 
+	private void handleFilter(FilterConfiguration filter,ServletContext webappContext){
+		filter.getFilter().visit(clazz-> {
+			setInitParameters(webappContext.addFilter(getName(filter),
+						clazz), filter)
+				.addMappingForUrlPatterns(
+						EnumSet.allOf(DispatcherType.class),true,
+						filter.getMapping());
+			return 1; 
+			}, obj-> {
+							Dynamic filterReg = webappContext.addFilter(
+									getName(filter), obj);
+							
+							filterReg.addMappingForUrlPatterns(
+									EnumSet.allOf(DispatcherType.class),true,
+									filter.getMapping());
+							
+							return 2;
+						});
+	}
 	private void addAutoDiscoveredFilters(ServletContext webappContext) {
 		serverData
 				.getRootContext()
@@ -40,13 +59,8 @@ public class FilterConfigurer {
 				.filter(f->f.getMapping()!=null)
 				.filter(f->f.getMapping().length>0)
 				.peek(this::logFilter)
-				.forEach(
-						filter -> setInitParameters(
-								webappContext.addFilter(getName(filter),
-										getClass(filter)), filter)
-								.addMappingForUrlPatterns(
-										EnumSet.allOf(DispatcherType.class),true,
-										filter.getMapping()));
+				.forEach(config->handleFilter(config,webappContext));
+
 	}
 
 	private void addExplicitlyDeclaredFilters(ServletContext webappContext) {
@@ -70,11 +84,7 @@ public class FilterConfigurer {
 		logger.info("Registering {} filter on {}",filter.getClass().getName(),filter.getMapping()[0]);
 	}
 
-	private Class<? extends Filter> getClass(FilterConfiguration filter) {
-		if (filter.getFilter() != null)
-			return filter.getFilter();
-		return (Class<? extends Filter>) filter.getClass();
-	}
+	
 
 	private Dynamic setInitParameters(Dynamic addFilter,
 			FilterConfiguration filter) {

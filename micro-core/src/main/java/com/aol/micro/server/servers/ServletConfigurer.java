@@ -1,13 +1,7 @@
 package com.aol.micro.server.servers;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
-
-import lombok.AllArgsConstructor;
-
-
-
 
 import org.pcollections.PStack;
 import org.slf4j.Logger;
@@ -16,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import com.aol.micro.server.auto.discovery.ServletConfiguration;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.servers.model.ServletData;
+
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class ServletConfigurer {
@@ -28,20 +24,25 @@ public class ServletConfigurer {
 		addExplicitlyDeclaredServlets(webappContext);
 		addAutoDiscoveredServlets(webappContext);
 	}
-
+	private void handleServlet(ServletConfiguration servlet,ServletContext webappContext){
+		servlet.getServlet().visit(clazz-> {
+			setInitParameters(webappContext.addServlet(getName(servlet),
+						clazz), servlet)
+				.addMapping(servlet.getMapping());
+			return 1; 
+			}, obj-> {
+				ServletRegistration.Dynamic servletReg = webappContext.addServlet(
+						servlet.getName(), obj);
+				servletReg.addMapping(servlet.getMapping());
+							return 2;
+						});
+	}
 	private void addAutoDiscoveredServlets(ServletContext webappContext) {
 		serverData
 				.getRootContext()
 				.getBeansOfType(ServletConfiguration.class)
 				.values()
-				.forEach(
-						servlet -> {
-							setInitParameters(
-									webappContext.addServlet(getName(servlet),
-											getServlet(servlet)), servlet)
-									.addMapping(servlet.getMapping());
-							logServlet(servlet);
-						});
+				.forEach(servlet -> handleServlet(servlet,webappContext));
 	}
 
 	private void addExplicitlyDeclaredServlets(ServletContext webappContext) {
@@ -62,12 +63,7 @@ public class ServletConfigurer {
 		logger.info("Registering {} servlet on {}",servlet.getClass().getName(), servlet.getMapping()[0]);
 	}
 
-	private Class<? extends Servlet> getServlet(ServletConfiguration servlet) {
-		if (servlet.getServlet() != null)
-			return servlet.getServlet();
-		return (Class<? extends Servlet>) servlet.getClass();
-	}
-
+	
 	private ServletRegistration.Dynamic setInitParameters(
 			ServletRegistration.Dynamic addServlet, ServletConfiguration servlet) {
 		addServlet.setInitParameters(servlet.getInitParameters());
