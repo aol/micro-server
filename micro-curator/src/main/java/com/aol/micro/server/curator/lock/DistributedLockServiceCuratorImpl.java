@@ -54,20 +54,18 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
 		if (curatorLock == null) {
 			lockName = key;
 			curatorLock = new InterProcessSemaphoreMutex(curatorFramework, String.join("/", basePath, key));
-			acquired = acquire();
-			return acquired;
+			return acquire();
 		} else if (lockName.equals(key)) {
-			acquired = acquire();
-			return acquired;
+			return acquire();
 		} else {
 			throw new IllegalArgumentException(
 					String.format("Lock can't change the name old:%s, new:%s", lockName, key));
 		}
 	}
 
-	private boolean acquire() {
+	private synchronized boolean acquire() {
 		try {
-			return acquired ? acquired : curatorLock.acquire(timeout, TimeUnit.MILLISECONDS);
+			return acquired = acquired ? acquired : curatorLock.acquire(timeout, TimeUnit.MILLISECONDS);
 		} catch (Exception e) {
 			return false;
 		}
@@ -75,13 +73,15 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
 
 	@Override
 	public boolean tryReleaseLock(String key) {
-		acquired = false;
+		
 		try {
 			curatorLock.release();
 			return true;
 		} catch (Exception e) {
 			logger.warn("Can't release lock", e);
 			return false;
+		}finally{
+			setAcquired(false);
 		}
 	}
 
@@ -90,10 +90,18 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
 		switch (newState) {
 		case LOST:
 		case SUSPENDED:
-			acquired = false;
+			setAcquired(false);
 			break;
 		default:
 		}
+	}
+
+	private synchronized boolean isAcquired() {
+		return acquired;
+	}
+
+	private synchronized void setAcquired(boolean acquired) {
+		this.acquired = acquired;
 	}
 
 }
