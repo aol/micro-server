@@ -1,17 +1,20 @@
 package com.aol.micro.server.curator.lock;
 
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.WatcherRemoveCuratorFramework;
 import org.apache.curator.framework.api.CreateBuilder;
 import org.apache.curator.framework.api.ExistsBuilder;
-import org.apache.curator.framework.api.ProtectACLCreateModePathAndBytesable;
 import org.apache.curator.framework.api.ProtectACLCreateModeStatPathAndBytesable;
 import org.apache.zookeeper.data.Stat;
 import org.junit.Test;
 
-import com.aol.micro.server.curator.lock.DistributedLockServiceCuratorImpl;
 import com.aol.micro.server.utility.DistributedLockService;
 
 public class DistributedLockServiceCuratorImplTest {
@@ -46,7 +49,7 @@ public class DistributedLockServiceCuratorImplTest {
 		verify(protector, times(0)).forPath(anyString(), anyObject());
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void lock() throws Exception {
 		CuratorFramework client = mock(CuratorFramework.class);
 		ExistsBuilder builder = mock(ExistsBuilder.class);
@@ -58,7 +61,7 @@ public class DistributedLockServiceCuratorImplTest {
 		when(client.newWatcherRemoveCuratorFramework()).thenReturn(mock(WatcherRemoveCuratorFramework.class));
 		when(client.create()).thenReturn(createBuilder);
 		when(createBuilder.creatingParentContainersIfNeeded()).thenReturn(protector);
-		DistributedLockService lock = new DistributedLockServiceCuratorImpl(client, "/", 0);
+		DistributedLockService lock = new DistributedLockServiceCuratorImpl(client, "/test", 0);
 		lock.tryLock("test");
 	}
 }
