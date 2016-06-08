@@ -6,6 +6,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.api.CreateBuilder;
 import org.apache.curator.framework.api.ExistsBuilder;
 import org.apache.curator.framework.api.ProtectACLCreateModePathAndBytesable;
+import org.apache.curator.framework.api.ProtectACLCreateModeStatPathAndBytesable;
 import org.apache.zookeeper.data.Stat;
 import org.junit.Test;
 
@@ -18,12 +19,13 @@ public class DistributedLockServiceCuratorImplTest {
 		CuratorFramework client = mock(CuratorFramework.class);
 		ExistsBuilder builder = mock(ExistsBuilder.class);
 		CreateBuilder createBuilder = mock(CreateBuilder.class);
-		@SuppressWarnings("unchecked")
-		ProtectACLCreateModePathAndBytesable<String> protector = mock(ProtectACLCreateModePathAndBytesable.class);
+		
+		
+		ProtectACLCreateModeStatPathAndBytesable<String> protector = mock(ProtectACLCreateModeStatPathAndBytesable.class);
 		when(builder.forPath(anyString())).thenReturn(null);
 		when(client.checkExists()).thenReturn(builder);
 		when(client.create()).thenReturn(createBuilder);
-		when(createBuilder.creatingParentContainersIfNeeded()).thenReturn(protector);
+		when(createBuilder.creatingParentContainersIfNeeded()).thenReturn((ProtectACLCreateModeStatPathAndBytesable<String>)protector);
 		new DistributedLockServiceCuratorImpl(client, "/", 0);
 		verify(protector).forPath(anyString(), anyObject());
 	}
@@ -33,8 +35,8 @@ public class DistributedLockServiceCuratorImplTest {
 		CuratorFramework client = mock(CuratorFramework.class);
 		ExistsBuilder builder = mock(ExistsBuilder.class);
 		CreateBuilder createBuilder = mock(CreateBuilder.class);
-		@SuppressWarnings("unchecked")
-		ProtectACLCreateModePathAndBytesable<String> protector = mock(ProtectACLCreateModePathAndBytesable.class);
+		
+		ProtectACLCreateModeStatPathAndBytesable<String> protector = mock(ProtectACLCreateModeStatPathAndBytesable.class);
 		when(builder.forPath(anyString())).thenReturn(new Stat());
 		when(client.checkExists()).thenReturn(builder);
 		when(client.create()).thenReturn(createBuilder);
@@ -48,8 +50,8 @@ public class DistributedLockServiceCuratorImplTest {
 		CuratorFramework client = mock(CuratorFramework.class);
 		ExistsBuilder builder = mock(ExistsBuilder.class);
 		CreateBuilder createBuilder = mock(CreateBuilder.class);
-		@SuppressWarnings("unchecked")
-		ProtectACLCreateModePathAndBytesable<String> protector = mock(ProtectACLCreateModePathAndBytesable.class);
+		
+		ProtectACLCreateModeStatPathAndBytesable<String> protector = mock(ProtectACLCreateModeStatPathAndBytesable.class);
 		when(builder.forPath(anyString())).thenReturn(new Stat());
 		when(client.checkExists()).thenReturn(builder);
 		when(client.create()).thenReturn(createBuilder);

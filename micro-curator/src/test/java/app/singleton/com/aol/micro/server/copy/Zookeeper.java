@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.zookeeper.server.ServerConfig;
 import org.apache.zookeeper.server.ZooKeeperServerMain;
+import org.apache.zookeeper.server.admin.AdminServer.AdminServerException;
 import org.apache.zookeeper.server.quorum.QuorumPeerConfig;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +42,10 @@ public class Zookeeper {
 			            zooKeeperServer.runFromConfig(configuration);
 			        } catch (IOException e) {
 			        	e.printStackTrace();
-			        }
+			        } catch (AdminServerException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			    }
 			}.start();
 			

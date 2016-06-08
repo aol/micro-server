@@ -14,11 +14,15 @@ import org.slf4j.LoggerFactory;
 
 import com.aol.micro.server.utility.DistributedLockService;
 
+/**
+ * DistributedLockService suitable for single threaded use only
+ *
+ */
 @Wither
 @AllArgsConstructor
 public class DistributedLockServiceCuratorImpl implements DistributedLockService, ConnectionStateListener {
 
-	private volatile boolean acquired;
+	private boolean acquired;
 
 	private InterProcessSemaphoreMutex curatorLock;
 
