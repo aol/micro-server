@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.utility.DistributedLockService;
+import com.aol.micro.server.dist.lock.DistributedLockService;
 
 public class IntegrationTest {
 

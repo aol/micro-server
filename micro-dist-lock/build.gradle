@@ -1,22 +1,21 @@
-description = 'micro-mysql'
+description = 'micro-dist-lock'
 dependencies {
-	compile group: 'org.springframework', name: 'spring-jdbc', version:"${springVersion}"
-	compile 'com.zaxxer:HikariCP:'+hikariCPVersion
-	compile project(':micro-dist-lock')
-	testCompile project(':micro-grizzly-with-jersey')
-	testCompile group: 'org.hsqldb', name:'hsqldb', version:'2.0.0'
+	compile project(':micro-core')	
 	
+	testCompile project(':micro-client')
+	testCompile project(':micro-grizzly')
+	testCompile project(':micro-jersey')
 }
 
 modifyPom {
 	project {
-		name 'Microserver mysql'
+		name 'Microserver distributed lock'
 		description 'Opinionated rest microservices'
 		url 'https://github.com/aol/micro-server'
 		inceptionYear '2015'
 
 		groupId 'com.aol.microservices'
-		artifactId 'micro-mysql'
+		artifactId 'micro-dist-lock'
 		version "$version" 
 		
 		
@@ -36,9 +35,19 @@ modifyPom {
 
 		developers {
 			developer {
-				id 'Arkadiusz-Gasior'
-				name 'Arkadiusz Gasior'
-				email 'arkadiusz.gasior@teamaol.com'
+				id 'johnmcclean-aol'
+				name 'John McClean'
+				email 'john.mcclean@teamaol.com'
+			}
+			developer {
+				id 'kewangie'
+				name 'Ke Wang'
+				email 'ke.wang@teamaol.com'
+			}
+			developer {
+				id 'earlzero'
+				name 'Nikita Sapozhnikov'
+				email 'nikita.sapozhnikov@teamaol.com'
 			}
 		}
 		
