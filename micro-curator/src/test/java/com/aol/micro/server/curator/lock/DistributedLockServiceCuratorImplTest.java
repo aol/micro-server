@@ -3,6 +3,7 @@ package com.aol.micro.server.curator.lock;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.WatcherRemoveCuratorFramework;
 import org.apache.curator.framework.api.CreateBuilder;
 import org.apache.curator.framework.api.ExistsBuilder;
 import org.apache.curator.framework.api.ProtectACLCreateModePathAndBytesable;
@@ -54,6 +55,7 @@ public class DistributedLockServiceCuratorImplTest {
 		ProtectACLCreateModeStatPathAndBytesable<String> protector = mock(ProtectACLCreateModeStatPathAndBytesable.class);
 		when(builder.forPath(anyString())).thenReturn(new Stat());
 		when(client.checkExists()).thenReturn(builder);
+		when(client.newWatcherRemoveCuratorFramework()).thenReturn(mock(WatcherRemoveCuratorFramework.class));
 		when(client.create()).thenReturn(createBuilder);
 		when(createBuilder.creatingParentContainersIfNeeded()).thenReturn(protector);
 		DistributedLockService lock = new DistributedLockServiceCuratorImpl(client, "/", 0);
