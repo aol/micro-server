@@ -13,6 +13,7 @@ import org.apache.curator.framework.api.CreateBuilder;
 import org.apache.curator.framework.api.ExistsBuilder;
 import org.apache.curator.framework.api.ProtectACLCreateModeStatPathAndBytesable;
 import org.apache.zookeeper.data.Stat;
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.aol.micro.server.utility.DistributedLockService;
@@ -49,19 +50,4 @@ public class DistributedLockServiceCuratorImplTest {
 		verify(protector, times(0)).forPath(anyString(), anyObject());
 	}
 	
-	@Test
-	public void lock() throws Exception {
-		CuratorFramework client = mock(CuratorFramework.class);
-		ExistsBuilder builder = mock(ExistsBuilder.class);
-		CreateBuilder createBuilder = mock(CreateBuilder.class);
-		
-		ProtectACLCreateModeStatPathAndBytesable<String> protector = mock(ProtectACLCreateModeStatPathAndBytesable.class);
-		when(builder.forPath(anyString())).thenReturn(new Stat());
-		when(client.checkExists()).thenReturn(builder);
-		when(client.newWatcherRemoveCuratorFramework()).thenReturn(mock(WatcherRemoveCuratorFramework.class));
-		when(client.create()).thenReturn(createBuilder);
-		when(createBuilder.creatingParentContainersIfNeeded()).thenReturn(protector);
-		DistributedLockService lock = new DistributedLockServiceCuratorImpl(client, "/test", 0);
-		lock.tryLock("test");
-	}
 }
