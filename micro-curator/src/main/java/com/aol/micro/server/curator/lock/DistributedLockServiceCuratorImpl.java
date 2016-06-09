@@ -27,11 +27,9 @@ import lombok.experimental.Wither;
 @AllArgsConstructor
 public class DistributedLockServiceCuratorImpl implements DistributedLockService, ConnectionStateListener {
 
-    private boolean acquired;
+   
 
-    private ConcurrentMap<String, InterProcessMutex> locks = new ConcurrentHashMap<>();
-
-    private String lockName;
+    private final ConcurrentMap<String, InterProcessMutex> locks = new ConcurrentHashMap<>();
 
     private final String basePath;
 
@@ -76,7 +74,7 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
 
     @Override
     public boolean tryReleaseLock(String key) {
-        return Optional.ofNullable(locks.get(key)).map(c -> {
+    	return Optional.ofNullable(locks.get(key)).map(c -> {
             try {
                 c.release();
                 return true;
@@ -88,6 +86,7 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
 
     @Override
     public void stateChanged(CuratorFramework client, ConnectionState newState) {
+    	
         switch (newState) {
         case LOST:
         case SUSPENDED:
