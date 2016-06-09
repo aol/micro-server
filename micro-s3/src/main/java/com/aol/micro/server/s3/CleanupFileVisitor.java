@@ -17,19 +17,24 @@ public class CleanupFileVisitor extends SimpleFileVisitor<Path> {
 	
 	@Override
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-		Files.delete(file);
+	    deleteNotTopDirectory(file);
 		return FileVisitResult.CONTINUE;
 	}
 
 	@Override
 	public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
 		if (e == null) {
-			if(!dir.equals(tempDirectory)) {
-				Files.delete(dir);
-			}
+			deleteNotTopDirectory(dir);
 			return FileVisitResult.CONTINUE;
 		} else {
 			throw e;
 		}
 	}
+	
+	private void deleteNotTopDirectory(Path dir) throws IOException {
+	    if(!dir.equals(tempDirectory)) {
+	        Files.delete(dir);
+	    }
+	}
+	
 }
