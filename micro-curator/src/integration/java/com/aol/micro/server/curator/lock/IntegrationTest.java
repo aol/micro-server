@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.apache.zookeeper.server.ServerConfig;
 import org.apache.zookeeper.server.ZooKeeperServerMain;
+import org.apache.zookeeper.server.admin.AdminServer.AdminServerException;
 import org.apache.zookeeper.server.quorum.QuorumPeerConfig;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,7 +44,7 @@ public class IntegrationTest {
 		    public void run() {
 		        try {
 		            zooKeeperServer.runFromConfig(configuration);
-		        } catch (IOException e) {
+		        } catch (IOException | AdminServerException e) {
 		        	e.printStackTrace();
 		        }
 		    }

@@ -34,7 +34,9 @@ public class CuratorDistributedLockServiceProvider {
 	 */
 	public DistributedLockService getDistributedLock(int timeout)  {
 		try {
-			return new DistributedLockServiceCuratorImpl(curatorFramework, lockBasePath, timeout);
+			DistributedLockServiceCuratorImpl lock = new DistributedLockServiceCuratorImpl(curatorFramework, lockBasePath, timeout);
+			curatorFramework.getConnectionStateListenable().addListener(lock);
+			return lock;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

@@ -12,7 +12,6 @@ buildscript {
 
 	dependencies {
 		classpath 'com.bmuschko:gradle-nexus-plugin:2.2'
-	//	classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.0'
 		classpath 'com.github.lkishalmi.gradle:gradle-bom-plugin:0.3'
 		
 	}
@@ -60,8 +59,13 @@ subprojects {
 		}
 	}
 
-	test { systemProperties 'property': 'value' }
+	test { 
+		systemProperties 'property': 'value'
+		
+		testLogging {
+			events "started","passed", "skipped", "failed"//, "standardOut", "standardError"
+		}
+	}
 
-	
 }
 

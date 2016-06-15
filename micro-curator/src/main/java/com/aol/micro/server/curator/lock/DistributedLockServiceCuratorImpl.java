@@ -1,9 +1,14 @@
 package com.aol.micro.server.curator.lock;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.curator.framework.CuratorFramework;
-import org.apache.curator.framework.recipes.locks.InterProcessSemaphoreMutex;
+import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.framework.state.ConnectionStateListener;
 import org.slf4j.Logger;
@@ -14,82 +19,94 @@ import com.aol.micro.server.dist.lock.DistributedLockService;
 import lombok.AllArgsConstructor;
 import lombok.experimental.Wither;
 
+import lombok.AllArgsConstructor;
+import lombok.experimental.Wither;
+
+/**
+ * DistributedLockService suitable for single threaded use only
+ *
+ */
 @Wither
 @AllArgsConstructor
 public class DistributedLockServiceCuratorImpl implements DistributedLockService, ConnectionStateListener {
 
-	private volatile boolean acquired;
+   
 
-	private InterProcessSemaphoreMutex curatorLock;
+    private final ConcurrentMap<String, InterProcessMutex> locks = new ConcurrentHashMap<>();
 
-	private String lockName;
+    private final String basePath;
 
-	private final String basePath;
+    private final CuratorFramework curatorFramework;
 
-	private final CuratorFramework curatorFramework;
+    private final int timeout;
 
-	private final int timeout;
+    private static final Logger logger = LoggerFactory.getLogger(DistributedLockServiceCuratorImpl.class);
 
-	private static final Logger logger = LoggerFactory.getLogger(DistributedLockServiceCuratorImpl.class);
-	
-	public DistributedLockServiceCuratorImpl(CuratorFramework curatorFramework, String basePath, int timeout) throws Exception {
-		this.curatorFramework = curatorFramework;
-		this.basePath = basePath;
-		this.timeout = timeout;
-		createIfNotExists(basePath);
-	}
+    public DistributedLockServiceCuratorImpl(CuratorFramework curatorFramework, String basePath, int timeout)
+            throws Exception {
+        this.curatorFramework = curatorFramework;
+        this.basePath = basePath;
+        this.timeout = timeout;
+        createIfNotExists(basePath);
+    }
 
-	private void createIfNotExists(String path) throws Exception {
-		if (curatorFramework.checkExists().forPath(path) == null) {
-			curatorFramework.create().creatingParentContainersIfNeeded().forPath(path, new byte[0]);
-		}
-	}
+    private void createIfNotExists(String path) throws Exception {
+        if (curatorFramework.checkExists().forPath(path) == null) {
+            curatorFramework.create().creatingParentContainersIfNeeded().forPath(path, new byte[0]);
+        }
+    }
 
-	@Override
-	public boolean tryLock(String key) {
-		if (curatorLock == null) {
-			lockName = key;
-			curatorLock = new InterProcessSemaphoreMutex(curatorFramework, String.join("/", basePath, key));
-			acquired = acquire();
-			return acquired;
-		} else if (lockName.equals(key)) {
-			acquired = acquire();
-			return acquired;
-		} else {
-			throw new IllegalArgumentException(
-					String.format("Lock can't change the name old:%s, new:%s", lockName, key));
-		}
-	}
+    @Override
+    public boolean tryLock(String key) {
+        try {
+            InterProcessMutex mutex = locks.computeIfAbsent(key,
+                    __ -> new InterProcessMutex(curatorFramework, String.join("/", basePath, key)));
+            
+            
+            boolean owned = mutex.isAcquiredInThisProcess();
+            if(owned) {
+                return true;
+            } else {
+                mutex.acquire(timeout, TimeUnit.MILLISECONDS);
+            }
+            return mutex.isAcquiredInThisProcess();
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
-	private boolean acquire() {
-		try {
-			return acquired ? acquired : curatorLock.acquire(timeout, TimeUnit.MILLISECONDS);
-		} catch (Exception e) {
-			return false;
-		}
-	}
+    @Override
+    public boolean tryReleaseLock(String key) {
+    	return Optional.ofNullable(locks.get(key)).map(c -> {
+            try {
+                c.release();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }).orElse(false);
+    }
 
-	@Override
-	public boolean tryReleaseLock(String key) {
-		acquired = false;
-		try {
-			curatorLock.release();
-			return true;
-		} catch (Exception e) {
-			logger.warn("Can't release lock", e);
-			return false;
-		}
-	}
+    @Override
+    public void stateChanged(CuratorFramework client, ConnectionState newState) {
+    	
+        switch (newState) {
+        case LOST:
+        case SUSPENDED:
 
-	@Override
-	public void stateChanged(CuratorFramework client, ConnectionState newState) {
-		switch (newState) {
-		case LOST:
-		case SUSPENDED:
-			acquired = false;
-			break;
-		default:
-		}
-	}
+            Collection<InterProcessMutex> oldLocks = new ArrayList<>(locks.values());
+            locks.clear();
+
+            oldLocks.stream().parallel().forEach(lock -> {
+                try {
+                    lock.release();
+                } catch (Exception e) {
+                    logger.trace("Can't release lock on " + newState);
+                }
+            });
+            break;
+        default:
+        }
+    }
 
 }

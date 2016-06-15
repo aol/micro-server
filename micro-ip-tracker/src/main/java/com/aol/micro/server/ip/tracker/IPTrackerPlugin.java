@@ -10,7 +10,7 @@ public class IPTrackerPlugin implements Plugin{
 
 	@Override
 	public PSetX<Class> springClasses() {
-		return PSetX.of(QueryIPRetriever.class);
+		return PSetX.of(BeanConfiguration.class);
 		
 	}
 	
