@@ -29,15 +29,8 @@ public class DistLockRunnerTest {
 	}
 
 	@Test
-	public void testIsMainProcess() {
-		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock"), is("true"));
+	public void testOwnLock() {
+		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock/dummyKeyProvider"), is("true"));
+		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock/dummyKeyProvider2"), is("false"));
 	}
-	
-	@Test
-	public void testIsMainProcessWithKey() {
-		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock/with/keykey2"), is("true"));
-		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock/with/key"), is("false"));
-	}
-	
-
 }

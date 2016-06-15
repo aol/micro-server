@@ -6,9 +6,14 @@ import com.aol.micro.server.dist.lock.LockKeyProvider;
 
 @Component
 public class DummyKeyProvider implements LockKeyProvider {
+	
 	@Override
 	public String getKey() {
 		return "key";
 	}
-
+	
+	@Override
+	public String getLockName() {
+		return "dummyKeyProvider";
+	}
 }

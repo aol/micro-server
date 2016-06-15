@@ -1,7 +1,7 @@
 package com.aol.micro.server.dist.lock;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -12,20 +12,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class LockController {
 
-	private String combinedKey;
-	
-	@Autowired(required=false)
-	DistributedLockService lock;
-	
-	@Autowired(required=false) 
-	List<LockKeyProvider> lockKeyProviders;
+	private final DistributedLockService lock;
+	private final List<LockKeyProvider> lockKeyProviders;
+	private Map<String, String> nameKeyMap;
+
+	@Autowired
+	public LockController(DistributedLockService lock, List<LockKeyProvider> lockKeyProviders) {
+		this.lock = lock;
+		this.lockKeyProviders = lockKeyProviders;
+	}
 
 	@PostConstruct
 	public void init() {
-		combinedKey = Optional.ofNullable(lockKeyProviders).map(providers -> providers.stream().map(keyProvider -> keyProvider.getKey()).collect(Collectors.joining(""))).orElse(null);
-	}	
+		nameKeyMap = lockKeyProviders.stream().collect(Collectors.toMap(LockKeyProvider::getLockName, LockKeyProvider::getKey));
+	}
 
-	public boolean acquire() {
-		return Optional.ofNullable(combinedKey).map(key -> Optional.ofNullable(lock).map(service -> service.tryLock(key)).orElse(false)).orElse(false);		
+	public boolean acquire(String lockName) {
+		return lock.tryLock(nameKeyMap.get(lockName));
 	}
 }

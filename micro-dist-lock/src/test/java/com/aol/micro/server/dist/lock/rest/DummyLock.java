@@ -9,7 +9,7 @@ public class DummyLock implements DistributedLockService {
 
 	@Override
 	public boolean tryLock(String key) {
-		if (key.equals("keykey2")) {
+		if (key.equals("key")) {
 			return true;
 		}
 		return false;
