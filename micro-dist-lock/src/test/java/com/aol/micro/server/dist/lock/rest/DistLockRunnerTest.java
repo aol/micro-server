@@ -32,5 +32,8 @@ public class DistLockRunnerTest {
 	public void testOwnLock() {
 		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock/dummyKeyProvider"), is("true"));
 		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock/dummyKeyProvider2"), is("false"));
+		
+		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock/for/key/key"), is("true"));
+		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock/for/key/key2"), is("false"));
 	}
 }
