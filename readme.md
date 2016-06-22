@@ -9,6 +9,9 @@ A convenient modular engine for Microservices. Microserver plugins offer seamles
 
 ![screen shot 2016-05-06 at 12 30 26 pm](https://cloud.githubusercontent.com/assets/9964792/15588807/8da91440-2387-11e6-979b-f24d456541f5.png)
 
+### Microsever plugins video
+[![Getting started video](https://cloud.githubusercontent.com/assets/9964792/6361863/9991c50c-bc7e-11e4-8d28-746b0b87b1da.png)](https://youtu.be/sYn2cVTkfcM)
+
 
 
 ## Quick start
