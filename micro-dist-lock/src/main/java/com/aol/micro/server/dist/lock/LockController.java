@@ -30,7 +30,7 @@ public class LockController {
 	public boolean acquire(String lockName) {
 		String key = nameKeyMap.get(lockName);
 		if (key != null) {
-			return lock.tryLock(nameKeyMap.get(lockName));
+			return lock.tryLock(key);
 		} else {
 			return false;
 		}
