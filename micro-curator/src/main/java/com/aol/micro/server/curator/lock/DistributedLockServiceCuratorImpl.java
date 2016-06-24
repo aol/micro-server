@@ -14,7 +14,10 @@ import org.apache.curator.framework.state.ConnectionStateListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.micro.server.utility.DistributedLockService;
+import com.aol.micro.server.dist.lock.DistributedLockService;
+
+import lombok.AllArgsConstructor;
+import lombok.experimental.Wither;
 
 import lombok.AllArgsConstructor;
 import lombok.experimental.Wither;
