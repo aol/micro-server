@@ -32,9 +32,14 @@ public class RestClient<T> {
 	private final Class<T> response;
 	private final JavaType genericResponse;
 
-	public RestClient(int readTimeout, int connectTimeout) {
+	/**
+	 * Create a new rest client.
+	 * @param readTimeoutMillis Read timeout, in milliseconds
+	 * @param connectTimeoutMillis Connect timeout, in milliseconds
+	 */
+	public RestClient(int readTimeoutMillis, int connectTimeoutMillis) {
 
-		this.client = initClient(readTimeout, connectTimeout);
+		this.client = initClient(readTimeoutMillis, connectTimeoutMillis);
 		contentType = MediaType.APPLICATION_JSON;
 		accept = MediaType.APPLICATION_JSON;
 		response = (Class<T>) String.class;
