@@ -46,19 +46,23 @@
                 <!-- <a class="navbar-brand topnav" href="#">Start Bootstrap</a> -->
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#about">About</a>
+                        <!-- <a href="#about">About</a> -->
                     </li>
                     <li>
-                        <a href="#services">Services</a>
+                        <a href="#quick_start">Quick Start</a>
                     </li>
                     <li>
-                        <a href="#contact">Contact</a>
+                        <a href="#why">Why Microserver?</a>
                     </li>
+                    <li>
+                        <a href="#tutorials">Tutorials</a>
+                    </li>
+
                 </ul>
-            </div> -->
+            </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
@@ -82,7 +86,7 @@
                                 <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
                             </li>
                             <li>
-                                <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                                <a href="https://github.com/CrazeeIvan/micro-server" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
                             </li>
                             <li>
                                 <a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>
@@ -100,7 +104,7 @@
 
     <!-- Page Content -->
 
-	<a  name="services"></a>
+	<a  name="quick_start"></a>
     <div class="content-section-a">
 
         <div class="container">
@@ -108,16 +112,36 @@
                 <div class="col-lg-5 col-sm-6">
                   <h2 class="section-heading">Quick start</h2>
                   <p>Install Microserver with Grizzly, Jackson and Jersey (Gradle config below)</p>
-                  <pre class=" language-java"><code class=" language-java"><span class="token keyword"> compile group: 'com.aol.microservices', name:'micro-grizzly-with-jersey', version:'x.yz'
-                  </span></code></pre>
+                  <pre class=" language-java"><code class=" language-java"><span class="token keyword"> compile group: 'com.aol.microservices', name:'micro-grizzly-with-jersey', version:'x.yz'</span></code></pre>
+                  <p>Install Microserver with Tomcat, Jackson and Jersey (Gradle config below)</p>
+                  <pre class=" language-java"><code class=" language-java"><span class="token keyword"> compile group: 'com.aol.microservices', name:'micro-tomcat-with-jersey', version:'x.yz'</span></code></pre>
+                  <p>Create and run a simple app</p>
+                  <pre class=" language-java"><code class=" language-java"><span class="token keyword">
+@Rest
+@Path("/test")
+public class SimpleApp {
+
+    public static void main(String[] args){
+      new MicroserverApp(()->"test-app").run();
+    }
+    @GET
+    public String myEndPoint(){
+      return "hello world!";
+    }
+}
+                    </span></code></pre>
+                    <p>Browse to http://localhost:8080/test-app/test</p>
+                    <p>See the response hello world!</p>
+                    <p>Add plugins by adding them to your build file - rerun the app to get new end points, Spring beans and more!</p</p>
 
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
-                    <h2 class="section-heading"><a href="https://www.youtube.com/watch?v=sYn2cVTkfcM">Microserver screencast : getting started with plugins</a></h2>
-                    <!-- <p class="lead"> -->
-                    <img src="https://cloud.githubusercontent.com/assets/9964792/15588807/8da91440-2387-11e6-979b-f24d456541f5.png" alt="screen shot 2016-05-06 at 12 30 26 pm" style="max-width:100%;"></p>
+
                 </div>
                 <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                  <h2 class="section-heading"><a href="https://www.youtube.com/watch?v=sYn2cVTkfcM">Microserver screencast : getting started with plugins</a></h2>
+                  <!-- <p class="lead"> -->
+                  <img src="https://cloud.githubusercontent.com/assets/9964792/15588807/8da91440-2387-11e6-979b-f24d456541f5.png" alt="screen shot 2016-05-06 at 12 30 26 pm" style="max-width:100%;"></p>
                   <p><a href="https://youtu.be/sYn2cVTkfcM"><img class="img-responsive" src="https://cloud.githubusercontent.com/assets/9964792/6361863/9991c50c-bc7e-11e4-8d28-746b0b87b1da.png" alt="Getting started video"></a></p>
                 </div>
 
@@ -128,7 +152,7 @@
 
     </div>
     <!-- /.content-section-a -->
-
+	<a name="why"></a>
     <div class="content-section-b">
 
         <div class="container">
@@ -137,8 +161,9 @@
                 <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
-                    <h2 class="section-heading">3D Device Mockups<br>by PSDCovers</h2>
-                    <p class="lead">Turn your 2D designs into high quality, 3D product shots in seconds using free Photoshop actions by <a target="_blank" href="http://www.psdcovers.com/">PSDCovers</a>! Visit their website to download some of their awesome, free photoshop actions!</p>
+                    <h2 class="section-heading">Why Microserver?</h2>
+                    <p class="lead">Microserver is a plugin engine for building Spring and Spring Boot based microservices. Microserver supports pure microservice and micro-monolith development styles. The micro-monolith style involves packaging multiple services into a single deployment - offering developers the productivity of microservice development without the operational risk. This can help teams adopt a Microservices architecture on projects that are currently monoliths. </p>
+                    <p class="lead">Microserver plugins are orthogonal to Microservices. They solve a common problem in Microservice development where by services are broken up and deployed separately but code remains entangled in a monolithic common library. By making use of a plugin system that follows the same modular archictectural principals as microservice development, teams can keep cross-service concerns and infrastructure in properly size, coherent and cohesive plugin modules.</p>
                 </div>
                 <div class="col-lg-5 col-sm-pull-6  col-sm-6">
                     <img class="img-responsive" src="img/dog.png" alt="">
@@ -151,6 +176,7 @@
     </div>
     <!-- /.content-section-b -->
 
+<a name="tutorials"></a>
     <div class="content-section-a">
 
         <div class="container">
@@ -159,8 +185,9 @@
                 <div class="col-lg-5 col-sm-6">
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
-                    <h2 class="section-heading">Google Web Fonts and<br>Font Awesome Icons</h2>
-                    <p class="lead">This template features the 'Lato' font, part of the <a target="_blank" href="http://www.google.com/fonts">Google Web Font library</a>, as well as <a target="_blank" href="http://fontawesome.io">icons from Font Awesome</a>.</p>
+                    <h2 class="section-heading">Tutorial and overview</h2>
+                    <p class="lead"><a href="https://github.com/aol/micro-server/wiki/Getting-started-:-Tutorial">Tutorial</a></p>
+                    <p class="lead"><a href="https://github.com/aol/micro-server/tree/master/micro-tutorial">Tutorial code</a></p>
                 </div>
                 <div class="col-lg-5 col-lg-offset-2 col-sm-6">
                     <img class="img-responsive" src="img/phones.png" alt="">
@@ -173,7 +200,7 @@
     </div>
     <!-- /.content-section-a -->
 
-	<a  name="contact"></a>
+	<a name="about"></a>
     <div class="banner">
 
         <div class="container">
@@ -201,10 +228,12 @@
         <!-- /.container -->
 
     </div>
+
+
     <!-- /.banner -->
 
     <!-- Footer -->
-    <footer>
+    <!-- <footer>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -229,7 +258,8 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </footer> -->
+    <footer>Micro-server is a free and open source Java Web Framework, released under the <a href="https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)" target="_blank">Apache 2 License</a> &nbsp;|&nbsp; <a href="/contact.html">Contact</a> &nbsp;|&nbsp; <a href="/contact.html#team">Team</a></footer>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
