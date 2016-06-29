@@ -1,4 +1,4 @@
-package com.aol.micro.server.couchbase.base;
+package com.aol.micro.server.manifest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

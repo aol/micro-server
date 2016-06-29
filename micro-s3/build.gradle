@@ -4,6 +4,7 @@ dependencies {
 	compile ("com.aol.simplereact:cyclops-react:$cyclopsReactVersion")
 	compile 'com.amazonaws:aws-java-sdk:' + s3Version
 	compile project(':micro-core')
+	compile project(':micro-manifest-comparator')
 	
 	compile 'commons-io:commons-io:'+commonsIOVersion
 	testCompile project(':micro-grizzly-with-jersey')

@@ -1,6 +1,13 @@
 # S3 Plugin
 
-This adds a facility to use AmazonS3Client.
+This adds a facility to use AmazonS3Client. The following APIs are provided
+
+1. S3ManifestComparator : Only download changed datasets from S3
+2. S3ObjectWriter : For writing Java Objects to S3
+3. S3StringWriter : For writing UTF-8 Strings to S3
+4. S3Reader : For reading data from S3
+5. S3Deleter : For deleting data from S3
+6. S3Utils : General S3 uploading / downloading utils. Creational entry point for the various CRUD Apis (S3ObjectWriter, S3StringWriter, S3Reader, S3Deleter)
 
 ## To use
 

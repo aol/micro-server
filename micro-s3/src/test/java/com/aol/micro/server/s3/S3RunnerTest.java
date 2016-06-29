@@ -11,6 +11,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
+import com.aol.micro.server.s3.data.S3Utils;
 
 @Microserver(properties = { "s3.accessKey", "", "s3.secretKey", "" })
 public class S3RunnerTest {

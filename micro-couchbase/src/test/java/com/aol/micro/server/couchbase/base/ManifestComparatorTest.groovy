@@ -9,6 +9,8 @@ import org.junit.Test
 import org.mockito.Mockito
 
 import com.aol.micro.server.couchbase.DistributedMapClient
+import com.aol.micro.server.manifest.Data
+import com.aol.micro.server.manifest.VersionedKey
 import com.fasterxml.jackson.core.JsonParseException
 
 
@@ -16,14 +18,14 @@ import com.fasterxml.jackson.core.JsonParseException
 @CompileStatic
 class ManifestComparatorTest {
 
-	ManifestComparator manifestComparator
+	CouchbaseManifestComparator manifestComparator
 	DistributedMapClient mock
 	String key = "key"
 
 	@Before
 	public void setup(){
 		mock = Mockito.mock(DistributedMapClient)
-		manifestComparator  = new ManifestComparator(key,mock)
+		manifestComparator  = new CouchbaseManifestComparator(key,mock)
 	}
 
 	@Test
