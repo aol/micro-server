@@ -22,7 +22,7 @@ h6 {
 }
 
 .topnav {
-    font-size: 14px; 
+    font-size: 14px;
 }
 
 .lead {
@@ -43,11 +43,12 @@ h6 {
     position: relative;
     padding-top: 20%;
     padding-bottom: 20%;
+    color: rgb(240, 240, 240);
 }
 
 .intro-message > h1 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    text-shadow: 2px 2px 3px rgba(0,0,0,1);
     font-size: 5em;
 }
 
