@@ -138,7 +138,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 	 * @param key Key to store data with
 	 * @return new ManifestComparator that targets specified key
 	 */
-	public <R> ManifestComparator<R> withKey(String key){
+	public <R> S3ManifestComparator<R> withKey(String key){
 		return new S3ManifestComparator<>(key, reader,writer,deleter,stringWriter);
 	}
 

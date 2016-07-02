@@ -1,0 +1,68 @@
+description = 'micro-async-data-loader'
+
+dependencies {
+	compile ("com.aol.simplereact:cyclops-react:$cyclopsReactVersion")
+	compile project(':micro-events')
+	compile project(':micro-manifest-comparator')
+	testCompile project(':micro-grizzly-with-jersey')
+}
+
+modifyPom {
+	project {
+		name 'Microserver async data loading'
+		description 'Plugin for loading data asyncrhonously via a micro-manifest-comparator implementation'
+		url 'https://github.com/aol/micro-server'
+		inceptionYear '2016'
+
+		groupId 'com.aol.microservices'
+		artifactId 'micro-async-data-loader'
+		version "$version" 
+		
+		
+		scm {
+			url 'scm:git@github.com:aol/micro-server.git'
+			connection 'scm:git@github.com:aol/micro-server.git'
+			developerConnection 'scm:git@github.com:aol/micro-server.git'
+		}
+
+		licenses {
+			license {
+				name 'The Apache Software License, Version 2.0'
+				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+				distribution 'repo'
+			}
+		}
+
+		developers {
+                        developer {
+                                id 'johnmcclean-aol'
+                                name 'John McClean'
+                                email 'john.mcclean@teamaol.com'
+                        }
+                        developer {
+                                id 'kewangie'
+                                name 'Ke Wang'
+                                email 'ke.wang@teamaol.com'
+                        }
+                        developer {
+                                id 'earlzero'
+                                name 'Nikita Sapozhnikov'
+                                email 'nikita.sapozhnikov@teamaol.com'
+                        }
+		}
+		
+	}
+}
+
+extraArchive {
+	sources = true
+	tests = true
+	javadoc = true
+}
+
+nexus {
+	sign = true
+	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+}
+
