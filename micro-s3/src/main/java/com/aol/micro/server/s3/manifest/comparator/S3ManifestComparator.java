@@ -23,6 +23,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.val;
+import lombok.experimental.Wither;
 
 /**
  * Manifest comparator for use with a distributed map -assumes single producer / multiple consumers
@@ -87,6 +88,10 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 	private final S3StringWriter stringWriter;
 	private final S3Deleter deleter;
 
+
+	@Wither
+	private long backoff;
+
 	/**
 	 * Create a ManifestComparator with the supplied distributed map client
 	 * Data  stored by ManifestComparator will be
@@ -102,6 +107,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 		this.writer = writer;
 		this.deleter = deleter;
 		this.stringWriter = stringWriter;
+		backoff=500l;
 	}
 	/**
 	 * Create a ManifestComparator with the supplied distributed map client
@@ -121,6 +127,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 		this.writer = writer;
 		this.deleter = deleter;
 		this.stringWriter = stringWriter;
+		backoff=500l;
 	}
 	
 	
@@ -146,8 +153,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 
 	private VersionedKey loadKeyFromS3() {
 		Try<String,Throwable> optionalKey =  reader.getAsString(key);
-		return optionalKey.peek(System.err::println).flatMap( val -> Try.success(JacksonUtil.convertFromJson( val, VersionedKey.class)))
-				.peek(System.out::println)
+		return optionalKey.flatMap( val -> Try.success(JacksonUtil.convertFromJson( val, VersionedKey.class)))
 				.orElse( newKey(0L));
 	
 	}
@@ -189,6 +195,8 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 		long lastMod = -1;
 		while(modified >= lastMod){
 			lastMod = reader.getLastModified(newVersionedKey).getTime();
+			if(modified < lastMod)
+				Thread.sleep(backoff );
 		}
 		Data data = reader.<Data>getAsObject(newVersionedKey).orElseThrow(() -> {
 			return new ManifestComparatorKeyNotFoundException("Missing versioned key " + newVersionedKey + " - likely data changed during read");

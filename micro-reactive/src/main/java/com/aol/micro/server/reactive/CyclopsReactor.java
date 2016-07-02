@@ -56,7 +56,7 @@ public interface CyclopsReactor {
 	}
 	
 	static <T> FutureW<T> futureW(Mono<T> mono){
-		return FutureW.of(mono.toCompletableFuture());
+		return FutureW.of(mono.toFuture());
 	}
 	
 	

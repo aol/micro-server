@@ -1,10 +1,13 @@
-# Couchbase plugin for BASE microservices
+# Manifest Compartor plugin for BASE microservices
 
-[micro-couchbase example apps](https://github.com/aol/micro-server/tree/master/micro-couchbase/src/test/java/app)
+This plugin provides the core classes and interfaces for building Manifest Comparator based data loading (see below for an explanation). Implementations are provided via micro-couchbase or micro-s3.
+
+[micro-manifest-comparator example apps via micro-couchbase](https://github.com/aol/micro-server/tree/master/micro-couchbase/src/test/java/app)
+
+[micro-manifest-comparator example apps via micro-s3](https://github.com/aol/micro-server/tree/master/micro-s3/src/test/java/app)
 
 Basically Available Soft statE
 
-* Simple Couchbase Client (Couchbase bucket as distributed / persistent map)
 * Manifest comparator : Versioned key for loading refreshed state
 
 # Manifest comparison
@@ -19,7 +22,7 @@ This allows large immutable datastructures to be stored in as a key/value pair (
 
 ## Injecting the manifest comparator
 
-Inject the Spring bean created by micro-couchbase ManifestComparator into your own beans. Customise the key used (allows multiple ManifestComparators to be used)
+Inject the Spring bean created by micro-couchbase or micro-s3 that implements ManifestComparator into your own beans. Customize the key used (allows multiple ManifestComparators to be used)
 
 ```java
 public class ManifestComparatorResource {
@@ -137,7 +140,7 @@ e.g.
  
   ```
 
-## Getting The Microserver Couchbase Plugin
+## Getting The Microserver Manifest comparator Plugin
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-couchbase/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-couchbase)
 
@@ -145,11 +148,11 @@ e.g.
 ```xml
      <dependency>
         <groupId>com.aol.microservices</groupId>  
-        <artifactId>micro-couchbase</artifactId>
+        <artifactId>micro-manifest-comparator</artifactId>
         <version>x.yz</version>
      </dependency>
 ```
 ### Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-couchbase:x.yz'
+    compile 'com.aol.microservices:micro-manifest-comparator:x.yz'
  ```
