@@ -8,6 +8,7 @@ repositories {
 description = 'micro-couchbase'
 dependencies {
 	compile group: 'com.couchbase.client', name: 'couchbase-client', version:'1.4.8'
+	compile project(':micro-manifest-comparator')
 	compile project(':micro-core')
 	compile project(':micro-guava')
 	testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.3.3'

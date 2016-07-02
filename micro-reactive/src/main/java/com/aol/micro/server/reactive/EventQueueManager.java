@@ -87,7 +87,7 @@ public class EventQueueManager<T> {
 		 * @return Mono that will eventually have data from the Queue
 		 */
 		public Mono<T> mono(String key,Executor ex){
-			return Mono.fromCompletableFuture(pipes.oneOrErrorAsync(key, ex)
+			return Mono.fromFuture(pipes.oneOrErrorAsync(key, ex)
 						.getFuture());
 		}
 		

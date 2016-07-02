@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 
-import com.aol.micro.server.couchbase.base.ManifestComparator;
+import com.aol.micro.server.couchbase.base.CouchbaseManifestComparator;
 import com.couchbase.client.CouchbaseClient;
 import com.couchbase.client.CouchbaseConnectionFactory;
 import com.couchbase.client.CouchbaseConnectionFactoryBuilder;
@@ -69,8 +69,8 @@ public class ConfigureCouchbase {
 
 	}
 	@Bean
-	public ManifestComparator couchbaseManifestComparator() throws IOException, URISyntaxException{
-		return new ManifestComparator(this.simpleCouchbaseClient());
+	public CouchbaseManifestComparator couchbaseManifestComparator() throws IOException, URISyntaxException{
+		return new CouchbaseManifestComparator(this.simpleCouchbaseClient());
 	}
 
 	private List<URI> getServersList() throws URISyntaxException {

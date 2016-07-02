@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import com.aol.micro.server.couchbase.base.ManifestComparatorKeyNotFoundException;
+import com.aol.micro.server.manifest.ManifestComparatorKeyNotFoundException;
 
 public class ManifestComparatorKeyNotFoundExceptionTest {
 

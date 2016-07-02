@@ -22,7 +22,7 @@ public class CyclopsReactorTest {
 	
 		System.out.println(Flux.just("hello","world")
 							   .map(a->a+"!")
-							   .toList().get());
+							   .collectList().block());
 	
 
 		String res = flux.map(a->a+"!")
