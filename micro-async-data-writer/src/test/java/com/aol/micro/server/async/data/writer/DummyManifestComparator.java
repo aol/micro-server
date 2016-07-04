@@ -24,8 +24,9 @@ public class DummyManifestComparator<T> implements ManifestComparator<T> {
 
 	
 	@Override
-	public void load() {
+	public boolean load() {
 		loadCalled.incrementAndGet();
+		return true;
 		
 	}
 
@@ -56,7 +57,7 @@ public class DummyManifestComparator<T> implements ManifestComparator<T> {
 	@Override
 	public boolean isOutOfDate() {
 		outofDateCalled.incrementAndGet();
-		return false;
+		return true;
 	}
 
 }

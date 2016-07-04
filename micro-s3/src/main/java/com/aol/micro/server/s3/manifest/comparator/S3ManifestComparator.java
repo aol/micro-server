@@ -169,7 +169,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 	/**
 	 * Load data from remote store if stale
 	 */
-	public synchronized void load() {
+	public synchronized boolean load() {
 		T oldData = data;
 		long oldModified = modified;
 		String oldKey = versionedKey;
@@ -180,6 +180,8 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 				data = (T) loaded.v2;
 				modified=loaded.v1;
 				versionedKey = newVersionedKey;
+			}else{
+				return false;
 			}
 		} catch (Throwable e) {
 			data = oldData;
@@ -188,6 +190,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 			logger.debug( e.getMessage(), e);
 			throw ExceptionSoftener.throwSoftenedException(e);
 		}
+		return true;
 	}
 
 	@SuppressWarnings("unchecked")

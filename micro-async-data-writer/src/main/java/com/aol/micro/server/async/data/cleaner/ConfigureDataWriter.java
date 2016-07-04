@@ -15,6 +15,7 @@ import com.aol.cyclops.data.collections.extensions.standard.ListX;
 import com.aol.micro.server.async.data.writer.AsyncDataWriter;
 import com.aol.micro.server.async.data.writer.MultiDataWriter;
 import com.aol.micro.server.manifest.ManifestComparator;
+import com.google.common.eventbus.EventBus;
 
 @Configuration
 public class ConfigureDataWriter {
@@ -27,18 +28,21 @@ public class ConfigureDataWriter {
 	@Value("${asyc.data.writer.multi:false}")
 	private boolean multiWriterOn=false;
 	
+	@Autowired
+	private EventBus bus;
+	
 	@Bean
 	public AsyncDataWriter<?> defaultDataWriter(){
 		if(defaultComparators.size()>0){
-			System.err.println("Warning :: multiple ManifestComparators configured as Spring bean, using the first configured bean for the Default DataWriter, recommended approach is to configure your own DataWriters as needed.");
-			logger.warn("Warning :: multiple ManifestComparators configured as Spring bean, using the first configured bean for the Default DataWriter, recommended approach is to configure your own DataWriters as needed.");
+			System.err.println("Warning :: multiple ManifestComparators configured as Spring bean, using the first configured bean for the Default AsyncDataWriter, recommended approach is to configure your own DataWriters as needed.");
+			logger.warn("Warning :: multiple ManifestComparators configured as Spring bean, using the first configured bean for the Default AsyncDataWriter, recommended approach is to configure your own DataWriters as needed.");
 		}
-		return new AsyncDataWriter(asyncDataWriterThreadPool(),defaultComparators.get(0));
+		return new AsyncDataWriter(asyncDataWriterThreadPool(),defaultComparators.get(0),bus);
 	}
 	@Bean
 	public MultiDataWriter<?> defaultMultiDataWriter(){
 		if(multiWriterOn)
-			return new MultiDataWriter(ListX.fromIterable(defaultComparators).map(mc->new AsyncDataWriter(asyncDataWriterThreadPool(),mc)));
+			return new MultiDataWriter(ListX.fromIterable(defaultComparators).map(mc->new AsyncDataWriter(asyncDataWriterThreadPool(),mc,bus)));
 		return new MultiDataWriter(ListX.empty());
 	}
 	

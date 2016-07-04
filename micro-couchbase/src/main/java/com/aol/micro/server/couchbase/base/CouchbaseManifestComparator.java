@@ -145,7 +145,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 	/**
 	 * Load data from remote store if stale
 	 */
-	public synchronized void load() {
+	public synchronized boolean load() {
 		T oldData = data;
 		String oldKey = versionedKey;
 		try {
@@ -153,6 +153,8 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 				String newVersionedKey = (String) connection.get(key).get();
 				data = (T) nonAtomicload(newVersionedKey);
 				versionedKey = newVersionedKey;
+			}else{
+				return false;
 			}
 		} catch (Throwable e) {
 			data = oldData;
@@ -160,6 +162,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 			logger.debug( e.getMessage(), e);
 			throw ExceptionSoftener.throwSoftenedException(e);
 		}
+		return true;
 	}
 
 	@SuppressWarnings("unchecked")

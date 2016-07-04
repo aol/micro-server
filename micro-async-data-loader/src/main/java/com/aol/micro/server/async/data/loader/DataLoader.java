@@ -1,6 +1,5 @@
 package com.aol.micro.server.async.data.loader;
 
-import java.util.Map;
 import java.util.Random;
 import java.util.function.Supplier;
 
@@ -26,9 +25,7 @@ public class DataLoader implements ScheduledJob{
 		String correlationId = ""+System.currentTimeMillis() + ":" + r.nextLong();
 		Supplier<MapX<String, String>> dataMap=()->MapX.fromMap(HashMapBuilder.map(MANIFEST_COMPARATOR_DATA_LOADER_KEY,comparator.toString()).build());
 		try{
-			boolean changed = comparator.isOutOfDate();
-			if(changed)
-				comparator.load();
+			boolean changed = comparator.load();
 			
 			return SystemData.<String,String>builder()
 							 .correlationId(correlationId)
