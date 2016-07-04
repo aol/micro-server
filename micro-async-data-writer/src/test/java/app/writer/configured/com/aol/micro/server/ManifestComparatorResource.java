@@ -5,7 +5,7 @@ import javax.ws.rs.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.micro.server.async.data.writer.DataWriter;
+import com.aol.micro.server.async.data.writer.AsyncDataWriter;
 import com.aol.micro.server.auto.discovery.Rest;
 
 @Path("/comparator")
@@ -14,9 +14,9 @@ public class ManifestComparatorResource {
 	
 
 	private volatile int count = 1;
-	private final DataWriter<String> comparator;
+	private final AsyncDataWriter<String> comparator;
 	@Autowired
-	public  ManifestComparatorResource(DataWriter comparator) {
+	public  ManifestComparatorResource(AsyncDataWriter comparator) {
 		this.comparator = comparator;
 	}
 	@GET

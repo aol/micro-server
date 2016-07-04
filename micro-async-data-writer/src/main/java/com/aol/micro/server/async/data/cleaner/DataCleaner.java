@@ -1,6 +1,5 @@
 package com.aol.micro.server.async.data.cleaner;
 
-import java.util.Map;
 import java.util.Random;
 import java.util.function.Supplier;
 
