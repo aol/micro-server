@@ -114,7 +114,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 	 * @param key Key to store data with
 	 * @return new ManifestComparator that targets specified key
 	 */
-	public <R> ManifestComparator<R> withKey(String key){
+	public <R> CouchbaseManifestComparator<R> withKey(String key){
 		return new CouchbaseManifestComparator<>(key, connection);
 	}
 
@@ -225,5 +225,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 			versionedKey = newVersionedKey.toJson();
 		}
 	}
-
+	public String toString(){
+		return "[CouchbaseManifestComparator:key:"+key+",versionedKey:"+JacksonUtil.serializeToJson(versionedKey)+"]";
+	}
 }

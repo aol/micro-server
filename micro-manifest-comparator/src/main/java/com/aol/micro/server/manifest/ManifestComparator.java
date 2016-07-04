@@ -8,4 +8,5 @@ public interface ManifestComparator<T> {
 	public void clean(int numberToClean);
 	public void saveAndIncrement(T data);
 	public T getData();
+	
 }

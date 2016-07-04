@@ -1,4 +1,4 @@
-package app.couchbase.distributed.map.com.aol.micro.server;
+package app.loader.scheduled.com.aol.micro.server;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aol.cyclops.control.Maybe;
 import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
-import com.aol.micro.server.async.data.loader.DataCleaner;
 import com.aol.micro.server.async.data.loader.DataLoader;
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.couchbase.DistributedMapClient;
@@ -22,7 +21,7 @@ public class CouchbaseResource {
 	
 	private final DistributedMapClient client;
 	private volatile PStackX<SystemData> dataLoads = PStackX.empty();
-	private volatile PStackX<SystemData> dataCleans = PStackX.empty();
+
 	@Autowired
 	public  CouchbaseResource(DistributedMapClient client, EventBus bus) {
 		this.client = client;
@@ -30,10 +29,8 @@ public class CouchbaseResource {
 	}
 	@Subscribe
 	public synchronized void events(SystemData event){
-		if(event.getDataMap().containsKey(DataLoader.MANIFEST_COMPARATOR_DATA_LOADER_KEY))
-			dataLoads = dataLoads.plus(event);
-		if(event.getDataMap().containsKey(DataCleaner.MANIFEST_COMPARATOR_DATA_CLEANER_KEY))
-			dataCleans = dataCleans.plus(event);
+		dataLoads = dataLoads.plus(event);
+
 	}
 	@GET
 	@Path("/loading-events")
@@ -41,12 +38,7 @@ public class CouchbaseResource {
 	public synchronized PStackX<SystemData> loadingEvents(){
 		return dataLoads;
 	}
-	@GET
-	@Path("/cleaning-events")
-	@Produces("application/json")
-	public synchronized PStackX<SystemData> cleaningEvents(){
-		return dataCleans;
-	}
+	
 	@GET
 	@Path("/maybe")
 	@Produces("application/json")

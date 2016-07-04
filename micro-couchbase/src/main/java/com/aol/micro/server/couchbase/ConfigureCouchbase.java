@@ -26,6 +26,8 @@ public class ConfigureCouchbase {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
+	@Value("${couchbase.manifest.comparison.key:default-key}")
+	private String defaultCouchbaseManifestComparisonKey;
 	@Setter
 	@Value("${couchbaseServers:}")
 	private String couchbaseServers;
@@ -70,7 +72,7 @@ public class ConfigureCouchbase {
 	}
 	@Bean
 	public CouchbaseManifestComparator couchbaseManifestComparator() throws IOException, URISyntaxException{
-		return new CouchbaseManifestComparator(this.simpleCouchbaseClient());
+		return new CouchbaseManifestComparator(this.simpleCouchbaseClient()).withKey(defaultCouchbaseManifestComparisonKey);
 	}
 
 	private List<URI> getServersList() throws URISyntaxException {

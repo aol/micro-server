@@ -1,4 +1,4 @@
-package com.aol.micro.server.async.data.loader;
+package com.aol.micro.server.async.data.cleaner;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -16,16 +16,16 @@ import com.google.common.eventbus.EventBus;
 @Configuration
 public class ConfigureScheduling {
 
-	@Value("${asyc.data.schedular.cron.loader:0 0 * * * *}")
-	private String defaultCron;
 	
-	@Value("${asyc.data.schedular.threads:5}")
+	@Value("${asyc.data.schedular.cron.cleaner:0 0 * * * ?}")
+	private String defaultCronCleaner;
+	@Value("${asyc.data.schedular.threads:1}")
 	private int schedularThreads;
 	
+
+	
 	@Autowired(required=false)
-	private List<DataLoader> dataLoaders= ListX.empty();;
-	
-	
+	private List<DataCleaner> dataCleaners = ListX.empty();
 	
 	@Autowired
 	private EventBus bus;
@@ -34,21 +34,21 @@ public class ConfigureScheduling {
 	private List<ManifestComparator> defaultComparators;
 	
 	
-	private ListX<DataLoader> dataLoaders(){
-		Maybe<DataLoader> defaultDataLoader = defaultComparators.size()==1  ?
-							Maybe.just(new DataLoader(defaultComparators.get(0),defaultCron))
+	
+	private ListX<DataCleaner> dataCleaners(){
+		Maybe<DataCleaner> defaultDataCleaner = defaultComparators.size()==1  ?
+							Maybe.just(new DataCleaner(defaultComparators.get(0),defaultCronCleaner))
 							: Maybe.none();
-		return ListX.fromIterable(defaultDataLoader)
-			.plusAll(dataLoaders);
+		return ListX.fromIterable(defaultDataCleaner)
+			.plusAll(dataCleaners);
 		
 		     
 	}
 	
 	@Bean
-	public LoaderSchedular asyncDataLoader(){
-		LoaderSchedular schedular =  new LoaderSchedular(dataLoaders(),Executors.newScheduledThreadPool(schedularThreads) , bus);
+	public CleanerSchedular asyncDataCleaner(){
+		CleanerSchedular schedular = new CleanerSchedular(dataCleaners(),Executors.newScheduledThreadPool(schedularThreads) , bus);
 		schedular.schedule();
 		return schedular;
 	}
-	
 }

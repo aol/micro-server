@@ -1,28 +1,26 @@
-package app.couchbase.distributed.map.com.aol.micro.server;
+package app.writer.configured.com.aol.micro.server;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.couchbase.mock.CouchbaseMock;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.module.ConfigurableModule;
-import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver(properties={"couchbaseServers","http://localhost:8091/pools",
 						"couchbasePassword","",
 						"couchbaseBucket","beer-sample",
-						"asyc.data.schedular.cron.loader","* * * * * ?",
-						"asyc.data.schedular.cron.cleaner","* * * * * ?"})
-public class CouchbaseRunnerTest {
+						"couchbase.manifest.comparison.key","test-key"})
+public class ManifestComparatorRunnerTest {
 
 	RestAgent rest = new RestAgent();
 
@@ -49,22 +47,21 @@ public class CouchbaseRunnerTest {
 		server.stop();
 	}
 
-	@Test
+	@Test 
 	public void runAppAndBasicTest() throws InterruptedException,
 			ExecutionException {
-		rest.get("http://localhost:8080/simple-app/couchbase/put");
-		assertThat(rest.get("http://localhost:8080/simple-app/couchbase/get"),
-				containsString("world"));
+		rest.get("http://localhost:8080/simple-app/comparator/increment");
 		
-		Thread.sleep(2000);
-		String json=rest.getJson("http://localhost:8080/simple-app/couchbase/loading-events");
-		List list =JacksonUtil.convertFromJson(json, List.class);
-		System.out.println(list);
-		assertTrue(list.size()>0);
-		json=rest.getJson("http://localhost:8080/simple-app/couchbase/cleaning-events");
-		 list =JacksonUtil.convertFromJson(json, List.class);
-		System.out.println(list);
-		assertTrue(list.size()>0);
+		assertThat(rest.get("http://localhost:8080/simple-app/comparator/check"),equalTo("true"));
+		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"),equalTo("hello1"));
+		rest.get("http://localhost:8080/simple-app/comparator/increment");
+		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"),equalTo("hello2"));
+		
+		rest.get("http://localhost:8080/simple-app/comparator2/increment");
+	
+		assertThat(rest.get("http://localhost:8080/simple-app/comparator/check"),equalTo("false"));
+		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"),equalTo("hellob"));
+			
 
 	}
 
