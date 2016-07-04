@@ -261,5 +261,9 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 			versionedKey = newVersionedKey.toJson();
 		}
 	}
+	
+	public String toString(){
+		return "[S3ManifestComparator:key:"+key+",versionedKey:"+JacksonUtil.serializeToJson(versionedKey)+"]";
+	}
 
 }

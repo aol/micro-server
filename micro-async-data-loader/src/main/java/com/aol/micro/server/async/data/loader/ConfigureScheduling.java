@@ -16,15 +16,18 @@ import com.google.common.eventbus.EventBus;
 @Configuration
 public class ConfigureScheduling {
 
-	@Value("${asyc.data.schedular.cron:0 0 * * * *")
+	@Value("${asyc.data.schedular.cron.loader:0 0 * * * *}")
 	private String defaultCron;
-	@Value("${asyc.data.schedular.threads:5")
+	@Value("${asyc.data.schedular.cron.cleaner:0 0 * * * ?}")
+	private String defaultCronCleaner;
+	@Value("${asyc.data.schedular.threads:5}")
 	private int schedularThreads;
 	
-	@Autowired
-	private List<DataLoader> dataLoaders;
-	@Autowired
-	private List<DataCleaner> dataCleaners;
+	@Autowired(required=false)
+	private List<DataLoader> dataLoaders= ListX.empty();;
+	
+	@Autowired(required=false)
+	private List<DataCleaner> dataCleaners = ListX.empty();
 	
 	@Autowired
 	private EventBus bus;
@@ -44,7 +47,7 @@ public class ConfigureScheduling {
 	}
 	private ListX<DataCleaner> dataCleaners(){
 		Maybe<DataCleaner> defaultDataCleaner = defaultComparators.size()==1  ?
-							Maybe.just(new DataCleaner(defaultComparators.get(0),defaultCron))
+							Maybe.just(new DataCleaner(defaultComparators.get(0),defaultCronCleaner))
 							: Maybe.none();
 		return ListX.fromIterable(defaultDataCleaner)
 			.plusAll(dataCleaners);
@@ -53,10 +56,14 @@ public class ConfigureScheduling {
 	}
 	@Bean
 	public LoaderSchedular asyncDataLoader(){
-		return new LoaderSchedular(dataLoaders(),Executors.newScheduledThreadPool(schedularThreads) , bus);
+		LoaderSchedular schedular =  new LoaderSchedular(dataLoaders(),Executors.newScheduledThreadPool(schedularThreads) , bus);
+		schedular.schedule();
+		return schedular;
 	}
 	@Bean
 	public CleanerSchedular asyncDataCleaner(){
-		return new CleanerSchedular(dataCleaners(),Executors.newScheduledThreadPool(schedularThreads) , bus);
+		CleanerSchedular schedular = new CleanerSchedular(dataCleaners(),Executors.newScheduledThreadPool(schedularThreads) , bus);
+		schedular.schedule();
+		return schedular;
 	}
 }
