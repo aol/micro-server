@@ -1,4 +1,4 @@
-package com.aol.micro.server.dist.lock.rest;
+package app.com.aol.micro.server.dist.lock.rest;
 
 import org.springframework.stereotype.Component;
 

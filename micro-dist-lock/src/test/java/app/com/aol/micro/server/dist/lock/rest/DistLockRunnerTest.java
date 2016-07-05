@@ -1,4 +1,4 @@
-package com.aol.micro.server.dist.lock.rest;
+package app.com.aol.micro.server.dist.lock.rest;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
