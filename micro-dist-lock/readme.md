@@ -1,5 +1,7 @@
 # Distributed lock plugin
 
+[micro-dist-lock example apps](https://github.com/aol/micro-server/tree/master/micro-dist-lock/src/test/java/app)
+
 This plugin provides some common code for distributed lock. This plugin can be used in two ways:
 
 ## Via LockKeyProvider Spring Beans
