@@ -63,10 +63,9 @@ public class DataLoader  implements ScheduledJob<Job>{
 	}
 
 }
-
-@Component
-
-\lyvyv vv; ;r;;;;'' res'''e'e''lhlhlllllgm       xdvl;;l;l; 
+ ```
+ 
+ ```java
 
 @Component
 public class Schedular{
