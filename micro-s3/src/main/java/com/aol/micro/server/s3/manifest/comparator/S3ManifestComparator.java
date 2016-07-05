@@ -26,28 +26,29 @@ import lombok.val;
 import lombok.experimental.Wither;
 
 /**
- * Manifest comparator for use with a distributed map -assumes single producer / multiple consumers
+ * Manifest comparator for use with a distributed map -assumes single producer /
+ * multiple consumers
  * 
  * Uses to entries in the map
  * 
- * key : versioned key
- * versioned key : actual data
+ * key : versioned key versioned key : actual data
  * 
- * ManifestComparator stores the current version number, only when the version changes is the full
- * data set loaded from the remote store.
+ * ManifestComparator stores the current version number, only when the version
+ * changes is the full data set loaded from the remote store.
  * 
- * Usage as a Spring Bean - inject into the host class, and use withKey to customise for the targeted Key.
+ * Usage as a Spring Bean - inject into the host class, and use withKey to
+ * customise for the targeted Key.
  * 
  * 
  * <pre>
  * {@code 
- * @Rest
+ * &#64;Rest
 	public class MyDataService {
 	
 
 	
 	private final ManifestComparator<DataType> comparator;
-	@Autowired
+	&#64;Autowired
 	public  MyDataService(ManifestComparator comparator) {
 		this.comparator = comparator.withKey("test-key");
 	}
@@ -55,26 +56,27 @@ import lombok.experimental.Wither;
  * }
  * </pre>
  * 
- * micro-couchbase configures a single ManifestComparator bean that can be customized for multiple different keys via
- * withKey
+ * micro-couchbase configures a single ManifestComparator bean that can be
+ * customized for multiple different keys via withKey
  * 
- * When your bean is injected save via saveAndIncrement, and periodically call load() to refresh data if (and only if)
- * it has changed.
+ * When your bean is injected save via saveAndIncrement, and periodically call
+ * load() to refresh data if (and only if) it has changed.
  * 
- * ManifestComparator will automatically remove old versions on saveAndIncrement, but system outages may occasionally cause old keys
- * to linger, you can also use clean & cleanAll to periodically to remove old key versions.
+ * ManifestComparator will automatically remove old versions on
+ * saveAndIncrement, but system outages may occasionally cause old keys to
+ * linger, you can also use clean & cleanAll to periodically to remove old key
+ * versions.
  * 
  * 
  * @author johnmcclean
  *
  * @param <T>
  */
-@AllArgsConstructor(access=AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class S3ManifestComparator<T> implements ManifestComparator<T> {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	
 	private final String key;
 
 	@Getter
@@ -88,62 +90,68 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 	private final S3StringWriter stringWriter;
 	private final S3Deleter deleter;
 
-
 	@Wither
 	private long backoff;
 
 	/**
-	 * Create a ManifestComparator with the supplied distributed map client
-	 * Data  stored by ManifestComparator will be
+	 * Create a ManifestComparator with the supplied distributed map client Data
+	 * stored by ManifestComparator will be
 	 * 
-	 * key : versioned key
-	 * versioned key : actual data
-	 * @param connection DistributedMapClient to store comparison data
+	 * key : versioned key versioned key : actual data
+	 * 
+	 * @param connection
+	 *            DistributedMapClient to store comparison data
 	 */
-	public S3ManifestComparator(S3Reader connection,S3ObjectWriter writer,S3Deleter deleter,S3StringWriter stringWriter) {
+	public S3ManifestComparator(S3Reader connection, S3ObjectWriter writer, S3Deleter deleter,
+			S3StringWriter stringWriter) {
 		this.key = "default";
 		this.versionedKey = newKey(1L).toJson();
 		this.reader = connection;
 		this.writer = writer;
 		this.deleter = deleter;
 		this.stringWriter = stringWriter;
-		backoff=500l;
+		backoff = 500l;
 	}
+
 	/**
 	 * Create a ManifestComparator with the supplied distributed map client
 	 * 
-	 * Data  stored by ManifestComparator will be
+	 * Data stored by ManifestComparator will be
 	 * 
-	 * key : versioned key
-	 * versioned key : actual data
+	 * key : versioned key versioned key : actual data
 	 * 
-	 * @param key To store actual data with
-	 * @param connection DistributeMapClient connection
+	 * @param key
+	 *            To store actual data with
+	 * @param connection
+	 *            DistributeMapClient connection
 	 */
-	public S3ManifestComparator(String key,S3Reader connection,S3ObjectWriter writer,S3Deleter deleter,S3StringWriter stringWriter) {
+	public S3ManifestComparator(String key, S3Reader connection, S3ObjectWriter writer, S3Deleter deleter,
+			S3StringWriter stringWriter) {
 		this.key = key;
 		this.versionedKey = newKey(1L).toJson();
-		this.reader =connection;
+		this.reader = connection;
 		this.writer = writer;
 		this.deleter = deleter;
 		this.stringWriter = stringWriter;
-		backoff=500l;
+		backoff = 500l;
 	}
-	
-	
+
 	/**
 	 * Create a new ManifestComparator with the same distributed map connection
 	 * that targets a different key
 	 * 
-	 * @param key Key to store data with
+	 * @param key
+	 *            Key to store data with
 	 * @return new ManifestComparator that targets specified key
 	 */
-	public <R> S3ManifestComparator<R> withKey(String key){
-		return new S3ManifestComparator<>(key, reader,writer,deleter,stringWriter);
+	public <R> S3ManifestComparator<R> withKey(String key) {
+		return new S3ManifestComparator<>(
+											key, reader, writer, deleter, stringWriter);
 	}
 
 	private VersionedKey newKey(Long version) {
-		return new VersionedKey(key, version);
+		return new VersionedKey(
+								key, version);
 	}
 
 	private VersionedKey increment() {
@@ -152,17 +160,17 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 	}
 
 	private VersionedKey loadKeyFromS3() {
-		Try<String,Throwable> optionalKey =  reader.getAsString(key);
-		return optionalKey.flatMap( val -> Try.success(JacksonUtil.convertFromJson( val, VersionedKey.class)))
-				.orElse( newKey(0L));
-	
+		Try<String, Throwable> optionalKey = reader.getAsString(key);
+		return optionalKey	.flatMap(val -> Try.success(JacksonUtil.convertFromJson(val, VersionedKey.class)))
+							.orElse(newKey(0L));
+
 	}
 
 	/**
 	 * @return true - if current data is stale and needs refreshed
 	 */
 	public boolean isOutOfDate() {
-		
+
 		return !versionedKey.equals(loadKeyFromS3().toJson());
 	}
 
@@ -175,38 +183,44 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 		String oldKey = versionedKey;
 		try {
 			if (isOutOfDate()) {
-				String newVersionedKey = (String) reader.getAsString(key).get();
+				String newVersionedKey = (String) reader.getAsString(key)
+														.get();
 				val loaded = nonAtomicload(newVersionedKey);
 				data = (T) loaded.v2;
-				modified=loaded.v1;
+				modified = loaded.v1;
 				versionedKey = newVersionedKey;
-			}else{
+			} else {
 				return false;
 			}
 		} catch (Throwable e) {
 			data = oldData;
 			versionedKey = oldKey;
 			modified = oldModified;
-			logger.debug( e.getMessage(), e);
+			logger.debug(e.getMessage(), e);
 			throw ExceptionSoftener.throwSoftenedException(e);
 		}
 		return true;
 	}
 
 	@SuppressWarnings("unchecked")
-	private Tuple2<Long,Object> nonAtomicload(String newVersionedKey) throws Throwable {
+	private Tuple2<Long, Object> nonAtomicload(String newVersionedKey) throws Throwable {
 		long lastMod = -1;
-		while(modified >= lastMod){
-			lastMod = reader.getLastModified(newVersionedKey).getTime();
-			if(modified < lastMod)
-				Thread.sleep(backoff );
+		while (modified >= lastMod) {
+			lastMod = reader.getLastModified(newVersionedKey)
+							.getTime();
+			if (modified < lastMod)
+				Thread.sleep(backoff);
 		}
-		Data data = reader.<Data>getAsObject(newVersionedKey).orElseThrow(() -> {
-			return new ManifestComparatorKeyNotFoundException("Missing versioned key " + newVersionedKey + " - likely data changed during read");
-		});
-		logger.info( "Loaded new data with date {} for key {}, versionedKey {}, versionedKey from data ",
-				new Object[]{data.getDate(), key, newVersionedKey, data.getVersionedKey()});
-		 return Tuple.tuple(lastMod,data.getData());
+		Data data = reader	.<Data> getAsObject(newVersionedKey)
+							.orElseThrow(() -> {
+								return new ManifestComparatorKeyNotFoundException(
+																					"Missing versioned key "
+																							+ newVersionedKey
+																							+ " - likely data changed during read");
+							});
+		logger.info("Loaded new data with date {} for key {}, versionedKey {}, versionedKey from data ",
+					new Object[] { data.getDate(), key, newVersionedKey, data.getVersionedKey() });
+		return Tuple.tuple(lastMod, data.getData());
 	}
 
 	/**
@@ -222,15 +236,16 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 	 * @param numberToClean
 	 */
 	public void clean(int numberToClean) {
-		logger.info("Attempting to delete the last {} records for key {}",numberToClean,key);
+		logger.info("Attempting to delete the last {} records for key {}", numberToClean, key);
 		VersionedKey currentVersionedKey = loadKeyFromS3();
 		long start = 0;
 		if (numberToClean != -1)
 			start = currentVersionedKey.getVersion() - numberToClean;
 		for (long i = start; i < currentVersionedKey.getVersion(); i++) {
-			delete(currentVersionedKey.withVersion(i).toJson());
+			delete(currentVersionedKey	.withVersion(i)
+										.toJson());
 		}
-		logger.info("Finished deleting the last {} records for key {}",numberToClean,key);
+		logger.info("Finished deleting the last {} records for key {}", numberToClean, key);
 	}
 
 	private void delete(String withVersion) {
@@ -238,35 +253,38 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 	}
 
 	/**
-	 * Save provided data with the key this ManifestComparator manages
-	 * bump the versioned key version.
+	 * Save provided data with the key this ManifestComparator manages bump the
+	 * versioned key version.
 	 * 
-	 * NB : To avoid race conditions - make sure only one service (an elected leader) can write at a time (see micro-mysql for a mysql distributed lock,
-	 * or micro-curator for a curator / zookeeper distributed lock implementation).
+	 * NB : To avoid race conditions - make sure only one service (an elected
+	 * leader) can write at a time (see micro-mysql for a mysql distributed
+	 * lock, or micro-curator for a curator / zookeeper distributed lock
+	 * implementation).
 	 * 
-	 * @param data to save
+	 * @param data
+	 *            to save
 	 */
 	public synchronized void saveAndIncrement(T data) {
 		T oldData = this.data;
 		VersionedKey newVersionedKey = increment();
-		logger.info( "Saving data with key {}, new version is {}", key,newVersionedKey.toJson());
-		
+		logger.info("Saving data with key {}, new version is {}", key, newVersionedKey.toJson());
+
 		try {
-			writer.putSync(newVersionedKey.toJson(), new Data(data, new Date(), newVersionedKey.toJson()))
-			     .flatMap(res-> 
-			     		stringWriter.put(key, newVersionedKey.toJson()))
-			     .peek(res ->{
-			    	 	this.data = data;
-			    	 	delete(versionedKey);
-			     });
-			
-		}finally {
+			writer	.putSync(newVersionedKey.toJson(), new Data(
+																data, new Date(), newVersionedKey.toJson()))
+					.flatMap(res -> stringWriter.put(key, newVersionedKey.toJson()))
+					.peek(res -> {
+						this.data = data;
+						delete(versionedKey);
+					});
+
+		} finally {
 			versionedKey = newVersionedKey.toJson();
 		}
 	}
-	
-	public String toString(){
-		return "[S3ManifestComparator:key:"+key+",versionedKey:"+JacksonUtil.serializeToJson(versionedKey)+"]";
+
+	public String toString() {
+		return "[S3ManifestComparator:key:" + key + ",versionedKey:" + JacksonUtil.serializeToJson(versionedKey) + "]";
 	}
 
 }

@@ -19,8 +19,7 @@ public class CleanerSchedular {
 		cleaner.forEach(cl -> {
 			ReactiveSeq	.generate(() -> cl.scheduleAndLog())
 						.peek(sd -> bus.post(sd))
-						.schedule(	cl.getCron(),
-									executor);
+						.schedule(cl.getCron(), executor);
 		});
 	}
 }

@@ -20,11 +20,11 @@ public class S3ManifestComparatorProvider {
 	private String key;
 	@Autowired
 	private S3Utils s3Utils;
+
 	@Bean
-	public S3ManifestComparator s3ManifestComparator() throws IOException, URISyntaxException{
-		return new S3ManifestComparator(s3Utils.reader(bucket),
-								s3Utils.writer(bucket),
-								s3Utils.deleter(bucket),
-								s3Utils.stringWriter(bucket)).withKey(key);
+	public S3ManifestComparator s3ManifestComparator() throws IOException, URISyntaxException {
+		return new S3ManifestComparator(
+										s3Utils.reader(bucket), s3Utils.writer(bucket), s3Utils.deleter(bucket),
+										s3Utils.stringWriter(bucket)).withKey(key);
 	}
 }

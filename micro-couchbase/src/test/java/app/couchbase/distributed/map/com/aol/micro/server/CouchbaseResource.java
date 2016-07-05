@@ -29,8 +29,7 @@ public class CouchbaseResource {
 	@GET
 	@Path("/put")
 	public String put() {
-		client.put(	"hello",
-					"world");
+		client.put("hello", "world");
 		return "added";
 	}
 }

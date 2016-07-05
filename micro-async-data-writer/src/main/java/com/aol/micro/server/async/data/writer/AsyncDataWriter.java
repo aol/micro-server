@@ -26,16 +26,13 @@ public class AsyncDataWriter<T> implements DataWriter<T> {
 	private final EventBus bus;
 
 	public static <T> AsyncDataWriter<T> asyncDataWriter(Executor executorService, ManifestComparator<T> comparator) {
-		return asyncDataWriter(	executorService,
-								comparator,
-								new EventBus());
+		return asyncDataWriter(executorService, comparator, new EventBus());
 	}
 
 	public static <T> AsyncDataWriter<T> asyncDataWriter(Executor executorService, ManifestComparator<T> comparator,
 			EventBus bus) {
-		return new AsyncDataWriter<>(	executorService,
-										comparator,
-										bus);
+		return new AsyncDataWriter<>(
+										executorService, comparator, bus);
 	}
 
 	@Override
@@ -45,9 +42,7 @@ public class AsyncDataWriter<T> implements DataWriter<T> {
 																						comparator.toString())
 																					.build());
 
-		return FutureW	.ofSupplier(() -> Tuple.tuple(comparator.load(),
-													comparator.getData()),
-									executorService)
+		return FutureW	.ofSupplier(() -> Tuple.tuple(comparator.load(), comparator.getData()), executorService)
 						.peek(t -> bus.post(SystemData	.<String, String> builder()
 														.correlationId(correlationId)
 														.dataMap(dataMap.get())
@@ -70,11 +65,10 @@ public class AsyncDataWriter<T> implements DataWriter<T> {
 		Supplier<MapX<String, String>> dataMap = () -> MapX.fromMap(HashMapBuilder	.map(MANIFEST_COMPARATOR_DATA_WRITER_KEY,
 																						comparator.toString())
 																					.build());
-		return FutureW	.<Void> ofSupplier(	() -> {
+		return FutureW	.<Void> ofSupplier(() -> {
 			comparator.saveAndIncrement(data);
 			return null;
-		} ,
-											executorService)
+		} , executorService)
 						.peek(t -> bus.post(SystemData	.<String, String> builder()
 														.correlationId(correlationId)
 														.dataMap(dataMap.get())
@@ -93,7 +87,6 @@ public class AsyncDataWriter<T> implements DataWriter<T> {
 
 	@Override
 	public FutureW<Boolean> isOutOfDate() {
-		return FutureW.ofSupplier(	() -> comparator.isOutOfDate(),
-									executorService);
+		return FutureW.ofSupplier(() -> comparator.isOutOfDate(), executorService);
 	}
 }

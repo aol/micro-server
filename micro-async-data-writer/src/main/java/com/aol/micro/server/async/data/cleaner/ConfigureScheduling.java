@@ -31,9 +31,9 @@ public class ConfigureScheduling {
 	private List<ManifestComparator> defaultComparators;
 
 	private ListX<DataCleaner> dataCleaners() {
-		Maybe<DataCleaner> defaultDataCleaner = defaultComparators.size() == 1
-				? Maybe.just(new DataCleaner(	defaultComparators.get(0),
-												defaultCronCleaner))
+		Maybe<DataCleaner> defaultDataCleaner = defaultComparators.size() == 1 ? Maybe.just(new DataCleaner(
+																											defaultComparators.get(0),
+																											defaultCronCleaner))
 				: Maybe.none();
 		return ListX.fromIterable(defaultDataCleaner)
 					.plusAll(dataCleaners);
@@ -42,9 +42,9 @@ public class ConfigureScheduling {
 
 	@Bean
 	public CleanerSchedular asyncDataCleaner() {
-		CleanerSchedular schedular = new CleanerSchedular(	dataCleaners(),
-															Executors.newScheduledThreadPool(schedularThreads),
-															bus);
+		CleanerSchedular schedular = new CleanerSchedular(
+															dataCleaners(),
+															Executors.newScheduledThreadPool(schedularThreads), bus);
 		schedular.schedule();
 		return schedular;
 	}

@@ -27,23 +27,26 @@ public class DirectoryCleaner {
 
 	@PostConstruct
 	public void clean() throws IOException {
-		if (temporaryDirectory != null && new File(temporaryDirectory).exists()) {
-			Path directory = FileSystems.getDefault().getPath(temporaryDirectory);
-			Files.walkFileTree(directory, new CleanupFileVisitor(directory));
+		if (temporaryDirectory != null && new File(
+													temporaryDirectory).exists()) {
+			Path directory = FileSystems.getDefault()
+										.getPath(temporaryDirectory);
+			Files.walkFileTree(directory, new CleanupFileVisitor(
+																	directory));
 		}
 	}
 
-	static  class CleanupFileVisitor extends SimpleFileVisitor<Path> {
+	static class CleanupFileVisitor extends SimpleFileVisitor<Path> {
 
 		private final Path tempDirectory;
-		
+
 		public CleanupFileVisitor(Path directory) {
 			this.tempDirectory = directory;
 		}
-		
+
 		@Override
 		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-		    deleteNotTopDirectory(file);
+			deleteNotTopDirectory(file);
 			return FileVisitResult.CONTINUE;
 		}
 
@@ -56,13 +59,13 @@ public class DirectoryCleaner {
 				throw e;
 			}
 		}
-		
+
 		private void deleteNotTopDirectory(Path dir) throws IOException {
-		    if(!dir.equals(tempDirectory)) {
-		        Files.delete(dir);
-		    }
+			if (!dir.equals(tempDirectory)) {
+				Files.delete(dir);
+			}
 		}
-		
+
 	}
 
 }

@@ -11,8 +11,7 @@ public class AsyncDataWriterPlugin implements Plugin {
 
 	@Override
 	public Set<Class> springClasses() {
-		return SetX.of(	ConfigureScheduling.class,
-						ConfigureDataWriter.class);
+		return SetX.of(ConfigureScheduling.class, ConfigureDataWriter.class);
 	}
 
 }

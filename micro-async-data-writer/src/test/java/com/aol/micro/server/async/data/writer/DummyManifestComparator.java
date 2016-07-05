@@ -9,10 +9,14 @@ import lombok.Setter;
 
 public class DummyManifestComparator<T> implements ManifestComparator<T> {
 
-	AtomicInteger loadCalled = new AtomicInteger(0);
-	AtomicInteger outofDateCalled = new AtomicInteger(0);
-	AtomicInteger cleanCalled = new AtomicInteger(0);
-	AtomicInteger cleanAllCalled = new AtomicInteger(0);
+	AtomicInteger loadCalled = new AtomicInteger(
+													0);
+	AtomicInteger outofDateCalled = new AtomicInteger(
+														0);
+	AtomicInteger cleanCalled = new AtomicInteger(
+													0);
+	AtomicInteger cleanAllCalled = new AtomicInteger(
+														0);
 
 	private boolean outOfDate;
 	@Getter

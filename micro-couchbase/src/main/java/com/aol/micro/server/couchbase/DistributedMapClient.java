@@ -21,12 +21,8 @@ public class DistributedMapClient<V> {
 	}
 
 	public boolean put(final String key, final V value) {
-		logger.debug(	"put '{}', value:{}",
-						key,
-						value);
-		return couchbaseClient	.map(c -> putInternal(c,
-													key,
-													value))
+		logger.debug("put '{}', value:{}", key, value);
+		return couchbaseClient	.map(c -> putInternal(c, key, value))
 								.orElse(false);
 
 	}
@@ -34,8 +30,7 @@ public class DistributedMapClient<V> {
 	private boolean putInternal(final CouchbaseClient client, final String key, final V value) {
 
 		try {
-			return client	.set(key,
-								value)
+			return client	.set(key, value)
 							.get();
 		} catch (InterruptedException | ExecutionException e) {
 			throw ExceptionSoftener.throwSoftenedException(e);

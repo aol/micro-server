@@ -32,9 +32,9 @@ public class ConfigureScheduling {
 	private List<ManifestComparator> defaultComparators;
 
 	private ListX<DataLoader> dataLoaders() {
-		Maybe<DataLoader> defaultDataLoader = defaultComparators.size() == 1
-				? Maybe.just(new DataLoader(defaultComparators.get(0),
-											defaultCron))
+		Maybe<DataLoader> defaultDataLoader = defaultComparators.size() == 1 ? Maybe.just(new DataLoader(
+																											defaultComparators.get(0),
+																											defaultCron))
 				: Maybe.none();
 		return ListX.fromIterable(defaultDataLoader)
 					.plusAll(dataLoaders);
@@ -43,9 +43,9 @@ public class ConfigureScheduling {
 
 	@Bean
 	public LoaderSchedular asyncDataLoader() {
-		LoaderSchedular schedular = new LoaderSchedular(dataLoaders(),
-														Executors.newScheduledThreadPool(schedularThreads),
-														bus);
+		LoaderSchedular schedular = new LoaderSchedular(
+														dataLoaders(),
+														Executors.newScheduledThreadPool(schedularThreads), bus);
 		schedular.schedule();
 		return schedular;
 	}

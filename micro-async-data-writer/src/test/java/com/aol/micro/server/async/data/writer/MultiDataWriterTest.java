@@ -19,25 +19,26 @@ public class MultiDataWriterTest {
 	public void setup() {
 		dataWriter1 = new DummyDataWriter();
 		dataWriter2 = new DummyDataWriter();
-		writer = new MultiDataWriter<>(ListX.of(dataWriter1,
-												dataWriter2));
-		empty = new MultiDataWriter<>(ListX.empty());
+		writer = new MultiDataWriter<>(
+										ListX.of(dataWriter1, dataWriter2));
+		empty = new MultiDataWriter<>(
+										ListX.empty());
 	}
 
 	@Test
 	public void bothDataWritersUpdated() {
 		writer.saveAndIncrement("hello world");
-		assertThat(	dataWriter1	.loadAndGet()
+		assertThat(dataWriter1	.loadAndGet()
 								.get(),
 					equalTo("hello world"));
-		assertThat(	dataWriter2	.loadAndGet()
+		assertThat(dataWriter2	.loadAndGet()
 								.get(),
 					equalTo("hello world"));
 	}
 
 	@Test
 	public void emptySaveAndIncrement() {
-		assertThat(	empty.saveAndIncrement("hello world")
+		assertThat(empty.saveAndIncrement("hello world")
 						.get(),
 					equalTo(null));
 	}
@@ -48,16 +49,14 @@ public class MultiDataWriterTest {
 		dataWriter2.setData("two");
 		String data = writer.loadAndGet()
 							.get();
-		assertThat(	data,
-					equalTo("one"));
+		assertThat(data, equalTo("one"));
 	}
 
 	@Test
 	public void loadAndGetReturnsNullForEmpty() {
 		String data = empty	.loadAndGet()
 							.get();
-		assertThat(	data,
-					equalTo(null));
+		assertThat(data, equalTo(null));
 	}
 
 	@Test
@@ -66,8 +65,7 @@ public class MultiDataWriterTest {
 		dataWriter2.setOutofdate(false);
 		boolean outofdate = writer	.isOutOfDate()
 									.get();
-		assertThat(	outofdate,
-					equalTo(true));
+		assertThat(outofdate, equalTo(true));
 	}
 
 	@Test
@@ -76,8 +74,7 @@ public class MultiDataWriterTest {
 		dataWriter2.setOutofdate(true);
 		boolean outofdate = writer	.isOutOfDate()
 									.get();
-		assertThat(	outofdate,
-					equalTo(true));
+		assertThat(outofdate, equalTo(true));
 	}
 
 	@Test
@@ -86,8 +83,7 @@ public class MultiDataWriterTest {
 		dataWriter2.setOutofdate(false);
 		boolean outofdate = writer	.isOutOfDate()
 									.get();
-		assertThat(	outofdate,
-					equalTo(false));
+		assertThat(outofdate, equalTo(false));
 	}
 
 	@Test
@@ -96,8 +92,7 @@ public class MultiDataWriterTest {
 		dataWriter2.setOutofdate(true);
 		boolean outofdate = writer	.isOutOfDate()
 									.get();
-		assertThat(	outofdate,
-					equalTo(true));
+		assertThat(outofdate, equalTo(true));
 	}
 
 	@Test
@@ -105,7 +100,6 @@ public class MultiDataWriterTest {
 
 		boolean outofdate = empty	.isOutOfDate()
 									.get();
-		assertThat(	outofdate,
-					equalTo(false));
+		assertThat(outofdate, equalTo(false));
 	}
 }

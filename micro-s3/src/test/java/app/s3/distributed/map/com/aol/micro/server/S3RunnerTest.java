@@ -21,8 +21,9 @@ public class S3RunnerTest {
 
 	@Before
 	public void startServer() {
-	
-		server = new MicroserverApp(()->"simple-app");
+
+		server = new MicroserverApp(
+									() -> "simple-app");
 
 		server.start();
 
@@ -33,12 +34,11 @@ public class S3RunnerTest {
 		server.stop();
 	}
 
-	@Test @Ignore
-	public void runAppAndBasicTest() throws InterruptedException,
-			ExecutionException {
+	@Test
+	@Ignore
+	public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
 		rest.get("http://localhost:8080/simple-app/s3/put");
-		assertThat(rest.get("http://localhost:8080/simple-app/s3/get"),
-				containsString("world"));
+		assertThat(rest.get("http://localhost:8080/simple-app/s3/get"), containsString("world"));
 
 	}
 

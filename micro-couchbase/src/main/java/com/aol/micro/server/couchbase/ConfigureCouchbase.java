@@ -49,24 +49,25 @@ public class ConfigureCouchbase {
 	@Bean(name = "couchbaseDistributedMap")
 	public DistributedMapClient simpleCouchbaseClient() throws IOException, URISyntaxException {
 		if (couchbaseClientEnabled) {
-			return new DistributedMapClient(couchbaseClient());
+			return new DistributedMapClient(
+											couchbaseClient());
 		} else {
-			return new DistributedMapClient(null);
+			return new DistributedMapClient(
+											null);
 		}
 	}
 
 	@Bean(name = "couchbaseClient")
 	public CouchbaseClient couchbaseClient() throws IOException, URISyntaxException {
 		if (couchbaseClientEnabled) {
-			logger.info("Creating CouchbaseClient for servers: {}",
-						couchbaseServers);
+			logger.info("Creating CouchbaseClient for servers: {}", couchbaseServers);
 			CouchbaseConnectionFactoryBuilder builder = new CouchbaseConnectionFactoryBuilder();
 			builder.setOpTimeout(opTimeout);
-			CouchbaseConnectionFactory cf = builder.buildCouchbaseConnection(	getServersList(),
-																				couchbaseBucket,
+			CouchbaseConnectionFactory cf = builder.buildCouchbaseConnection(	getServersList(), couchbaseBucket,
 																				StringUtils.trimAllWhitespace(Optional	.ofNullable(couchbasePassword)
 																														.orElse("")));
-			return new CouchbaseClient(cf);
+			return new CouchbaseClient(
+										cf);
 		}
 		return null;
 
@@ -74,19 +75,21 @@ public class ConfigureCouchbase {
 
 	@Bean
 	public CouchbaseManifestComparator couchbaseManifestComparator() throws IOException, URISyntaxException {
-		return new CouchbaseManifestComparator(this.simpleCouchbaseClient()).withKey(defaultCouchbaseManifestComparisonKey);
+		return new CouchbaseManifestComparator(
+												this.simpleCouchbaseClient()).withKey(defaultCouchbaseManifestComparisonKey);
 	}
 
 	private List<URI> getServersList() throws URISyntaxException {
 		List<URI> uris = new ArrayList<URI>();
 		if (couchbaseServers.indexOf(',') == -1) {
-			uris.add(new URI(couchbaseServers));
+			uris.add(new URI(
+								couchbaseServers));
 			return uris;
 		}
 
-		for (String serverHost : StringUtils.split(	couchbaseServers,
-													",")) {
-			uris.add(new URI(serverHost));
+		for (String serverHost : StringUtils.split(couchbaseServers, ",")) {
+			uris.add(new URI(
+								serverHost));
 		}
 		return uris;
 	}

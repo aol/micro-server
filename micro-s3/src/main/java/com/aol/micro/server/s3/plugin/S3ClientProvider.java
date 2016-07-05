@@ -24,17 +24,20 @@ public class S3ClientProvider {
 		AWSCredentials credentials;
 
 		if (s3Configuration.getSessionToken() == null) {
-			credentials = new BasicAWSCredentials(s3Configuration.getAccessKey(), s3Configuration.getSecretKey());
+			credentials = new BasicAWSCredentials(
+													s3Configuration.getAccessKey(), s3Configuration.getSecretKey());
 		} else {
-			credentials = new BasicSessionCredentials(s3Configuration.getAccessKey(), s3Configuration.getSecretKey(),
-					s3Configuration.getSessionToken());
+			credentials = new BasicSessionCredentials(
+														s3Configuration.getAccessKey(), s3Configuration.getSecretKey(),
+														s3Configuration.getSessionToken());
 		}
-		
-		AmazonS3Client amazonS3Client = new AmazonS3Client(credentials);
-		
+
+		AmazonS3Client amazonS3Client = new AmazonS3Client(
+															credentials);
+
 		if (s3Configuration.getRegion() != null) {
 			Region region = Region.getRegion(Regions.fromName(s3Configuration.getRegion()));
-			amazonS3Client.setRegion(region);		
+			amazonS3Client.setRegion(region);
 		}
 
 		return amazonS3Client;

@@ -9,13 +9,13 @@ import org.junit.Test;
 
 public class DirectoryCleanerTest {
 
-	@Test 
+	@Test
 	public void clean() throws IOException {
-		
-		
+
 		Path dir = Files.createTempDirectory("test");
-		DirectoryCleaner cleaner = new DirectoryCleaner(dir.toString());
-		Path file  = Files.createTempFile(dir, "a", "b");
+		DirectoryCleaner cleaner = new DirectoryCleaner(
+														dir.toString());
+		Path file = Files.createTempFile(dir, "a", "b");
 		Assert.assertTrue(Files.exists(file));
 		cleaner.clean();
 		Assert.assertFalse(Files.exists(file));

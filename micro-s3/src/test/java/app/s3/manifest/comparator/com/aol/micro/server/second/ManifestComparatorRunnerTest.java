@@ -13,7 +13,6 @@ import org.junit.Test;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.testing.RestAgent;
 
-
 public class ManifestComparatorRunnerTest {
 
 	RestAgent rest = new RestAgent();
@@ -22,8 +21,9 @@ public class ManifestComparatorRunnerTest {
 
 	@Before
 	public void startServer() {
-		
-		server = new MicroserverApp(()->"simple-app");
+
+		server = new MicroserverApp(
+									() -> "simple-app");
 
 		server.start();
 
@@ -34,21 +34,20 @@ public class ManifestComparatorRunnerTest {
 		server.stop();
 	}
 
-	@Test @Ignore
-	public void runAppAndBasicTest() throws InterruptedException,
-			ExecutionException {
+	@Test
+	@Ignore
+	public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
 		rest.get("http://localhost:8080/simple-app/comparator/increment");
-		
-		assertThat(rest.get("http://localhost:8080/simple-app/comparator/check"),equalTo("true"));
-		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"),equalTo("hello1"));
+
+		assertThat(rest.get("http://localhost:8080/simple-app/comparator/check"), equalTo("true"));
+		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"), equalTo("hello1"));
 		rest.get("http://localhost:8080/simple-app/comparator/increment");
-		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"),equalTo("hello2"));
-		
+		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"), equalTo("hello2"));
+
 		rest.get("http://localhost:8080/simple-app/comparator2/increment");
-		
-		assertThat(rest.get("http://localhost:8080/simple-app/comparator/check"),equalTo("false"));
-		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"),equalTo("hellob"));
-		
+
+		assertThat(rest.get("http://localhost:8080/simple-app/comparator/check"), equalTo("false"));
+		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"), equalTo("hellob"));
 
 	}
 

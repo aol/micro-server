@@ -41,8 +41,7 @@ public class DataCleaner<T> implements ScheduledJob<Job> {
 			return SystemData	.<String, String> builder()
 								.correlationId(correlationId)
 								.dataMap(dataMap.get()
-												.plus(	"Error",
-														e.getMessage()))
+												.plus("Error", e.getMessage()))
 								.errors(1)
 								.processed(0)
 								.build();

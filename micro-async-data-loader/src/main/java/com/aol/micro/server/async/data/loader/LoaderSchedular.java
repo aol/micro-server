@@ -19,8 +19,7 @@ public class LoaderSchedular {
 		loader.forEach(dl -> {
 			ReactiveSeq	.generate(() -> dl.scheduleAndLog())
 						.peek(sd -> bus.post(sd))
-						.schedule(	dl.getCron(),
-									executor);
+						.schedule(dl.getCron(), executor);
 		});
 	}
 }

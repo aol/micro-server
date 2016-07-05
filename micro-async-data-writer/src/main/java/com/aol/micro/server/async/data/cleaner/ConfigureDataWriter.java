@@ -37,19 +37,19 @@ public class ConfigureDataWriter {
 			System.err.println("Warning :: multiple ManifestComparators configured as Spring bean, using the first configured bean for the Default AsyncDataWriter, recommended approach is to configure your own DataWriters as needed.");
 			logger.warn("Warning :: multiple ManifestComparators configured as Spring bean, using the first configured bean for the Default AsyncDataWriter, recommended approach is to configure your own DataWriters as needed.");
 		}
-		return new AsyncDataWriter(	asyncDataWriterThreadPool(),
-									defaultComparators.get(0),
-									bus);
+		return new AsyncDataWriter(
+									asyncDataWriterThreadPool(), defaultComparators.get(0), bus);
 	}
 
 	@Bean
 	public MultiDataWriter<?> defaultMultiDataWriter() {
 		if (multiWriterOn)
-			return new MultiDataWriter(ListX.fromIterable(defaultComparators)
-											.map(mc -> new AsyncDataWriter(	asyncDataWriterThreadPool(),
-																			mc,
-																			bus)));
-		return new MultiDataWriter(ListX.empty());
+			return new MultiDataWriter(
+										ListX	.fromIterable(defaultComparators)
+												.map(mc -> new AsyncDataWriter(
+																				asyncDataWriterThreadPool(), mc, bus)));
+		return new MultiDataWriter(
+									ListX.empty());
 	}
 
 	@Bean

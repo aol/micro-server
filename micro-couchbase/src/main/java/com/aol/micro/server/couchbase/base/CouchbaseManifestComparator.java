@@ -121,13 +121,13 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 	 * @return new ManifestComparator that targets specified key
 	 */
 	public <R> CouchbaseManifestComparator<R> withKey(String key) {
-		return new CouchbaseManifestComparator<>(	key,
-													connection);
+		return new CouchbaseManifestComparator<>(
+													key, connection);
 	}
 
 	private VersionedKey newKey(Long version) {
-		return new VersionedKey(key,
-								version);
+		return new VersionedKey(
+								key, version);
 	}
 
 	private VersionedKey increment() {
@@ -137,8 +137,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 
 	private VersionedKey loadKeyFromCouchbase() {
 		Optional<String> optionalKey = connection.get(key);
-		return optionalKey	.flatMap(val -> Optional.of(JacksonUtil.convertFromJson(val,
-																					VersionedKey.class)))
+		return optionalKey	.flatMap(val -> Optional.of(JacksonUtil.convertFromJson(val, VersionedKey.class)))
 							.orElse(newKey(0L));
 
 	}
@@ -169,8 +168,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 		} catch (Throwable e) {
 			data = oldData;
 			versionedKey = oldKey;
-			logger.debug(	e.getMessage(),
-							e);
+			logger.debug(e.getMessage(), e);
 			throw ExceptionSoftener.throwSoftenedException(e);
 		}
 		return true;
@@ -180,8 +178,10 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 	private Object nonAtomicload(String newVersionedKey) throws Throwable {
 		Data data = (Data) connection	.get(newVersionedKey)
 										.orElseThrow(() -> {
-											return new ManifestComparatorKeyNotFoundException("Missing versioned key "
-													+ newVersionedKey + " - likely data changed during read");
+											return new ManifestComparatorKeyNotFoundException(
+																								"Missing versioned key "
+																										+ newVersionedKey
+																										+ " - likely data changed during read");
 										});
 		logger.info("Loaded new data with date {} for key {}, versionedKey {}, versionedKey from data ",
 					new Object[] { data.getDate(), key, newVersionedKey, data.getVersionedKey() });
@@ -201,9 +201,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 	 * @param numberToClean
 	 */
 	public void clean(int numberToClean) {
-		logger.info("Attempting to delete the last {} records for key {}",
-					numberToClean,
-					key);
+		logger.info("Attempting to delete the last {} records for key {}", numberToClean, key);
 		VersionedKey currentVersionedKey = loadKeyFromCouchbase();
 		long start = 0;
 		if (numberToClean != -1)
@@ -212,9 +210,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 			delete(currentVersionedKey	.withVersion(i)
 										.toJson());
 		}
-		logger.info("Finished deleting the last {} records for key {}",
-					numberToClean,
-					key);
+		logger.info("Finished deleting the last {} records for key {}", numberToClean, key);
 	}
 
 	private void delete(String withVersion) {
@@ -236,15 +232,10 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 	public void saveAndIncrement(T data) {
 		T oldData = this.data;
 		VersionedKey newVersionedKey = increment();
-		logger.info("Saving data with key {}, new version is {}",
-					key,
-					newVersionedKey.toJson());
-		connection.put(	newVersionedKey.toJson(),
-						new Data(	data,
-									new Date(),
-									newVersionedKey.toJson()));
-		connection.put(	key,
-						newVersionedKey.toJson());
+		logger.info("Saving data with key {}, new version is {}", key, newVersionedKey.toJson());
+		connection.put(newVersionedKey.toJson(), new Data(
+															data, new Date(), newVersionedKey.toJson()));
+		connection.put(key, newVersionedKey.toJson());
 		try {
 			this.data = data;
 			delete(versionedKey);
