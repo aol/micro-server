@@ -20,30 +20,35 @@ public class DistributedMapClient<V> {
 		this.couchbaseClient = Optional.ofNullable(couchbaseClient);
 	}
 
-	
 	public boolean put(final String key, final V value) {
-		logger.debug("put '{}', value:{}", key, value);
-		return couchbaseClient.map(c->putInternal(c,key,value)).orElse(false);
+		logger.debug(	"put '{}', value:{}",
+						key,
+						value);
+		return couchbaseClient	.map(c -> putInternal(c,
+													key,
+													value))
+								.orElse(false);
 
 	}
-	private boolean putInternal(final CouchbaseClient client, final String key, final V value){
-	
-		try{
-			return client.set(key, value).get();
+
+	private boolean putInternal(final CouchbaseClient client, final String key, final V value) {
+
+		try {
+			return client	.set(key,
+								value)
+							.get();
 		} catch (InterruptedException | ExecutionException e) {
 			throw ExceptionSoftener.throwSoftenedException(e);
-			
+
 		}
 	}
-	
 
-	
 	public Optional<V> get(String key) {
-		return couchbaseClient.map(c->(V)c.get(key));
-			
+		return couchbaseClient.map(c -> (V) c.get(key));
+
 	}
 
 	public void delete(String key) {
-		couchbaseClient.map(c->c.delete(key));
+		couchbaseClient.map(c -> c.delete(key));
 	}
 }

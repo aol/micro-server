@@ -13,33 +13,37 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public class DataLoader implements ScheduledJob{
+public class DataLoader implements ScheduledJob {
 	public static final String MANIFEST_COMPARATOR_DATA_LOADER_KEY = "Manifest Comparator Data Loader";
 	private final ManifestComparator<String> comparator;
 	@Getter
 	private final String cron;
 	private final Random r = new Random();
-	
+
 	@Override
-	public SystemData<String,String> scheduleAndLog() {
-		String correlationId = ""+System.currentTimeMillis() + ":" + r.nextLong();
-		Supplier<MapX<String, String>> dataMap=()->MapX.fromMap(HashMapBuilder.map(MANIFEST_COMPARATOR_DATA_LOADER_KEY,comparator.toString()).build());
-		try{
+	public SystemData<String, String> scheduleAndLog() {
+		String correlationId = "" + System.currentTimeMillis() + ":" + r.nextLong();
+		Supplier<MapX<String, String>> dataMap = () -> MapX.fromMap(HashMapBuilder	.map(MANIFEST_COMPARATOR_DATA_LOADER_KEY,
+																						comparator.toString())
+																					.build());
+		try {
 			boolean changed = comparator.load();
-			
-			return SystemData.<String,String>builder()
-							 .correlationId(correlationId)
-							 .dataMap(dataMap.get())
-							 .errors(0)
-							 .processed(changed?1:0)
-							 .build();
-		}catch(Exception e){
-			return SystemData.<String,String>builder()
-							.correlationId(correlationId)
-							.dataMap(dataMap.get().plus("Error",e.getMessage()))
-							.errors(1)
-							.processed(0)
-							.build();
+
+			return SystemData	.<String, String> builder()
+								.correlationId(correlationId)
+								.dataMap(dataMap.get())
+								.errors(0)
+								.processed(changed ? 1 : 0)
+								.build();
+		} catch (Exception e) {
+			return SystemData	.<String, String> builder()
+								.correlationId(correlationId)
+								.dataMap(dataMap.get()
+												.plus(	"Error",
+														e.getMessage()))
+								.errors(1)
+								.processed(0)
+								.build();
 		}
 	}
 

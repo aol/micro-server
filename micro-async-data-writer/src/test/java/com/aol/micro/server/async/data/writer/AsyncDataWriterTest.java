@@ -22,42 +22,56 @@ public class AsyncDataWriterTest {
 	EventBus bus;
 	private DummyManifestComparator<String> dummyMc;
 	AtomicInteger eventRecieved;
+
 	@Before
-	public void setup(){
+	public void setup() {
 		eventRecieved = new AtomicInteger(0);
-		 bus = new EventBus();
-		 bus.register(this);
+		bus = new EventBus();
+		bus.register(this);
 		dummyMc = new DummyManifestComparator<>();
-		writer = new AsyncDataWriter<>(ex,dummyMc, bus);
+		writer = new AsyncDataWriter<>(	ex,
+										dummyMc,
+										bus);
 	}
+
 	@Subscribe
-	public void event(SystemData data){
+	public void event(SystemData data) {
 		eventRecieved.incrementAndGet();
 	}
+
 	@Test
 	public void testLoadAndGet() {
-		assertThat(eventRecieved.get(),equalTo(0));
+		assertThat(	eventRecieved.get(),
+					equalTo(0));
 		dummyMc.setData("hello world");
 		FutureW<String> res = writer.loadAndGet();
-		
-		assertThat(res.get(),equalTo("hello world"));
-		assertThat(dummyMc.loadCalled.get(),equalTo(1));
-		assertThat(eventRecieved.get(),equalTo(1));
+
+		assertThat(	res.get(),
+					equalTo("hello world"));
+		assertThat(	dummyMc.loadCalled.get(),
+					equalTo(1));
+		assertThat(	eventRecieved.get(),
+					equalTo(1));
 	}
 
 	@Test
 	public void testSaveAndIncrement() {
-		assertThat(eventRecieved.get(),equalTo(0));
+		assertThat(	eventRecieved.get(),
+					equalTo(0));
 		writer.saveAndIncrement("boo!");
 		FutureW<String> res = writer.loadAndGet();
-		assertThat(res.get(),equalTo("boo!"));
-		assertThat(eventRecieved.get(),equalTo(2));
+		assertThat(	res.get(),
+					equalTo("boo!"));
+		assertThat(	eventRecieved.get(),
+					equalTo(2));
 	}
 
 	@Test
 	public void testIsOutOfDate() {
-		writer.isOutOfDate().get();
-		assertThat(dummyMc.outofDateCalled.get(),equalTo(1));
+		writer	.isOutOfDate()
+				.get();
+		assertThat(	dummyMc.outofDateCalled.get(),
+					equalTo(1));
 	}
 
 }

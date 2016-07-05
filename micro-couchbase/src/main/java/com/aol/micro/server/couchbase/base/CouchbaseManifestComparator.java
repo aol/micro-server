@@ -19,28 +19,29 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * Manifest comparator for use with a distributed map -assumes single producer / multiple consumers
+ * Manifest comparator for use with a distributed map -assumes single producer /
+ * multiple consumers
  * 
  * Uses to entries in the map
  * 
- * key : versioned key
- * versioned key : actual data
+ * key : versioned key versioned key : actual data
  * 
- * ManifestComparator stores the current version number, only when the version changes is the full
- * data set loaded from the remote store.
+ * ManifestComparator stores the current version number, only when the version
+ * changes is the full data set loaded from the remote store.
  * 
- * Usage as a Spring Bean - inject into the host class, and use withKey to customise for the targeted Key.
+ * Usage as a Spring Bean - inject into the host class, and use withKey to
+ * customise for the targeted Key.
  * 
  * 
  * <pre>
  * {@code 
- * @Rest
+ * &#64;Rest
 	public class MyDataService {
 	
 
 	
 	private final ManifestComparator<DataType> comparator;
-	@Autowired
+	&#64;Autowired
 	public  MyDataService(ManifestComparator comparator) {
 		this.comparator = comparator.withKey("test-key");
 	}
@@ -48,26 +49,27 @@ import lombok.Getter;
  * }
  * </pre>
  * 
- * micro-couchbase configures a single ManifestComparator bean that can be customized for multiple different keys via
- * withKey
+ * micro-couchbase configures a single ManifestComparator bean that can be
+ * customized for multiple different keys via withKey
  * 
- * When your bean is injected save via saveAndIncrement, and periodically call load() to refresh data if (and only if)
- * it has changed.
+ * When your bean is injected save via saveAndIncrement, and periodically call
+ * load() to refresh data if (and only if) it has changed.
  * 
- * ManifestComparator will automatically remove old versions on saveAndIncrement, but system outages may occasionally cause old keys
- * to linger, you can also use clean & cleanAll to periodically to remove old key versions.
+ * ManifestComparator will automatically remove old versions on
+ * saveAndIncrement, but system outages may occasionally cause old keys to
+ * linger, you can also use clean & cleanAll to periodically to remove old key
+ * versions.
  * 
  * 
  * @author johnmcclean
  *
  * @param <T>
  */
-@AllArgsConstructor(access=AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	
 	private final String key;
 
 	@Getter
@@ -78,48 +80,54 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 	private final DistributedMapClient connection;
 
 	/**
-	 * Create a ManifestComparator with the supplied distributed map client
-	 * Data  stored by ManifestComparator will be
+	 * Create a ManifestComparator with the supplied distributed map client Data
+	 * stored by ManifestComparator will be
 	 * 
-	 * key : versioned key
-	 * versioned key : actual data
-	 * @param connection DistributedMapClient to store comparison data
+	 * key : versioned key versioned key : actual data
+	 * 
+	 * @param connection
+	 *            DistributedMapClient to store comparison data
 	 */
 	public CouchbaseManifestComparator(DistributedMapClient connection) {
 		this.key = "default";
 		this.versionedKey = newKey(1L).toJson();
 		this.connection = connection;
 	}
+
 	/**
 	 * Create a ManifestComparator with the supplied distributed map client
 	 * 
-	 * Data  stored by ManifestComparator will be
+	 * Data stored by ManifestComparator will be
 	 * 
-	 * key : versioned key
-	 * versioned key : actual data
+	 * key : versioned key versioned key : actual data
 	 * 
-	 * @param key To store actual data with
-	 * @param connection DistributeMapClient connection
+	 * @param key
+	 *            To store actual data with
+	 * @param connection
+	 *            DistributeMapClient connection
 	 */
-	public CouchbaseManifestComparator(String key,DistributedMapClient connection) {
+	public CouchbaseManifestComparator(String key, DistributedMapClient connection) {
 		this.key = key;
 		this.versionedKey = newKey(1L).toJson();
 		this.connection = connection;
 	}
-	
+
 	/**
 	 * Create a new ManifestComparator with the same distributed map connection
 	 * that targets a different key
 	 * 
-	 * @param key Key to store data with
+	 * @param key
+	 *            Key to store data with
 	 * @return new ManifestComparator that targets specified key
 	 */
-	public <R> CouchbaseManifestComparator<R> withKey(String key){
-		return new CouchbaseManifestComparator<>(key, connection);
+	public <R> CouchbaseManifestComparator<R> withKey(String key) {
+		return new CouchbaseManifestComparator<>(	key,
+													connection);
 	}
 
 	private VersionedKey newKey(Long version) {
-		return new VersionedKey(key, version);
+		return new VersionedKey(key,
+								version);
 	}
 
 	private VersionedKey increment() {
@@ -128,17 +136,18 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 	}
 
 	private VersionedKey loadKeyFromCouchbase() {
-		Optional<String> optionalKey =  connection.get(key);
-		return optionalKey.flatMap( val -> Optional.of(JacksonUtil.convertFromJson( val, VersionedKey.class)))
-				.orElse( newKey(0L));
-	
+		Optional<String> optionalKey = connection.get(key);
+		return optionalKey	.flatMap(val -> Optional.of(JacksonUtil.convertFromJson(val,
+																					VersionedKey.class)))
+							.orElse(newKey(0L));
+
 	}
 
 	/**
 	 * @return true - if current data is stale and needs refreshed
 	 */
 	public boolean isOutOfDate() {
-		
+
 		return !versionedKey.equals(loadKeyFromCouchbase().toJson());
 	}
 
@@ -150,16 +159,18 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 		String oldKey = versionedKey;
 		try {
 			if (isOutOfDate()) {
-				String newVersionedKey = (String) connection.get(key).get();
+				String newVersionedKey = (String) connection.get(key)
+															.get();
 				data = (T) nonAtomicload(newVersionedKey);
 				versionedKey = newVersionedKey;
-			}else{
+			} else {
 				return false;
 			}
 		} catch (Throwable e) {
 			data = oldData;
 			versionedKey = oldKey;
-			logger.debug( e.getMessage(), e);
+			logger.debug(	e.getMessage(),
+							e);
 			throw ExceptionSoftener.throwSoftenedException(e);
 		}
 		return true;
@@ -167,11 +178,13 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 
 	@SuppressWarnings("unchecked")
 	private Object nonAtomicload(String newVersionedKey) throws Throwable {
-		Data data = (Data) connection.get(newVersionedKey).orElseThrow(() -> {
-			return new ManifestComparatorKeyNotFoundException("Missing versioned key " + newVersionedKey + " - likely data changed during read");
-		});
-		logger.info( "Loaded new data with date {} for key {}, versionedKey {}, versionedKey from data ",
-				new Object[]{data.getDate(), key, newVersionedKey, data.getVersionedKey()});
+		Data data = (Data) connection	.get(newVersionedKey)
+										.orElseThrow(() -> {
+											return new ManifestComparatorKeyNotFoundException("Missing versioned key "
+													+ newVersionedKey + " - likely data changed during read");
+										});
+		logger.info("Loaded new data with date {} for key {}, versionedKey {}, versionedKey from data ",
+					new Object[] { data.getDate(), key, newVersionedKey, data.getVersionedKey() });
 		return data.getData();
 	}
 
@@ -188,15 +201,20 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 	 * @param numberToClean
 	 */
 	public void clean(int numberToClean) {
-		logger.info("Attempting to delete the last {} records for key {}",numberToClean,key);
+		logger.info("Attempting to delete the last {} records for key {}",
+					numberToClean,
+					key);
 		VersionedKey currentVersionedKey = loadKeyFromCouchbase();
 		long start = 0;
 		if (numberToClean != -1)
 			start = currentVersionedKey.getVersion() - numberToClean;
 		for (long i = start; i < currentVersionedKey.getVersion(); i++) {
-			delete(currentVersionedKey.withVersion(i).toJson());
+			delete(currentVersionedKey	.withVersion(i)
+										.toJson());
 		}
-		logger.info("Finished deleting the last {} records for key {}",numberToClean,key);
+		logger.info("Finished deleting the last {} records for key {}",
+					numberToClean,
+					key);
 	}
 
 	private void delete(String withVersion) {
@@ -204,31 +222,42 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 	}
 
 	/**
-	 * Save provided data with the key this ManifestComparator manages
-	 * bump the versioned key version.
+	 * Save provided data with the key this ManifestComparator manages bump the
+	 * versioned key version.
 	 * 
-	 * NB : To avoid race conditions - make sure only one service (an elected leader) can write at a time (see micro-mysql for a mysql distributed lock,
-	 * or micro-curator for a curator / zookeeper distributed lock implementation).
+	 * NB : To avoid race conditions - make sure only one service (an elected
+	 * leader) can write at a time (see micro-mysql for a mysql distributed
+	 * lock, or micro-curator for a curator / zookeeper distributed lock
+	 * implementation).
 	 * 
-	 * @param data to save
+	 * @param data
+	 *            to save
 	 */
 	public void saveAndIncrement(T data) {
 		T oldData = this.data;
 		VersionedKey newVersionedKey = increment();
-		logger.info( "Saving data with key {}, new version is {}", key,newVersionedKey.toJson());
-		connection.put(newVersionedKey.toJson(), new Data(data, new Date(), newVersionedKey.toJson()));
-		connection.put(key, newVersionedKey.toJson());
+		logger.info("Saving data with key {}, new version is {}",
+					key,
+					newVersionedKey.toJson());
+		connection.put(	newVersionedKey.toJson(),
+						new Data(	data,
+									new Date(),
+									newVersionedKey.toJson()));
+		connection.put(	key,
+						newVersionedKey.toJson());
 		try {
 			this.data = data;
 			delete(versionedKey);
-			
-		} catch(Throwable t){
+
+		} catch (Throwable t) {
 			this.data = oldData;
-		}finally {
+		} finally {
 			versionedKey = newVersionedKey.toJson();
 		}
 	}
-	public String toString(){
-		return "[CouchbaseManifestComparator:key:"+key+",versionedKey:"+JacksonUtil.serializeToJson(versionedKey)+"]";
+
+	public String toString() {
+		return "[CouchbaseManifestComparator:key:" + key + ",versionedKey:" + JacksonUtil.serializeToJson(versionedKey)
+				+ "]";
 	}
 }

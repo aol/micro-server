@@ -13,34 +13,34 @@ public class DummyManifestComparator<T> implements ManifestComparator<T> {
 	AtomicInteger outofDateCalled = new AtomicInteger(0);
 	AtomicInteger cleanCalled = new AtomicInteger(0);
 	AtomicInteger cleanAllCalled = new AtomicInteger(0);
-	
+
 	private boolean outOfDate;
-	@Getter @Setter
+	@Getter
+	@Setter
 	private volatile T data;
+
 	@Override
 	public <R> ManifestComparator<R> withKey(java.lang.String key) {
-		return (DummyManifestComparator)this;
+		return (DummyManifestComparator) this;
 	}
 
-	
 	@Override
 	public boolean load() {
 		loadCalled.incrementAndGet();
 		return true;
-		
+
 	}
 
 	@Override
 	public void cleanAll() {
 		cleanAllCalled.incrementAndGet();
-		
+
 	}
 
 	@Override
 	public void clean(int numberToClean) {
 		cleanCalled.incrementAndGet();
-		
-		
+
 	}
 
 	@Override
@@ -49,10 +49,9 @@ public class DummyManifestComparator<T> implements ManifestComparator<T> {
 	}
 
 	@Override
-	public  T getData() {
+	public T getData() {
 		return data;
 	}
-
 
 	@Override
 	public boolean isOutOfDate() {

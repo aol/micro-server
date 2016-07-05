@@ -18,42 +18,48 @@ import com.google.common.eventbus.Subscribe;
 @Path("/couchbase")
 @Rest
 public class CouchbaseResource {
-	
+
 	private final DistributedMapClient client;
 	private volatile PStackX<SystemData> dataLoads = PStackX.empty();
 
 	@Autowired
-	public  CouchbaseResource(DistributedMapClient client, EventBus bus) {
+	public CouchbaseResource(DistributedMapClient client, EventBus bus) {
 		this.client = client;
 		bus.register(this);
 	}
+
 	@Subscribe
-	public synchronized void events(SystemData event){
+	public synchronized void events(SystemData event) {
 		dataLoads = dataLoads.plus(event);
 
 	}
+
 	@GET
 	@Path("/loading-events")
 	@Produces("application/json")
-	public synchronized PStackX<SystemData> loadingEvents(){
+	public synchronized PStackX<SystemData> loadingEvents() {
 		return dataLoads;
 	}
-	
+
 	@GET
 	@Path("/maybe")
 	@Produces("application/json")
-	public Maybe<String> maybe(){
+	public Maybe<String> maybe() {
 		return Maybe.just("hello-world");
 	}
+
 	@GET
 	@Path("/get")
-	public String bucket(){
-		return client.get("hello").toString();
+	public String bucket() {
+		return client	.get("hello")
+						.toString();
 	}
+
 	@GET
 	@Path("/put")
-	public String put(){
-		client.put("hello", "world");
-		return  "added";
+	public String put() {
+		client.put(	"hello",
+					"world");
+		return "added";
 	}
 }

@@ -5,7 +5,7 @@ import com.aol.cyclops.control.FutureW;
 import lombok.Getter;
 import lombok.Setter;
 
-public class DummyDataWriter implements DataWriter<String>{
+public class DummyDataWriter implements DataWriter<String> {
 
 	@Getter
 	@Setter
@@ -16,7 +16,7 @@ public class DummyDataWriter implements DataWriter<String>{
 	@Getter
 	@Setter
 	boolean outofdate = false;
-	
+
 	@Override
 	public FutureW<String> loadAndGet() {
 		return FutureW.ofResult(data);
@@ -34,5 +34,4 @@ public class DummyDataWriter implements DataWriter<String>{
 		return FutureW.ofResult(outofdate);
 	}
 
-	
 }

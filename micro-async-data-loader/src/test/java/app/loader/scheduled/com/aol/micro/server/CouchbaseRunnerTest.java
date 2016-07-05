@@ -17,11 +17,9 @@ import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
 
-@Microserver(properties={"couchbaseServers","http://localhost:8091/pools",
-						"couchbasePassword","",
-						"couchbaseBucket","beer-sample",
-						"asyc.data.schedular.cron.loader","* * * * * ?",
-						"asyc.data.schedular.cron.cleaner","* * * * * ?"})
+@Microserver(properties = { "couchbaseServers", "http://localhost:8091/pools", "couchbasePassword", "",
+		"couchbaseBucket", "beer-sample", "asyc.data.schedular.cron.loader", "* * * * * ?",
+		"asyc.data.schedular.cron.cleaner", "* * * * * ?" })
 public class CouchbaseRunnerTest {
 
 	RestAgent rest = new RestAgent();
@@ -30,15 +28,16 @@ public class CouchbaseRunnerTest {
 
 	@Before
 	public void startServer() {
-		try{
-			//couchbase already running?
+		try {
+			// couchbase already running?
 			rest.get("http://localhost:8091/pools");
-		}catch(Exception e){
-			//start mock couchbase
-			CouchbaseMock.main(new String[]{"-S"});
+		} catch (Exception e) {
+			// start mock couchbase
+			CouchbaseMock.main(new String[] { "-S" });
 		}
-		server = new MicroserverApp(ConfigurableModule.builder()
-				.context("simple-app").build());
+		server = new MicroserverApp(ConfigurableModule	.builder()
+														.context("simple-app")
+														.build());
 
 		server.start();
 
@@ -50,21 +49,22 @@ public class CouchbaseRunnerTest {
 	}
 
 	@Test
-	public void runAppAndBasicTest() throws InterruptedException,
-			ExecutionException {
+	public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
 		rest.get("http://localhost:8080/simple-app/couchbase/put");
-		assertThat(rest.get("http://localhost:8080/simple-app/couchbase/get"),
-				containsString("world"));
-		
+		assertThat(	rest.get("http://localhost:8080/simple-app/couchbase/get"),
+					containsString("world"));
+
 		Thread.sleep(2000);
-		String json=rest.getJson("http://localhost:8080/simple-app/couchbase/loading-events");
-		List list =JacksonUtil.convertFromJson(json, List.class);
+		String json = rest.getJson("http://localhost:8080/simple-app/couchbase/loading-events");
+		List list = JacksonUtil.convertFromJson(json,
+												List.class);
 		System.out.println(list);
-		assertTrue(list.size()>0);
-		json=rest.getJson("http://localhost:8080/simple-app/couchbase/cleaning-events");
-		 list =JacksonUtil.convertFromJson(json, List.class);
+		assertTrue(list.size() > 0);
+		json = rest.getJson("http://localhost:8080/simple-app/couchbase/cleaning-events");
+		list = JacksonUtil.convertFromJson(	json,
+											List.class);
 		System.out.println(list);
-		assertTrue(list.size()>0);
+		assertTrue(list.size() > 0);
 
 	}
 
