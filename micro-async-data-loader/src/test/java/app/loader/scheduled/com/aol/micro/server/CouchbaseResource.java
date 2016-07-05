@@ -19,46 +19,46 @@ import com.google.common.eventbus.Subscribe;
 @Rest
 public class CouchbaseResource {
 
-	private final DistributedMapClient client;
-	private volatile PStackX<SystemData> dataLoads = PStackX.empty();
+    private final DistributedMapClient client;
+    private volatile PStackX<SystemData> dataLoads = PStackX.empty();
 
-	@Autowired
-	public CouchbaseResource(DistributedMapClient client, EventBus bus) {
-		this.client = client;
-		bus.register(this);
-	}
+    @Autowired
+    public CouchbaseResource(DistributedMapClient client, EventBus bus) {
+        this.client = client;
+        bus.register(this);
+    }
 
-	@Subscribe
-	public synchronized void events(SystemData event) {
-		dataLoads = dataLoads.plus(event);
+    @Subscribe
+    public synchronized void events(SystemData event) {
+        dataLoads = dataLoads.plus(event);
 
-	}
+    }
 
-	@GET
-	@Path("/loading-events")
-	@Produces("application/json")
-	public synchronized PStackX<SystemData> loadingEvents() {
-		return dataLoads;
-	}
+    @GET
+    @Path("/loading-events")
+    @Produces("application/json")
+    public synchronized PStackX<SystemData> loadingEvents() {
+        return dataLoads;
+    }
 
-	@GET
-	@Path("/maybe")
-	@Produces("application/json")
-	public Maybe<String> maybe() {
-		return Maybe.just("hello-world");
-	}
+    @GET
+    @Path("/maybe")
+    @Produces("application/json")
+    public Maybe<String> maybe() {
+        return Maybe.just("hello-world");
+    }
 
-	@GET
-	@Path("/get")
-	public String bucket() {
-		return client	.get("hello")
-						.toString();
-	}
+    @GET
+    @Path("/get")
+    public String bucket() {
+        return client.get("hello")
+                     .toString();
+    }
 
-	@GET
-	@Path("/put")
-	public String put() {
-		client.put("hello", "world");
-		return "added";
-	}
+    @GET
+    @Path("/put")
+    public String put() {
+        client.put("hello", "world");
+        return "added";
+    }
 }

@@ -9,9 +9,9 @@ import com.aol.micro.server.async.data.cleaner.ConfigureScheduling;
 
 public class AsyncDataWriterPlugin implements Plugin {
 
-	@Override
-	public Set<Class> springClasses() {
-		return SetX.of(ConfigureScheduling.class, ConfigureDataWriter.class);
-	}
+    @Override
+    public Set<Class> springClasses() {
+        return SetX.of(ConfigureScheduling.class, ConfigureDataWriter.class);
+    }
 
 }

@@ -12,33 +12,33 @@ import com.aol.micro.server.manifest.ManifestComparator;
 @Rest
 public class SecondComparatorResource {
 
-	private final ManifestComparator comparator;
+    private final ManifestComparator comparator;
 
-	@Autowired
-	public SecondComparatorResource(ManifestComparator comparator) {
-		this.comparator = comparator.withKey("test-key5");
-	}
+    @Autowired
+    public SecondComparatorResource(ManifestComparator comparator) {
+        this.comparator = comparator.withKey("test-key5");
+    }
 
-	@GET
-	@Path("/increment")
-	public String bucket() {
-		comparator.saveAndIncrement("hellob");
-		return "increment";
-	}
+    @GET
+    @Path("/increment")
+    public String bucket() {
+        comparator.saveAndIncrement("hellob");
+        return "increment";
+    }
 
-	@GET
-	@Path("/get")
-	public String get() {
-		comparator.load();
-		return comparator	.getData()
-							.toString();
+    @GET
+    @Path("/get")
+    public String get() {
+        comparator.load();
+        return comparator.getData()
+                         .toString();
 
-	}
+    }
 
-	@GET
-	@Path("/check")
-	public String check() {
-		return "" + !comparator.isOutOfDate();
+    @GET
+    @Path("/check")
+    public String check() {
+        return "" + !comparator.isOutOfDate();
 
-	}
+    }
 }

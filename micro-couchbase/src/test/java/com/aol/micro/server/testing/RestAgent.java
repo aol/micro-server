@@ -8,17 +8,17 @@ import javax.ws.rs.core.MediaType;
 
 public class RestAgent {
 
-	public String get(String url) {
+    public String get(String url) {
 
-		Client client = ClientBuilder.newClient();
+        Client client = ClientBuilder.newClient();
 
-		WebTarget resource = client.target(url);
+        WebTarget resource = client.target(url);
 
-		Builder request = resource.request();
-		request.accept(MediaType.APPLICATION_JSON);
+        Builder request = resource.request();
+        request.accept(MediaType.APPLICATION_JSON);
 
-		return request.get(String.class);
+        return request.get(String.class);
 
-	}
+    }
 
 }

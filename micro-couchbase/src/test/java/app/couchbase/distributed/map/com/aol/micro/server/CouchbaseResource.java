@@ -12,24 +12,24 @@ import com.aol.micro.server.couchbase.DistributedMapClient;
 @Rest
 public class CouchbaseResource {
 
-	private final DistributedMapClient client;
+    private final DistributedMapClient client;
 
-	@Autowired
-	public CouchbaseResource(DistributedMapClient client) {
-		this.client = client;
-	}
+    @Autowired
+    public CouchbaseResource(DistributedMapClient client) {
+        this.client = client;
+    }
 
-	@GET
-	@Path("/get")
-	public String bucket() {
-		return client	.get("hello")
-						.toString();
-	}
+    @GET
+    @Path("/get")
+    public String bucket() {
+        return client.get("hello")
+                     .toString();
+    }
 
-	@GET
-	@Path("/put")
-	public String put() {
-		client.put("hello", "world");
-		return "added";
-	}
+    @GET
+    @Path("/put")
+    public String put() {
+        client.put("hello", "world");
+        return "added";
+    }
 }

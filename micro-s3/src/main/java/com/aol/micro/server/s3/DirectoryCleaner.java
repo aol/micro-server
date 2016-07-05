@@ -18,54 +18,54 @@ import org.springframework.stereotype.Component;
 @Component
 public class DirectoryCleaner {
 
-	private final String temporaryDirectory;
+    private final String temporaryDirectory;
 
-	@Autowired
-	public DirectoryCleaner(@Value("${s3.temp.dir:#{null}}") String temporaryDirectory) {
-		this.temporaryDirectory = temporaryDirectory;
-	}
+    @Autowired
+    public DirectoryCleaner(@Value("${s3.temp.dir:#{null}}") String temporaryDirectory) {
+        this.temporaryDirectory = temporaryDirectory;
+    }
 
-	@PostConstruct
-	public void clean() throws IOException {
-		if (temporaryDirectory != null && new File(
-													temporaryDirectory).exists()) {
-			Path directory = FileSystems.getDefault()
-										.getPath(temporaryDirectory);
-			Files.walkFileTree(directory, new CleanupFileVisitor(
-																	directory));
-		}
-	}
+    @PostConstruct
+    public void clean() throws IOException {
+        if (temporaryDirectory != null && new File(
+                                                   temporaryDirectory).exists()) {
+            Path directory = FileSystems.getDefault()
+                                        .getPath(temporaryDirectory);
+            Files.walkFileTree(directory, new CleanupFileVisitor(
+                                                                 directory));
+        }
+    }
 
-	static class CleanupFileVisitor extends SimpleFileVisitor<Path> {
+    static class CleanupFileVisitor extends SimpleFileVisitor<Path> {
 
-		private final Path tempDirectory;
+        private final Path tempDirectory;
 
-		public CleanupFileVisitor(Path directory) {
-			this.tempDirectory = directory;
-		}
+        public CleanupFileVisitor(Path directory) {
+            this.tempDirectory = directory;
+        }
 
-		@Override
-		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-			deleteNotTopDirectory(file);
-			return FileVisitResult.CONTINUE;
-		}
+        @Override
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+            deleteNotTopDirectory(file);
+            return FileVisitResult.CONTINUE;
+        }
 
-		@Override
-		public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
-			if (e == null) {
-				deleteNotTopDirectory(dir);
-				return FileVisitResult.CONTINUE;
-			} else {
-				throw e;
-			}
-		}
+        @Override
+        public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
+            if (e == null) {
+                deleteNotTopDirectory(dir);
+                return FileVisitResult.CONTINUE;
+            } else {
+                throw e;
+            }
+        }
 
-		private void deleteNotTopDirectory(Path dir) throws IOException {
-			if (!dir.equals(tempDirectory)) {
-				Files.delete(dir);
-			}
-		}
+        private void deleteNotTopDirectory(Path dir) throws IOException {
+            if (!dir.equals(tempDirectory)) {
+                Files.delete(dir);
+            }
+        }
 
-	}
+    }
 
 }

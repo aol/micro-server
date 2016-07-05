@@ -24,74 +24,74 @@ import lombok.Setter;
 @Configuration
 public class ConfigureCouchbase {
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Value("${couchbase.manifest.comparison.key:default-key}")
-	private String defaultCouchbaseManifestComparisonKey;
-	@Setter
-	@Value("${couchbaseServers:}")
-	private String couchbaseServers;
+    @Value("${couchbase.manifest.comparison.key:default-key}")
+    private String defaultCouchbaseManifestComparisonKey;
+    @Setter
+    @Value("${couchbaseServers:}")
+    private String couchbaseServers;
 
-	@Value("${couchbaseBucket:couchbase_bucket}")
-	private String couchbaseBucket;
+    @Value("${couchbaseBucket:couchbase_bucket}")
+    private String couchbaseBucket;
 
-	@Value("${couchbasePassword:}")
-	private String couchbasePassword;
+    @Value("${couchbasePassword:}")
+    private String couchbasePassword;
 
-	@Setter
-	@Value("${couchbaseClientEnabled:true}")
-	private boolean couchbaseClientEnabled = true;
+    @Setter
+    @Value("${couchbaseClientEnabled:true}")
+    private boolean couchbaseClientEnabled = true;
 
-	@Value("${couchbaseClientOperationTimeout:120000}")
-	private long opTimeout;
+    @Value("${couchbaseClientOperationTimeout:120000}")
+    private long opTimeout;
 
-	@SuppressWarnings("rawtypes")
-	@Bean(name = "couchbaseDistributedMap")
-	public DistributedMapClient simpleCouchbaseClient() throws IOException, URISyntaxException {
-		if (couchbaseClientEnabled) {
-			return new DistributedMapClient(
-											couchbaseClient());
-		} else {
-			return new DistributedMapClient(
-											null);
-		}
-	}
+    @SuppressWarnings("rawtypes")
+    @Bean(name = "couchbaseDistributedMap")
+    public DistributedMapClient simpleCouchbaseClient() throws IOException, URISyntaxException {
+        if (couchbaseClientEnabled) {
+            return new DistributedMapClient(
+                                            couchbaseClient());
+        } else {
+            return new DistributedMapClient(
+                                            null);
+        }
+    }
 
-	@Bean(name = "couchbaseClient")
-	public CouchbaseClient couchbaseClient() throws IOException, URISyntaxException {
-		if (couchbaseClientEnabled) {
-			logger.info("Creating CouchbaseClient for servers: {}", couchbaseServers);
-			CouchbaseConnectionFactoryBuilder builder = new CouchbaseConnectionFactoryBuilder();
-			builder.setOpTimeout(opTimeout);
-			CouchbaseConnectionFactory cf = builder.buildCouchbaseConnection(	getServersList(), couchbaseBucket,
-																				StringUtils.trimAllWhitespace(Optional	.ofNullable(couchbasePassword)
-																														.orElse("")));
-			return new CouchbaseClient(
-										cf);
-		}
-		return null;
+    @Bean(name = "couchbaseClient")
+    public CouchbaseClient couchbaseClient() throws IOException, URISyntaxException {
+        if (couchbaseClientEnabled) {
+            logger.info("Creating CouchbaseClient for servers: {}", couchbaseServers);
+            CouchbaseConnectionFactoryBuilder builder = new CouchbaseConnectionFactoryBuilder();
+            builder.setOpTimeout(opTimeout);
+            CouchbaseConnectionFactory cf = builder.buildCouchbaseConnection(getServersList(), couchbaseBucket,
+                                                                             StringUtils.trimAllWhitespace(Optional.ofNullable(couchbasePassword)
+                                                                                                                   .orElse("")));
+            return new CouchbaseClient(
+                                       cf);
+        }
+        return null;
 
-	}
+    }
 
-	@Bean
-	public CouchbaseManifestComparator couchbaseManifestComparator() throws IOException, URISyntaxException {
-		return new CouchbaseManifestComparator(
-												this.simpleCouchbaseClient()).withKey(defaultCouchbaseManifestComparisonKey);
-	}
+    @Bean
+    public CouchbaseManifestComparator couchbaseManifestComparator() throws IOException, URISyntaxException {
+        return new CouchbaseManifestComparator(
+                                               this.simpleCouchbaseClient()).withKey(defaultCouchbaseManifestComparisonKey);
+    }
 
-	private List<URI> getServersList() throws URISyntaxException {
-		List<URI> uris = new ArrayList<URI>();
-		if (couchbaseServers.indexOf(',') == -1) {
-			uris.add(new URI(
-								couchbaseServers));
-			return uris;
-		}
+    private List<URI> getServersList() throws URISyntaxException {
+        List<URI> uris = new ArrayList<URI>();
+        if (couchbaseServers.indexOf(',') == -1) {
+            uris.add(new URI(
+                             couchbaseServers));
+            return uris;
+        }
 
-		for (String serverHost : StringUtils.split(couchbaseServers, ",")) {
-			uris.add(new URI(
-								serverHost));
-		}
-		return uris;
-	}
+        for (String serverHost : StringUtils.split(couchbaseServers, ",")) {
+            uris.add(new URI(
+                             serverHost));
+        }
+        return uris;
+    }
 
 }

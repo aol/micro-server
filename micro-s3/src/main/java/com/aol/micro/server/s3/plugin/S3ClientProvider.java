@@ -15,31 +15,31 @@ import com.aol.micro.server.s3.S3Configuration;
 @Configuration
 public class S3ClientProvider {
 
-	@Autowired
-	private S3Configuration s3Configuration;
+    @Autowired
+    private S3Configuration s3Configuration;
 
-	@Bean
-	public AmazonS3Client getClient() {
+    @Bean
+    public AmazonS3Client getClient() {
 
-		AWSCredentials credentials;
+        AWSCredentials credentials;
 
-		if (s3Configuration.getSessionToken() == null) {
-			credentials = new BasicAWSCredentials(
-													s3Configuration.getAccessKey(), s3Configuration.getSecretKey());
-		} else {
-			credentials = new BasicSessionCredentials(
-														s3Configuration.getAccessKey(), s3Configuration.getSecretKey(),
-														s3Configuration.getSessionToken());
-		}
+        if (s3Configuration.getSessionToken() == null) {
+            credentials = new BasicAWSCredentials(
+                                                  s3Configuration.getAccessKey(), s3Configuration.getSecretKey());
+        } else {
+            credentials = new BasicSessionCredentials(
+                                                      s3Configuration.getAccessKey(), s3Configuration.getSecretKey(),
+                                                      s3Configuration.getSessionToken());
+        }
 
-		AmazonS3Client amazonS3Client = new AmazonS3Client(
-															credentials);
+        AmazonS3Client amazonS3Client = new AmazonS3Client(
+                                                           credentials);
 
-		if (s3Configuration.getRegion() != null) {
-			Region region = Region.getRegion(Regions.fromName(s3Configuration.getRegion()));
-			amazonS3Client.setRegion(region);
-		}
+        if (s3Configuration.getRegion() != null) {
+            Region region = Region.getRegion(Regions.fromName(s3Configuration.getRegion()));
+            amazonS3Client.setRegion(region);
+        }
 
-		return amazonS3Client;
-	}
+        return amazonS3Client;
+    }
 }

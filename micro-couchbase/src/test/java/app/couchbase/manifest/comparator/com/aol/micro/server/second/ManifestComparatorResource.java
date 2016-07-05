@@ -12,34 +12,34 @@ import com.aol.micro.server.manifest.ManifestComparator;
 @Rest
 public class ManifestComparatorResource {
 
-	private volatile int count = 1;
-	private final ManifestComparator<String> comparator;
+    private volatile int count = 1;
+    private final ManifestComparator<String> comparator;
 
-	@Autowired
-	public ManifestComparatorResource(ManifestComparator comparator) {
-		this.comparator = comparator.<String> withKey("test-key");
-	}
+    @Autowired
+    public ManifestComparatorResource(ManifestComparator comparator) {
+        this.comparator = comparator.<String> withKey("test-key");
+    }
 
-	@GET
-	@Path("/increment")
-	public String bucket() {
-		comparator.saveAndIncrement("hello" + (count++));
-		return "increment";
-	}
+    @GET
+    @Path("/increment")
+    public String bucket() {
+        comparator.saveAndIncrement("hello" + (count++));
+        return "increment";
+    }
 
-	@GET
-	@Path("/get")
-	public String get() {
-		comparator.load();
-		return comparator	.getData()
-							.toString();
+    @GET
+    @Path("/get")
+    public String get() {
+        comparator.load();
+        return comparator.getData()
+                         .toString();
 
-	}
+    }
 
-	@GET
-	@Path("/check")
-	public String check() {
-		return "" + !comparator.isOutOfDate();
+    @GET
+    @Path("/check")
+    public String check() {
+        return "" + !comparator.isOutOfDate();
 
-	}
+    }
 }

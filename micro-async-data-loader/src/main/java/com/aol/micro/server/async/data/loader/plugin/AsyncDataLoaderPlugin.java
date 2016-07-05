@@ -8,9 +8,9 @@ import com.aol.micro.server.async.data.loader.ConfigureScheduling;
 
 public class AsyncDataLoaderPlugin implements Plugin {
 
-	@Override
-	public Set<Class> springClasses() {
-		return SetX.of(ConfigureScheduling.class);
-	}
+    @Override
+    public Set<Class> springClasses() {
+        return SetX.of(ConfigureScheduling.class);
+    }
 
 }

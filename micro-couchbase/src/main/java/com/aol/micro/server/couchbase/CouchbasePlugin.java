@@ -5,7 +5,7 @@ import com.aol.micro.server.Plugin;
 
 public class CouchbasePlugin implements Plugin {
 
-	public PSetX<Class> springClasses() {
-		return PSetX.of(ConfigureCouchbase.class);
-	}
+    public PSetX<Class> springClasses() {
+        return PSetX.of(ConfigureCouchbase.class);
+    }
 }

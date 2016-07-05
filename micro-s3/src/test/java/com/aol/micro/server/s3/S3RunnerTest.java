@@ -16,46 +16,46 @@ import com.aol.micro.server.s3.data.S3Utils;
 @Microserver(properties = { "s3.accessKey", "", "s3.secretKey", "" })
 public class S3RunnerTest {
 
-	MicroserverApp server;
+    MicroserverApp server;
 
-	@Before
-	public void startServer() {
+    @Before
+    public void startServer() {
 
-		server = new MicroserverApp(
-									() -> "s3");
-		server.start();
+        server = new MicroserverApp(
+                                    () -> "s3");
+        server.start();
 
-	}
+    }
 
-	@After
-	public void stopServer() {
-		server.stop();
-	}
+    @After
+    public void stopServer() {
+        server.stop();
+    }
 
-	@Test
-	public void runAppAndBasicTest() {
+    @Test
+    public void runAppAndBasicTest() {
 
-		AmazonS3Client s3client = server.getSpringContext()
-										.getBean(AmazonS3Client.class);
-		assertThat(s3client != null, is(true));
+        AmazonS3Client s3client = server.getSpringContext()
+                                        .getBean(AmazonS3Client.class);
+        assertThat(s3client != null, is(true));
 
-		S3Configuration s3Configuration = server.getSpringContext()
-												.getBean(S3Configuration.class);
-		assertThat(s3Configuration.getAccessKey(), is(""));
-		assertThat(s3Configuration.getSecretKey(), is(""));
-		assertThat(s3Configuration.getSessionToken() == null, is(true));
-		assertThat(s3Configuration.getRegion() == null, is(true));
-		assertThat(s3Configuration.getUploadThreads(), is(5));
-		assertThat(s3Configuration.getUploadThreadNamePrefix(), is("s3-transfer-manager-worker-"));
+        S3Configuration s3Configuration = server.getSpringContext()
+                                                .getBean(S3Configuration.class);
+        assertThat(s3Configuration.getAccessKey(), is(""));
+        assertThat(s3Configuration.getSecretKey(), is(""));
+        assertThat(s3Configuration.getSessionToken() == null, is(true));
+        assertThat(s3Configuration.getRegion() == null, is(true));
+        assertThat(s3Configuration.getUploadThreads(), is(5));
+        assertThat(s3Configuration.getUploadThreadNamePrefix(), is("s3-transfer-manager-worker-"));
 
-		S3Utils s3Utils = server.getSpringContext()
-								.getBean(S3Utils.class);
-		assertThat(s3Utils != null, is(true));
+        S3Utils s3Utils = server.getSpringContext()
+                                .getBean(S3Utils.class);
+        assertThat(s3Utils != null, is(true));
 
-		TransferManager tm = server	.getSpringContext()
-									.getBean(TransferManager.class);
-		assertThat(tm != null, is(true));
+        TransferManager tm = server.getSpringContext()
+                                   .getBean(TransferManager.class);
+        assertThat(tm != null, is(true));
 
-	}
+    }
 
 }

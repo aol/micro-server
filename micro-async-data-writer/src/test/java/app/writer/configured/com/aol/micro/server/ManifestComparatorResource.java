@@ -12,36 +12,36 @@ import com.aol.micro.server.auto.discovery.Rest;
 @Rest
 public class ManifestComparatorResource {
 
-	private volatile int count = 1;
-	private final AsyncDataWriter<String> comparator;
+    private volatile int count = 1;
+    private final AsyncDataWriter<String> comparator;
 
-	@Autowired
-	public ManifestComparatorResource(AsyncDataWriter comparator) {
-		this.comparator = comparator;
-	}
+    @Autowired
+    public ManifestComparatorResource(AsyncDataWriter comparator) {
+        this.comparator = comparator;
+    }
 
-	@GET
-	@Path("/increment")
-	public String bucket() {
-		comparator	.saveAndIncrement("hello" + (count++))
-					.get();
-		return "incremented";
-	}
+    @GET
+    @Path("/increment")
+    public String bucket() {
+        comparator.saveAndIncrement("hello" + (count++))
+                  .get();
+        return "incremented";
+    }
 
-	@GET
-	@Path("/get")
-	public String get() {
+    @GET
+    @Path("/get")
+    public String get() {
 
-		return comparator	.loadAndGet()
-							.get();
+        return comparator.loadAndGet()
+                         .get();
 
-	}
+    }
 
-	@GET
-	@Path("/check")
-	public String check() {
-		return "" + !comparator	.isOutOfDate()
-								.get();
+    @GET
+    @Path("/check")
+    public String check() {
+        return "" + !comparator.isOutOfDate()
+                               .get();
 
-	}
+    }
 }

@@ -4,10 +4,10 @@ import com.aol.cyclops.control.FutureW;
 
 public interface DataWriter<T> {
 
-	FutureW<T> loadAndGet();
+    FutureW<T> loadAndGet();
 
-	FutureW<Void> saveAndIncrement(T data);
+    FutureW<Void> saveAndIncrement(T data);
 
-	FutureW<Boolean> isOutOfDate();
+    FutureW<Boolean> isOutOfDate();
 
 }

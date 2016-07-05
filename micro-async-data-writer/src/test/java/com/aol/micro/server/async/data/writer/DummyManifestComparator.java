@@ -9,58 +9,58 @@ import lombok.Setter;
 
 public class DummyManifestComparator<T> implements ManifestComparator<T> {
 
-	AtomicInteger loadCalled = new AtomicInteger(
-													0);
-	AtomicInteger outofDateCalled = new AtomicInteger(
-														0);
-	AtomicInteger cleanCalled = new AtomicInteger(
-													0);
-	AtomicInteger cleanAllCalled = new AtomicInteger(
-														0);
+    AtomicInteger loadCalled = new AtomicInteger(
+                                                 0);
+    AtomicInteger outofDateCalled = new AtomicInteger(
+                                                      0);
+    AtomicInteger cleanCalled = new AtomicInteger(
+                                                  0);
+    AtomicInteger cleanAllCalled = new AtomicInteger(
+                                                     0);
 
-	private boolean outOfDate;
-	@Getter
-	@Setter
-	private volatile T data;
+    private boolean outOfDate;
+    @Getter
+    @Setter
+    private volatile T data;
 
-	@Override
-	public <R> ManifestComparator<R> withKey(java.lang.String key) {
-		return (DummyManifestComparator) this;
-	}
+    @Override
+    public <R> ManifestComparator<R> withKey(java.lang.String key) {
+        return (DummyManifestComparator) this;
+    }
 
-	@Override
-	public boolean load() {
-		loadCalled.incrementAndGet();
-		return true;
+    @Override
+    public boolean load() {
+        loadCalled.incrementAndGet();
+        return true;
 
-	}
+    }
 
-	@Override
-	public void cleanAll() {
-		cleanAllCalled.incrementAndGet();
+    @Override
+    public void cleanAll() {
+        cleanAllCalled.incrementAndGet();
 
-	}
+    }
 
-	@Override
-	public void clean(int numberToClean) {
-		cleanCalled.incrementAndGet();
+    @Override
+    public void clean(int numberToClean) {
+        cleanCalled.incrementAndGet();
 
-	}
+    }
 
-	@Override
-	public void saveAndIncrement(T data) {
-		this.data = data;
-	}
+    @Override
+    public void saveAndIncrement(T data) {
+        this.data = data;
+    }
 
-	@Override
-	public T getData() {
-		return data;
-	}
+    @Override
+    public T getData() {
+        return data;
+    }
 
-	@Override
-	public boolean isOutOfDate() {
-		outofDateCalled.incrementAndGet();
-		return true;
-	}
+    @Override
+    public boolean isOutOfDate() {
+        outofDateCalled.incrementAndGet();
+        return true;
+    }
 
 }

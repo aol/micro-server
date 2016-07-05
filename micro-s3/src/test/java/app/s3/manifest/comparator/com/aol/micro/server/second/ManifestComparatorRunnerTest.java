@@ -15,40 +15,40 @@ import com.aol.micro.server.testing.RestAgent;
 
 public class ManifestComparatorRunnerTest {
 
-	RestAgent rest = new RestAgent();
+    RestAgent rest = new RestAgent();
 
-	MicroserverApp server;
+    MicroserverApp server;
 
-	@Before
-	public void startServer() {
+    @Before
+    public void startServer() {
 
-		server = new MicroserverApp(
-									() -> "simple-app");
+        server = new MicroserverApp(
+                                    () -> "simple-app");
 
-		server.start();
+        server.start();
 
-	}
+    }
 
-	@After
-	public void stopServer() {
-		server.stop();
-	}
+    @After
+    public void stopServer() {
+        server.stop();
+    }
 
-	@Test
-	@Ignore
-	public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
-		rest.get("http://localhost:8080/simple-app/comparator/increment");
+    @Test
+    @Ignore
+    public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
+        rest.get("http://localhost:8080/simple-app/comparator/increment");
 
-		assertThat(rest.get("http://localhost:8080/simple-app/comparator/check"), equalTo("true"));
-		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"), equalTo("hello1"));
-		rest.get("http://localhost:8080/simple-app/comparator/increment");
-		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"), equalTo("hello2"));
+        assertThat(rest.get("http://localhost:8080/simple-app/comparator/check"), equalTo("true"));
+        assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"), equalTo("hello1"));
+        rest.get("http://localhost:8080/simple-app/comparator/increment");
+        assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"), equalTo("hello2"));
 
-		rest.get("http://localhost:8080/simple-app/comparator2/increment");
+        rest.get("http://localhost:8080/simple-app/comparator2/increment");
 
-		assertThat(rest.get("http://localhost:8080/simple-app/comparator/check"), equalTo("false"));
-		assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"), equalTo("hellob"));
+        assertThat(rest.get("http://localhost:8080/simple-app/comparator/check"), equalTo("false"));
+        assertThat(rest.get("http://localhost:8080/simple-app/comparator/get"), equalTo("hellob"));
 
-	}
+    }
 
 }

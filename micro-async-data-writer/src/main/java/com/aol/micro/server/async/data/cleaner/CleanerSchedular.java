@@ -11,15 +11,15 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CleanerSchedular {
 
-	private ListX<DataCleaner> cleaner;
-	private final ScheduledExecutorService executor;
-	private final EventBus bus;
+    private ListX<DataCleaner> cleaner;
+    private final ScheduledExecutorService executor;
+    private final EventBus bus;
 
-	public void schedule() {
-		cleaner.forEach(cl -> {
-			ReactiveSeq	.generate(() -> cl.scheduleAndLog())
-						.peek(sd -> bus.post(sd))
-						.schedule(cl.getCron(), executor);
-		});
-	}
+    public void schedule() {
+        cleaner.forEach(cl -> {
+            ReactiveSeq.generate(() -> cl.scheduleAndLog())
+                       .peek(sd -> bus.post(sd))
+                       .schedule(cl.getCron(), executor);
+        });
+    }
 }
