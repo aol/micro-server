@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CleanerSchedular {
 
-    private ListX<DataCleaner> cleaner;
+    private final ListX<DataCleaner> cleaner;
     private final ScheduledExecutorService executor;
     private final EventBus bus;
 
