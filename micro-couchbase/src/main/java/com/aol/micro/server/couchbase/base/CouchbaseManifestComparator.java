@@ -246,7 +246,9 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
             versionedKey = newVersionedKey.toJson();
         }
     }
+    
 
+    @Override
     public String toString() {
         return "[CouchbaseManifestComparator:key:" + key + ",versionedKey:" + JacksonUtil.serializeToJson(versionedKey)
                 + "]";

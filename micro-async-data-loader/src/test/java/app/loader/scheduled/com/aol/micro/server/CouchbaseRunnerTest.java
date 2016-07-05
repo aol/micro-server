@@ -1,7 +1,8 @@
 package app.loader.scheduled.com.aol.micro.server;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -57,10 +58,6 @@ public class CouchbaseRunnerTest {
         Thread.sleep(2000);
         String json = rest.getJson("http://localhost:8080/simple-app/couchbase/loading-events");
         List list = JacksonUtil.convertFromJson(json, List.class);
-        System.out.println(list);
-        assertTrue(list.size() > 0);
-        json = rest.getJson("http://localhost:8080/simple-app/couchbase/cleaning-events");
-        list = JacksonUtil.convertFromJson(json, List.class);
         System.out.println(list);
         assertTrue(list.size() > 0);
 
