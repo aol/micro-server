@@ -63,4 +63,9 @@ public class DummyManifestComparator<T> implements ManifestComparator<T> {
         return true;
     }
 
+    @Override
+    public T getCurrentData() {
+        return getData();
+    }
+
 }

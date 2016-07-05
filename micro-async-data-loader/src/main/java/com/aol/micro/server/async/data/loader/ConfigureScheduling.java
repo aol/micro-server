@@ -8,36 +8,39 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.aol.cyclops.control.Maybe;
+import com.aol.cyclops.control.ReactiveSeq;
 import com.aol.cyclops.data.collections.extensions.standard.ListX;
+import com.aol.cyclops.data.collections.extensions.standard.SetX;
 import com.aol.micro.server.manifest.ManifestComparator;
 import com.google.common.eventbus.EventBus;
 
 @Configuration
 public class ConfigureScheduling {
 
-    @Value("${asyc.data.schedular.cron.loader:0 0 * * * *}")
+    @Value("${asyc.data.schedular.cron.loader:0 * * * * *}")
     private String defaultCron;
 
     @Value("${asyc.data.schedular.threads:5}")
     private int schedularThreads;
 
     @Autowired(required = false)
-    private List<DataLoader> dataLoaders = ListX.empty();;
+    private List<DataLoader> dataLoaders = ListX.empty();
 
     @Autowired
     private EventBus bus;
 
     @Autowired(required = false)
-    private List<ManifestComparator> defaultComparators;
+    private List<ManifestComparator> defaultComparators = ListX.empty();
 
     private ListX<DataLoader> dataLoaders() {
-        Maybe<DataLoader> defaultDataLoader = defaultComparators.size() == 1 ? Maybe.just(new DataLoader(
-                                                                                                         defaultComparators.get(0),
-                                                                                                         defaultCron))
-                : Maybe.none();
-        return ListX.fromIterable(defaultDataLoader)
-                    .plusAll(dataLoaders);
+        SetX<ManifestComparator> comparatorSet = SetX.fromIterable(dataLoaders)
+                                                     .map(dl -> dl.comparator);
+        return ReactiveSeq.fromIterable(defaultComparators)
+                          .filter(i -> !comparatorSet.contains(i))
+                          .map(mc -> new DataLoader(
+                                                    mc, defaultCron))
+                          .concat(dataLoaders.stream())
+                          .toListX();
 
     }
 

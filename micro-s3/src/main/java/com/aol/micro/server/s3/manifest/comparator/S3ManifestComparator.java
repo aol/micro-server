@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aol.cyclops.control.Try;
+import com.aol.cyclops.control.Xor;
 import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.micro.server.manifest.Data;
 import com.aol.micro.server.manifest.ManifestComparator;
@@ -22,6 +23,7 @@ import com.aol.micro.server.s3.data.S3StringWriter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.SneakyThrows;
 import lombok.val;
 import lombok.experimental.Wither;
 
@@ -79,8 +81,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 
     private final String key;
 
-    @Getter
-    private volatile T data;
+    private volatile Xor<Void, T> data = Xor.secondary(null);
     private volatile long modified = -1;
 
     @Getter
@@ -111,6 +112,20 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
         this.deleter = deleter;
         this.stringWriter = stringWriter;
         backoff = 500l;
+    }
+
+    @Override
+    @SneakyThrows
+    public T getData() {
+        while (data.isSecondary()) {
+            Thread.sleep(500);
+        }
+        return data.get();
+    }
+
+    @Override
+    public T getCurrentData() {
+        return data.visit(present -> present, () -> null);
     }
 
     /**
@@ -144,6 +159,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
      *            Key to store data with
      * @return new ManifestComparator that targets specified key
      */
+    @Override
     public <R> S3ManifestComparator<R> withKey(String key) {
         return new S3ManifestComparator<>(
                                           key, reader, writer, deleter, stringWriter);
@@ -169,6 +185,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
     /**
      * @return true - if current data is stale and needs refreshed
      */
+    @Override
     public boolean isOutOfDate() {
 
         return !versionedKey.equals(loadKeyFromS3().toJson());
@@ -177,16 +194,17 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
     /**
      * Load data from remote store if stale
      */
+    @Override
     public synchronized boolean load() {
-        T oldData = data;
+        Xor<Void, T> oldData = data;
         long oldModified = modified;
         String oldKey = versionedKey;
         try {
             if (isOutOfDate()) {
-                String newVersionedKey = (String) reader.getAsString(key)
-                                                        .get();
+                String newVersionedKey = reader.getAsString(key)
+                                               .get();
                 val loaded = nonAtomicload(newVersionedKey);
-                data = (T) loaded.v2;
+                data = Xor.primary((T) loaded.v2);
                 modified = loaded.v1;
                 versionedKey = newVersionedKey;
             } else {
@@ -226,6 +244,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
     /**
      * Clean all old (not current) versioned keys
      */
+    @Override
     public void cleanAll() {
         clean(-1);
     }
@@ -235,6 +254,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
      * 
      * @param numberToClean
      */
+    @Override
     public void clean(int numberToClean) {
         logger.info("Attempting to delete the last {} records for key {}", numberToClean, key);
         VersionedKey currentVersionedKey = loadKeyFromS3();
@@ -264,8 +284,9 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
      * @param data
      *            to save
      */
+    @Override
     public synchronized void saveAndIncrement(T data) {
-        T oldData = this.data;
+        Xor<Void, T> oldData = this.data;
         VersionedKey newVersionedKey = increment();
         logger.info("Saving data with key {}, new version is {}", key, newVersionedKey.toJson());
 
@@ -274,7 +295,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
                                                               data, new Date(), newVersionedKey.toJson()))
                   .flatMap(res -> stringWriter.put(key, newVersionedKey.toJson()))
                   .peek(res -> {
-                      this.data = data;
+                      this.data = Xor.primary(data);
                       delete(versionedKey);
                   });
 
@@ -282,6 +303,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
             versionedKey = newVersionedKey.toJson();
         }
     }
+
     @Override
     public String toString() {
         return "[S3ManifestComparator:key:" + key + ",versionedKey:" + JacksonUtil.serializeToJson(versionedKey) + "]";

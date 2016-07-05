@@ -15,13 +15,14 @@ import lombok.Getter;
 @AllArgsConstructor
 public class DataLoader implements ScheduledJob {
     public static final String MANIFEST_COMPARATOR_DATA_LOADER_KEY = "Manifest Comparator Data Loader";
-    private final ManifestComparator<String> comparator;
+    final ManifestComparator<String> comparator;
     @Getter
     private final String cron;
     private final Random r = new Random();
 
     @Override
     public SystemData<String, String> scheduleAndLog() {
+
         String correlationId = "" + System.currentTimeMillis() + ":" + r.nextLong();
         Supplier<MapX<String, String>> dataMap = () -> MapX.fromMap(HashMapBuilder.map(MANIFEST_COMPARATOR_DATA_LOADER_KEY,
                                                                                        comparator.toString())

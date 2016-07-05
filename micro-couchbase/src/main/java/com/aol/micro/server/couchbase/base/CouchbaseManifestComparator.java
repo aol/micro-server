@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aol.cyclops.control.Xor;
 import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.micro.server.couchbase.DistributedMapClient;
 import com.aol.micro.server.manifest.Data;
@@ -17,6 +18,7 @@ import com.aol.micro.server.rest.jackson.JacksonUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.SneakyThrows;
 
 /**
  * Manifest comparator for use with a distributed map -assumes single producer /
@@ -72,8 +74,9 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 
     private final String key;
 
-    @Getter
-    private volatile T data;
+    private volatile Xor<Void, T> data = Xor.secondary(null); // Void represents
+                                                              // an unitialized
+                                                              // state
 
     @Getter
     private volatile String versionedKey;
@@ -120,6 +123,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
      *            Key to store data with
      * @return new ManifestComparator that targets specified key
      */
+    @Override
     public <R> CouchbaseManifestComparator<R> withKey(String key) {
         return new CouchbaseManifestComparator<>(
                                                  key, connection);
@@ -142,9 +146,24 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 
     }
 
+    @Override
+    @SneakyThrows
+    public T getData() {
+        while (data.isSecondary()) {
+            Thread.sleep(500);
+        }
+        return data.get();
+    }
+
+    @Override
+    public T getCurrentData() {
+        return data.visit(present -> present, () -> null);
+    }
+
     /**
      * @return true - if current data is stale and needs refreshed
      */
+    @Override
     public boolean isOutOfDate() {
 
         return !versionedKey.equals(loadKeyFromCouchbase().toJson());
@@ -153,14 +172,15 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
     /**
      * Load data from remote store if stale
      */
+    @Override
     public synchronized boolean load() {
-        T oldData = data;
+        Xor<Void, T> oldData = data;
         String oldKey = versionedKey;
         try {
             if (isOutOfDate()) {
                 String newVersionedKey = (String) connection.get(key)
                                                             .get();
-                data = (T) nonAtomicload(newVersionedKey);
+                data = Xor.primary((T) nonAtomicload(newVersionedKey));
                 versionedKey = newVersionedKey;
             } else {
                 return false;
@@ -191,6 +211,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
     /**
      * Clean all old (not current) versioned keys
      */
+    @Override
     public void cleanAll() {
         clean(-1);
     }
@@ -200,6 +221,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
      * 
      * @param numberToClean
      */
+    @Override
     public void clean(int numberToClean) {
         logger.info("Attempting to delete the last {} records for key {}", numberToClean, key);
         VersionedKey currentVersionedKey = loadKeyFromCouchbase();
@@ -229,15 +251,16 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
      * @param data
      *            to save
      */
+    @Override
     public void saveAndIncrement(T data) {
-        T oldData = this.data;
+        Xor<Void, T> oldData = this.data;
         VersionedKey newVersionedKey = increment();
         logger.info("Saving data with key {}, new version is {}", key, newVersionedKey.toJson());
         connection.put(newVersionedKey.toJson(), new Data(
                                                           data, new Date(), newVersionedKey.toJson()));
         connection.put(key, newVersionedKey.toJson());
         try {
-            this.data = data;
+            this.data = Xor.primary(data);
             delete(versionedKey);
 
         } catch (Throwable t) {
@@ -246,7 +269,6 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
             versionedKey = newVersionedKey.toJson();
         }
     }
-    
 
     @Override
     public String toString() {

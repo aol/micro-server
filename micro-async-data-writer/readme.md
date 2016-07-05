@@ -52,7 +52,7 @@ Inject in the AsyncDataWriter as a Spring Bean to your Service
  
  Both AsyncDataWriter and MultiDataWriter implement the same interface DataWriter. Simply inject the MultiDataWriter into your Service bean and turn on the feature.
  
-  ```java
+ ```java
 	 private final DataWriter<String> comparator;
 	
 	@Autowired
