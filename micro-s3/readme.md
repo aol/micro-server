@@ -63,27 +63,9 @@ public class DataLoader  implements ScheduledJob<Job>{
 	}
 
 }
-
-@Component
-public class DataCleaner  implements ScheduledJob<Job>{
-	
-	private final ManifestComparator<String> comparator;
-	@Autowired
-	public  DataCleaner(ManifestComparator comparator) {
-		this.comparator = comparator.<String>withKey("test-key");
-	}
-	@Override
-	public SystemData<String,String> scheduleAndLog() {
-		try{
-		        comparator.cleanAll();
-			return SystemData.<String,String>builder().errors(0).processed(1).build();
-		}catch(Exception e){
-			return SystemData.<String,String>builder().errors(1).processed(0).build();
-		}
-		
-	}
-
-}
+ ```
+ 
+ ```java
 
 @Component
 public class Schedular{
