@@ -1,5 +1,7 @@
 # S3 Plugin
 
+[micro-S3 example apps](https://github.com/aol/micro-server/tree/master/micro-S3/src/test/java/app)
+
 This adds a facility to use AmazonS3Client. The following APIs are provided
 
 1. S3ManifestComparator : Only download changed datasets from S3
@@ -8,6 +10,8 @@ This adds a facility to use AmazonS3Client. The following APIs are provided
 4. S3Reader : For reading data from S3
 5. S3Deleter : For deleting data from S3
 6. S3Utils : General S3 uploading / downloading utils. Creational entry point for the various CRUD Apis (S3ObjectWriter, S3StringWriter, S3Reader, S3Deleter)
+
+See also [micro-async-data-writer](https://github.com/aol/micro-server/tree/master/micro-async-data-writer) and [micro-async-data-loader](https://github.com/aol/micro-server/tree/master/micro-async-data-loader) for automated management of writing versioned data and loading versioned data from S3 (or couchbase via micro-couchbase), that builds on this plugin.
 
 # Manifest comparison
 
