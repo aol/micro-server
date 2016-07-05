@@ -9,12 +9,11 @@ import com.aol.micro.server.events.SystemData;
 import com.aol.micro.server.manifest.ManifestComparator;
 import com.aol.micro.server.utility.HashMapBuilder;
 
-import app.events.com.aol.micro.server.Job;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public class DataCleaner<T> implements ScheduledJob<Job> {
+public class DataCleaner<T> implements ScheduledJob<T> {
 
     public static final String MANIFEST_COMPARATOR_DATA_CLEANER_KEY = "Manifest Comparator Data Cleaner";
     private final ManifestComparator<T> comparator;

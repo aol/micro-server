@@ -1,4 +1,3 @@
-apply plugin: 'groovy'
 apply plugin: 'java'
 repositories {
 	
@@ -22,7 +21,6 @@ sourceSets {
 
 	test {
 		java { srcDirs = []}
-		groovy { srcDirs = ['src/test/java'] }
 		resources { srcDir 'src/test/resources' }
 	}
 	

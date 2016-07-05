@@ -44,17 +44,18 @@ import lombok.experimental.Wither;
  * 
  * <pre>
  * {@code 
- * &#64;Rest
+ *  
+    {@literal @}Rest
 	public class MyDataService {
 	
-
-	
-	private final ManifestComparator<DataType> comparator;
-	&#64;Autowired
+    private final ManifestComparator<DataType> comparator;
+	   
+	{@literal @}Autowired
 	public  MyDataService(ManifestComparator comparator) {
 		this.comparator = comparator.withKey("test-key");
 	}
  * 
+ *  }
  * }
  * </pre>
  * 
@@ -66,7 +67,7 @@ import lombok.experimental.Wither;
  * 
  * ManifestComparator will automatically remove old versions on
  * saveAndIncrement, but system outages may occasionally cause old keys to
- * linger, you can also use clean & cleanAll to periodically to remove old key
+ * linger, you can also use clean and cleanAll to periodically to remove old key
  * versions.
  * 
  * 
