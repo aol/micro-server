@@ -1,9 +1,6 @@
 package com.aol.micro.server.errors;
 
-import java.util.List;
-
-import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
+import java.text.MessageFormat;
 
 import lombok.Getter;
 
@@ -49,39 +46,13 @@ public class ErrorCode {
 
     }
 
-    public String renderAsJavaMessageFormat() {
-        final StringBuilder result = new StringBuilder();
-        int pos = 0;
-
-        String renderSafeStr = renderSafe();
-
-        if (!renderSafeStr.contains("{}")) {
-            result.append(renderSafeStr);
-        } else {
-            List<String> strList = Lists.newLinkedList(Splitter.on("{}")
-                                                               .omitEmptyStrings()
-                                                               .split(renderSafeStr));
-            int count = 0;
-
-            for (final String next : strList) {
-                result.append(next);
-                count++;
-
-                if (renderSafeStr.endsWith("{}")) {
-                    result.append("{")
-                          .append(pos++)
-                          .append("}");
-                } else if (count < strList.size()) {
-                    result.append("{")
-                          .append(pos++)
-                          .append("}");
-                }
-            }
-        }
-        return result.toString();
+    public ErrorCode withData(Object... data) {
+        return new ErrorCode(
+                             errorId, MessageFormat.format(message, data), severity);
     }
 
-    public String renderSafe() {
+    @Override
+    public String toString() {
         return "Error ID (" + errorId + ") :" + " - " + message;
     }
 }
