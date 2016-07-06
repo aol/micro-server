@@ -1,13 +1,6 @@
-apply plugin: 'java'
-repositories {
-	
-	maven { url "https://jitpack.io" }
-}
-
 description = 'micro-manifest-comparator'
 dependencies {
-	
-	compile project(':micro-core')
+
 	compile project(':micro-jackson-configuration')
 	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:hamcrestVersion
 	
@@ -31,7 +24,7 @@ modifyPom {
 		name 'Microserver Manifest Comparator'
 		description 'Pattern for loading cached data for BASE microservices'
 		url 'https://github.com/aol/micro-server'
-		inceptionYear '2015'
+		inceptionYear '2016'
 
 		groupId 'com.aol.microservices'
 		artifactId 'micro-manifest-comparator'

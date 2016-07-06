@@ -10,6 +10,7 @@ cyclops-react offers a range of functional datatypes and datastructures, many of
 
 Features include
 
+* Inter-Microservice Streaming [v0.87 and above]
 * EventQueueManager - a powerful event bus
 * Enhanced for-comprehension syntax specifically for micro-reactive
 * Ability to treat Flux and Mono as cyclops monads
@@ -17,6 +18,38 @@ Features include
 * CyclopsReactor a conversion layer between cyclops-react and Reactor datatypes
 
 ## Examples
+
+### Streaming across Microservices
+
+To publish an infinite Stream of Boo! we could create Rest end points like those below
+
+```java
+@GET
+@Produces("application/json")
+@Path("/infinite-boo")
+public Response boo() {
+       return ReactiveResponse.publishAsJson(ReactiveSeq.generate(() -> "boo!"));
+
+}
+@GET
+@Produces("application/json")
+@Path("/infinite-boo-jdk")
+public Response booJDK() {
+       return ReactiveResponse.streamAsJson(Stream.generate(() -> "boo!"));
+
+}
+
+```
+
+To Stream in output from our infinetely Streaming Rest end points we can write
+
+```java
+
+new ReactiveRequest(1000, 1000).getJsonStream("http://localhost:8080/simple-app/single/infinite-boo",String.class)
+                               .forEach(System.err::println);
+```
+
+Which will write each Boo! recieved from our end point to the console.
 
 ## Event bus - 
 
