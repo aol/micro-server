@@ -1,17 +1,20 @@
 package com.aol.micro.server.dist.lock;
 
+import lombok.Getter;
+
 public class DistributedLockManager {
 
-	private final DistributedLockService distributedLockService;
-	private final String lockKey;
+    private final DistributedLockService distributedLockService;
+    @Getter
+    private final String key;
 
-	public DistributedLockManager(DistributedLockService distributedLockService, String lockKey) {
-		this.distributedLockService = distributedLockService;
-		this.lockKey = lockKey;
-	}
+    public DistributedLockManager(DistributedLockService distributedLockService, String lockKey) {
+        this.distributedLockService = distributedLockService;
+        this.key = lockKey;
+    }
 
-	public boolean isMainProcess() {
-		return distributedLockService.tryLock(lockKey);
-	}
+    public boolean isMainProcess() {
+        return distributedLockService.tryLock(key);
+    }
 
 }
