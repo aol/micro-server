@@ -1,4 +1,4 @@
-package com.aol.micro.server.async.data.cleaner;
+package com.aol.micro.server.async.data.writer;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -12,8 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.aol.cyclops.data.collections.extensions.standard.ListX;
-import com.aol.micro.server.async.data.writer.AsyncDataWriter;
-import com.aol.micro.server.async.data.writer.MultiDataWriter;
 import com.aol.micro.server.manifest.ManifestComparator;
 import com.google.common.eventbus.EventBus;
 

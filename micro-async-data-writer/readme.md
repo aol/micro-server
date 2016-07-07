@@ -16,6 +16,7 @@ This plugin supports asyncrhonously writing data to a store such as S3 or Couchb
 
 This plugin must be used in conjunction with an implementation of the interfaces in micro-manifest-comparator (either micro-s3 or micro-couchbase should be on the classpath). The first steps to using the AsyncDataWriter should be to configure access to your data store as per the appropriate plugin (configure access keys for S3, servers / user / password for Couchbase).
 
+
 ### Additional properties are 
 
 asyc.data.writer.threads=no. of threads for asynchronous writing
@@ -87,7 +88,7 @@ New ManifestComparators targeting a different data key can be created from preco
    return existing.withKey("new-data-key");
  }
  
- 
+```
  
 # Data Cleaner Plugin Features
 
@@ -97,6 +98,24 @@ asyc.data.schedular.cron.cleaner=0 0 * * * ?
 
 When the cleaner runs it triggers an event with processing and error stats published to a Guava Event Bus.
 
+## Conditionally turning the cleaner off
+
+The DataCleaner can be truned off conditionally by having a Spring Bean implement ConditionallyClean. shouldClean is called everytime the DataCleaner is scheduled to determine if it is run.
+
+```java
+ 
+@Component
+public class TurnOff implements ConditionallyClean {
+
+    @Override
+    public boolean shouldClean() {
+
+        return false;
+    }
+
+}
+
+```
 
 ## Getting The Microserver Async Data Writer Plugin
 

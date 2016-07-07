@@ -2,6 +2,7 @@ package com.aol.micro.server.async.data.cleaner;
 
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.function.BinaryOperator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +24,8 @@ public class ConfigureScheduling {
 
     @Autowired(required = false)
     private List<DataCleaner> dataCleaners = ListX.empty();
+    @Autowired(required = false)
+    private List<ConditionallyClean> predicates = ListX.empty();
 
     @Autowired
     private EventBus bus;
@@ -42,9 +45,13 @@ public class ConfigureScheduling {
 
     @Bean
     public CleanerSchedular asyncDataCleaner() {
+        ConditionallyClean cc = () -> true;
+        BinaryOperator<ConditionallyClean> accumulator = (cc1, cc2) -> () -> cc1.shouldClean() && cc2.shouldClean();
         CleanerSchedular schedular = new CleanerSchedular(
                                                           dataCleaners(),
-                                                          Executors.newScheduledThreadPool(schedularThreads), bus);
+                                                          Executors.newScheduledThreadPool(schedularThreads), bus,
+                                                          predicates.stream()
+                                                                    .reduce(cc, accumulator));
         schedular.schedule();
         return schedular;
     }
