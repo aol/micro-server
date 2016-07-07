@@ -2,6 +2,7 @@ package com.aol.micro.server.health;
 
 import java.util.Queue;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +11,13 @@ import com.aol.cyclops.control.Maybe;
 @Component
 public class HealthChecker {
 
-    @Value("${health.check.time.threshold.from.error.to.normal:360000}")
-    Long timeThresholdForNormal = 360000l; // 60 mins
+    private final long timeThresholdForNormal;
+
+    @Autowired
+    public HealthChecker(
+            @Value("${health.check.time.threshold.from.error.to.normal:360000}") long timeThresholdForNormalInMillis) {
+        this.timeThresholdForNormal = timeThresholdForNormalInMillis;
+    }
 
     HealthStatus checkHealthStatus(final Queue<ErrorEvent> errors, final Queue<ErrorEvent> fatal) {
 

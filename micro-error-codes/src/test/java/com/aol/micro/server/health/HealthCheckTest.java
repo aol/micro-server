@@ -1,4 +1,4 @@
-package com.aol.micro.server.common.healthCheck;
+package com.aol.micro.server.health;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -8,10 +8,6 @@ import static org.mockito.Mockito.verify;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.health.ErrorEvent;
-import com.aol.micro.server.health.HealthCheck;
-import com.aol.micro.server.health.HealthChecker;
-import com.aol.micro.server.health.HealthStatus;
 import com.google.common.eventbus.EventBus;
 
 public class HealthCheckTest {
@@ -25,7 +21,9 @@ public class HealthCheckTest {
         eventBus = mock(EventBus.class);
 
         check = new HealthCheck(
-                                new HealthChecker(), 10, 20, eventBus);
+                                new HealthChecker(
+                                                  10000l),
+                                10, 20, eventBus);
     }
 
     @Test
@@ -42,23 +40,40 @@ public class HealthCheckTest {
 
     @Test
     public void testOnEventMaxNotExceeded() {
-        for (int i = 0; i < check.maxSize * 2; i++) {
+        for (int i = 0; i < check.getMaxSize() * 2; i++) {
             check.onEvent(new ErrorEvent());
-            assertThat(check.errors.size(), is(Math.min(i + 1, check.maxSize)));
+            assertThat(check.errors.size(), is(Math.min(i + 1, check.getMaxSize())));
         }
     }
 
     @Test
     public void testCheckHealthStatusErrorsOld() throws InterruptedException {
+        check = new HealthCheck(
+                                new HealthChecker(
+                                                  1l),
+                                10, 20, eventBus);
         check.onEvent(new ErrorEvent());
-        check.healthCheckHelper.timeThresholdForNormal = 1l;
+
         Thread.sleep(1l);
 
         HealthStatus status = check.checkHealthStatus();
-        assertThat(status.mdmsDbConnection, is(HealthStatus.State.Not_Applicable));
-        assertThat(status.aceDbConnection, is(HealthStatus.State.Not_Applicable));
-        assertThat(status.generalProcessing, is(HealthStatus.State.Ok));
-        assertThat(status.recentErrors.size(), is(1));
+
+        assertThat(status.getGeneralProcessing(), is(HealthStatus.State.Ok));
+        assertThat(status.getRecentErrors()
+                         .size(),
+                   is(1));
+    }
+
+    @Test
+    public void testSetMaxSizeTooBig() {
+        check.setMaxSize(100);
+        assertThat(check.getMaxSize(), is(10));
+    }
+
+    @Test
+    public void testSetMaxSizeOk() {
+        check.setMaxSize(15);
+        assertThat(check.getMaxSize(), is(15));
     }
 
 }

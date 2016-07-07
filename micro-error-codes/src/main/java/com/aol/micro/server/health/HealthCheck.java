@@ -38,8 +38,8 @@ public class HealthCheck {
         this.errorBus = errorBus;
     }
 
-    private final ConcurrentLinkedQueue<ErrorEvent> errors = new ConcurrentLinkedQueue<>();
-    private final ConcurrentLinkedQueue<ErrorEvent> fatalErrors = new ConcurrentLinkedQueue<>();
+    final ConcurrentLinkedQueue<ErrorEvent> errors = new ConcurrentLinkedQueue<>();
+    final ConcurrentLinkedQueue<ErrorEvent> fatalErrors = new ConcurrentLinkedQueue<>();
 
     @PostConstruct
     public void register() {
@@ -53,7 +53,7 @@ public class HealthCheck {
     }
 
     private Void handle(ErrorEvent e, ConcurrentLinkedQueue<ErrorEvent> queue) {
-        if (queue.size() > maxSize)
+        while (queue.size() >= maxSize)
             queue.poll();
         queue.offer(e);
         return null;
