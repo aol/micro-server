@@ -10,7 +10,7 @@ import com.aol.cyclops.control.Maybe;
 import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.async.data.loader.DataLoader;
 import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.couchbase.DistributedMapClient;
+import com.aol.micro.server.distributed.DistributedMap;
 import com.aol.micro.server.events.SystemData;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -19,11 +19,11 @@ import com.google.common.eventbus.Subscribe;
 @Rest
 public class CouchbaseResource {
 
-    private final DistributedMapClient client;
+    private final DistributedMap client;
     private volatile PStackX<SystemData> dataLoads = PStackX.empty();
 
     @Autowired
-    public CouchbaseResource(DistributedMapClient client, EventBus bus) {
+    public CouchbaseResource(DistributedMap client, EventBus bus) {
         this.client = client;
         bus.register(this);
     }

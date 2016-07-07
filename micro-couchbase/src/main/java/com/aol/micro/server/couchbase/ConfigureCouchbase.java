@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 
 import com.aol.micro.server.couchbase.base.CouchbaseManifestComparator;
+import com.aol.micro.server.distributed.DistributedMap;
 import com.couchbase.client.CouchbaseClient;
 import com.couchbase.client.CouchbaseConnectionFactory;
 import com.couchbase.client.CouchbaseConnectionFactoryBuilder;
@@ -47,12 +48,12 @@ public class ConfigureCouchbase {
 
     @SuppressWarnings("rawtypes")
     @Bean(name = "couchbaseDistributedMap")
-    public DistributedMapClient simpleCouchbaseClient() throws IOException, URISyntaxException {
+    public DistributedMap simpleCouchbaseClient() throws IOException, URISyntaxException {
         if (couchbaseClientEnabled) {
-            return new DistributedMapClient(
+            return new CouchbaseDistributedMapClient(
                                             couchbaseClient());
         } else {
-            return new DistributedMapClient(
+            return new CouchbaseDistributedMapClient(
                                             null);
         }
     }

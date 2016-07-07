@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.aol.cyclops.control.Xor;
 import com.aol.cyclops.util.ExceptionSoftener;
-import com.aol.micro.server.couchbase.DistributedMapClient;
+import com.aol.micro.server.distributed.DistributedMap;
 import com.aol.micro.server.manifest.Data;
 import com.aol.micro.server.manifest.ManifestComparator;
 import com.aol.micro.server.manifest.ManifestComparatorKeyNotFoundException;
@@ -80,7 +80,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 
     @Getter
     private volatile String versionedKey;
-    private final DistributedMapClient connection;
+    private final DistributedMap connection;
 
     /**
      * Create a ManifestComparator with the supplied distributed map client Data
@@ -91,7 +91,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
      * @param connection
      *            DistributedMapClient to store comparison data
      */
-    public CouchbaseManifestComparator(DistributedMapClient connection) {
+    public CouchbaseManifestComparator(DistributedMap connection) {
         this.key = "default";
         this.versionedKey = newKey(1L).toJson();
         this.connection = connection;
@@ -109,7 +109,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
      * @param connection
      *            DistributeMapClient connection
      */
-    public CouchbaseManifestComparator(String key, DistributedMapClient connection) {
+    public CouchbaseManifestComparator(String key, DistributedMap connection) {
         this.key = key;
         this.versionedKey = newKey(1L).toJson();
         this.connection = connection;
