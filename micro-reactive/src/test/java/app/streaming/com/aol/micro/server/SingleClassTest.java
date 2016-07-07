@@ -1,10 +1,14 @@
 package app.streaming.com.aol.micro.server;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.annotation.PostConstruct;
@@ -64,14 +68,16 @@ public class SingleClassTest implements RestResource {
     @Test
     public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
 
-        new ReactiveRequest(
-                            1000, 1000)
-                                       .getJsonStream("http://localhost:8080/simple-app/single/infinite-boo",
-                                                      String.class)
-                                       .forEach(System.err::println);
-                                       // System.out.println(rest.get("http://localhost:8080/simple-app/single/ping"));
-                                       // assertThat(rest.get("http://localhost:8080/simple-app/single/ping"),
-                                       // is("[1,2,3,4]"));
+        List<String> boos = new ReactiveRequest(
+                                                1000, 1000)
+                                                           .getJsonStream("http://localhost:8080/simple-app/single/infinite-boo",
+                                                                          String.class)
+                                                           .toList();
+
+        assertThat(boos.size(), is(5));
+        // System.out.println(rest.get("http://localhost:8080/simple-app/single/ping"));
+        // assertThat(rest.get("http://localhost:8080/simple-app/single/ping"),
+        // is("[1,2,3,4]"));
 
         // assertThat(lastRecieved, equalTo("input"));
 
@@ -124,7 +130,8 @@ public class SingleClassTest implements RestResource {
     @Path("/infinite-boo")
     public Response boo() {
         manager.push("ping", "input");
-        Response response = ReactiveResponse.publishAsJson(ReactiveSeq.generate(() -> "boo!"));
+        Response response = ReactiveResponse.publishAsJson(ReactiveSeq.generate(() -> "boo!")
+                                                                      .limit(5));
 
         System.out.println("created response");
         return response;
@@ -135,7 +142,8 @@ public class SingleClassTest implements RestResource {
     @Path("/ping")
     public Response ping() {
         manager.push("ping", "input");
-        Response response = ReactiveResponse.publishAsJson(ReactiveSeq.of(1, 2, 3, 4));
+        Response response = ReactiveResponse.publishAsJson(ReactiveSeq.of(1, 2, 3, 4)
+                                                                      .limit(5));
         System.out.println("created response");
         return response;
     }

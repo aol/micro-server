@@ -7,11 +7,13 @@ import java.util.concurrent.ExecutionException;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.testing.RestAgent;
 
+@Ignore
 public class S3RunnerTest {
 
     RestAgent rest = new RestAgent();

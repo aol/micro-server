@@ -22,37 +22,37 @@ import com.aol.micro.server.testing.RestAgent;
 @Path("/single")
 public class MinimalClassTest {
 
-	RestAgent rest = new RestAgent();
-	
-	MicroserverApp server;
-	@Before
-	public void startServer(){
-		
-		server = new MicroserverApp(()-> "minimal-app");
-		server.start();
+    RestAgent rest = new RestAgent();
 
-	}
-	
-	@After
-	public void stopServer(){
-		server.stop();
-	}
-	
-	@Test
-	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
-		
-		
-		
-		assertThat(rest.get("http://localhost:8080/minimal-app/single/ping"),is("ok"));
-	
-	}
+    MicroserverApp server;
 
-	@GET
-	@Produces("text/plain")
-	@Path("/ping")
-	public String ping() {
-		return "ok";
-	}
-	
-	
+    @Before
+    public void startServer() {
+
+        server = new MicroserverApp(
+                                    () -> "minimal-app");
+        server.start();
+
+    }
+
+    @After
+    public void stopServer() {
+        server.stop();
+    }
+
+    @Test
+    public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
+
+        Thread.sleep(500l);
+        assertThat(rest.get("http://localhost:8080/minimal-app/single/ping"), is("ok"));
+
+    }
+
+    @GET
+    @Produces("text/plain")
+    @Path("/ping")
+    public String ping() {
+        return "ok";
+    }
+
 }

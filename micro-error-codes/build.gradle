@@ -4,7 +4,7 @@ dependencies {
 	
 	compile project(':micro-events')
 	testCompile project(':micro-grizzly-with-jersey')
-	testCompile  'com.github.johnmcclean-aol:couchbasemock:master'
+	
 }
 
 modifyPom {
