@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aol.cyclops.util.ExceptionSoftener;
-import com.aol.micro.server.ErrorCode;
+import com.aol.micro.server.InternalErrorCode;
 import com.aol.micro.server.config.SSLProperties;
 import com.aol.micro.server.module.WebServerProvider;
 import com.aol.micro.server.servers.AccessLogLocationBean;
@@ -119,9 +119,9 @@ public class GrizzlyApplication implements ServerApplication {
 			builder.rotationPattern("yyyy-MM-dd");
 			builder.instrument(httpServer.getServerConfiguration());
 		} catch (Exception e) {
-			logger.error(ErrorCode.SERVER_STARTUP_FAILED_TO_CREATE_ACCESS_LOG.toString() + ": " + e.getMessage());
+			logger.error(InternalErrorCode.SERVER_STARTUP_FAILED_TO_CREATE_ACCESS_LOG.toString() + ": " + e.getMessage());
 			if (e.getCause() != null)
-				logger.error("CAUSED BY: " + ErrorCode.SERVER_STARTUP_FAILED_TO_CREATE_ACCESS_LOG.toString() + ": " + e.getCause().getMessage());
+				logger.error("CAUSED BY: " + InternalErrorCode.SERVER_STARTUP_FAILED_TO_CREATE_ACCESS_LOG.toString() + ": " + e.getCause().getMessage());
 
 		}
 

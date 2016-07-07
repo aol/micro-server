@@ -5,7 +5,7 @@ import lombok.Getter;
 
 
 @Getter
-public enum ErrorCode {
+public enum InternalErrorCode {
 	GRIZZLY_SERVER_EXCEPTION, SERVER_STARTUP_FAILED_TO_CREATE_ACCESS_LOG, STARTUP_FAILED_SPRING_INITIALISATION
 
 
