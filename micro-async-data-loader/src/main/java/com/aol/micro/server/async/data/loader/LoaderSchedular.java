@@ -15,6 +15,7 @@ public class LoaderSchedular {
     private ListX<DataLoader> loader;
     private final ScheduledExecutorService executor;
     private final EventBus bus;
+    private final ConditionallyLoad condition;
 
     public void schedule() {
 
@@ -32,7 +33,9 @@ public class LoaderSchedular {
     }
 
     private ReactiveSeq<SystemData<String, String>> create(DataLoader dl) {
-        return ReactiveSeq.generate(() -> dl.scheduleAndLog())
+        return ReactiveSeq.generate(() -> 1)
+                          .filter(in -> condition.shouldLoad())
+                          .map(in -> dl.scheduleAndLog())
                           .peek(sd -> bus.post(sd));
     }
 }

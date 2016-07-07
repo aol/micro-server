@@ -14,10 +14,13 @@ public class CleanerSchedular {
     private final ListX<DataCleaner> cleaner;
     private final ScheduledExecutorService executor;
     private final EventBus bus;
+    private final ConditionallyClean condition;
 
     public void schedule() {
         cleaner.forEach(cl -> {
-            ReactiveSeq.generate(() -> cl.scheduleAndLog())
+            ReactiveSeq.generate(() -> 1)
+                       .filter(in -> condition.shouldClean())
+                       .map(i -> cl.scheduleAndLog())
                        .peek(sd -> bus.post(sd))
                        .schedule(cl.getCron(), executor);
         });

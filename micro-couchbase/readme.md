@@ -113,6 +113,7 @@ Elsewhere a single writer service can write data to the store for all services o
 e.g.
 
  ```java
+ 
  @Component
  public class DataWriter {
  
@@ -136,6 +137,32 @@ e.g.
  }
  
   ```
+  
+## Configurable properties
+
+Key used to store data used by the configured ManfiestComparator in Couchbase (default is default-key)
+
+couchbase.manifest.comparison.key=default-key
+
+Comma separate list of Couchbase servers
+
+couchbaseServers=
+
+Couchbase bucket (default is couchbase_bucket) to store / read data in
+
+couchbaseBucket=couchbase_bucket
+
+Couchbase password
+
+couchbasePassword=
+
+Switch off Couchbase enabled / disabled
+
+couchbaseClientEnabled:true
+
+Couchbase client operation
+
+couchbaseClientOperationTimeout:120000
 
 ## Getting The Microserver Couchbase Plugin
 

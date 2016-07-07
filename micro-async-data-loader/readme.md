@@ -17,6 +17,14 @@ This plugin supports asyncrhonously reading data from a store such as S3 or Couc
 
 This plugin must be used in conjunction with an implementation of the interfaces in micro-manifest-comparator (either micro-s3 or micro-couchbase should be on the classpath). The first steps to using the AsyncDataLoader should be to configure access to your data store as per the appropriate plugin (configure access keys for S3, servers / user / password for Couchbase).
 
+To configure a manifest comparator for Couchbase please set this property
+
+couchbase.manifest.comparison.key=<key>
+
+To configure a manifest comparator for S3 please set this property
+
+s3.manifest.comparator.key=<key>
+
 ### Additional properties are 
 
 asyc.data.schedular.cron.loader=0 * * * * *

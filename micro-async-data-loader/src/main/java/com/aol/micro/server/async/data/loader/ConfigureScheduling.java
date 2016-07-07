@@ -2,6 +2,7 @@ package com.aol.micro.server.async.data.loader;
 
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.function.BinaryOperator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +32,8 @@ public class ConfigureScheduling {
 
     @Autowired(required = false)
     private List<ManifestComparator> defaultComparators = ListX.empty();
+    @Autowired(required = false)
+    private List<ConditionallyLoad> predicates = ListX.empty();
 
     private ListX<DataLoader> dataLoaders() {
         SetX<ManifestComparator> comparatorSet = SetX.fromIterable(dataLoaders)
@@ -46,9 +49,14 @@ public class ConfigureScheduling {
 
     @Bean
     public LoaderSchedular asyncDataLoader() {
+        ConditionallyLoad cc = () -> true;
+        BinaryOperator<ConditionallyLoad> accumulator = (cc1, cc2) -> () -> cc1.shouldLoad() && cc2.shouldLoad();
+
         LoaderSchedular schedular = new LoaderSchedular(
                                                         dataLoaders(),
-                                                        Executors.newScheduledThreadPool(schedularThreads), bus);
+                                                        Executors.newScheduledThreadPool(schedularThreads), bus,
+                                                        predicates.stream()
+                                                                  .reduce(cc, accumulator));
         schedular.schedule();
         return schedular;
     }
