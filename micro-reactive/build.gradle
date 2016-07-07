@@ -4,6 +4,7 @@ dependencies {
 
 	compile 'com.aol.cyclops:cyclops-reactor:'+cyclopsVersion
 	compile project(':micro-core')
+    compile project(':micro-client')
 	compile project(':micro-events')
 	testCompile project(':micro-grizzly')
 	testCompile project(':micro-jersey')
