@@ -10,12 +10,21 @@ This adds a facility to use AmazonS3Client. The following APIs are provided
 4. S3Reader : For reading data from S3
 5. S3Deleter : For deleting data from S3
 6. S3Utils : General S3 uploading / downloading utils. Creational entry point for the various CRUD Apis (S3ObjectWriter, S3StringWriter, S3Reader, S3Deleter)
+7. DistributedMap implementation that uses S3 as distributed persistent map
 
 See also [micro-async-data-writer](https://github.com/aol/micro-server/tree/master/micro-async-data-writer) and [micro-async-data-loader](https://github.com/aol/micro-server/tree/master/micro-async-data-loader) for automated management of writing versioned data and loading versioned data from S3 (or couchbase via micro-couchbase), that builds on this plugin.
 
 # Manifest comparison
 
 Manifest comparison stores a manifest along with each value. The manifest contains the version for the value, if the version has changed, the latest verson of the value will be loaded.
+
+Configure the S3 Bucket for Manifest comparision via this property
+
+s3.manifest.comparator.bucket
+
+You can also configure the key under which your data will be stored with
+
+s3.manifest.comparator.key:default
 
    
       key : manifest [contains version info]
@@ -125,6 +134,30 @@ e.g.
  
   ```
   
+ ## DistributedMap
+ 
+ Configure the S3 to be used by the DistributedMap with the following property
+ 
+ s3.distributed.map.bucket
+ 
+Then inject in either  DistributedMap or it's concrete implementation S3DistributedMapClient into your code to use S3 as a remote persistent Key Value store.
+ 
+ ```java
+ 
+ @Component
+ public class MyService{
+    
+     private final DistributedMap<DataType> map;
+     
+     @Autowired
+     public MyService(DistributedMap map){
+       this.map = map;
+     }
+ 
+ }
+ 
+ ```
+  
 ## To use
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-s3/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-s3)
@@ -143,10 +176,19 @@ Gradle
 ```groovy
     compile 'com.aol.microservices:micro-s3:x.yz'
 ```
+
 ## Usage
-This plugin simply provides an AmazonS3Client implementation bean. You should just fill properties
-s3.accessKey, s3.secretKey and s3.sessionToken (optionally - only for short term keys)
+This plugin simply provides an AmazonS3Client implementation bean. You should define properties for
+s3.accessKey, s3.secretKey and optionall s3.sessionToken (optionally - only for short term keys)
 [AmazonS3Client](http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/AmazonS3Client.html)
+
+Configure the S3 Bucket for Manifest comparision via this property
+
+s3.manifest.comparator.bucket
+
+You can also configure the key under which your data will be stored with
+
+s3.manifest.comparator.key:default
 
 ```java
 @Component

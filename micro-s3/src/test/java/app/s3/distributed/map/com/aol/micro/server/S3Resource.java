@@ -6,34 +6,30 @@ import javax.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.s3.data.S3Reader;
-import com.aol.micro.server.s3.data.S3Utils;
-import com.aol.micro.server.s3.data.S3ObjectWriter;
+import com.aol.micro.server.distributed.DistributedMap;
 
 @Path("/s3")
 @Rest
 public class S3Resource {
 
-    private final S3Reader client;
-    private final S3ObjectWriter writer;
+    private final DistributedMap client;
 
     @Autowired
-    public S3Resource(S3Utils utils) {
-        this.client = utils.reader("aolp-lana-dev-test-partition-us-east-1");
-        this.writer = utils.writer("aolp-lana-dev-test-partition-us-east-1");
+    public S3Resource(DistributedMap client) {
+        this.client = client;
     }
 
     @GET
     @Path("/get")
     public String bucket() {
-        return client.getAsString("hello")
-                     .get();
+        return client.get("hello")
+                     .toString();
     }
 
     @GET
     @Path("/put")
     public String put() {
-        writer.put("hello", "world");
+        client.put("hello", "world");
         return "added";
     }
 }

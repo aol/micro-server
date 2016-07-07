@@ -7,19 +7,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aol.cyclops.util.ExceptionSoftener;
+import com.aol.micro.server.distributed.DistributedMap;
 import com.couchbase.client.CouchbaseClient;
 
-public class DistributedMapClient<V> {
+public class CouchbaseDistributedMapClient<V> implements DistributedMap<V> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final Optional<CouchbaseClient> couchbaseClient;
 
-    public DistributedMapClient(CouchbaseClient couchbaseClient) {
+    public CouchbaseDistributedMapClient(CouchbaseClient couchbaseClient) {
 
         this.couchbaseClient = Optional.ofNullable(couchbaseClient);
     }
 
+    @Override
     public boolean put(final String key, final V value) {
         logger.debug("put '{}', value:{}", key, value);
         return couchbaseClient.map(c -> putInternal(c, key, value))
@@ -38,11 +40,13 @@ public class DistributedMapClient<V> {
         }
     }
 
+    @Override
     public Optional<V> get(String key) {
         return couchbaseClient.map(c -> (V) c.get(key));
 
     }
 
+    @Override
     public void delete(String key) {
         couchbaseClient.map(c -> c.delete(key));
     }

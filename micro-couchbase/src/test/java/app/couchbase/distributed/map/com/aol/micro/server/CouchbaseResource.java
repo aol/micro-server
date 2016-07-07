@@ -6,16 +6,16 @@ import javax.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.couchbase.DistributedMapClient;
+import com.aol.micro.server.distributed.DistributedMap;
 
 @Path("/couchbase")
 @Rest
 public class CouchbaseResource {
 
-    private final DistributedMapClient client;
+    private final DistributedMap client;
 
     @Autowired
-    public CouchbaseResource(DistributedMapClient client) {
+    public CouchbaseResource(DistributedMap client) {
         this.client = client;
     }
 

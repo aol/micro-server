@@ -14,7 +14,7 @@ import com.aol.micro.server.s3.manifest.comparator.S3ManifestComparator;
 @Configuration
 public class S3ManifestComparatorProvider {
 
-    @Value("${s3.manifest.comparator.bucket:aolp-lana-dev-test-partition-us-east-1}")
+    @Value("${s3.manifest.comparator.bucket:}")
     private String bucket;
     @Value("${s3.manifest.comparator.key:default}")
     private String key;
