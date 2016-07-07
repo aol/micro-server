@@ -10,9 +10,9 @@ import com.aol.micro.server.dist.lock.rest.DistLockResource;
  *
  */
 public class DistLockPlugin implements Plugin {
-	@Override
-	public PSetX<Class> springClasses() {
-		return PSetX.of(LockController.class, DistLockResource.class);
-	}
+    @Override
+    public PSetX<Class> springClasses() {
+        return PSetX.of(DistLockResource.class);
+    }
 
 }

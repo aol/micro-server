@@ -1,5 +1,9 @@
 package com.aol.micro.server.dist.lock.rest;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -9,34 +13,34 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.aol.cyclops.data.collections.extensions.standard.ListX;
 import com.aol.micro.server.auto.discovery.SingletonRestResource;
-import com.aol.micro.server.dist.lock.DistributedLockService;
-import com.aol.micro.server.dist.lock.LockController;
+import com.aol.micro.server.dist.lock.DistributedLockManager;
 
 @Component
-@Path("/dist/lock")
+@Path("/lock-owner")
 public class DistLockResource implements SingletonRestResource {
-	
-	private final LockController lockController;
-	private final DistributedLockService lock;
-	
-	@Autowired
-	public DistLockResource(LockController lockController, DistributedLockService lock) {
-		this.lockController = lockController;	
-		this.lock = lock;
-	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/own/lock/{lockName}")
-	public boolean ownLock(@PathParam("lockName") final String lockName) {
-		return lockController.acquire(lockName);		
-	}
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/own/lock/for/key/{lockKey}")
-	public boolean ownLockForKey(@PathParam("lockKey") final String lockKey) {
-		return lock.tryLock(lockKey);		
-	}		
+
+    private final Map<String, DistributedLockManager> lockController;
+
+    @Autowired(required = false)
+    public DistLockResource(List<DistributedLockManager> lockController) {
+        this.lockController = ListX.fromIterable(lockController)
+                                   .toMap(lc -> lc.getKey(), lc -> lc);
+    }
+
+    public DistLockResource() {
+        lockController = new HashMap<>();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{lockName}")
+    public boolean ownLock(@PathParam("lockName") final String lockName) {
+        if (!lockController.containsKey(lockName))
+            return false;
+        return lockController.get(lockName)
+                             .isMainProcess();
+    }
+
 }

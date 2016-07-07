@@ -14,26 +14,25 @@ import com.aol.micro.server.testing.RestAgent;
 @Microserver
 public class DistLockRunnerTest {
 
-	RestAgent rest = new RestAgent();
-	MicroserverApp server;
+    RestAgent rest = new RestAgent();
+    MicroserverApp server;
 
-	@Before
-	public void startServer() {
-		server = new MicroserverApp(() -> "dist-lock");
-		server.start();
-	}
+    @Before
+    public void startServer() {
+        server = new MicroserverApp(
+                                    () -> "test-app");
+        server.start();
+    }
 
-	@After
-	public void stopServer() {
-		server.stop();
-	}
+    @After
+    public void stopServer() {
+        server.stop();
+    }
 
-	@Test
-	public void testOwnLock() {
-		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock/dummyKeyProvider"), is("true"));
-		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock/dummyKeyProvider2"), is("false"));
-		
-		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock/for/key/key"), is("true"));
-		assertThat(rest.getJson("http://localhost:8080/dist-lock/dist/lock/own/lock/for/key/key2"), is("false"));
-	}
+    @Test
+    public void testOwnLock() {
+        assertThat(rest.getJson("http://localhost:8080/test-app/lock-owner/dummy-key"), is("true"));
+        assertThat(rest.getJson("http://localhost:8080/test-app/lock-owner/dummyKeyProvider2"), is("false"));
+
+    }
 }
