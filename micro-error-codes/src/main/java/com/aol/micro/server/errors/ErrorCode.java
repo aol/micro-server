@@ -11,8 +11,6 @@ public class ErrorCode {
     private final String message;
     private final Severity severity;
 
-    private final ErrorBus errorBus = new ErrorBus();
-
     public static ErrorCode error(final int errorId, final String message, final Severity severity) {
         return new ErrorCode(
                              errorId, message, severity);
@@ -46,7 +44,7 @@ public class ErrorCode {
 
     }
 
-    public ErrorCode withData(Object... data) {
+    public ErrorCode format(Object... data) {
         return new ErrorCode(
                              errorId, MessageFormat.format(message, data), severity);
     }

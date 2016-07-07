@@ -1,7 +1,7 @@
 package com.aol.micro.server.health;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Queue;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,32 +9,37 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.google.common.annotations.VisibleForTesting;
+import com.aol.cyclops.data.collections.extensions.standard.QueueX;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "health-status")
 @XmlType(name = "")
+@AllArgsConstructor
 public class HealthStatus implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     public enum State {
-        Ok, Unavailable, Not_Applicable, Untested, Errors, Running
+        Ok, Untested, Errors, Fatal
     }
 
+    @Getter
     @XmlElement(name = "general-processing")
-    State generalProcessing = State.Untested;
+    private final State generalProcessing;
 
+    @Getter
     @XmlElement(name = "recent-errors")
-    List<ErrorEvent> recentErrors = null;
+    private final Queue<ErrorEvent> recentErrors;
+    @Getter
+    @XmlElement(name = "fatal-errors")
+    private final Queue<ErrorEvent> fatalErrors;
 
-    public State getGeneralProcessing() {
-        return generalProcessing;
+    public HealthStatus() {
+        generalProcessing = State.Untested;
+        recentErrors = QueueX.empty();
+        fatalErrors = QueueX.empty();
     }
-
-    @VisibleForTesting
-    public List<ErrorEvent> getRecentErrors() {
-        return recentErrors;
-    }
-
 }

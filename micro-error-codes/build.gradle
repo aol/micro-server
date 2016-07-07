@@ -1,14 +1,9 @@
 description = 'micro-error-codes'
-repositories {
-	
-	maven { url "https://jitpack.io" }
-}
 
 dependencies {
 	
 	compile project(':micro-events')
 	testCompile project(':micro-grizzly-with-jersey')
-	testCompile project(':micro-couchbase')
 	testCompile  'com.github.johnmcclean-aol:couchbasemock:master'
 }
 

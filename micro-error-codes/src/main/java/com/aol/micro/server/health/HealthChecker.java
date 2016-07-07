@@ -1,11 +1,11 @@
 package com.aol.micro.server.health;
 
-import java.util.List;
+import java.util.Queue;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.google.common.collect.ImmutableList;
+import com.aol.cyclops.control.Maybe;
 
 @Component
 public class HealthChecker {
@@ -13,41 +13,39 @@ public class HealthChecker {
     @Value("${health.check.time.threshold.from.error.to.normal:360000}")
     Long timeThresholdForNormal = 360000l; // 60 mins
 
-    HealthStatus checkHealthStatus(final List<ErrorEvent> errors, final boolean verbose) {
+    HealthStatus checkHealthStatus(final Queue<ErrorEvent> errors, final Queue<ErrorEvent> fatal) {
 
-        final HealthStatus status = new HealthStatus();
+        Maybe<ErrorEvent> latest = selectLatestError(errors, fatal);
+        HealthStatus.State state = state(latest);
 
-        status.recentErrors = errors;
-
-        assignGeneralProcessingToStatus(status, errors);
-
+        final HealthStatus status = new HealthStatus(
+                                                     state, errors, fatal);
         return status;
     }
 
-    <T> ImmutableList<T> handleEvent(final T event, final ImmutableList<T> list, final int max) {
-        return list.size() < max ? ImmutableList.<T> builder()
-                                                .addAll(list)
-                                                .add(event)
-                                                .build()
-                : ImmutableList.<T> builder()
-                               .addAll(list.subList(1, list.size()))
-                               .add(event)
-                               .build();
-    }
-
-    private void assignGeneralProcessingToStatus(HealthStatus status, List<ErrorEvent> errors) {
-        if (errors.size() > 0) {
-
-            final ErrorEvent event = errors.get(errors.size() - 1);
-
-            if (System.currentTimeMillis() - event.time.getTime() < timeThresholdForNormal) {
-                status.generalProcessing = HealthStatus.State.Errors;
-            } else {
-                status.generalProcessing = HealthStatus.State.Ok;
-            }
-        } else {
-            status.generalProcessing = HealthStatus.State.Ok;
+    private Maybe<ErrorEvent> selectLatestError(Queue<ErrorEvent> errors, Queue<ErrorEvent> fatal) {
+        if (errors.size() == 0 && fatal.size() == 0) {
+            return Maybe.none();
         }
+        if (fatal.size() > 0) {
+            return Maybe.just(fatal.peek());
+        }
+        return Maybe.just(errors.peek());
+
     }
 
+    private HealthStatus.State state(Maybe<ErrorEvent> errors) {
+        return errors.visit(this::handleError, () -> HealthStatus.State.Ok);
+    }
+
+    private HealthStatus.State handleError(ErrorEvent event) {
+        return event.visit(e -> HealthStatus.State.Fatal, e -> {
+            if (System.currentTimeMillis() - event.getTime()
+                                                  .getTime() < timeThresholdForNormal) {
+                return HealthStatus.State.Errors;
+            } else {
+                return HealthStatus.State.Ok;
+            }
+        });
+    }
 }

@@ -17,7 +17,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.aol.cyclops.control.ReactiveSeq;
 import com.aol.cyclops.util.ExceptionSoftener;
-import com.aol.micro.server.ErrorCode;
+import com.aol.micro.server.InternalErrorCode;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.config.Config;
@@ -81,7 +81,7 @@ public class SpringContextFactory {
 			ApplicationContext springContext = springBuilder.createSpringApp(config,classes.toArray(new Class[0]));
 			return springContext;
 		} catch (Exception e) {
-			logger.error( ErrorCode.STARTUP_FAILED_SPRING_INITIALISATION.toString(),e.getMessage());
+			logger.error( InternalErrorCode.STARTUP_FAILED_SPRING_INITIALISATION.toString(),e.getMessage());
 			ExceptionSoftener.throwSoftenedException(e);
 		}
 		return null;
