@@ -1,4 +1,0 @@
-language: java
-install: gradle clean build
-jdk:
-  - oraclejdk8
