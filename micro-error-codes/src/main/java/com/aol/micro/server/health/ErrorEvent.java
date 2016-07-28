@@ -33,6 +33,7 @@ public class ErrorEvent implements Serializable {
                                                               "yyyy.MM.dd 'at' HH:mm:ss z").format(new Date());
 
     @XmlElement(name = "error-code")
+    @Getter
     private final ErrorCode code;
 
     @XmlElement(name = "error-message")

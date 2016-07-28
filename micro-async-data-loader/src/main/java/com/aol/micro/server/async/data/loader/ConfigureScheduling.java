@@ -18,10 +18,10 @@ import com.google.common.eventbus.EventBus;
 @Configuration
 public class ConfigureScheduling {
 
-    @Value("${asyc.data.schedular.cron.loader:0 * * * * *}")
+    @Value("${async.data.schedular.cron.loader:0 * * * * ?}")
     private String defaultCron;
 
-    @Value("${asyc.data.schedular.threads:5}")
+    @Value("${async.data.schedular.threads:5}")
     private int schedularThreads;
 
     @Autowired(required = false)
