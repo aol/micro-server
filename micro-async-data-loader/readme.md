@@ -37,7 +37,7 @@ asyc.data.schedular.threads=no. of threads for asynchronous loading
 
 The default value is 5.
 
-asyc.data.writer.multi=true / false
+async.data.writer.multi=true / false
 
 By default writing to multiple services is disabled, if more than one ManifestComparator bean is found on the classpath only the first is configured in an AsyncDataWriter. If asyc.data.writer.multi is set to true all ManifestComparators will be wrapped by a single MultiDataWriter bean. Calling saveAndIncrement with new data on this bean will write that data to all sources.
 
