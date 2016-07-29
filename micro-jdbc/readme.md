@@ -1,9 +1,9 @@
- # JDBC plugin
+# JDBC plugin
 
 [micro-jdbc example apps](https://github.com/aol/micro-server/tree/master/micro-dbcp/src/test/java/app/pure/jdbc/com/aol/micro/server)
 
 Adds Spring JDBC. 
-This plugin needs either micro-hikaricp or micro-dbcp2 plugin at runtime to provide mainDataSource
+This plugin needs either micro-hikaricp or micro-dbcp2 plugin at runtime to provide a DataSource (bean name for qualify / inject purposes is mainDataSource)
 
 ## To use
 
