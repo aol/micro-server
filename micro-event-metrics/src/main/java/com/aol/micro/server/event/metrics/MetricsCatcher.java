@@ -40,39 +40,40 @@ public class MetricsCatcher<T> {
     @Subscribe
     @Metered(name = "requests-started")
     @Counted(name = "request-started-count")
-    public void processing(AddQuery<T> data) {
+    public void requestStart(AddQuery<T> data) {
         if (this.configuration.isQueriesByType()) {
             RequestData<T> rd = data.getData();
 
             registry.meter(queryStartName(rd))
                     .mark();
 
-            queries.start(rd.getCorrelationId(), registry.timer(queryEndName(rd))
+            queries.start(rd.getCorrelationId(), registry.timer(queryEndName(rd) + "-timer")
                                                          .time());
-            registry.counter("queries-active-" + rd.getCorrelationId() + "-count")
+            registry.counter("requests-active-" + rd.getType() + "-count")
                     .inc();
         }
     }
 
     private String queryStartName(RequestData<T> rd) {
-        return "query-start-" + rd.getType();
+        return "request-start-" + rd.getType();
     }
 
     private String queryEndName(RequestData<T> rd) {
-        return "query-end-" + rd.getType();
+        return "request-end-" + rd.getType();
     }
 
     @Metered(name = "requests-completed")
     @Counted(name = "request-completed-count")
     @Subscribe
-    public void finished(RemoveQuery<T> data) {
+    public void requestComplete(RemoveQuery<T> data) {
         if (this.configuration.isQueriesByType()) {
             RequestData<T> rd = data.getData();
             registry.meter(queryEndName(rd))
                     .mark();
 
             queries.complete(rd.getCorrelationId());
-            registry.counter("queries-active-" + rd.getCorrelationId() + "-count")
+
+            registry.counter("requests-active-" + rd.getType() + "-count")
                     .dec();
         }
 

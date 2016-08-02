@@ -1,7 +1,6 @@
 package com.aol.micro.server.event.metrics;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
@@ -16,7 +15,7 @@ import com.aol.micro.server.events.RequestsBeingExecuted.RequestData;
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.eventbus.EventBus;
 
-public class MetricsCatcherTest {
+public class MetricsCatcherConfigOffTest {
 
     MetricsCatcher<?> catcher;
     MetricRegistry registry;
@@ -28,7 +27,7 @@ public class MetricsCatcherTest {
         registry = new MetricRegistry();
         bus = new EventBus();
         config = new Configuration(
-                                   true, true, true, true, 5, 6, 7, 8);
+                                   false, false, false, false, 5, 6, 7, 8);
         catcher = new MetricsCatcher<>(
                                        registry, bus, config);
     }
@@ -43,7 +42,7 @@ public class MetricsCatcherTest {
                                                      .build()));
         assertThat(registry.meter("request-start-test")
                            .getMeanRate(),
-                   greaterThan(0.0));
+                   equalTo(0.0));
     }
 
     @Test
@@ -56,7 +55,7 @@ public class MetricsCatcherTest {
                                                            .build()));
         assertThat(registry.meter("request-end-test")
                            .getMeanRate(),
-                   greaterThan(0.0));
+                   equalTo(0.0));
     }
 
     @Test
@@ -69,7 +68,7 @@ public class MetricsCatcherTest {
                                                      .build()));
         assertThat(registry.counter("requests-active-test-count")
                            .getCount(),
-                   equalTo(1l));
+                   equalTo(0l));
     }
 
     @Test
@@ -82,7 +81,7 @@ public class MetricsCatcherTest {
                                                            .build()));
         assertThat(registry.counter("requests-active-test-count")
                            .getCount(),
-                   equalTo(-1l));
+                   equalTo(0l));
     }
 
     @Test
@@ -92,7 +91,7 @@ public class MetricsCatcherTest {
                                                  10l, "test"));
         assertThat(registry.counter("jobs-active-test-count")
                            .getCount(),
-                   equalTo(-1l));
+                   equalTo(0l));
     }
 
     @Test
@@ -111,7 +110,7 @@ public class MetricsCatcherTest {
                                                            .build()));
         assertThat(registry.timer("request-end-test-timer")
                            .getMeanRate(),
-                   greaterThan(0.0));
+                   equalTo(0.0));
     }
 
     @Test
@@ -121,7 +120,7 @@ public class MetricsCatcherTest {
                                              10l, "test"));
         assertThat(registry.meter("job-meter-test")
                            .getMeanRate(),
-                   greaterThan(0.0));
+                   equalTo(0.0));
     }
 
     @Test
@@ -131,7 +130,7 @@ public class MetricsCatcherTest {
                                              10l, "test"));
         assertThat(registry.counter("jobs-active-test-count")
                            .getCount(),
-                   equalTo(1l));
+                   equalTo(0l));
     }
 
     @Test
@@ -139,7 +138,7 @@ public class MetricsCatcherTest {
         catcher.error(ErrorCode.medium(10, "hello world"));
         assertThat(registry.counter("error-MEDIUM-10-count")
                            .getCount(),
-                   equalTo(1l));
+                   equalTo(0l));
 
     }
 
@@ -148,7 +147,7 @@ public class MetricsCatcherTest {
         catcher.error(ErrorCode.medium(10, "hello world"));
         assertThat(registry.meter("error-MEDIUM-10")
                            .getMeanRate(),
-                   greaterThan(0.00));
+                   equalTo(0.00));
 
     }
 
@@ -157,7 +156,7 @@ public class MetricsCatcherTest {
         catcher.error(ErrorCode.medium(10, "hello world"));
         assertThat(registry.counter("error-severity-MEDIUM-count")
                            .getCount(),
-                   equalTo(1l));
+                   equalTo(0l));
 
     }
 
@@ -166,7 +165,7 @@ public class MetricsCatcherTest {
         catcher.error(ErrorCode.medium(10, "hello world"));
         assertThat(registry.meter("error-severity-MEDIUM")
                            .getMeanRate(),
-                   greaterThan(0.00));
+                   equalTo(0.00));
 
     }
 
