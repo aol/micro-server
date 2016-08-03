@@ -1,5 +1,6 @@
 package com.aol.micro.server.event.metrics;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,7 @@ class Configuration {
     private final int numJobs;
     private final int holdJobsForMinutes;
 
+    @Autowired
     public Configuration(@Value("${event.metrics.capture.errors.by.type:true}") boolean errorsByType,
             @Value("${event.metrics.capture.errors.by.code:true}") boolean errorsByCode,
             @Value("${event.metrics.capture.queries.by.type:true}") boolean queriesByType,

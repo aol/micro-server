@@ -40,7 +40,7 @@ public class MetricsCatcherConfigOffTest {
                                                      .correlationId(10l)
                                                      .type("test")
                                                      .build()));
-        assertThat(registry.meter("request-start-test")
+        assertThat(registry.meter(MetricsCatcher.prefix + ".request-start-test")
                            .getMeanRate(),
                    equalTo(0.0));
     }
@@ -53,7 +53,7 @@ public class MetricsCatcherConfigOffTest {
                                                            .correlationId(10l)
                                                            .type("test")
                                                            .build()));
-        assertThat(registry.meter("request-end-test")
+        assertThat(registry.meter(MetricsCatcher.prefix + ".request-end-test")
                            .getMeanRate(),
                    equalTo(0.0));
     }
@@ -66,7 +66,7 @@ public class MetricsCatcherConfigOffTest {
                                                      .correlationId(10l)
                                                      .type("test")
                                                      .build()));
-        assertThat(registry.counter("requests-active-test-count")
+        assertThat(registry.counter(MetricsCatcher.prefix + ".requests-active-test-count")
                            .getCount(),
                    equalTo(0l));
     }
@@ -79,7 +79,7 @@ public class MetricsCatcherConfigOffTest {
                                                            .correlationId(10l)
                                                            .type("test")
                                                            .build()));
-        assertThat(registry.counter("requests-active-test-count")
+        assertThat(registry.counter(MetricsCatcher.prefix + ".requests-active-test-count")
                            .getCount(),
                    equalTo(0l));
     }
@@ -89,7 +89,7 @@ public class MetricsCatcherConfigOffTest {
 
         catcher.jobComplete(new JobCompleteEvent(
                                                  10l, "test"));
-        assertThat(registry.counter("jobs-active-test-count")
+        assertThat(registry.counter(MetricsCatcher.prefix + ".jobs-active-test-count")
                            .getCount(),
                    equalTo(0l));
     }
@@ -108,7 +108,7 @@ public class MetricsCatcherConfigOffTest {
                                                            .correlationId(10l)
                                                            .type("test")
                                                            .build()));
-        assertThat(registry.timer("request-end-test-timer")
+        assertThat(registry.timer(MetricsCatcher.prefix + ".request-end-test-timer")
                            .getMeanRate(),
                    equalTo(0.0));
     }
@@ -118,7 +118,7 @@ public class MetricsCatcherConfigOffTest {
 
         catcher.jobStarted(new JobStartEvent(
                                              10l, "test"));
-        assertThat(registry.meter("job-meter-test")
+        assertThat(registry.meter(MetricsCatcher.prefix + ".job-meter-test")
                            .getMeanRate(),
                    equalTo(0.0));
     }
@@ -128,7 +128,7 @@ public class MetricsCatcherConfigOffTest {
 
         catcher.jobStarted(new JobStartEvent(
                                              10l, "test"));
-        assertThat(registry.counter("jobs-active-test-count")
+        assertThat(registry.counter(MetricsCatcher.prefix + ".jobs-active-test-count")
                            .getCount(),
                    equalTo(0l));
     }
@@ -136,7 +136,7 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void testErrorCount() {
         catcher.error(ErrorCode.medium(10, "hello world"));
-        assertThat(registry.counter("error-MEDIUM-10-count")
+        assertThat(registry.counter(MetricsCatcher.prefix + ".error-MEDIUM-10-count")
                            .getCount(),
                    equalTo(0l));
 
@@ -145,7 +145,7 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void testErrorMeter() {
         catcher.error(ErrorCode.medium(10, "hello world"));
-        assertThat(registry.meter("error-MEDIUM-10")
+        assertThat(registry.meter(MetricsCatcher.prefix + ".error-MEDIUM-10")
                            .getMeanRate(),
                    equalTo(0.00));
 
@@ -154,7 +154,7 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void testSeverityErrorCount() {
         catcher.error(ErrorCode.medium(10, "hello world"));
-        assertThat(registry.counter("error-severity-MEDIUM-count")
+        assertThat(registry.counter(MetricsCatcher.prefix + ".error-severity-MEDIUM-count")
                            .getCount(),
                    equalTo(0l));
 
@@ -163,7 +163,7 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void testErrorSeverityMeter() {
         catcher.error(ErrorCode.medium(10, "hello world"));
-        assertThat(registry.meter("error-severity-MEDIUM")
+        assertThat(registry.meter(MetricsCatcher.prefix + ".error-severity-MEDIUM")
                            .getMeanRate(),
                    equalTo(0.00));
 

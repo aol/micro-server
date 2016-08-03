@@ -11,13 +11,13 @@ import com.aol.micro.server.events.RequestsBeingExecuted.RemoveQuery;
 import com.aol.micro.server.events.RequestsBeingExecuted.RequestData;
 import com.aol.micro.server.events.SystemData;
 import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.annotation.Counted;
-import com.codahale.metrics.annotation.Metered;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 @Component
 public class MetricsCatcher<T> {
+
+    public static final String prefix = MetricsCatcher.class.getTypeName();
 
     private final MetricRegistry registry;
 
@@ -38,9 +38,11 @@ public class MetricsCatcher<T> {
     }
 
     @Subscribe
-    @Metered(name = "requests-started")
-    @Counted(name = "request-started-count")
     public void requestStart(AddQuery<T> data) {
+        registry.meter(prefix + ".requests-started")
+                .mark();
+        registry.counter(prefix + ".requests-started-count")
+                .inc();
         if (this.configuration.isQueriesByType()) {
             RequestData<T> rd = data.getData();
 
@@ -49,23 +51,25 @@ public class MetricsCatcher<T> {
 
             queries.start(rd.getCorrelationId(), registry.timer(queryEndName(rd) + "-timer")
                                                          .time());
-            registry.counter("requests-active-" + rd.getType() + "-count")
+            registry.counter(prefix + ".requests-active-" + rd.getType() + "-count")
                     .inc();
         }
     }
 
     private String queryStartName(RequestData<T> rd) {
-        return "request-start-" + rd.getType();
+        return prefix + ".request-start-" + rd.getType();
     }
 
     private String queryEndName(RequestData<T> rd) {
-        return "request-end-" + rd.getType();
+        return prefix + ".request-end-" + rd.getType();
     }
 
-    @Metered(name = "requests-completed")
-    @Counted(name = "request-completed-count")
     @Subscribe
     public void requestComplete(RemoveQuery<T> data) {
+        registry.meter(prefix + ".requests-completed")
+                .mark();
+        registry.counter(prefix + ".requests-completed-count")
+                .inc();
         if (this.configuration.isQueriesByType()) {
             RequestData<T> rd = data.getData();
             registry.meter(queryEndName(rd))
@@ -73,28 +77,30 @@ public class MetricsCatcher<T> {
 
             queries.complete(rd.getCorrelationId());
 
-            registry.counter("requests-active-" + rd.getType() + "-count")
+            registry.counter(prefix + ".requests-active-" + rd.getType() + "-count")
                     .dec();
         }
 
     }
 
-    @Counted(name = "jobs-completed-count")
-    @Metered(name = "jobs-completed")
     @Subscribe
     public void finished(SystemData data) {
+        registry.meter(prefix + ".jobs-completed")
+                .mark();
+        registry.counter(prefix + ".jobs-completed-count")
+                .inc();
 
     }
 
     @Subscribe
     public void jobStarted(JobStartEvent data) {
         if (this.configuration.isJobsByType()) {
-            registry.meter("job-meter-" + data.getType())
+            registry.meter(prefix + ".job-meter-" + data.getType())
                     .mark();
 
-            jobs.start(data.getCorrelationId(), registry.timer("job-timer-" + data.getType())
+            jobs.start(data.getCorrelationId(), registry.timer(prefix + ".job-timer-" + data.getType())
                                                         .time());
-            registry.counter("jobs-active-" + data.getType() + "-count")
+            registry.counter(prefix + ".jobs-active-" + data.getType() + "-count")
                     .inc();
         }
     }
@@ -103,15 +109,17 @@ public class MetricsCatcher<T> {
     public void jobComplete(JobCompleteEvent data) {
         if (this.configuration.isJobsByType()) {
             jobs.complete(data.getCorrelationId());
-            registry.counter("jobs-active-" + data.getType() + "-count")
+            registry.counter(prefix + ".jobs-active-" + data.getType() + "-count")
                     .dec();
         }
     }
 
-    @Metered(name = "errors")
-    @Counted(name = "errors-count")
     @Subscribe
     public void error(ErrorCode c) {
+        registry.meter(prefix + ".errors")
+                .mark();
+        registry.counter(prefix + ".errors-count")
+                .inc();
         if (this.configuration.isErrorsByCode()) {
             registry.meter(name(c))
                     .mark();
@@ -119,12 +127,12 @@ public class MetricsCatcher<T> {
                     .inc();
         }
         if (this.configuration.isErrorsByType()) {
-            registry.meter("error-severity-" + c.getSeverity()
-                                                .name())
+            registry.meter(prefix + ".error-severity-" + c.getSeverity()
+                                                          .name())
                     .mark();
 
-            registry.counter("error-severity-" + c.getSeverity()
-                                                  .name()
+            registry.counter(prefix + ".error-severity-" + c.getSeverity()
+                                                            .name()
                     + "-count")
                     .inc();
         }
@@ -132,6 +140,6 @@ public class MetricsCatcher<T> {
     }
 
     private String name(ErrorCode c) {
-        return "error-" + c.getSeverity() + "-" + c.getErrorId();
+        return prefix + ".error-" + c.getSeverity() + "-" + c.getErrorId();
     }
 }

@@ -1,12 +1,13 @@
-# Events Plugin
+# Event Metrics Plugin
 
-[micro-events example apps](https://github.com/aol/micro-server/tree/master/micro-events/src/test/java/app)
 
-This adds a facility to capture events such as requests, request execution and scheduled jobs. 
+Captures Dropwizard metrics based on application events 
+
+[micro-event-metrics example apps](https://github.com/aol/micro-server/tree/master/micro-event-metrics/src/test/java/app) 
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-events/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-events)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-event-metrics/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-event-metrics)
 
 Simply add to the classpath
 
@@ -14,324 +15,84 @@ Maven
 ```xml
      <dependency>
         <groupId>com.aol.microservices</groupId>  
-        <artifactId>micro-events</artifactId>
+        <artifactId>micro-event-metrics</artifactId>
         <version>x.yz</version>
      </dependency>
 ```   
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-events:x.yz'
+    compile 'com.aol.microservices:micro-event-metrics:x.yz'
 ```
 ### Depends on
 
-1. [micro-reactive](https://github.com/aol/micro-server/tree/master/micro-reactive)
-2. [micro-guava](https://github.com/aol/micro-server/tree/master/micro-guava)
+1. [micro-events](https://github.com/aol/micro-server/tree/master/micro-events)
+1. [micro-error-codes](https://github.com/aol/micro-server/tree/master/micro-error-codes)
+3. [micro-reactive](https://github.com/aol/micro-server/tree/master/micro-reactive)
+4. [micro-guava](https://github.com/aol/micro-server/tree/master/micro-guava)
 
-## Example resource capturing queries
+# Captures metrics on
 
- ```java
-@Component
-@Path("/status")
-public class EventStatusResource implements RestResource {
+1. Scheduled jobs
+2. User requests
+3. Errors
 
-	private final EventBus bus;
-	
-	@Autowired //micro-events plugin configures a Guava EventBus as a Spring bean
-	public EventStatusResource(EventBus bus ){
-		this.bus = bus;
-	}
+## The following metrics are captured
 
-	@GET
-	@Produces("text/plain")
-	@Path("/ping")
-	public String ping() {
-	        //Post RequestEvents starting
-		bus.post(RequestEvents.start("get", 1l));
-		try{
-			return "ok";
-		}finally{
-		        //and RequestEvents finishing
-			bus.post(RequestEvents.finish("get",1l));
-		}
-	}
+### Requests :
 
-}
- ```
- 
-Active and recently finished events become available at https://hostname::port/context/active/requests
+#### Meters :
 
-## Capturing scheduled Jobs
+com.aol.micro.server.event.metrics.MetricsCatcher.requests-started
+com.aol.micro.server.event.metrics.MetricsCatcher.request-start-<TYPE>
+com.aol.micro.server.event.metrics.MetricsCatcher.requests-completed
+com.aol.micro.server.event.metrics.MetricsCatcher.request-completed-<TYPE>
 
-Any Spring Bean implementing com.aol.micro.server.events.ScheduledJob will have start / completion tracking for the  scheduleAndLog() method. 
-Event details will be added to the eventually consistent ActiveEvents class, and recent & currently active events will be visible via the ActiveResource.
- ```java
-@Component
-public class Job  implements ScheduledJob<Job>{
+#### Timers :
 
-	@Override
-	public SystemData<String,String> scheduleAndLog() {
-		return SystemData.<String,String>builder().errors(0).processed(2).build();
-	}
+com.aol.micro.server.event.metrics.MetricsCatcher.request-completed-<TYPE>
 
-}
- ```
+#### Counters : 
+com.aol.micro.server.event.metrics.MetricsCatcher.requests-started-count
+com.aol.micro.server.event.metrics.MetricsCatcher.requests-active-count
 
-### Job metrics
 
-Metrics about each job are captured in a SystemData object which will be also posted to a Guava EventBus, to allow custom processors to handle the 
-completion event, for example, an EventBus listener that posts info to a simple-react Queue or Topic (via the Pipes class in the micro-reactive plugin) 
-or an RxJava Observable.
+### Jobs :
 
- ```java
+#### Meters:
+com.aol.micro.server.event.metrics.MetricsCatcher.jobs-completed
+com.aol.micro.server.event.metrics.MetricsCatcher.jobs-<TYPE>
 
-    public class SystemData<K, V> {
+#### Counters :
+com.aol.micro.server.event.metrics.MetricsCatcher.jobs-completed-count
+com.aol.micro.server.event.metrics.MetricsCatcher.jobs-active-count
 
-	private final Integer processed;
-	private final Integer errors;
-	private final Map<K, V> dataMap;
+#### Timers :
 
-	private SystemData(Integer processed, Integer errors, Map<K, V> dataMap) {
-		this.processed = processed;
-		this.errors = errors;
-		this.dataMap = dataMap;
-	 }
-  }
-``` 
-## Subscribing to scheduled job events
+com.aol.micro.server.event.metrics.MetricsCatcher.job-timer-<TYPE>
 
-Inject in the micro-events Guava Event Bus to your class as Spring Bean, and implement a method annotated with the Guava @Subscribe annotation that takes SystemData as a single parameter.
+### Errors:
 
- ```java
-   
-    public class Subscriber {
-    @Autowired
-	public Subsciber(EventBus eventBus){
-	    bus.register(this);
-	}
-      
-        @Subscribe
-        public void listenForJobEvents(SystemData data){ 
-         
-           logsStats(data);
-        }
-	
-  }
-```
+#### Meters:
+com.aol.micro.server.event.metrics.MetricsCatcher.errors
+com.aol.micro.server.event.metrics.MetricsCatcher.error-<SEVERITY>-<ERROR_CODE>
+com.aol.micro.server.event.metrics.MetricsCatcher.error-<SEVERITY>
 
-##  Capturing Queries
- 
-To capture requests or Queries post a AddQuery event to the configured  Guava event bus when the Query starts, and a RemoveQuery event when it finishes. There are static helper methods on the RequestEvents class to help with this. E.g. 
- ```java
+#### Counters:
+com.aol.micro.server.event.metrics.MetricsCatcher.errors-count
+com.aol.micro.server.event.metrics.MetricsCatcher.error-<SEVERITY>-<ERROR_CODE>-count
+com.aol.micro.server.event.metrics.MetricsCatcher.error-<SEVERITY>-count
 
-        bus.post(RequestEvents.start("get request", correlationId));
-		try{
-			return "ok";
-		}finally{
-			bus.post(RequestEvents.finish("get request",correlationId));
-		}
-```		
-## REST Calls and output
 
-1. **/active/requests** shows currently active and recently completed requests
-2. **/active/jobs** shows currently active and recently completed jobs
+# Configuration
 
-### Active Requests output
- ```json
-    {
-    "removed": 0,
-    "added": 1,
-    "active": {
-        "1-32": {
-            "freeMemory": 135573448,
-            "startedAt": 1438634550597,
-            "startedAtFormatted": "2015.08.03 at 21:42:30 IST",
-            "processingThread": 32,
-            "correlationId": 1,
-            "query": "get",
-            "type": "default",
-            "additionalData": null
-        }
-    },
-    "events": 1,
-    "recently-finished": [
-        {
-            "event": {
-                "freeMemory": 135573448,
-                "startedAt": 1438634550597,
-                "startedAtFormatted": "2015.08.03 at 21:42:30 IST",
-                "processingThread": 32,
-                "correlationId": 1,
-                "query": "get",
-                "type": "default",
-                "additionalData": null
-            },
-            "completed": 1438634550598,
-            "completed-formated": "2015.08.03 at 21:42:30 IST",
-            "time-taken": 1,
-            "memory-change": 0
-        }
-    ]
-}
-```
-### Active Jobs output
- ```json
-    {
-    "removed": 0,
-    "added": 9304,
-    "active": {
-        "id_app.events.com.aol.micro.server.Job-15": {
-            "freeMemory": 222866800,
-            "startedAt": 1438634384118,
-            "startedAtFormatted": "2015.08.03 at 21:39:44 IST",
-            "processingThread": 15,
-            "type": "app.events.com.aol.micro.server.Job",
-            "timesExecuted": 9304
-        },
-        "id_app.events.com.aol.micro.server.Job-16": {
-            "freeMemory": 115960832,
-            "startedAt": 1438634382652,
-            "startedAtFormatted": "2015.08.03 at 21:39:42 IST",
-            "processingThread": 16,
-            "type": "app.events.com.aol.micro.server.Job",
-            "timesExecuted": 8143
-        },
-        "id_app.events.com.aol.micro.server.Job-17": {
-            "freeMemory": 117375880,
-            "startedAt": 1438634382107,
-            "startedAtFormatted": "2015.08.03 at 21:39:42 IST",
-            "processingThread": 17,
-            "type": "app.events.com.aol.micro.server.Job",
-            "timesExecuted": 7720
-        }
-    },
-    "events": 9304,
-    "recently-finished": [
-        {
-            "event": {
-                "freeMemory": 220814872,
-                "startedAt": 1438634371998,
-                "startedAtFormatted": "2015.08.03 at 21:39:31 IST",
-                "processingThread": 16,
-                "type": "app.events.com.aol.micro.server.Job",
-                "timesExecuted": 9
-            },
-            "completed": 1438634371999,
-            "completed-formated": "2015.08.03 at 21:39:31 IST",
-            "time-taken": 1,
-            "memory-change": -447624
-        },
-        {
-            "event": {
-                "freeMemory": 221845600,
-                "startedAt": 1438634371996,
-                "startedAtFormatted": "2015.08.03 at 21:39:31 IST",
-                "processingThread": 16,
-                "type": "app.events.com.aol.micro.server.Job",
-                "timesExecuted": 8
-            },
-            "completed": 1438634371996,
-            "completed-formated": "2015.08.03 at 21:39:31 IST",
-            "time-taken": 0,
-            "memory-change": 0
-        },
-        {
-            "event": {
-                "freeMemory": 222293016,
-                "startedAt": 1438634371992,
-                "startedAtFormatted": "2015.08.03 at 21:39:31 IST",
-                "processingThread": 16,
-                "type": "app.events.com.aol.micro.server.Job",
-                "timesExecuted": 7
-            },
-            "completed": 1438634371992,
-            "completed-formated": "2015.08.03 at 21:39:31 IST",
-            "time-taken": 0,
-            "memory-change": 0
-        },
-        {
-            "event": {
-                "freeMemory": 222740728,
-                "startedAt": 1438634371988,
-                "startedAtFormatted": "2015.08.03 at 21:39:31 IST",
-                "processingThread": 16,
-                "type": "app.events.com.aol.micro.server.Job",
-                "timesExecuted": 6
-            },
-            "completed": 1438634371989,
-            "completed-formated": "2015.08.03 at 21:39:31 IST",
-            "time-taken": 1,
-            "memory-change": 0
-        },
-        {
-            "event": {
-                "freeMemory": 222753672,
-                "startedAt": 1438634371985,
-                "startedAtFormatted": "2015.08.03 at 21:39:31 IST",
-                "processingThread": 16,
-                "type": "app.events.com.aol.micro.server.Job",
-                "timesExecuted": 5
-            },
-            "completed": 1438634371985,
-            "completed-formated": "2015.08.03 at 21:39:31 IST",
-            "time-taken": 0,
-            "memory-change": 0
-        },
-        {
-            "event": {
-                "freeMemory": 222753704,
-                "startedAt": 1438634371982,
-                "startedAtFormatted": "2015.08.03 at 21:39:31 IST",
-                "processingThread": 16,
-                "type": "app.events.com.aol.micro.server.Job",
-                "timesExecuted": 4
-            },
-            "completed": 1438634371982,
-            "completed-formated": "2015.08.03 at 21:39:31 IST",
-            "time-taken": 0,
-            "memory-change": 0
-        },
-        {
-            "event": {
-                "freeMemory": 222753704,
-                "startedAt": 1438634371979,
-                "startedAtFormatted": "2015.08.03 at 21:39:31 IST",
-                "processingThread": 16,
-                "type": "app.events.com.aol.micro.server.Job",
-                "timesExecuted": 3
-            },
-            "completed": 1438634371979,
-            "completed-formated": "2015.08.03 at 21:39:31 IST",
-            "time-taken": 0,
-            "memory-change": 0
-        },
-        {
-            "event": {
-                "freeMemory": 223648616,
-                "startedAt": 1438634371977,
-                "startedAtFormatted": "2015.08.03 at 21:39:31 IST",
-                "processingThread": 15,
-                "type": "app.events.com.aol.micro.server.Job",
-                "timesExecuted": 2
-            },
-            "completed": 1438634371977,
-            "completed-formated": "2015.08.03 at 21:39:31 IST",
-            "time-taken": 0,
-            "memory-change": 0
-        },
-        {
-            "event": {
-                "freeMemory": 226284664,
-                "startedAt": 1438634371955,
-                "startedAtFormatted": "2015.08.03 at 21:39:31 IST",
-                "processingThread": 15,
-                "type": "app.events.com.aol.micro.server.Job",
-                "timesExecuted": 1
-            },
-            "completed": 1438634371965,
-            "completed-formated": "2015.08.03 at 21:39:31 IST",
-            "time-taken": 10,
-            "memory-change": -894784
-        }
-    ]
-}
-```
+Configuration properties and their default values
+
+event.metrics.capture.errors.by.type=true  # errorsByType,
+event.metrics.capture.errors.by.code=true # errorsByCode,
+event.metrics.capture.queries.by.type=true # queriesByType,
+event.metrics.capture.jobs.by.type=true # jobsByType,
+event.metrics.capture.number.of.queries=10000 # numQueries,
+event.metrics.capture.queries.minutes=180 # holdQueriesForMinutes,
+event.metrics.capture.number.of.jobs=10000 # numJobs,
+event.metrics.capture.jobs.minutes=180
+
