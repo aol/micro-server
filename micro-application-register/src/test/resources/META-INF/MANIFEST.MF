@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Implementation-Vendor: TEST
+Implementation-Title: TITLE
+Implementation-Version: 10.2
+
