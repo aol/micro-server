@@ -35,20 +35,20 @@ h6 {
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
-    background: url(../img/intro-bg.jpg) no-repeat center center;
+    background: url(../img/jigsaw.png) no-repeat center center;
     background-size: cover;
 }
 
 .intro-message {
     position: relative;
-    padding-top: 20%;
+    padding-top: 10%;
     padding-bottom: 20%;
-    color: rgb(240, 240, 240);
+    color: rgb(40, 40, 40);
 }
 
 .intro-message > h1 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,1);
+    text-shadow: 2px 2px 3px rgba(240,240,240,1);
     font-size: 5em;
 }
 

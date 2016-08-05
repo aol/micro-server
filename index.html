@@ -39,11 +39,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
+                   
                     <li>
-                        <a href="http://aol.github.io/">AOL Open</a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/aol/micro-server">Download</a>
+                        <a href="https://github.com/aol/micro-server">Microserver</a>
                     </li>
                     <li>
                         <a href="#quick_start">Quick Start</a>
@@ -68,18 +66,18 @@
                 <div class="col-lg-12">
                     <div class="intro-message">
                         <h1>Microserver</h1>
-                        <h2>A convenient modular engine for Microservices.</h3>
-                        <h3>Microserver plugins offer seamless integration with Spring (core), Jersey, Guava, Tomcat, Grizzly, reactive programming, Hibernate (& Spring Data), Spring Boot, Codahale Metrics, Swagger and more to come!</h3>
+                        <h2>Plugins for building microservices with Spring and Spring Boot.</h3>
+                        <p>Over 30 plugins including for Jersey, Grizzly, Tomcat, Jackson, Spring Boot, Guava, Drop Wizard Metrics, load / CPU stats (SIGAR), cloud storage (AWS S3), Servce event monitoring, CORS, Service Registration</p>
                         <hr class="intro-divider">
                         <ul class="list-inline intro-social-buttons">
                             <li>
-                                <a href="https://twitter.com/aolireland" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                                <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-follow-button twitter-follow-button-rendered" title="Twitter Follow Button" src="http://platform.twitter.com/widgets/follow_button.b7de008f493a5185d8df1aedd62d77c6.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;screen_name=cyclops_aol&amp;show_count=false&amp;show_screen_name=true&amp;size=m&amp;time=1467285061527" style="position: static; visibility: visible; width: 130px; height: 20px;" data-screen-name="cyclops_aol"></iframe>
                             </li>
                             <li>
-                                <a href="https://github.com/aol/micro-server" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                                 <iframe id="gh-star" src="http://ghbtns.com/github-btn.html?user=aol&amp;repo=micro-server&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe>
                             </li>
                             <li>
-                                <a href="https://www.linkedin.com/company/aol-international" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>
+                                <!--a href="https://www.linkedin.com/company/aol-international" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a-->
                             </li>
                         </ul>
                     </div>
@@ -97,27 +95,13 @@
                 <div class="col-lg-5 col-sm-6">
                   <h2 class="section-heading">Quick start</h2>
                   <p>Install Microserver with Grizzly, Jackson and Jersey (Gradle config below)</p>
-                  <pre class=" language-java"><code class=" language-java"><span class="token keyword"> compile group: 'com.aol.microservices', name:'micro-grizzly-with-jersey', version:'x.yz'</span></code></pre>
-                  <p>Install Microserver with Tomcat, Jackson and Jersey (Gradle config below)</p>
-                  <pre class=" language-java"><code class=" language-java"><span class="token keyword"> compile group: 'com.aol.microservices', name:'micro-tomcat-with-jersey', version:'x.yz'</span></code></pre>
-                  <p>Create and run a simple app</p>
-                  <pre class=" language-java"><code class=" language-java"><span class="token keyword">
-@Rest
-@Path("/test")
-public class SimpleApp {
-
-    public static void main(String[] args){
-      new MicroserverApp(()->"test-app").run();
-    }
-    @GET
-    public String myEndPoint(){
-      return "hello world!";
-    }
-}
-                    </span></code></pre>
-                    <p>Browse to http://localhost:8080/test-app/test</p>
-                    <p>See the response hello world!</p>
-                    <p>Add plugins by adding them to your build file - rerun the app to get new end points, Spring beans and more!</p</p>
+                  <script src="https://gist.github.com/johnmcclean-aol/c9ade24dda098dc788b5b1949565d9a8.js"></script>	
+                  <p>Install Microserver with Tomcat, Jackson and Jersey (Maven config below)</p>
+                  <script src="https://gist.github.com/johnmcclean-aol/52115a845f09c75ecc47de98dfb20a37.js"></script>
+                  <p>Define a Microservice in a single class.</p>
+                  <script src="https://gist.github.com/johnmcclean-aol/12ab38378fcbe00ef08849e9d046bdd5.js"></script>
+                    <p>Browse to http://localhost:8080/test-app/test to see the response "hello world!"</p>
+                    <p>Add plugins by adding them to your build file - rerun the app to get new end points, features and functionality!</p</p>
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
                 </div>
@@ -139,6 +123,7 @@ public class SimpleApp {
             <div class="row">
                 <div class="col-lg-5 col-sm-6 ">
                     <h2 class="section-heading">Why Microserver?</h2>
+					<p class="lead">Don't build monolithic (big-ball-of-mud)'common' libraries to share infrastructure across your Microservices. Build well-tested, decoupled plugins with limited and coherent scope instead. With Microserver, ensuring standard behaviour - monitoring, alerting, standard rest end points is as easy as importing a plugin to your project.</p>
                     <p class="lead">Microserver is a plugin engine for building Spring and Spring Boot based microservices. Microserver supports pure microservice and micro-monolith development styles. The micro-monolith style involves packaging multiple services into a single deployment - offering developers the productivity of microservice development without the operational risk. This can help teams adopt a Microservices architecture on projects that are currently monoliths. </p>
                 </div>
                 <div class="col-lg-5 col-lg-offset-1 col-sm-6  ">
@@ -200,37 +185,7 @@ public class SimpleApp {
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="row">
-                <div class="col-md-6 footer-left">
-                <p>
-                    <iframe id="gh-fork" src="http://ghbtns.com/github-btn.html?user=aol&amp;repo=micro-server&amp;type=fork" allowtransparency="true" frameborder="0" scrolling="0" width="55px" height="20px"></iframe>
-                    <iframe id="gh-star" src="http://ghbtns.com/github-btn.html?user=aol&amp;repo=micro-server&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe>
-                    <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-follow-button twitter-follow-button-rendered" title="Twitter Follow Button" src="http://platform.twitter.com/widgets/follow_button.b7de008f493a5185d8df1aedd62d77c6.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;screen_name=aolireland&amp;show_count=false&amp;show_screen_name=true&amp;size=m&amp;time=1467285061527" style="position: static; visibility: visible; width: 130px; height: 20px;" data-screen-name="aolireland"></iframe>
-                    <br>
-                    <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Faolireland%2F&tabs&width=340&height=154&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=true&appId" width="340" height="154" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-                </p>
-            </div>
-                <div class="col-lg-12">
-                    <ul class="list-inline">
-                        <li>
-                            <a href="#">Home</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="http://corp.aol.com/about-aol">About</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="http://corp.aol.com/products-servicesa">Services</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="https://github.com/aol/micro-server/issues">Contact</a>
-                        </li>
-                    </ul>
-                    <p class="copyright text-muted small">Micro-server is a free and open source Java Web Framework, released under the <a href="https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)" target="_blank">Apache 2 License</a></p>
-                </div>
-            </div>
+            
         </div>
     </footer>
 
