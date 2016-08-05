@@ -30,7 +30,7 @@ public class InvalidStateExceptionTest {
     @Test
     public void testEventErrorSuscriber() {
         new InvalidStateException(
-                                  Errors.QUERY_FAILURE);
+                                  Errors.QUERY_FAILURE.format());
         assertTrue(eventTriggered);
     }
 

@@ -6,16 +6,16 @@ public class InvalidStateException extends BaseException {
 
     private static final long serialVersionUID = 1L;
 
-    public InvalidStateException(final ErrorCode errorCode) {
+    public InvalidStateException(final FormattedErrorCode errorCode) {
         super(
-              errorCode);
+              errorCode.getCode());
         new ErrorBus().post(new ErrorEvent(
                                            this));
     }
 
-    public InvalidStateException(final ErrorCode errorCode, final Throwable cause) {
+    public InvalidStateException(final FormattedErrorCode errorCode, final Throwable cause) {
         super(
-              errorCode, cause);
+              errorCode.getCode(), cause);
         new ErrorBus().post(new ErrorEvent(
                                            this));
     }
