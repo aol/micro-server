@@ -10,7 +10,7 @@ dependencies {
 
 modifyPom {
 	project {
-		name 'Microserver events'
+		name 'Microserver event metrics'
 		description 'Opinionated rest microservices'
 		url 'https://github.com/aol/micro-server'
 		inceptionYear '2016'
