@@ -14,6 +14,25 @@ This adds a facility to use AmazonS3Client. The following APIs are provided
 
 See also [micro-async-data-writer](https://github.com/aol/micro-server/tree/master/micro-async-data-writer) and [micro-async-data-loader](https://github.com/aol/micro-server/tree/master/micro-async-data-loader) for automated management of writing versioned data and loading versioned data from S3 (or couchbase via micro-couchbase), that builds on this plugin.
 
+## To use
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-s3/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-s3)
+
+Simply add to the classpath
+
+Maven 
+```xml
+     <dependency>
+        <groupId>com.aol.microservices</groupId>  
+        <artifactId>micro-s3</artifactId>
+        <version>x.yz</version>
+     </dependency>
+```   
+Gradle
+```groovy
+    compile 'com.aol.microservices:micro-s3:x.yz'
+```
+
 # Manifest comparison
 
 Manifest comparison stores a manifest along with each value. The manifest contains the version for the value, if the version has changed, the latest verson of the value will be loaded.
@@ -134,7 +153,7 @@ e.g.
  
   ```
   
- ## DistributedMap
+## DistributedMap
  
  Configure the S3 to be used by the DistributedMap with the following property
  
@@ -158,27 +177,11 @@ Then inject in either  DistributedMap or it's concrete implementation S3Distribu
  
  ```
   
-## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-s3/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-s3)
 
-Simply add to the classpath
+## Usage AmazonS3Client
 
-Maven 
-```xml
-     <dependency>
-        <groupId>com.aol.microservices</groupId>  
-        <artifactId>micro-s3</artifactId>
-        <version>x.yz</version>
-     </dependency>
-```   
-Gradle
-```groovy
-    compile 'com.aol.microservices:micro-s3:x.yz'
-```
-
-## Usage
-This plugin simply provides an AmazonS3Client implementation bean. You should define properties for
+This plugin also provides an AmazonS3Client implementation bean. You should define properties for
 s3.accessKey, s3.secretKey and optionall s3.sessionToken (optionally - only for short term keys)
 [AmazonS3Client](http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/AmazonS3Client.html)
 
