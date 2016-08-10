@@ -48,12 +48,15 @@ public class EventRunnerTest {
 
         String json = rest.getJson("http://localhost:8080/event-app/status/counters");
         Map<String, Integer> map = JacksonUtil.convertFromJson(json, Map.class);
-        assertThat(map.get("com.aol.micro.server.event.metrics.MetricsCatcher.jobs-completed-count"), greaterThan(1));
+
+        assertThat(json, map.get("com.aol.micro.server.event.metrics.MetricsCatcher.jobs-completed-count"),
+                   greaterThan(1));
 
         String json2 = rest.getJson("http://localhost:8080/event-app/status/meters");
         Map<String, Integer> map2 = JacksonUtil.convertFromJson(json2, Map.class);
 
-        assertThat(map2.get("com.aol.micro.server.event.metrics.MetricsCatcherrequest-start-default"), greaterThan(0));
+        assertThat(json2, map2.get("com.aol.micro.server.event.metrics.MetricsCatcher.request-start-default"),
+                   greaterThan(0));
 
     }
 
