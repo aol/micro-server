@@ -44,9 +44,10 @@ public class ErrorCode {
 
     }
 
-    public ErrorCode format(Object... data) {
-        return new ErrorCode(
-                             errorId, MessageFormat.format(message, data), severity);
+    public FormattedErrorCode format(Object... data) {
+        return new FormattedErrorCode(
+                                      new ErrorCode(
+                                                    errorId, MessageFormat.format(message, data), severity));
     }
 
     @Override
