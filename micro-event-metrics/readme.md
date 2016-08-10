@@ -42,51 +42,65 @@ Gradle
 
 #### Meters :
 
+```text
 com.aol.micro.server.event.metrics.MetricsCatcher.requests-started
 com.aol.micro.server.event.metrics.MetricsCatcher.request-start-<TYPE>
 com.aol.micro.server.event.metrics.MetricsCatcher.requests-completed
 com.aol.micro.server.event.metrics.MetricsCatcher.request-completed-<TYPE>
+```
 
 #### Timers :
 
+```text
 com.aol.micro.server.event.metrics.MetricsCatcher.request-completed-<TYPE>
+```
 
 #### Counters : 
+```text
 com.aol.micro.server.event.metrics.MetricsCatcher.requests-started-count
 com.aol.micro.server.event.metrics.MetricsCatcher.requests-active-count
-
+```
 
 ### Jobs :
 
 #### Meters:
+```text
 com.aol.micro.server.event.metrics.MetricsCatcher.jobs-completed
 com.aol.micro.server.event.metrics.MetricsCatcher.jobs-<TYPE>
+```
 
 #### Counters :
+```text
 com.aol.micro.server.event.metrics.MetricsCatcher.jobs-completed-count
 com.aol.micro.server.event.metrics.MetricsCatcher.jobs-active-count
+```
 
 #### Timers :
-
+```text
 com.aol.micro.server.event.metrics.MetricsCatcher.job-timer-<TYPE>
+```
 
 ### Errors:
 
 #### Meters:
+```text
 com.aol.micro.server.event.metrics.MetricsCatcher.errors
 com.aol.micro.server.event.metrics.MetricsCatcher.error-<SEVERITY>-<ERROR_CODE>
 com.aol.micro.server.event.metrics.MetricsCatcher.error-<SEVERITY>
+```
 
 #### Counters:
+```text
 com.aol.micro.server.event.metrics.MetricsCatcher.errors-count
 com.aol.micro.server.event.metrics.MetricsCatcher.error-<SEVERITY>-<ERROR_CODE>-count
 com.aol.micro.server.event.metrics.MetricsCatcher.error-<SEVERITY>-count
-
+```
 
 # Configuration
 
 Configuration properties and their default values
 
+```text
 event.metrics.capture.errors.by.type=true  # errorsByType,
 event.metrics.capture.errors.by.code=true # errorsByCode,
 event.metrics.capture.queries.by.type=true # queriesByType,
@@ -95,4 +109,5 @@ event.metrics.capture.number.of.queries=10000 # numQueries,
 event.metrics.capture.queries.minutes=180 # holdQueriesForMinutes,
 event.metrics.capture.number.of.jobs=10000 # numJobs,
 event.metrics.capture.jobs.minutes=180
+```
 
