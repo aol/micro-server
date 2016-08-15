@@ -1,0 +1,8 @@
+description = 'micro-slack'
+
+dependencies {
+        compile 'com.aol.microservices:micro-grizzly-with-jersey:0.87'
+        compile 'com.aol.microservices:micro-general-exception-mapper:0.87'
+        
+        testCompile 'com.jayway.restassured:rest-assured:2.8.0'
+}
