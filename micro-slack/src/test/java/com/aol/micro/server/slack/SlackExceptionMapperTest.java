@@ -16,7 +16,7 @@ public class SlackExceptionMapperTest {
 
     @Before
     public void setUp(){
-        mapper = new SlackExceptionMapper(WEB_HOOK_TEST);
+        mapper = new SlackExceptionMapper(new SlackConfiguration(WEB_HOOK_TEST));
     }
 
     @Test

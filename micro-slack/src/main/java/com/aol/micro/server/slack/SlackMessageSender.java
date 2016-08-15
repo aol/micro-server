@@ -1,9 +1,6 @@
 package com.aol.micro.server.slack;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
 
 import lombok.Getter;
 
@@ -14,29 +11,21 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
 @Getter
+@Component
 public class SlackMessageSender {
     
-    @Autowired
     private SlackConfiguration slackConfiguration;
     
-    public SlackMessageSender(@Value("${slack.webhookUri}") String webhookUrl){
-        this.slackConfiguration = new SlackConfiguration(webhookUrl);
+    @Autowired
+    public SlackMessageSender(SlackConfiguration slackConfiguration){
+        this.slackConfiguration = slackConfiguration;
     }
 
-    @GET
-    @Path("/slack/message")
-    public String slackMessageViaGet(@QueryParam("txt") final String msg) {
-        postMessageToSlack(msg);
-        return "OK";
-    }
-    
     //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
-    private int postMessageToSlack(String msg){
+    public int postMessageToSlack(String msg){
 
         try {
             URL obj;

@@ -1,5 +1,7 @@
 package com.aol.micro.server.slack;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.*;
 
 public class SlackMessageSenderTest {
@@ -10,11 +12,11 @@ public class SlackMessageSenderTest {
     
     @Before
     public void setup(){
-        slackMessageSender = new SlackMessageSender(WEB_HOOK_TEST);
+        slackMessageSender = new SlackMessageSender(new SlackConfiguration(WEB_HOOK_TEST));
     }
-    
+
     @Test
-    public void pingTest() {
-        Assert.assertEquals(slackMessageSender.slackMessageViaGet("Hello from " + this.getClass().getName()), "OK");
+    public void postMessageToSlackTest(){
+        assertTrue(slackMessageSender.postMessageToSlack("Hello from " + this.getClass().getName()) > 0);
     }
 }
