@@ -23,7 +23,7 @@ public class SlackRest {
     
     @GET
     @Path("/message")
-    public String slackMessageViaGet(@QueryParam("txt") final String msg) {
+    public String slackMessage(@QueryParam("txt") final String msg) {
         slackMessageSender.postMessageToSlack(msg);
         return "OK";
     }

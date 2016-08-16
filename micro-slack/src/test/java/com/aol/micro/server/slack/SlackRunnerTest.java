@@ -8,7 +8,7 @@ import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 
 
-@Microserver(properties = { "slack.webhookUri", "https://hooks.slack.com/services/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"})
+@Microserver
 public class SlackRunnerTest {
 
     private MicroserverApp server;
