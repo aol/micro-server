@@ -1,1 +1,1 @@
-DatadogMetricsPlugin
+com.aol.micro.server.datadog.metrics.DatadogMetricsPlugin

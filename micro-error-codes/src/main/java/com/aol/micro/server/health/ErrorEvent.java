@@ -1,22 +1,15 @@
 package com.aol.micro.server.health;
 
+import com.aol.micro.server.errors.BaseException;
+import com.aol.micro.server.errors.ErrorCode;
+import com.aol.micro.server.errors.Severity;
+import lombok.Getter;
+
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.function.Function;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
-
-import com.aol.micro.server.errors.BaseException;
-import com.aol.micro.server.errors.ErrorCode;
-import com.aol.micro.server.errors.Severity;
-
-import lombok.Getter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "error-event")
@@ -29,10 +22,10 @@ public class ErrorEvent implements Serializable {
     private final Date time = new Date();
 
     @XmlElement(name = "formatted-date")
-    private final String formattedDate = new SimpleDateFormat(
-                                                              "yyyy.MM.dd 'at' HH:mm:ss z").format(new Date());
+    private final String formattedDate = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z").format(new Date());
 
     @XmlElement(name = "error-code")
+    @Getter
     private final ErrorCode code;
 
     @XmlElement(name = "error-message")

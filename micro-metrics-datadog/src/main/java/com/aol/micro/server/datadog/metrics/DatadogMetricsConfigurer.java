@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+
+import static org.coursera.metrics.datadog.DatadogReporter.Expansion.COUNT;
 
 @Configuration
 @EnableMetrics
@@ -36,9 +39,10 @@ public class DatadogMetricsConfigurer extends MetricsConfigurerAdapter {
     @Override
     public void configureReporters(MetricRegistry metricRegistry) {
         HttpTransport httpTransport = new HttpTransport.Builder().withApiKey(apiKey).build();
-
+        EnumSet<DatadogReporter.Expansion> expansions = EnumSet.of(COUNT);
         DatadogReporter reporter = DatadogReporter.forRegistry(metricRegistry)
                                                   .withTransport(httpTransport)
+                                                  .withExpansions(expansions)
                                                   .withTags(tags)
                                                   .build();
         reporter.start(period, timeUnit);

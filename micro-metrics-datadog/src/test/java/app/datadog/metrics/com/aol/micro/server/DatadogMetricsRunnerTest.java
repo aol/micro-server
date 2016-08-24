@@ -1,20 +1,9 @@
 package app.datadog.metrics.com.aol.micro.server;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.datadog.metrics.DatadogMetricsConfigurer;
 import com.aol.micro.server.testing.RestAgent;
-import com.codahale.metrics.MetricRegistry;
-import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

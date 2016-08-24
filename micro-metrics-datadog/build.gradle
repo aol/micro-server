@@ -2,9 +2,11 @@ description = 'micro-metrics-datadog'
 dependencies {
     compile ('org.coursera:metrics-datadog:'+datadogMetricsVersion)
     compile project(':micro-metrics')
+    compile project(':micro-event-metrics')
     testCompile project(':micro-jackson-configuration')
     testCompile project(':micro-grizzly')
     testCompile project(':micro-jersey')
+    testCompile project(':micro-error-codes')
 }
 
 modifyPom {

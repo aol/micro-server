@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 public class RestAgent {
 
-	
+
 	public String getJson(String url) {
 
 		Client client = ClientBuilder.newClient();
@@ -24,7 +24,7 @@ public class RestAgent {
 		return request.get(String.class);
 
 	}
-	
+
 	public String get(String url) {
 
 		Client client = ClientBuilder.newClient();
@@ -48,6 +48,6 @@ public class RestAgent {
 
 		return request.post(Entity.entity(JacksonUtil.serializeToJson(payload),MediaType.APPLICATION_JSON), type);
 	}
-	
+
 
 }

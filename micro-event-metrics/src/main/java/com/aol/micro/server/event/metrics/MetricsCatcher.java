@@ -1,8 +1,5 @@
 package com.aol.micro.server.event.metrics;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.aol.micro.server.errors.ErrorCode;
 import com.aol.micro.server.events.JobCompleteEvent;
 import com.aol.micro.server.events.JobStartEvent;
@@ -10,9 +7,12 @@ import com.aol.micro.server.events.RequestsBeingExecuted.AddQuery;
 import com.aol.micro.server.events.RequestsBeingExecuted.RemoveQuery;
 import com.aol.micro.server.events.RequestsBeingExecuted.RequestData;
 import com.aol.micro.server.events.SystemData;
+import com.aol.micro.server.health.ErrorEvent;
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class MetricsCatcher<T> {
@@ -30,29 +30,22 @@ public class MetricsCatcher<T> {
     public MetricsCatcher(MetricRegistry registry, EventBus bus, Configuration configuration) {
         this.registry = registry;
         bus.register(this);
-        queries = new TimerManager(
-                                   configuration.getNumQueries(), configuration.getHoldQueriesForMinutes());
-        jobs = new TimerManager(
-                                configuration.getNumJobs(), configuration.getHoldJobsForMinutes());
+        queries = new TimerManager(configuration.getNumQueries(), configuration.getHoldQueriesForMinutes());
+        jobs = new TimerManager(configuration.getNumJobs(), configuration.getHoldJobsForMinutes());
         this.configuration = configuration;
     }
 
     @Subscribe
     public void requestStart(AddQuery<T> data) {
-        registry.meter(prefix + ".requests-started")
-                .mark();
-        registry.counter(prefix + ".requests-started-count")
-                .inc();
+        registry.meter(prefix + ".requests-started").mark();
+        registry.counter(prefix + ".requests-started-count").inc();
         if (this.configuration.isQueriesByType()) {
             RequestData<T> rd = data.getData();
 
-            registry.meter(queryStartName(rd))
-                    .mark();
+            registry.meter(queryStartName(rd)).mark();
 
-            queries.start(rd.getCorrelationId(), registry.timer(queryEndName(rd) + "-timer")
-                                                         .time());
-            registry.counter(prefix + ".requests-active-" + rd.getType() + "-count")
-                    .inc();
+            queries.start(rd.getCorrelationId(), registry.timer(queryEndName(rd) + "-timer").time());
+            registry.counter(prefix + ".requests-active-" + rd.getType() + "-count").inc();
         }
     }
 
@@ -66,42 +59,33 @@ public class MetricsCatcher<T> {
 
     @Subscribe
     public void requestComplete(RemoveQuery<T> data) {
-        registry.meter(prefix + ".requests-completed")
-                .mark();
-        registry.counter(prefix + ".requests-completed-count")
-                .inc();
+        registry.meter(prefix + ".requests-completed").mark();
+        registry.counter(prefix + ".requests-completed-count").inc();
         if (this.configuration.isQueriesByType()) {
             RequestData<T> rd = data.getData();
-            registry.meter(queryEndName(rd))
-                    .mark();
+            registry.meter(queryEndName(rd)).mark();
 
             queries.complete(rd.getCorrelationId());
 
-            registry.counter(prefix + ".requests-active-" + rd.getType() + "-count")
-                    .dec();
+            registry.counter(prefix + ".requests-active-" + rd.getType() + "-count").dec();
         }
 
     }
 
     @Subscribe
     public void finished(SystemData data) {
-        registry.meter(prefix + ".jobs-completed")
-                .mark();
-        registry.counter(prefix + ".jobs-completed-count")
-                .inc();
+        registry.meter(prefix + ".jobs-completed").mark();
+        registry.counter(prefix + ".jobs-completed-count").inc();
 
     }
 
     @Subscribe
     public void jobStarted(JobStartEvent data) {
         if (this.configuration.isJobsByType()) {
-            registry.meter(prefix + ".job-meter-" + data.getType())
-                    .mark();
+            registry.meter(prefix + ".job-meter-" + data.getType()).mark();
 
-            jobs.start(data.getCorrelationId(), registry.timer(prefix + ".job-timer-" + data.getType())
-                                                        .time());
-            registry.counter(prefix + ".jobs-active-" + data.getType() + "-count")
-                    .inc();
+            jobs.start(data.getCorrelationId(), registry.timer(prefix + ".job-timer-" + data.getType()).time());
+            registry.counter(prefix + ".jobs-active-" + data.getType() + "-count").inc();
         }
     }
 
@@ -109,32 +93,23 @@ public class MetricsCatcher<T> {
     public void jobComplete(JobCompleteEvent data) {
         if (this.configuration.isJobsByType()) {
             jobs.complete(data.getCorrelationId());
-            registry.counter(prefix + ".jobs-active-" + data.getType() + "-count")
-                    .dec();
+            registry.counter(prefix + ".jobs-active-" + data.getType() + "-count").dec();
         }
     }
 
     @Subscribe
-    public void error(ErrorCode c) {
-        registry.meter(prefix + ".errors")
-                .mark();
-        registry.counter(prefix + ".errors-count")
-                .inc();
+    public void error(ErrorEvent event) {
+        ErrorCode c = event.getCode();
+        registry.meter(prefix + ".errors").mark();
+        registry.counter(prefix + ".errors-count").inc();
         if (this.configuration.isErrorsByCode()) {
-            registry.meter(name(c))
-                    .mark();
-            registry.counter(name(c) + "-count")
-                    .inc();
+            registry.meter(name(c)).mark();
+            registry.counter(name(c) + "-count").inc();
         }
         if (this.configuration.isErrorsByType()) {
-            registry.meter(prefix + ".error-severity-" + c.getSeverity()
-                                                          .name())
-                    .mark();
+            registry.meter(prefix + ".error-severity-" + c.getSeverity().name()).mark();
 
-            registry.counter(prefix + ".error-severity-" + c.getSeverity()
-                                                            .name()
-                    + "-count")
-                    .inc();
+            registry.counter(prefix + ".error-severity-" + c.getSeverity().name() + "-count").inc();
         }
 
     }
