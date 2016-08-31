@@ -13,27 +13,31 @@ This plugin in combination with the micro-event-metrics plugin will send some me
 Simply add to the classpath
 
 Maven 
-
+```xml
      <dependency>
         <groupId>com.aol.microservices</groupId>  
         <artifactId>micro-metrics-datadog</artifactId>
         <version>x.yz</version>
      </dependency>
-     
+```     
 Gradle
-
+```groovy
     compile 'com.aol.microservices:micro-metrics-datadog:x.yz'
+```
     
- # Configuring datadog metrics Reporters
+# Configuring datadog metrics Reporters
  
  By default we report to the datadog every second. with the tag stage:dev. To modify these settings, change the values in the application.properties file.
  For example:
- The application.peroperties file can be modifed as follows,
- datadog.apikey = <your api key goes here>
- datadog.tags = "stage:dev", "owner:abc"
- datadog.report.period = 10
- datadog.report.timeunit = SECONDS
- This will report the metrics to datadog with tags as "stage:dev" and "owner:abc" and for every 10 seconds
+ The application.peroperties file can be modifed as follows
+ ```
+datadog.apikey = <your api key goes here>
+datadog.tags = "stage:dev", "owner:abc"
+datadog.report.period = 10
+datadog.report.timeunit = SECONDS
+```
+
+This will report the metrics to datadog with tags as "stage:dev" and "owner:abc" and for every 10 seconds
 
 
        
