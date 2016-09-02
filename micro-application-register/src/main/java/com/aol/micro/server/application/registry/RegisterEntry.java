@@ -2,6 +2,7 @@ package com.aol.micro.server.application.registry;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -42,6 +43,10 @@ public class RegisterEntry {
     String target;
     String formattedDate;
     Map<String, String> manifest = ManifestLoader.instance.getManifest();
+    @Wither
+    Health health;
+    @Wither
+    List<Map<String, Map<String, String>>> stats;
 
     public RegisterEntry() {
         this(
@@ -53,11 +58,11 @@ public class RegisterEntry {
         this(
              port, hostname, module, context, time, UUID.randomUUID()
                                                         .toString(),
-             target, null);
+             target, null, Health.OK, null);
     }
 
     private RegisterEntry(int port, String hostname, String module, String context, Date time, String uuid,
-            String target, String ignoreDate) {
+            String target, String ignoreDate, Health health, List<Map<String, Map<String, String>>> stats) {
         this.port = port;
         this.hostname = hostname;
         this.module = module;
@@ -65,6 +70,8 @@ public class RegisterEntry {
         this.time = time;
         this.uuid = uuid;
         this.target = target;
+        this.health = health;
+        this.stats = stats;
 
         if (time != null)
             this.formattedDate = f.format(this.time);

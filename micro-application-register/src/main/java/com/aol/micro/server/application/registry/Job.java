@@ -26,14 +26,19 @@ public class Job {
     private final String uuid = UUID.randomUUID()
                                     .toString();
     private final String resourcePath;
+    private final HealthChecker checker;
+    private final StatsChecker statsChecker;
 
     @Autowired
     public Job(@Value("${service.registry.url:null}") String apiUrl, ApplicationRegisterImpl app,
-            @Value("${resource.path:/service-registry/register}") String resourcePath) {
+            @Value("${resource.path:/service-registry/register}") String resourcePath, HealthChecker checker,
+            StatsChecker statsChecker) {
 
         this.apiUrl = apiUrl;
         this.app = app;
         this.resourcePath = resourcePath;
+        this.checker = checker;
+        this.statsChecker = statsChecker;
 
     }
 
@@ -51,7 +56,9 @@ public class Job {
 
     private void sendPing(RegisterEntry moduleEntry) {
         final RegisterEntry entry = moduleEntry.withTime(new Date())
-                                               .withUuid(uuid);
+                                               .withUuid(uuid)
+                                               .withHealth(checker.isOk() ? Health.OK : Health.ERROR)
+                                               .withStats(statsChecker.stats());
         try {
 
             logger.info("Posting {} to " + apiUrl + resourcePath, JacksonUtil.serializeToJson(entry));
