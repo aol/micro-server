@@ -38,7 +38,7 @@ public class Job {
     }
 
     @PostConstruct
-    @Scheduled(fixedDelayString = "${service.registry.delay:300000}")
+    @Scheduled(fixedDelayString = "${service.registry.delay:1000}")
     public synchronized void schedule() {
         try {
             if (app.getApplication() != null && apiUrl != null)
