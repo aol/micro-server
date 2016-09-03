@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.aol.cyclops.Semigroups;
-import com.aol.micro.server.HealthStatus;
+import com.aol.micro.server.HealthStatusChecker;
 import com.codahale.metrics.health.HealthCheckRegistry;
 
 @Component
-public class HealthCheckRunner implements HealthStatus {
+public class HealthCheckRunner implements HealthStatusChecker {
 
     private final HealthCheckRegistry healthChecks;
     private final long healthDelay;

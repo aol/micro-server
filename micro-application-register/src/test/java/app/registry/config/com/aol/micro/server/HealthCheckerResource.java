@@ -6,13 +6,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 import com.aol.cyclops.data.collections.extensions.standard.MapXs;
-import com.aol.micro.server.HealthStatus;
+import com.aol.micro.server.HealthStatusChecker;
 import com.aol.micro.server.StatsSupplier;
 import com.aol.micro.server.auto.discovery.Rest;
 
 @Rest
 @Path("/health")
-public class HealthCheckerResource implements HealthStatus, StatsSupplier {
+public class HealthCheckerResource implements HealthStatusChecker, StatsSupplier {
 
     private volatile boolean ok = true;
     private volatile Map<String, Map<String, String>> stats = null;

@@ -6,7 +6,7 @@ import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.micro.server.HealthStatus;
+import com.aol.micro.server.HealthStatusChecker;
 import com.aol.micro.server.auto.discovery.Rest;
 
 @Rest
@@ -14,7 +14,7 @@ import com.aol.micro.server.auto.discovery.Rest;
 public class HealthTestResource {
 
     @Autowired
-    HealthStatus status;
+    HealthStatusChecker status;
 
     @GET
     @Produces("text/plain")

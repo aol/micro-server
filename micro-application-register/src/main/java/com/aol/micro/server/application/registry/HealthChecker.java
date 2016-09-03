@@ -8,19 +8,19 @@ import org.springframework.stereotype.Component;
 import com.aol.cyclops.Monoid;
 import com.aol.cyclops.Semigroups;
 import com.aol.cyclops.data.collections.extensions.standard.ListX;
-import com.aol.micro.server.HealthStatus;
+import com.aol.micro.server.HealthStatusChecker;
 
 @Component
 public class HealthChecker {
 
-    private final ListX<HealthStatus> status;
+    private final ListX<HealthStatusChecker> status;
 
     public HealthChecker() {
         status = ListX.empty();
     }
 
     @Autowired(required = false)
-    public HealthChecker(final List<HealthStatus> status) {
+    public HealthChecker(final List<HealthStatusChecker> status) {
         this.status = ListX.fromIterable(status);
     }
 
