@@ -53,7 +53,7 @@ public class RegistryAppRunner {
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
                    containsString("[{\"port\":8080,"));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
-                   containsString("[{\"port\":9090,"));
+                   containsString("[{\"port\":9090"));
 
         sendPing(new RegisterEntry(
                                    8081, "use-ip", "hello", "world", new Date(), "my-target", 8082));

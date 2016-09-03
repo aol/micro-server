@@ -63,13 +63,24 @@ public class ApplicationRegisterImpl implements ApplicationRegister {
                                                                                next.getModule()
                                                                                    .getContext(),
                                                                                null, targetEndpoint,
-                                                                               Optional.<Integer> ofNullable((Integer) props.get("external.port."
-                                                                                       + next.getModule()))
-                                                                                       .orElse(next.getPort())))
+                                                                               externalPort(next)))
                                                 .collect(Collectors.toList()));
             logger.info("Registered application {} ", application);
         } catch (UnknownHostException e) {
             throw ExceptionSoftener.throwSoftenedException(e);
         }
+    }
+
+    private int externalPort(ServerData next) {
+        String ep = props.getProperty("external.port." + next.getModule()
+                                                             .getContext());
+        if (ep == null)
+            return next.getPort();
+        try {
+            return Integer.valueOf(ep);
+        } catch (NumberFormatException e) {
+            return next.getPort();
+        }
+
     }
 }
