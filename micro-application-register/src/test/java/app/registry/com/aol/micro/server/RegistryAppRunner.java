@@ -56,6 +56,8 @@ public class RegistryAppRunner {
         Thread.sleep(1000);
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
                    containsString("[{\"port\":8080,"));
+        assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
+                   containsString("externalPort\":8080"));
 
         sendPing(new RegisterEntry(
                                    8081, "use-ip", "hello", "world", new Date(), "my-target", 8082));
@@ -63,8 +65,7 @@ public class RegistryAppRunner {
         System.out.println(rest.getJson("http://localhost:8080/registry-app/service-registry/list"));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
                    containsString("[{\"port\":8081,"));
-        assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
-                   containsString("[{\"externalPort\":8082,"));
+
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
                    containsString("\"target\":\"my-target\""));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),

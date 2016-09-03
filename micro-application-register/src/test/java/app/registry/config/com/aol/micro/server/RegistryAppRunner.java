@@ -19,7 +19,8 @@ import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
 
-@Microserver(properties = { "service.registry.url", "http://localhost:8080/registry-app", "host.address", "test-host" })
+@Microserver(properties = { "external.port.registry-app", "9090", "service.registry.url",
+        "http://localhost:8080/registry-app", "host.address", "test-host" })
 public class RegistryAppRunner {
 
     RestAgent rest = new RestAgent();
@@ -51,6 +52,8 @@ public class RegistryAppRunner {
         Thread.sleep(1000);
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
                    containsString("[{\"port\":8080,"));
+        assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
+                   containsString("[{\"port\":9090,"));
 
         sendPing(new RegisterEntry(
                                    8081, "use-ip", "hello", "world", new Date(), "my-target", 8082));
