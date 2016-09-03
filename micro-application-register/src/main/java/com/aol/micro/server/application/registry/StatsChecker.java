@@ -33,7 +33,6 @@ public class StatsChecker {
         if (!active)
             return null;
         return status.map(StatsSupplier::get)
-                     .filter(Objects::nonNull)
-                     .onEmptySwitch(null);
+                     .filter(Objects::nonNull);
     }
 }
