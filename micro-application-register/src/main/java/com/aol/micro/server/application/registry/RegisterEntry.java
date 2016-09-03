@@ -47,22 +47,25 @@ public class RegisterEntry {
     Health health;
     @Wither
     List<Map<String, Map<String, String>>> stats;
+    @Wither
+    int externalPort;
 
     public RegisterEntry() {
         this(
-             -1, null, null, null, null, null, null);
+             -1, null, null, null, null, null, null, -1);
     }
 
     public RegisterEntry(int port, String hostname, String module, String context, Date time, String uuid,
-            String target) {
+            String target, int externalPort) {
         this(
              port, hostname, module, context, time, UUID.randomUUID()
                                                         .toString(),
-             target, null, Health.OK, null);
+             target, null, Health.OK, null, externalPort);
     }
 
     private RegisterEntry(int port, String hostname, String module, String context, Date time, String uuid,
-            String target, String ignoreDate, Health health, List<Map<String, Map<String, String>>> stats) {
+            String target, String ignoreDate, Health health, List<Map<String, Map<String, String>>> stats,
+            int externalPort) {
         this.port = port;
         this.hostname = hostname;
         this.module = module;
@@ -72,6 +75,7 @@ public class RegisterEntry {
         this.target = target;
         this.health = health;
         this.stats = stats;
+        this.externalPort = externalPort;
 
         if (time != null)
             this.formattedDate = f.format(this.time);
@@ -80,11 +84,12 @@ public class RegisterEntry {
 
     }
 
-    public RegisterEntry(int port, String hostname, String module, String context, Date time, String target) {
+    public RegisterEntry(int port, String hostname, String module, String context, Date time, String target,
+            int externalPort) {
         this(
              port, hostname, module, context, time, UUID.randomUUID()
                                                         .toString(),
-             target);
+             target, externalPort);
     }
 
 }

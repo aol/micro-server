@@ -1,4 +1,5 @@
 package com.aol.micro.server.application.registry;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -11,25 +12,36 @@ import org.junit.Test;
 
 public class WriterTest {
 
-	Register writer;
-	RegisterEntry entry;
-	@Before
-	public void setUp() throws Exception {
-		try{
-			FileUtils.deleteDirectory(new File(System.getProperty("java.io.tmpdir"),"service-reg-writer"));
-		}catch(Exception e){
-		}
+    Register writer;
+    RegisterEntry entry;
 
-		new File(System.getProperty("java.io.tmpdir"),"service-reg-writer").mkdirs();
-		writer = new Register(new RegisterConfig(new File(System.getProperty("java.io.tmpdir"),"service-reg-writer").getAbsolutePath()));
-	
-		entry= new RegisterEntry(8080,"host","module","context",new Date(),null);
-	}
+    @Before
+    public void setUp() throws Exception {
+        try {
+            FileUtils.deleteDirectory(new File(
+                                               System.getProperty("java.io.tmpdir"), "service-reg-writer"));
+        } catch (Exception e) {
+        }
 
-	@Test
-	public void testRegister() {
-		writer.register(entry);
-		File dir = new File(new File(System.getProperty("java.io.tmpdir"),"service-reg-writer"), "module");
-		assertThat( dir.listFiles().length,equalTo(1));
-	}
+        new File(
+                 System.getProperty("java.io.tmpdir"), "service-reg-writer").mkdirs();
+        writer = new Register(
+                              new RegisterConfig(
+                                                 new File(
+                                                          System.getProperty("java.io.tmpdir"),
+                                                          "service-reg-writer").getAbsolutePath()));
+
+        entry = new RegisterEntry(
+                                  8080, "host", "module", "context", new Date(), null, 8080);
+    }
+
+    @Test
+    public void testRegister() {
+        writer.register(entry);
+        File dir = new File(
+                            new File(
+                                     System.getProperty("java.io.tmpdir"), "service-reg-writer"),
+                            "module");
+        assertThat(dir.listFiles().length, equalTo(1));
+    }
 }

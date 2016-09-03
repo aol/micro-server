@@ -53,7 +53,7 @@ public class RegistryAppRunner {
                    containsString("[{\"port\":8080,"));
 
         sendPing(new RegisterEntry(
-                                   8081, "use-ip", "hello", "world", new Date(), "my-target"));
+                                   8081, "use-ip", "hello", "world", new Date(), "my-target", 8082));
         Thread.sleep(1000);
         System.out.println(rest.getJson("http://localhost:8080/registry-app/service-registry/list"));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
