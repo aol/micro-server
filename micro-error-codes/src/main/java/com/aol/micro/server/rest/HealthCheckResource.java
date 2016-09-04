@@ -21,7 +21,7 @@ import com.aol.micro.server.auto.discovery.SingletonRestResource;
 import com.aol.micro.server.health.HealthCheck;
 import com.aol.micro.server.utility.HashMapBuilder;
 
-@Path("/system-health")
+@Path("/system-errors")
 @Component
 public class HealthCheckResource implements CommonRestResource, SingletonRestResource {
 

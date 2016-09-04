@@ -3,6 +3,7 @@ package com.aol.micro.server.errors;
 import java.text.MessageFormat;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 
 @Getter
@@ -37,9 +38,8 @@ public class ErrorCode {
                              errorId, message, Severity.CRITICAL);
     }
 
-    private ErrorCode(@JsonProperty("errorId") final int errorId,
-                      @JsonProperty("message") final String message,
-                      @JsonProperty("severity") final Severity severity) {
+    private ErrorCode(@JsonProperty("errorId") final int errorId, @JsonProperty("message") final String message,
+            @JsonProperty("severity") final Severity severity) {
 
         this.errorId = errorId;
         this.message = message;
@@ -50,7 +50,11 @@ public class ErrorCode {
     public FormattedErrorCode format(Object... data) {
         return new FormattedErrorCode(
                                       new ErrorCode(
-                                                    errorId, MessageFormat.format(message, data), severity));
+                                                    errorId, formatStr(data), severity));
+    }
+
+    public String formatStr(Object... data) {
+        return MessageFormat.format(message, data);
     }
 
     @Override

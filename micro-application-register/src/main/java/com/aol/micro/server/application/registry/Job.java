@@ -1,6 +1,8 @@
 package com.aol.micro.server.application.registry;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -26,19 +28,24 @@ public class Job {
     private final String uuid = UUID.randomUUID()
                                     .toString();
     private final String resourcePath;
+    private final HealthChecker checker;
+    private final StatsChecker statsChecker;
 
     @Autowired
     public Job(@Value("${service.registry.url:null}") String apiUrl, ApplicationRegisterImpl app,
-            @Value("${resource.path:/service-registry/register}") String resourcePath) {
+            @Value("${resource.path:/service-registry/register}") String resourcePath, HealthChecker checker,
+            StatsChecker statsChecker) {
 
         this.apiUrl = apiUrl;
         this.app = app;
         this.resourcePath = resourcePath;
+        this.checker = checker;
+        this.statsChecker = statsChecker;
 
     }
 
     @PostConstruct
-    @Scheduled(fixedDelayString = "${service.registry.delay:300000}")
+    @Scheduled(fixedDelayString = "${service.registry.delay:1000}")
     public synchronized void schedule() {
         try {
             if (app.getApplication() != null && apiUrl != null)
@@ -51,7 +58,9 @@ public class Job {
 
     private void sendPing(RegisterEntry moduleEntry) {
         final RegisterEntry entry = moduleEntry.withTime(new Date())
-                                               .withUuid(uuid);
+                                               .withUuid(uuid)
+                                               .withHealth(checker.isOk() ? Health.OK : Health.ERROR)
+                                               .withStats(nonEmptyOrNull(statsChecker.stats()));
         try {
 
             logger.info("Posting {} to " + apiUrl + resourcePath, JacksonUtil.serializeToJson(entry));
@@ -61,5 +70,11 @@ public class Job {
             logger.warn("Failed posting {} to {}" + resourcePath, JacksonUtil.serializeToJson(entry), apiUrl);
 
         }
+    }
+
+    private List<Map<String, Map<String, String>>> nonEmptyOrNull(List<Map<String, Map<String, String>>> stats) {
+        if (stats == null || stats.isEmpty())
+            return null;
+        return stats;
     }
 }
