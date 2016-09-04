@@ -32,7 +32,7 @@ public class Job {
     private final StatsChecker statsChecker;
 
     @Autowired
-    public Job(@Value("${service.registry.url:null}") String apiUrl, ApplicationRegisterImpl app,
+    public Job(@Value("${service.registry.url:#{null}}") String apiUrl, ApplicationRegisterImpl app,
             @Value("${resource.path:/service-registry/register}") String resourcePath, HealthChecker checker,
             StatsChecker statsChecker) {
 
