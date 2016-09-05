@@ -28,13 +28,13 @@ public class Job {
     private final String uuid = UUID.randomUUID()
                                     .toString();
     private final String resourcePath;
-    private final HealthChecker checker;
-    private final StatsChecker statsChecker;
+    private final RegistryHealthChecker checker;
+    private final RegistryStatsChecker statsChecker;
 
     @Autowired
     public Job(@Value("${service.registry.url:#{null}}") String apiUrl, ApplicationRegisterImpl app,
-            @Value("${resource.path:/service-registry/register}") String resourcePath, HealthChecker checker,
-            StatsChecker statsChecker) {
+            @Value("${resource.path:/service-registry/register}") String resourcePath, RegistryHealthChecker checker,
+            RegistryStatsChecker statsChecker) {
 
         this.apiUrl = apiUrl;
         this.app = app;

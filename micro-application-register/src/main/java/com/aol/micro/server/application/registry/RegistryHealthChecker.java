@@ -11,16 +11,16 @@ import com.aol.cyclops.data.collections.extensions.standard.ListX;
 import com.aol.micro.server.HealthStatusChecker;
 
 @Component
-public class HealthChecker {
+public class RegistryHealthChecker {
 
     private final ListX<HealthStatusChecker> status;
 
-    public HealthChecker() {
+    public RegistryHealthChecker() {
         status = ListX.empty();
     }
 
     @Autowired(required = false)
-    public HealthChecker(final List<HealthStatusChecker> status) {
+    public RegistryHealthChecker(final List<HealthStatusChecker> status) {
         this.status = ListX.fromIterable(status);
     }
 

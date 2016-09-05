@@ -4,6 +4,7 @@ dependencies {
 	
 	compile project(':micro-events')
 	testCompile project(':micro-grizzly-with-jersey')
+    testCompile project(':micro-application-register')
 	
 }
 

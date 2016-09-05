@@ -12,18 +12,18 @@ import com.aol.cyclops.data.collections.extensions.standard.ListX;
 import com.aol.micro.server.StatsSupplier;
 
 @Component
-public class StatsChecker {
+public class RegistryStatsChecker {
 
     private final ListX<StatsSupplier> status;
     private final boolean active;
 
-    public StatsChecker() {
+    public RegistryStatsChecker() {
         status = ListX.empty();
         this.active = false;
     }
 
     @Autowired(required = false)
-    public StatsChecker(final List<StatsSupplier> status,
+    public RegistryStatsChecker(final List<StatsSupplier> status,
             @Value("${service.registry.stats.active:true}") boolean active) {
         this.status = ListX.fromIterable(status);
         this.active = active;
