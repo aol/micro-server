@@ -27,19 +27,19 @@ s3.manifest.comparator.key=<key>
 
 ### Additional properties are 
 
-asyc.data.schedular.cron.loader=0 * * * * *
+async.data.schedular.cron.loader=0 * * * * *
 
 How often loader should check for changes in data (uses a quartz expression and attempts a load every minute by default).
 
 By default data will be loaded from all configured ManifestComparators using the default cron.
 
-asyc.data.schedular.threads=no. of threads for asynchronous loading
+async.data.schedular.threads=no. of threads for asynchronous loading
 
 The default value is 5.
 
 async.data.writer.multi=true / false
 
-By default writing to multiple services is disabled, if more than one ManifestComparator bean is found on the classpath only the first is configured in an AsyncDataWriter. If asyc.data.writer.multi is set to true all ManifestComparators will be wrapped by a single MultiDataWriter bean. Calling saveAndIncrement with new data on this bean will write that data to all sources.
+By default writing to multiple services is disabled, if more than one ManifestComparator bean is found on the classpath only the first is configured in an AsyncDataWriter. If async.data.writer.multi is set to true all ManifestComparators will be wrapped by a single MultiDataWriter bean. Calling saveAndIncrement with new data on this bean will write that data to all sources.
 
 ### Configuring multiple ManifestComparators 
 

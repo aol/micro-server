@@ -16,7 +16,7 @@ import com.aol.micro.server.testing.RestAgent;
 
 @Microserver(properties = { "couchbaseServers", "http://localhost:8091/pools", "couchbasePassword", "",
         "couchbaseBucket", "beer-sample", "couchbase.manifest.comparison.key", "test-key",
-        "asyc.data.schedular.cron.loader", "* * * * * ?" })
+        "async.data.schedular.cron.loader", "* * * * * ?" })
 public class ManifestComparatorRunnerTest {
 
     RestAgent rest = new RestAgent();

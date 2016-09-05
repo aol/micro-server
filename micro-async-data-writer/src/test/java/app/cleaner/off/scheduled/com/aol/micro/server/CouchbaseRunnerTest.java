@@ -19,8 +19,8 @@ import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver(properties = { "couchbaseServers", "http://localhost:8091/pools", "couchbasePassword", "",
-        "couchbaseBucket", "beer-sample", "asyc.data.schedular.cron.loader", "* * * * * ?",
-        "asyc.data.schedular.cron.cleaner", "* * * * * ?" })
+        "couchbaseBucket", "beer-sample", "async.data.schedular.cron.loader", "* * * * * ?",
+        "async.data.schedular.cron.cleaner", "* * * * * ?" })
 public class CouchbaseRunnerTest {
 
     RestAgent rest = new RestAgent();
