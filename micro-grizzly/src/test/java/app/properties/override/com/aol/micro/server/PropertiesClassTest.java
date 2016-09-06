@@ -18,7 +18,7 @@ import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;
 
-@Microserver(properties = { "simple-app.port", "8080" }, propertiesName = "application.properties")
+@Microserver(properties = { "simple-app1.port", "8080" }, propertiesName = "application.properties")
 @Path("/single")
 public class PropertiesClassTest implements RestResource {
 
@@ -29,11 +29,15 @@ public class PropertiesClassTest implements RestResource {
     @Before
     public void startServer() {
 
-        System.setProperty("simple-app.port", "8081");
-        server = new MicroserverApp(
-                                    PropertiesClassTest.class, () -> "simple-app");
-        server.start();
+        System.setProperty("simple-app1.port", "8081");
+        try {
+            server = new MicroserverApp(
+                                        PropertiesClassTest.class, () -> "simple-app1");
+            server.start();
 
+        } finally {
+            System.setProperty("simple-app1.port", "8080");
+        }
     }
 
     @After
@@ -44,7 +48,7 @@ public class PropertiesClassTest implements RestResource {
     @Test
     public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
 
-        assertThat(rest.get("http://localhost:8081/simple-app/single/ping"), is("boo!"));
+        assertThat(rest.get("http://localhost:8081/simple-app1/single/ping"), is("boo!"));
 
     }
 
