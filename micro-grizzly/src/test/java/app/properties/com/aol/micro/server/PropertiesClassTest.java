@@ -1,4 +1,4 @@
-package app.properties.com.aol.micro.server.copy;
+package app.properties.com.aol.micro.server;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
