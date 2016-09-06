@@ -58,12 +58,18 @@ public class PropertyFileConfig {
                             .getProperties()
                             .entrySet()
                             .stream()
-
                             .forEach(e -> {
                                 if (props.getProperty(e.getKey()) == null) {
                                     props.put(e.getKey(), e.getValue());
                                 }
                             });
+
+        System.getProperties()
+              .entrySet()
+              .stream()
+              .forEach(e -> {
+                  props.put(e.getKey(), e.getValue());
+              });
 
         return props;
     }
