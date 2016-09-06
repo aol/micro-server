@@ -63,7 +63,7 @@ public class Job {
                                                .withStats(nonEmptyOrNull(statsChecker.stats()));
         try {
 
-            logger.info("Posting {} to " + apiUrl + resourcePath, JacksonUtil.serializeToJson(entry));
+            logger.debug("Posting {} to " + apiUrl + resourcePath, JacksonUtil.serializeToJson(entry));
             rest.post(apiUrl + resourcePath, JacksonUtil.serializeToJson(entry))
                 .join();
         } catch (Exception e) {
