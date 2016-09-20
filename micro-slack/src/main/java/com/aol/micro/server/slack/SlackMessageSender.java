@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,6 @@ public class SlackMessageSender {
         this.slackConfiguration = slackConfiguration;
     }
 
-    //https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
     public int postMessageToSlack(String msg){
 
         try {
@@ -65,5 +65,4 @@ public class SlackMessageSender {
             return -1;
         }
     }
-
 }

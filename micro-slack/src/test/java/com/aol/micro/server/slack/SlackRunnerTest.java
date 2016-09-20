@@ -1,14 +1,17 @@
 package com.aol.micro.server.slack;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.junit.Assert.*;
 
 import org.junit.*;
 
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
+import com.jayway.restassured.builder.RequestSpecBuilder;
+import com.jayway.restassured.specification.RequestSpecification;
 
 
-@Microserver(properties = { "slack.webhookUri", "https://hooks.slack.com/services/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"})
+@Microserver(propertiesName = "application.properties")
 public class SlackRunnerTest {
 
     private MicroserverApp server;
@@ -26,9 +29,15 @@ public class SlackRunnerTest {
 
     @Test
     public void simpleMessageTest(){
-        given().when()
-               .get("http://localhost:8080/simple-app/slack/message?txt=Message From "+this.getClass().getName())
-               .then()
-               .statusCode(200);
+        RequestSpecification requestSpec = new RequestSpecBuilder()
+                .setBaseUri("http://localhost")
+                .setBasePath("/simple-app/slack/message")
+                .setPort(8080)
+                .setBody("Message from "+this.getClass().getName())
+                .setContentType("application/json")
+                .setAccept("text/plain")
+                .build();
+        
+        assertEquals("OK",given().spec(requestSpec).when().post().andReturn().body().asString());
     }
 }

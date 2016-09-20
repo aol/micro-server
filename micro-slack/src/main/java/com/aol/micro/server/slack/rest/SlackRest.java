@@ -27,12 +27,7 @@ public class SlackRest {
     @Path("/message")
     @Consumes("application/json")
     public String sendMessage(final String msg) {
-        try{
-            slackMessageSender.postMessageToSlack(msg);
-        }
-        catch(IOException e){
-            return "INTERNAL_ERROR";
-        }
+        slackMessageSender.postMessageToSlack(msg);
         return "OK";
     }
 }
