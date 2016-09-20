@@ -10,14 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.aol.micro.server.HealthStatusChecker;
 import com.aol.micro.server.errors.ErrorBus;
+import com.aol.micro.server.health.HealthStatus.State;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import lombok.Getter;
 
 @Component
-public class HealthCheck {
+public class HealthCheck implements HealthStatusChecker {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -67,6 +69,14 @@ public class HealthCheck {
 
     public HealthStatus checkHealthStatus() {
         return healthCheckHelper.checkHealthStatus(errors, this.fatalErrors);
+    }
+
+    @Override
+    public boolean isOk() {
+        State state = checkHealthStatus().getGeneralProcessing();
+        if (state.equals(State.Fatal))
+            return false;
+        return true;
     }
 
 }

@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
-import lombok.Setter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -26,92 +24,116 @@ import com.aol.micro.server.config.ConfigAccessor;
 @Configuration
 public class PropertyFileConfig {
 
-	
-	private final static Logger logger = LoggerFactory.getLogger(PropertyFileConfig.class);
-	
-	public PropertyFileConfig(){
-		
-	}
-	public PropertyFileConfig(boolean set){
-		if(set)
-			new Config().set(); //make sure config instance is set
-	}
-	@Bean
-	public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {
+    private final static Logger logger = LoggerFactory.getLogger(PropertyFileConfig.class);
 
-	
+    public PropertyFileConfig() {
 
-		PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
-		Properties props = propertyFactory();
+    }
 
-		configurer.setProperties(props);
-		configurer.setSystemPropertiesMode(PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE);
-		return configurer;
-	}
+    public PropertyFileConfig(boolean set) {
+        if (set)
+            new Config().set(); // make sure config instance is set
+    }
 
-	@Bean
-	public static Properties propertyFactory() throws IOException {
-		List<Resource> resources = loadPropertyResource();
-		PropertiesFactoryBean factory = new PropertiesFactoryBean();
-		factory.setLocations(resources.toArray(new Resource[resources.size()]));
-		factory.afterPropertiesSet();
-		Properties props = factory.getObject();
-		props.putAll(new ConfigAccessor().get().getProperties());
-		return props;
-	}
+    @Bean
+    public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {
 
-	private static List<Resource> loadPropertyResource() {
-		List<Resource> resources = new ArrayList<>();
-		String applicationPropertyFileName = new ConfigAccessor().get().getPropertiesName();
-		loadProperties(applicationPropertyFileName,"application").ifPresent(it -> resources.add(it));
-		
-		String serviceTypePropertyFileName = new ConfigAccessor().get().getServiceTypePropertiesName();
-		loadProperties(serviceTypePropertyFileName,"service-type").ifPresent(it -> resources.add(it));
-		
-		
-		
-		String instancePropertyFileName = new ConfigAccessor().get().getInstancePropertiesName();
-		loadProperties(instancePropertyFileName,"instance").ifPresent(it -> resources.add(it));
-		
-		return resources;
-	}
+        PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
+        Properties props = propertyFactory();
 
-	private static Optional<Resource> loadProperties(String applicationPropertyFileName, String type) {
+        configurer.setProperties(props);
+        configurer.setSystemPropertiesMode(PropertyPlaceholderConfigurer.SYSTEM_PROPERTIES_MODE_OVERRIDE);
+        return configurer;
+    }
 
-		
+    @Bean
+    public static Properties propertyFactory() throws IOException {
+        List<Resource> resources = loadPropertyResource();
+        PropertiesFactoryBean factory = new PropertiesFactoryBean();
+        factory.setLocations(resources.toArray(new Resource[resources.size()]));
+        factory.afterPropertiesSet();
+        Properties props = factory.getObject();
 
-		Optional<Resource> resource = Optional.empty();
+        new ConfigAccessor().get()
+                            .getProperties()
+                            .entrySet()
+                            .stream()
+                            .forEach(e -> {
+                                if (props.getProperty(e.getKey()) == null) {
+                                    props.put(e.getKey(), e.getValue());
+                                }
+                            });
 
-		if (new File("./" + applicationPropertyFileName).exists()) {
-			resource = Optional.of(new FileSystemResource(new File("./" + applicationPropertyFileName)));
-			logger.info("./" + applicationPropertyFileName + " added");
-		}
+        System.getProperties()
+              .entrySet()
+              .stream()
+              .forEach(e -> {
+                  props.put(e.getKey(), e.getValue());
+              });
 
-		URL urlResource = PropertyFileConfig.class.getClassLoader().getResource(applicationPropertyFileName);
-		if (urlResource != null) {
-			resource = Optional.of(new UrlResource(urlResource));
-			logger.info(applicationPropertyFileName + " added");
-		}
+        return props;
+    }
 
-		if (System.getProperty(type+".env") != null) {
-			URL envResource = PropertyFileConfig.class.getClassLoader().getResource(createEnvBasedPropertyFileName(applicationPropertyFileName));
-			if (envResource != null) {
-				resource = Optional.of(new UrlResource(envResource));
-				logger.info(createEnvBasedPropertyFileName(applicationPropertyFileName) + " added");
-			}
+    private static List<Resource> loadPropertyResource() {
+        List<Resource> resources = new ArrayList<>();
+        String applicationPropertyFileName = new ConfigAccessor().get()
+                                                                 .getPropertiesName();
+        loadProperties(applicationPropertyFileName, "application").ifPresent(it -> resources.add(it));
 
-		}
-		if (System.getProperty(type+".property.file") != null) {
-			resource = Optional.of(new FileSystemResource(new File(System.getProperty(type+".property.file"))));
-			logger.info(System.getProperty("application.property.file") + " added");
+        String serviceTypePropertyFileName = new ConfigAccessor().get()
+                                                                 .getServiceTypePropertiesName();
+        loadProperties(serviceTypePropertyFileName, "service-type").ifPresent(it -> resources.add(it));
 
-		}
-		return resource;
-	}
+        String instancePropertyFileName = new ConfigAccessor().get()
+                                                              .getInstancePropertiesName();
+        loadProperties(instancePropertyFileName, "instance").ifPresent(it -> resources.add(it));
 
-	private static String createEnvBasedPropertyFileName(String applicationPropertyFileName) {
-		return applicationPropertyFileName.substring(0, applicationPropertyFileName.lastIndexOf(".")) + "-" + System.getProperty("application.env")
-				+ ".properties";
-	}
+        return resources;
+    }
+
+    private static Optional<Resource> loadProperties(String applicationPropertyFileName, String type) {
+
+        Optional<Resource> resource = Optional.empty();
+
+        if (new File(
+                     "./" + applicationPropertyFileName).exists()) {
+            resource = Optional.of(new FileSystemResource(
+                                                          new File(
+                                                                   "./" + applicationPropertyFileName)));
+            logger.info("./" + applicationPropertyFileName + " added");
+        }
+
+        URL urlResource = PropertyFileConfig.class.getClassLoader()
+                                                  .getResource(applicationPropertyFileName);
+        if (urlResource != null) {
+            resource = Optional.of(new UrlResource(
+                                                   urlResource));
+            logger.info(applicationPropertyFileName + " added");
+        }
+
+        if (System.getProperty(type + ".env") != null) {
+            URL envResource = PropertyFileConfig.class.getClassLoader()
+                                                      .getResource(createEnvBasedPropertyFileName(applicationPropertyFileName));
+            if (envResource != null) {
+                resource = Optional.of(new UrlResource(
+                                                       envResource));
+                logger.info(createEnvBasedPropertyFileName(applicationPropertyFileName) + " added");
+            }
+
+        }
+        if (System.getProperty(type + ".property.file") != null) {
+            resource = Optional.of(new FileSystemResource(
+                                                          new File(
+                                                                   System.getProperty(type + ".property.file"))));
+            logger.info(System.getProperty("application.property.file") + " added");
+
+        }
+        return resource;
+    }
+
+    private static String createEnvBasedPropertyFileName(String applicationPropertyFileName) {
+        return applicationPropertyFileName.substring(0, applicationPropertyFileName.lastIndexOf(".")) + "-"
+                + System.getProperty("application.env") + ".properties";
+    }
 
 }

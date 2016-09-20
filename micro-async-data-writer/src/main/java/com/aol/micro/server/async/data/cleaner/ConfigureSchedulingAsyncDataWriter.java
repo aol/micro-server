@@ -15,11 +15,11 @@ import com.aol.micro.server.manifest.ManifestComparator;
 import com.google.common.eventbus.EventBus;
 
 @Configuration
-public class ConfigureScheduling {
+public class ConfigureSchedulingAsyncDataWriter {
 
-    @Value("${asyc.data.schedular.cron.cleaner:0 0 * * * ?}")
+    @Value("${async.data.schedular.cron.cleaner:0 0 * * * ?}")
     private String defaultCronCleaner;
-    @Value("${asyc.data.schedular.threads:1}")
+    @Value("${async.data.schedular.threads:1}")
     private int schedularThreads;
 
     @Autowired(required = false)

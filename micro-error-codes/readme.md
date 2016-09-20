@@ -37,7 +37,7 @@ health.check.show.errors=true
 ### Health status 
 
 GET : text/plain
-<hostname>:<port>/<context>/system-health/status
+<hostname>:<port>/<context>/system-errors/status
 
 Returns one of Untested, Ok, Errors, Fatal
 
@@ -45,21 +45,21 @@ Returns one of Untested, Ok, Errors, Fatal
 ### System errors 
 
 GET : application/json
-<hostname>:<port>/<context>/system-health/errors
+<hostname>:<port>/<context>/system-errors/errors
 
 Returns a view into the most recent recoverable and fatal errors
 
 ### Set max number of errors to show 
 
 POST : application/json
-<hostname>:<port>/<context>/system-health/max-errors/{maxErrors}
+<hostname>:<port>/<context>/system-errors/max-errors/{maxErrors}
 
 Note this can not go past the hard maximum configurable by property
 
 ### Get max number of errors to show 
 
 GET : application/json
-<hostname>:<port>/<context>/system-health/max-errors
+<hostname>:<port>/<context>/system-errors/max-errors
 
 
 # Defining ErrorCodes

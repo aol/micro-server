@@ -17,7 +17,7 @@ modifyPom {
         inceptionYear '2015'
 
         groupId 'com.aol.microservices'
-        artifactId 'micro-metrics'
+        artifactId 'micro-metrics-datadog'
         version "$version"
 
 
@@ -37,9 +37,9 @@ modifyPom {
 
         developers {
             developer {
-                id 'johnmcclean-aol'
-                name 'John McClean'
-                email 'john.mcclean@teamaol.com'
+                id 'arunbcodes '
+                name 'Arun Balakrishnan'
+                email 'arun.balakrishnan@teamaol.com'
             }
         }
 

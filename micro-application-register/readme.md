@@ -59,6 +59,9 @@ To configure the application register to use the callers ip (rather than the sen
 
 	host.address=use-ip
 
+### Health checks
+
+Any Spring Beans that implement the HealthStatus interface will be executed on send
 	
 ### Configure a target address (e.g. a VIP or load balancer)
 

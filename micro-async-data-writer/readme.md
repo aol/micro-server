@@ -19,13 +19,13 @@ This plugin must be used in conjunction with an implementation of the interfaces
 
 ### Additional properties are 
 
-asyc.data.writer.threads=no. of threads for asynchronous writing
+async.data.writer.threads=no. of threads for asynchronous writing
 
 1 Thread is the default and is generally enough unless multiple AsyncDataWriters are to be configured to use the same thread pool.
 
-asyc.data.writer.multi=true / false
+async.data.writer.multi=true / false
 
-By default writing to multiple services is disabled, if more than one ManifestComparator bean is found on the classpath only the first is configured in an AsyncDataWriter. If asyc.data.writer.multi is set to true all ManifestComparators will be wrapped by a single MultiDataWriter bean. Calling saveAndIncrement with new data on this bean will write that data to all sources.
+By default writing to multiple services is disabled, if more than one ManifestComparator bean is found on the classpath only the first is configured in an AsyncDataWriter. If async.data.writer.multi is set to true all ManifestComparators will be wrapped by a single MultiDataWriter bean. Calling saveAndIncrement with new data on this bean will write that data to all sources.
 
 ### Using AsyncDataWriter
 
@@ -94,7 +94,7 @@ New ManifestComparators targeting a different data key can be created from preco
 
 The Data Cleaner removes old versions of the versioning key from the data store (Couchbase or S3). It runs on a schedule configurable via a Quartz cron expression. The default is to run hourly -
 
-asyc.data.schedular.cron.cleaner=0 0 * * * ?
+async.data.schedular.cron.cleaner=0 0 * * * ?
 
 When the cleaner runs it triggers an event with processing and error stats published to a Guava Event Bus.
 

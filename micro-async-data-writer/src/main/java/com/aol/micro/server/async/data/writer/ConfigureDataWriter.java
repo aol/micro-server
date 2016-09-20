@@ -21,9 +21,9 @@ public class ConfigureDataWriter {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired(required = false)
     private List<ManifestComparator> defaultComparators = ListX.empty();
-    @Value("${asyc.data.writer.threads:1}")
+    @Value("${async.data.writer.threads:1}")
     private int writerThreads = 1;
-    @Value("${asyc.data.writer.multi:false}")
+    @Value("${async.data.writer.multi:false}")
     private boolean multiWriterOn = false;
 
     @Autowired
