@@ -1,8 +1,10 @@
 package com.aol.micro.server.slack.rest;
 
-import javax.ws.rs.GET;
+import java.io.IOException;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,10 +23,16 @@ public class SlackRest {
         slackMessageSender = new SlackMessageSender(slackConfiguration);
     }
     
-    @GET
+    @POST
     @Path("/message")
-    public String slackMessageViaGet(@QueryParam("txt") final String msg) {
-        slackMessageSender.postMessageToSlack(msg);
+    @Consumes("application/json")
+    public String sendMessage(final String msg) {
+        try{
+            slackMessageSender.postMessageToSlack(msg);
+        }
+        catch(IOException e){
+            return "INTERNAL_ERROR";
+        }
         return "OK";
     }
 }

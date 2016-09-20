@@ -8,6 +8,6 @@ public class SlackPlugin implements Plugin {
 
     @Override
     public PSetX<Class> springClasses() {
-        return PSetX.of(SlackMessageSender.class, SlackExceptionMapper.class);
+        return PSetX.of(SlackConfiguration.class, SlackMessageSender.class);
     }
 }
