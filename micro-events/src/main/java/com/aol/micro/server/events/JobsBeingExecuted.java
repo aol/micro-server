@@ -27,28 +27,32 @@ public class JobsBeingExecuted {
     @Getter(AccessLevel.PACKAGE)
     private final ConcurrentHashMultiset<String> statCounter = ConcurrentHashMultiset.create();
     private final EventBus eventBus;
+    private final JobName.Types jobNameType;
 
     private final LoggingRateLimiter<Class> loggingRateLimiter;
 
     private final long maxLoggingCapacity;
 
     public JobsBeingExecuted(@Qualifier("microserverEventBus") EventBus bus,
-            @Value("${system.logging.max.per.hour:10}") long maxLoggingCapacity) {
+            @Value("${system.logging.max.per.hour:10}") long maxLoggingCapacity,
+            @Value("${micro.events.job.name.format:SIMPLE}") JobName.Types jobNameType) {
         this.eventBus = bus;
+        this.jobNameType = jobNameType;
         this.loggingRateLimiter = new LoggingRateLimiter<>();
         this.maxLoggingCapacity = maxLoggingCapacity;
     }
 
     public JobsBeingExecuted(EventBus bus) {
         this(
-             bus, 10);
+             bus, 10, JobName.Types.SIMPLE);
     }
 
     @Around("execution(* com.aol.micro.server.events.ScheduledJob.scheduleAndLog(..))")
     public Object aroundScheduledJob(ProceedingJoinPoint pjp) throws Throwable {
-        String type = pjp.getSignature()
-                         .getDeclaringType()
-                         .getName();
+
+        String type = jobNameType.getCreator()
+                                 .getType(pjp.getSignature()
+                                             .getDeclaringType());
 
         return executeScheduledJob(pjp, type);
 

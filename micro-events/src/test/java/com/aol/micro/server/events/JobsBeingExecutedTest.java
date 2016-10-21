@@ -47,7 +47,7 @@ public class JobsBeingExecutedTest {
         bus = new EventBus();
         bus.register(this);
         jobs = new JobsBeingExecuted(
-                                     bus, 10);
+                                     bus, 10, JobName.Types.SIMPLE);
         pjp = Mockito.mock(ProceedingJoinPoint.class);
     }
 
@@ -91,7 +91,7 @@ public class JobsBeingExecutedTest {
         scheduleAround();
         verify(pjp, times(1)).proceed();
 
-        assertThat(incoming.getCorrelationId(), containsString("id_java.lang.String"));
+        assertThat(incoming.getCorrelationId(), containsString("id_String"));
         assertThat(start.getCorrelationId(), equalTo(complete.getCorrelationId()));
         assertThat(start.getType(), equalTo(complete.getType()));
     }

@@ -18,7 +18,7 @@ public class ConfigureActiveJobsAspect {
     @Bean
     public JobsBeingExecuted microEventJobsBeingExecuted() {
         return new JobsBeingExecuted(
-                                     bus, maxLoggingCapacity);
+                                     bus, maxLoggingCapacity, JobName.Types.SIMPLE);
     }
 
     @Bean
