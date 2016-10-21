@@ -18,17 +18,17 @@ import com.google.common.eventbus.Subscribe;
 @Component
 public class MetricsCatcher<T> {
 
-    public static final String prefix = MetricsCatcher.class.getTypeName();
-
     private final MetricRegistry registry;
 
     private final TimerManager queries;
 
     private final TimerManager jobs;
     private final Configuration configuration;
+    private final String prefix;
 
     @Autowired
     public MetricsCatcher(MetricRegistry registry, EventBus bus, Configuration configuration) {
+        this.prefix = configuration.getPrefix();
         this.registry = registry;
         bus.register(this);
         queries = new TimerManager(
