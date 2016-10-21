@@ -25,7 +25,7 @@ public class ConfigureActiveJobsAspect {
     public RequestTypes microEventRequestTypes() {
         RequestsBeingExecuted def = this.microEventRequestsBeingExecuted();
         RequestTypes types = new RequestTypes(
-                                              bus);
+                                              bus, requestCapture);
         types.getMap()
              .put(def.getType(), def);
         return types;
@@ -34,7 +34,7 @@ public class ConfigureActiveJobsAspect {
     @Bean
     public RequestsBeingExecuted microEventRequestsBeingExecuted() {
         return new RequestsBeingExecuted(
-                                         bus, requestCapture);
+                                         bus);
     }
 
 }

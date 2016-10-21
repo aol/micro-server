@@ -86,8 +86,14 @@ public class JobsBeingExecuted {
             return retVal;
         } finally {
             logSystemEvent(pjp, type, data, retVal);
+            retVal = Optional.ofNullable(retVal)
+                             .orElse(SystemData.builder()
+                                               .correlationId("" + correlationId)
+                                               .errors(0l)
+                                               .processed(0l)
+                                               .build());
             eventBus.post(new JobCompleteEvent(
-                                               correlationId, type));
+                                               correlationId, type, retVal.getErrors(), retVal.getProcessed()));
         }
     }
 

@@ -5,10 +5,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
 import java.util.Map;
-
-import javax.ws.rs.container.AsyncResponse;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -36,13 +33,13 @@ public class ActiveResourceTest {
     public void setUp() throws Exception {
         bus = new EventBus();
         queries1 = new RequestsBeingExecuted(
-                                             bus, true);
+                                             bus);
         queries2 = new RequestsBeingExecuted(
                                              bus, "partition");
         jobs = new JobsBeingExecuted(
                                      new EventBus(), 10);
         RequestTypes types = new RequestTypes(
-                                              bus);
+                                              bus, true);
         types.getMap()
              .put(queries1.getType(), queries1);
         types.getMap()

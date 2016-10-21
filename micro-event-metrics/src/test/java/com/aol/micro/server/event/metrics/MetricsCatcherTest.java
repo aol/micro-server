@@ -89,7 +89,7 @@ public class MetricsCatcherTest {
     public void jobsCounterDec() {
 
         catcher.jobComplete(new JobCompleteEvent(
-                                                 10l, "test"));
+                                                 10l, "test", 10l, 5l));
         assertThat(registry.counter(this.config.getPrefix() + ".jobs-active-test-count")
                            .getCount(),
                    equalTo(-1l));
