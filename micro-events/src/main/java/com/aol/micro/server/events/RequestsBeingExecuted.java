@@ -16,11 +16,9 @@ public class RequestsBeingExecuted<T> {
     @Getter
     private final String type;
 
-    public RequestsBeingExecuted(@Qualifier("microserverEventBus") EventBus bus, boolean queryCapture) {
+    public RequestsBeingExecuted(@Qualifier("microserverEventBus") EventBus bus) {
         this.bus = bus;
         this.type = "default";
-        if (queryCapture)
-            bus.register(this);
 
     }
 

@@ -27,7 +27,7 @@ public class MetricsCatcherConfigOffTest {
         registry = new MetricRegistry();
         bus = new EventBus();
         config = new Configuration(
-                                   false, false, false, false, 5, 6, 7, 8);
+                                   false, false, false, false, 5, 6, 7, 8, "bob");
         catcher = new MetricsCatcher<>(
                                        registry, bus, config);
     }
@@ -40,7 +40,7 @@ public class MetricsCatcherConfigOffTest {
                                                      .correlationId(10l)
                                                      .type("test")
                                                      .build()));
-        assertThat(registry.meter(MetricsCatcher.prefix + ".request-start-test")
+        assertThat(registry.meter(this.config.getPrefix() + ".request-start-test")
                            .getMeanRate(),
                    equalTo(0.0));
     }
@@ -53,7 +53,7 @@ public class MetricsCatcherConfigOffTest {
                                                            .correlationId(10l)
                                                            .type("test")
                                                            .build()));
-        assertThat(registry.meter(MetricsCatcher.prefix + ".request-end-test")
+        assertThat(registry.meter(this.config.getPrefix() + ".request-end-test")
                            .getMeanRate(),
                    equalTo(0.0));
     }
@@ -66,7 +66,7 @@ public class MetricsCatcherConfigOffTest {
                                                      .correlationId(10l)
                                                      .type("test")
                                                      .build()));
-        assertThat(registry.counter(MetricsCatcher.prefix + ".requests-active-test-count")
+        assertThat(registry.counter(this.config.getPrefix() + ".requests-active-test-count")
                            .getCount(),
                    equalTo(0l));
     }
@@ -79,7 +79,7 @@ public class MetricsCatcherConfigOffTest {
                                                            .correlationId(10l)
                                                            .type("test")
                                                            .build()));
-        assertThat(registry.counter(MetricsCatcher.prefix + ".requests-active-test-count")
+        assertThat(registry.counter(this.config.getPrefix() + ".requests-active-test-count")
                            .getCount(),
                    equalTo(0l));
     }
@@ -88,8 +88,8 @@ public class MetricsCatcherConfigOffTest {
     public void jobsCounterDec() {
 
         catcher.jobComplete(new JobCompleteEvent(
-                                                 10l, "test"));
-        assertThat(registry.counter(MetricsCatcher.prefix + ".jobs-active-test-count")
+                                                 10l, "test", 10l, 5l));
+        assertThat(registry.counter(this.config.getPrefix() + ".jobs-active-test-count")
                            .getCount(),
                    equalTo(0l));
     }
@@ -108,7 +108,7 @@ public class MetricsCatcherConfigOffTest {
                                                            .correlationId(10l)
                                                            .type("test")
                                                            .build()));
-        assertThat(registry.timer(MetricsCatcher.prefix + ".request-end-test-timer")
+        assertThat(registry.timer(this.config.getPrefix() + ".request-end-test-timer")
                            .getMeanRate(),
                    equalTo(0.0));
     }
@@ -118,7 +118,7 @@ public class MetricsCatcherConfigOffTest {
 
         catcher.jobStarted(new JobStartEvent(
                                              10l, "test"));
-        assertThat(registry.meter(MetricsCatcher.prefix + ".job-meter-test")
+        assertThat(registry.meter(this.config.getPrefix() + ".job-meter-test")
                            .getMeanRate(),
                    equalTo(0.0));
     }
@@ -128,7 +128,7 @@ public class MetricsCatcherConfigOffTest {
 
         catcher.jobStarted(new JobStartEvent(
                                              10l, "test"));
-        assertThat(registry.counter(MetricsCatcher.prefix + ".jobs-active-test-count")
+        assertThat(registry.counter(this.config.getPrefix() + ".jobs-active-test-count")
                            .getCount(),
                    equalTo(0l));
     }
@@ -136,7 +136,7 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void testErrorCount() {
         catcher.error(ErrorCode.medium(10, "hello world"));
-        assertThat(registry.counter(MetricsCatcher.prefix + ".error-MEDIUM-10-count")
+        assertThat(registry.counter(this.config.getPrefix() + ".error-MEDIUM-10-count")
                            .getCount(),
                    equalTo(0l));
 
@@ -145,7 +145,7 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void testErrorMeter() {
         catcher.error(ErrorCode.medium(10, "hello world"));
-        assertThat(registry.meter(MetricsCatcher.prefix + ".error-MEDIUM-10")
+        assertThat(registry.meter(this.config.getPrefix() + ".error-MEDIUM-10")
                            .getMeanRate(),
                    equalTo(0.00));
 
@@ -154,7 +154,7 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void testSeverityErrorCount() {
         catcher.error(ErrorCode.medium(10, "hello world"));
-        assertThat(registry.counter(MetricsCatcher.prefix + ".error-severity-MEDIUM-count")
+        assertThat(registry.counter(this.config.getPrefix() + ".error-severity-MEDIUM-count")
                            .getCount(),
                    equalTo(0l));
 
@@ -163,7 +163,7 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void testErrorSeverityMeter() {
         catcher.error(ErrorCode.medium(10, "hello world"));
-        assertThat(registry.meter(MetricsCatcher.prefix + ".error-severity-MEDIUM")
+        assertThat(registry.meter(this.config.getPrefix() + ".error-severity-MEDIUM")
                            .getMeanRate(),
                    equalTo(0.00));
 

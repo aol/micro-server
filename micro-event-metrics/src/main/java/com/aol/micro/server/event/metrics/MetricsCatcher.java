@@ -18,17 +18,17 @@ import com.google.common.eventbus.Subscribe;
 @Component
 public class MetricsCatcher<T> {
 
-    public static final String prefix = MetricsCatcher.class.getTypeName();
-
     private final MetricRegistry registry;
 
     private final TimerManager queries;
 
     private final TimerManager jobs;
     private final Configuration configuration;
+    private final String prefix;
 
     @Autowired
     public MetricsCatcher(MetricRegistry registry, EventBus bus, Configuration configuration) {
+        this.prefix = configuration.getPrefix();
         this.registry = registry;
         bus.register(this);
         queries = new TimerManager(
@@ -112,6 +112,29 @@ public class MetricsCatcher<T> {
             jobs.complete(data.getCorrelationId());
             registry.counter(prefix + ".jobs-active-" + data.getType() + "-count")
                     .dec();
+
+            registry.counter(prefix + ".jobs-processed-" + data.getType() + "-count-data")
+                    .inc(data.getDataSize());
+            registry.meter(prefix + ".jobs-processed-" + data.getType() + "-meter-data")
+                    .mark(data.getDataSize());
+            registry.counter(prefix + ".jobs-errors-" + data.getType() + "-count-data")
+                    .inc(data.getErrors());
+            registry.meter(prefix + ".jobs-errors-" + data.getType() + "-meter-data")
+                    .mark(data.getErrors());
+
+            if (data.getErrors() > 0l) {
+                registry.counter(prefix + ".jobs-succeeded-" + data.getType() + "-count")
+                        .inc();
+                registry.meter(prefix + ".jobs-succeeded-" + data.getType() + "-meter")
+                        .mark();
+
+            } else {
+
+                registry.counter(prefix + ".jobs-failed-" + data.getType() + "-count")
+                        .inc();
+                registry.meter(prefix + ".jobs-failed-" + data.getType() + "-meter")
+                        .mark();
+            }
         }
     }
 

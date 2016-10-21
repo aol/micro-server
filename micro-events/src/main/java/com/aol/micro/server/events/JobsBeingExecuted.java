@@ -30,10 +30,10 @@ public class JobsBeingExecuted {
 
     private final LoggingRateLimiter<Class> loggingRateLimiter;
 
-    private final int maxLoggingCapacity;
+    private final long maxLoggingCapacity;
 
     public JobsBeingExecuted(@Qualifier("microserverEventBus") EventBus bus,
-            @Value("${system.logging.max.per.hour:10}") int maxLoggingCapacity) {
+            @Value("${system.logging.max.per.hour:10}") long maxLoggingCapacity) {
         this.eventBus = bus;
         this.loggingRateLimiter = new LoggingRateLimiter<>();
         this.maxLoggingCapacity = maxLoggingCapacity;
@@ -86,8 +86,14 @@ public class JobsBeingExecuted {
             return retVal;
         } finally {
             logSystemEvent(pjp, type, data, retVal);
+            retVal = Optional.ofNullable(retVal)
+                             .orElse(SystemData.builder()
+                                               .correlationId("" + correlationId)
+                                               .errors(0l)
+                                               .processed(0l)
+                                               .build());
             eventBus.post(new JobCompleteEvent(
-                                               correlationId, type));
+                                               correlationId, type, retVal.getErrors(), retVal.getProcessed()));
         }
     }
 
@@ -98,7 +104,7 @@ public class JobsBeingExecuted {
                                                     .getClass());
         loggingRateLimiter.capacityAvailable(pjp.getTarget()
                                                 .getClass(),
-                                             10, new Runnable() {
+                                             this.maxLoggingCapacity, new Runnable() {
                                                  @Override
                                                  public void run() {
                                                      postEvent(pjp, type, data, active);

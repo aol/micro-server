@@ -21,9 +21,11 @@ public class RequestTypes<T> {
 
     private final EventBus bus;
 
-    public RequestTypes(EventBus bus) {
+    public RequestTypes(EventBus bus, boolean queryCapture) {
         this.bus = bus;
-        bus.register(this);
+        if (queryCapture)
+            bus.register(this);
+
     }
 
     @Override

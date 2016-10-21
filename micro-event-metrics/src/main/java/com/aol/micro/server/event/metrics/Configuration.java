@@ -1,5 +1,7 @@
 package com.aol.micro.server.event.metrics;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,7 @@ class Configuration {
 
     private final int numJobs;
     private final int holdJobsForMinutes;
+    private final String prefix;
 
     @Autowired
     public Configuration(@Value("${event.metrics.capture.errors.by.type:true}") boolean errorsByType,
@@ -31,7 +34,8 @@ class Configuration {
             @Value("${event.metrics.capture.number.of.queries:10000}") int numQueries,
             @Value("${event.metrics.capture.queries.minutes:180}") int holdQueriesForMinutes,
             @Value("${event.metrics.capture.number.of.jobs:10000}") int numJobs,
-            @Value("${event.metrics.capture.jobs.minutes:180}") int holdJobsForMinutes) {
+            @Value("${event.metrics.capture.jobs.minutes:180}") int holdJobsForMinutes,
+            @Value("${event.metrics.capture.jobs.prefix:#{null}}") String prefix) {
         super();
         this.errorsByType = errorsByType;
         this.errorsByCode = errorsByCode;
@@ -41,6 +45,8 @@ class Configuration {
         this.holdQueriesForMinutes = holdQueriesForMinutes;
         this.numJobs = numJobs;
         this.holdJobsForMinutes = holdJobsForMinutes;
+        this.prefix = Optional.ofNullable(prefix)
+                              .orElseGet(() -> MetricsCatcher.class.getTypeName());
     }
 
 }
