@@ -9,9 +9,9 @@ import org.junit.Test;
 import com.aol.micro.server.errors.ErrorCode;
 import com.aol.micro.server.events.JobCompleteEvent;
 import com.aol.micro.server.events.JobStartEvent;
-import com.aol.micro.server.events.RequestsBeingExecuted.AddQuery;
-import com.aol.micro.server.events.RequestsBeingExecuted.RemoveQuery;
-import com.aol.micro.server.events.RequestsBeingExecuted.RequestData;
+import com.aol.micro.server.events.RequestTypes.AddQuery;
+import com.aol.micro.server.events.RequestTypes.RemoveQuery;
+import com.aol.micro.server.events.RequestTypes.RequestData;
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.eventbus.EventBus;
 

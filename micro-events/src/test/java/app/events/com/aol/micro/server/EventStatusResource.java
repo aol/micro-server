@@ -15,26 +15,35 @@ import com.google.common.eventbus.EventBus;
 @Path("/status")
 public class EventStatusResource implements RestResource {
 
+    private final EventBus bus;
 
-	
-	
-	private final EventBus bus;
-	
-	@Autowired
-	public EventStatusResource(EventBus bus ){
-		this.bus = bus;
-	}
+    @Autowired
+    public EventStatusResource(EventBus bus) {
+        this.bus = bus;
+    }
 
-	@GET
-	@Produces("text/plain")
-	@Path("/ping")
-	public String ping() {
-		bus.post(RequestEvents.start("get", 1l));
-		try{
-			return "ok";
-		}finally{
-			bus.post(RequestEvents.finish("get",1l));
-		}
-	}
+    @GET
+    @Produces("text/plain")
+    @Path("/ping")
+    public String ping() {
+        bus.post(RequestEvents.start("get", 1l));
+        try {
+            return "ok";
+        } finally {
+            bus.post(RequestEvents.finish("get", 1l));
+        }
+    }
+
+    @GET
+    @Produces("text/plain")
+    @Path("/ping-custom")
+    public String pingCustom() {
+        bus.post(RequestEvents.start("get", 1l, "custom"));
+        try {
+            return "ok";
+        } finally {
+            bus.post(RequestEvents.finish("get", 1l, "custom"));
+        }
+    }
 
 }
