@@ -1,6 +1,8 @@
 package com.aol.micro.server.events;
 
-import com.aol.cyclops.control.ReactiveSeq;
+import java.util.stream.Stream;
+
+import com.aol.cyclops.control.Maybe;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -46,16 +48,15 @@ public interface JobName {
 
         @Override
         public String getType(Class c) {
-            String packageName = c.getPackage()
-                                  .getName();
-            String[] packages = packageName.split("\\.");
-            ReactiveSeq.of(packages)
-                       .forEach(System.out::println);
-            return ReactiveSeq.of(packages)
-                              .takeRight(1)
-                              .singleOptional()
-                              .map(i -> i + ".")
-                              .orElse("")
+            return Maybe.ofNullable(c.getPackage())
+                        .map(Package::getName)
+                        .map(packageName -> packageName.split("\\."))
+                        .stream()
+                        .flatMap(Stream::of)
+                        .takeRight(1)
+                        .singleOptional()
+                        .map(i -> i + ".")
+                        .orElse("")
                     + c.getSimpleName();
         }
     }
