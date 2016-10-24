@@ -39,6 +39,15 @@ Gradle
 
 ## Properties 
 
+
+### Metric name properties
+
+All Metrics have a prefix, this is configurable 
+
+    event.metrics.capture.jobs.prefix=<MY PREFIX>
+
+By default it is set to com.aol.micro.server.event.metrics.MetricsCatcher
+
 Job names are configurable as either 
 
 * SIMPLE (simple class name)
@@ -53,6 +62,44 @@ or
 
     micro.events.job.name.format:SIMPLE 
 
+### Error handling properties    
+
+Turn on / off capturing errors by severvity
+    
+    event.metrics.capture.errors.by.type=true/false
+
+Turn on / off capturing errors by error code
+
+    event.metrics.capture.errors.by.code=true/false
+    
+### Query handling properties
+
+Capture metrics on queries by type
+
+    event.metrics.capture.queries.by.type=true/false
+
+Number of active queries to cache in memory 
+   
+    event.metrics.capture.number.of.queries=<default is 10,000>
+
+Number of minutes to cache active queries in memory 
+
+    event.metrics.capture.queries.minutes=<default is 180>
+    
+### Scheduled job handling properties    
+
+Capture scheduled job metrics by type
+
+    event.metrics.capture.jobs.by.type=true/false
+
+Number of active jobs to cache in memory 
+   
+    event.metrics.capture.number.of.jobs=<default is 180>
+ 
+ Number of minutes to cache active jobs in memory 
+  
+     event.metrics.capture.jobs.minutes=<default is 180>
+     
 ## The following metrics are captured
 
 ### Requests :
