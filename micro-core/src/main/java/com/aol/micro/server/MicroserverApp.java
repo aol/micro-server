@@ -146,15 +146,9 @@ public class MicroserverApp {
         }
 
         ServerApplication app = applications.get(0)
-                                            .createApp(module, springContext);
-
-        if (Config.instance()
-                  .getSslProperties() != null)
-            return app.withSSLProperties(Config.instance()
-                                               .getSslProperties());
-        else
-            return app;
-    }
+                                            .createApp(module, springContext);        
+        return app;
+    }    
 
     private void join(Thread thread) {
         try {

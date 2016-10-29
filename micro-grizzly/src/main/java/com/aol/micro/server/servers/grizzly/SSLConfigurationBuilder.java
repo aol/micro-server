@@ -14,8 +14,13 @@ public class SSLConfigurationBuilder {
 
         sslContext.setKeyStoreFile(sslProperties.getKeyStoreFile()); // contains server keypair
         sslContext.setKeyStorePass(sslProperties.getKeyStorePass());
-        sslContext.setTrustStoreFile(sslProperties.getTrustStoreFile()); // contains client certificate
-        sslContext.setTrustStorePass(sslProperties.getTrustStorePass());
+        
+        /**
+         * trustStore stores public key or certificates from CA (Certificate Authorities) 
+         * which is used to trust remote party or SSL connection. So should be optional
+         */
+        sslProperties.getTrustStoreFile().peek(file->sslContext.setTrustStoreFile(file)); // contains client certificate
+        sslProperties.getTrustStorePass().peek(pass->sslContext.setTrustStorePass(pass));
         
         
         
