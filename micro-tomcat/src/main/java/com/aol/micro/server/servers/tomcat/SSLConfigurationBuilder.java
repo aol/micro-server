@@ -16,8 +16,9 @@ public class SSLConfigurationBuilder {
         sslProperties.getKeyStoreType().peek(type->protocol.setKeystoreType(type));
         sslProperties.getKeyStoreProvider().peek(provider->protocol.setKeystoreProvider(provider));
 		
-        protocol.setTruststoreFile(sslProperties.getTrustStoreFile()); // contains client certificate
-        protocol.setTruststorePass(sslProperties.getTrustStorePass());
+        sslProperties.getTrustStoreFile().peek(file->protocol.setTruststoreFile(file)); // contains client certificate
+        sslProperties.getTrustStorePass().peek(pass->protocol.setTruststorePass(pass));
+        
         sslProperties.getTrustStoreType().peek(type->protocol.setTruststoreType(type));
         sslProperties.getTrustStoreProvider().peek(provider->protocol.setTruststoreProvider(provider));
 		sslProperties.getClientAuth().peek(auth->protocol.setClientAuth(auth));
