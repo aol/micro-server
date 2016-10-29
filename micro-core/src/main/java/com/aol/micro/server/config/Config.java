@@ -36,7 +36,6 @@ public class Config {
     private final String instancePropertiesName;
     private final String serviceTypePropertiesName;
     private final PMap<String, List<String>> dataSources;
-    private final SSLProperties sslProperties;
     private final boolean allowCircularReferences;
     private final String[] basePackages;
 
@@ -48,7 +47,6 @@ public class Config {
         propertiesName = "application.properties";
         instancePropertiesName = "instance.properties";
         serviceTypePropertiesName = "service-type.properties";
-        sslProperties = null;
         allowCircularReferences = false;
         basePackages = new String[0];
 

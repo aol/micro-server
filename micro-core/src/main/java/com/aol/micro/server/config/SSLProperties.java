@@ -44,4 +44,10 @@ public class SSLProperties {
 	public AnyM<String> getProtocol() {
 		return AnyM.ofNullable(protocol);
 	}
+	public AnyM<String> getTrustStoreFile() {
+		return AnyM.ofNullable(trustStoreFile);
+	}
+	public AnyM<String> getTrustStorePass() {
+		return AnyM.ofNullable(trustStorePass);
+	}
 }
