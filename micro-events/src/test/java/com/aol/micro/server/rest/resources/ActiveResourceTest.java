@@ -12,6 +12,7 @@ import org.aspectj.lang.Signature;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.aol.micro.server.events.JobName;
 import com.aol.micro.server.events.JobsBeingExecuted;
 import com.aol.micro.server.events.RequestEvents;
 import com.aol.micro.server.events.RequestTypes;
@@ -37,7 +38,7 @@ public class ActiveResourceTest {
         queries2 = new RequestsBeingExecuted(
                                              bus, "partition");
         jobs = new JobsBeingExecuted(
-                                     new EventBus(), 10);
+                                     new EventBus(), 10, JobName.Types.SIMPLE);
         RequestTypes types = new RequestTypes(
                                               bus, true);
         types.getMap()
