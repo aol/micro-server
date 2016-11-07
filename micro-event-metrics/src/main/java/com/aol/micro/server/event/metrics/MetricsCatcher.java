@@ -47,7 +47,7 @@ public class MetricsCatcher<T> {
         if (this.configuration.isQueriesByType()) {
             RequestData<T> rd = data.getData();
 
-            registry.meter(queryStartName(rd))
+            registry.meter(queryStartName(rd) + "-meter")
                     .mark();
 
             queries.start(rd.getCorrelationId(), registry.timer(queryEndName(rd) + "-timer")

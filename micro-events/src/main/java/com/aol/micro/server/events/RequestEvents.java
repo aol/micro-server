@@ -3,6 +3,7 @@ package com.aol.micro.server.events;
 import com.aol.micro.server.events.RequestTypes.AddQuery;
 import com.aol.micro.server.events.RequestTypes.RemoveQuery;
 import com.aol.micro.server.events.RequestTypes.RequestData;
+import com.google.common.eventbus.EventBus;
 
 /**
  * Factory class for creating Start and End events
@@ -36,6 +37,23 @@ public class RequestEvents {
     }
 
     /**
+     * Publish start events for each of the specified query types
+     * 
+     * @param query Completed query
+     * @param correlationId Identifier
+     * @param bus EventBus to post events to
+     * @param types Query types to post to event bus
+     */
+    public static <T> void start(T query, long correlationId, EventBus bus, String... types) {
+
+        for (String type : types) {
+            AddQuery<T> next = start(query, correlationId, type, null);
+            bus.post(next);
+        }
+
+    }
+
+    /**
      *  Marks the start of a query identified by the provided correlationId, with additional query type and data parameters
      * 
      * @param query  - Query data
@@ -64,6 +82,21 @@ public class RequestEvents {
      */
     public static <T> RemoveQuery<T> finish(T query, long correlationId) {
         return finish(query, correlationId, "default");
+    }
+
+    /**
+     * Publish finish events for each of the specified query types
+     * 
+     * @param query Completed query
+     * @param correlationId Identifier
+     * @param bus EventBus to post events to
+     * @param types Query types to post to event bus
+     */
+    public static <T> void finish(T query, long correlationId, EventBus bus, String... types) {
+        for (String type : types) {
+            RemoveQuery<T> next = finish(query, correlationId, type);
+            bus.post(next);
+        }
     }
 
     /**
