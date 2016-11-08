@@ -42,6 +42,7 @@ public class CustomAliases implements LogLookup {
     }
 
 }
+```
 
 ```java
 new ReactiveRequest(10, 10).getTextStream("http://myhost:8080/my-app/log-tail/stream-file?alias=custom")
