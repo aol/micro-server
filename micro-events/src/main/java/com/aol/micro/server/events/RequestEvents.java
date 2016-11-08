@@ -39,6 +39,17 @@ public class RequestEvents {
     /**
      * Publish start events for each of the specified query types
      * 
+     * <pre>
+     * {@code 
+        RequestEvents.start("get", 1l, bus, "typeA", "custom");
+        try {
+            return "ok";
+        } finally {
+            RequestEvents.finish("get", 1l, bus, "typeA", "custom");
+        }     
+     * }
+     * </pre>
+     * 
      * @param query Completed query
      * @param correlationId Identifier
      * @param bus EventBus to post events to
@@ -86,6 +97,19 @@ public class RequestEvents {
 
     /**
      * Publish finish events for each of the specified query types
+     * 
+     * <pre>
+     * {@code 
+     * RequestEvents.start("get", 1l, bus, "typeA", "custom");
+        try {
+            return "ok";
+        } finally {
+            RequestEvents.finish("get", 1l, bus, "typeA", "custom");
+        }
+     * 
+     * }
+     * </pre>
+     * 
      * 
      * @param query Completed query
      * @param correlationId Identifier
