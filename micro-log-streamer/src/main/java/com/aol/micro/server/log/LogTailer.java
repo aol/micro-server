@@ -31,6 +31,7 @@ public class LogTailer {
         File file = new File(
                              fileLocation);
         Tailer tailer = Tailer.create(file, listener, 10);
+
         tailer.run();
     }
 

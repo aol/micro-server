@@ -84,11 +84,12 @@ public class LogStreamer implements CommonRestResource, SingletonRestResource {
     @AllArgsConstructor
     static class LogListener implements TailerListener {
         private final Writer writer;
+        private volatile Tailer tailer;
 
         @Override
         public void init(Tailer tailer) {
-            // TODO Auto-generated method stub
 
+            this.tailer = tailer;
         }
 
         @Override
@@ -97,7 +98,7 @@ public class LogStreamer implements CommonRestResource, SingletonRestResource {
                 writer.write("File not found!");
                 writer.flush();
             } catch (IOException e) {
-
+                tailer.stop();
             }
 
         }
@@ -107,8 +108,7 @@ public class LogStreamer implements CommonRestResource, SingletonRestResource {
             try {
                 writer.flush();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                tailer.stop();
             }
         }
 
@@ -121,20 +121,27 @@ public class LogStreamer implements CommonRestResource, SingletonRestResource {
                 writer.write("\n");
                 // writer.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                tailer.stop();
             }
 
         }
 
         @Override
         public void handle(Exception ex) {
-            ex.printStackTrace();
+
             try {
+                writer.write("Error " + ex.getMessage());
+                writer.write("/n");
                 writer.flush();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                tailer.stop();
             }
+        }
+
+        private LogListener(Writer writer) {
+
+            this.writer = writer;
+            this.tailer = null;
         }
 
     }
