@@ -1,26 +1,22 @@
-description = 'micro-grizzly'
+description = 'micro-log-streamer'
 dependencies {
-	compile group: 'org.glassfish.grizzly', name: 'grizzly-http-server', version:"$grizzlyVersion"
-	compile group: 'org.glassfish.grizzly', name: 'grizzly-http-all', version:"$grizzlyVersion"
-	
-	
-	compile project(':micro-core')
+
+	compile project(':micro-reactive')
+    compile 'commons-io:commons-io:'+commonsIOVersion
+	testCompile project(':micro-grizzly')
 	testCompile project(':micro-jersey')
 	testCompile project(':micro-jackson-configuration')
-	testCompile 'commons-io:commons-io:'+commonsIOVersion
-	
-
 }
 
 modifyPom {
 	project {
-		name 'Microserver Grizzly'
+		name 'Microserver log streamer'
 		description 'Opinionated rest microservices'
 		url 'https://github.com/aol/micro-server'
-		inceptionYear '2015'
+		inceptionYear '2016'
 
 		groupId 'com.aol.microservices'
-		artifactId 'micro-grizzly'
+		artifactId 'micro-log-streamer'
 		version "$version" 
 		
 		
@@ -43,11 +39,6 @@ modifyPom {
 				id 'johnmcclean-aol'
 				name 'John McClean'
 				email 'john.mcclean@teamaol.com'
-			}
-			developer {
-				id 'kewangie'
-				name 'Ke Wang'
-				email 'ke.wang@teamaol.com'
 			}
 		}
 		

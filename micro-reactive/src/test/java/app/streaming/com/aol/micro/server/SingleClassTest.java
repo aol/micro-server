@@ -97,12 +97,12 @@ public class SingleClassTest implements RestResource {
                     writer.write("test");
 
                     writer.flush();
-                    try {
+                    /**  try {
                         Thread.sleep(100l);
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
-                    }
+                    }**/
                 }
             }
         };

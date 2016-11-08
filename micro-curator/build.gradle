@@ -23,7 +23,7 @@ dependencies {
 	compile 'org.apache.curator:curator-recipes:' + curatorVersion
 	compile project(':micro-dist-lock')
 	
-	testCompile 'commons-io:commons-io:2.4'
+	testCompile 'commons-io:commons-io:'+commonsIOVersion
 	testCompile project(':micro-grizzly-with-jersey')
 	integTestCompile sourceSets.main.output		
 	integTestCompile sourceSets.test.output 
