@@ -11,6 +11,6 @@ public class NoPackageTest {
 
     @Test
     public void testPackageNone() {
-        assertThat(one.getType(NoPackageTest.class), equalTo("NoPackage"));
+        assertThat(one.getType(NoPackageTest.class), equalTo("NoPackageTest"));
     }
 }

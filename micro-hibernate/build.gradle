@@ -5,7 +5,7 @@ dependencies {
 		exclude group: 'org.jboss.logging'
 	}
 	compile 'javax.transaction:jta:'+jtaVersion
-	compile group: 'org.hibernate', name: 'hibernate-core', version:hibernateVersion
+	compile (group: 'org.hibernate', name: 'hibernate-core', version:hibernateVersion)
 	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version:hibernateVersion
 	compile group: 'org.springframework', name: 'spring-orm', version:"${springVersion}"
 	
