@@ -17,7 +17,7 @@ Clients can't access log files (or other files) directly, only the files configu
 
 ### Streaming the primary configured file
 
-To publish an infinite Stream of Boo! we could create Rest end points like those below
+To listen to the stream of data being added to our primary configured log file
 
 ```java
 new ReactiveRequest(10, 10).getTextStream("http://myhost:8080/my-app/log-tail/stream")
@@ -30,6 +30,10 @@ curl -v http://myhost:8080/my-app/log-tail/stream
 ```
 
 ### Streaming the files using alias
+
+
+To listen to the stream of data being added to one of our configured log files
+
 
 ```java
 @Component
