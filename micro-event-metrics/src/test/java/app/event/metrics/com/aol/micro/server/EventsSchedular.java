@@ -5,12 +5,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Schedular {
+public class EventsSchedular {
 
-    private final Job job;
+    private final EventsJob job;
 
     @Autowired
-    public Schedular(final Job job) {
+    public EventsSchedular(final EventsJob job) {
         this.job = job;
     }
 

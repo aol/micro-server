@@ -5,6 +5,8 @@
 
 Add Jackson Serialization to Microserver apps & add custom configurations as neccessary.
 
+Includes serializers and deserializers for pCollections.
+
 ## Configurable Properties
 
 properties = default

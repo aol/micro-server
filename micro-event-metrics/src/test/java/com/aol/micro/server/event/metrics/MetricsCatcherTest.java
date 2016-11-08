@@ -41,7 +41,7 @@ public class MetricsCatcherTest {
                                                      .correlationId(10l)
                                                      .type("test")
                                                      .build()));
-        assertThat(registry.meter(this.config.getPrefix() + ".request-start-test")
+        assertThat(registry.meter(this.config.getPrefix() + ".request-start-test-meter")
                            .getMeanRate(),
                    greaterThan(0.0));
     }

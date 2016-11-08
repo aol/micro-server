@@ -6,7 +6,7 @@ import com.aol.micro.server.events.ScheduledJob;
 import com.aol.micro.server.events.SystemData;
 
 @Component
-public class Job implements ScheduledJob<Job> {
+public class EventsJob implements ScheduledJob<EventsJob> {
 
     @Override
     public SystemData<String, String> scheduleAndLog() {
