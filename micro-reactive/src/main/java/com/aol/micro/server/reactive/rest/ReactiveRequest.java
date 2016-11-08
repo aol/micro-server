@@ -62,6 +62,22 @@ public class ReactiveRequest {
     }
 
     @SneakyThrows
+    public ReactiveSeq<String> getTextStream(final String url) {
+
+        final WebTarget webResource = client.target(url);
+
+        InputStream s = webResource.request(MediaType.TEXT_PLAIN)
+                                   .accept(MediaType.TEXT_PLAIN)
+                                   .get(InputStream.class);
+
+        BufferedReader reader = new BufferedReader(
+                                                   new InputStreamReader(
+                                                                         s, this.stringFormat));
+        return ReactiveSeq.fromStream(reader.lines());
+
+    }
+
+    @SneakyThrows
     public ReactiveSeq<String> getStream(final String url) {
 
         final WebTarget webResource = client.target(url);
