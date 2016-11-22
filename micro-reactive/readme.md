@@ -90,7 +90,7 @@ schedular.schedule("* * * * * ?", myJob)
 	     .forEach(this::logStats) 
  ```
  
- ## Reactor monads
+## Reactor monads
  
  AnyMSeq wraps any sequential monad, allowing standard interfaces across Streams, Lists etc
  
@@ -98,7 +98,7 @@ schedular.schedule("* * * * * ?", myJob)
  AnyMSeq<String> flux = CyclopsReactor.from(Flux.just("hello","world","c"));
   ```
   
- ## Conversions
+## Conversions
  
  From a Flux to a LazyFutureStream
  
