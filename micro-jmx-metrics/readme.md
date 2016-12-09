@@ -1,7 +1,9 @@
 # JMX Metrics
 
 
-This plugin expose JMX metrics to metricRegistry, so they can be sent to datadog using by micro-metrics-datadog
+This plugin expose JMX metrics to metricRegistry, so they can be sent to datadog using by micro-metrics-datadog.
+
+Main advantage that it don't use remote JMX connection, so you still can connect using VisualVM/JConsole to your applications.
 
 See also [micro-metrics-datadog](https://github.com/aol/micro-server/tree/master/micro-metrics-datadog) 
 
@@ -35,4 +37,5 @@ Metrics reported by this plugin:
 * jvm.non_heap_memory_max - non-heap memory max
 * jvm.thread_count - number of threads.
 
-Property jmx.metrics.excluded may be set to comma-separated list of those metrics. Metrics included in this list will not be reported to datadog.
+Property *jmx.metrics.excluded* may be set to comma-separated list of those metrics. Metrics included in this list will not be reported to datadog.
+Datadog metrics will have prefix *com.aol.micro.server.application.metrics.jmx.JmxMetricsAcquirer.*
