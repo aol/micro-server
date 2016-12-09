@@ -95,7 +95,7 @@ public class JmxMetricsAcquirer {
             metricDescription.put("jvm.non_heap_memory_committed",
                     new MetricDescription(memory, "NonHeapMemoryUsage", memoryConverter("committed")));
 
-            metricDescription.put("jvm.non_heap_memory_committed",
+            metricDescription.put("jvm.non_heap_memory_init",
                     new MetricDescription(memory, "NonHeapMemoryUsage", memoryConverter("init")));
 
             metricDescription.put("jvm.non_heap_memory_max",
