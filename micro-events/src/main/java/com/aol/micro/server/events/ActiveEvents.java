@@ -17,12 +17,9 @@ public class ActiveEvents<T extends BaseEventInfo> {
 
     private final Map<String, T> active = new ConcurrentHashMap<>();
     private final Deque<Map> recentlyFinished = new ConcurrentLinkedDeque<>();
-    private final AtomicInteger events = new AtomicInteger(
-                                                           0);
-    private final AtomicInteger added = new AtomicInteger(
-                                                          0);
-    private final AtomicInteger removed = new AtomicInteger(
-                                                            0);
+    private final AtomicInteger events = new AtomicInteger(0);
+    private final AtomicInteger added = new AtomicInteger(0);
+    private final AtomicInteger removed = new AtomicInteger(0);
 
     public void active(String key, T data) {
         active.put(key, data);
@@ -48,20 +45,20 @@ public class ActiveEvents<T extends BaseEventInfo> {
 
     private Map wrapInMap(T event, ImmutableMap data) {
         Long time = System.currentTimeMillis();
-        DateFormat format = new SimpleDateFormat(
-                                                 "yyyy.MM.dd 'at' HH:mm:ss z");
+        DateFormat format = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
         String formatted = format.format(time);
         String change = Optional.ofNullable(event)
-                                .map(e -> Long.toString(Runtime.getRuntime()
-                                                               .freeMemory()
-                                        - e.getFreeMemory()))
-                                .orElse("unknown");
+                .map(e -> Long.toString(Runtime.getRuntime().freeMemory() - e.getFreeMemory())).orElse("unknown");
 
-        return ImmutableMap.builder()
-                           .putAll(data)
-                           .putAll(ImmutableMap.of("event", event, "completed", time, "completed-formated", formatted,
-                                                   "time-taken", time - event.getStartedAt(), "memory-change", change))
-                           .build();
+        ImmutableMap map = ImmutableMap.of("completed", time, "completed-formated", formatted, "memory-change", change);
+
+        ImmutableMap.Builder builder = ImmutableMap.builder().putAll(data).putAll(map);
+
+        if (event != null) {
+            builder.put("event", event);
+            builder.put("time-taken", time - event.getStartedAt());
+        }
+        return builder.build();
     }
 
     /*
