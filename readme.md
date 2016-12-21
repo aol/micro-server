@@ -56,7 +56,7 @@ Microserver plugins are orthogonal to Microservices. They solve a common problem
 
 [Tutorial](https://github.com/aol/micro-server/wiki/Getting-started-:-Tutorial) 
 
-[Tutoiral code](https://github.com/aol/micro-server/tree/master/micro-tutorial)
+[Tutorial code](https://github.com/aol/micro-server/tree/master/micro-tutorial)
 
 ## Note on Fat Jars
 Microserver (& Cyclops) have a plugin architecture and make use of the Java Service Laoder mechanism. Make sure your Fat Jar implementation is configured to aggreagate services. With the Gradle Shadow Jar you do this with
