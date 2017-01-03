@@ -9,7 +9,7 @@ A convenient modular engine for Microservices. Microserver plugins offer seamles
 
 ![screen shot 2016-05-06 at 12 30 26 pm](https://cloud.githubusercontent.com/assets/9964792/15588807/8da91440-2387-11e6-979b-f24d456541f5.png)
 
-### Microsever plugins video
+### Microserver plugins video
 [![Getting started video](https://cloud.githubusercontent.com/assets/9964792/6361863/9991c50c-bc7e-11e4-8d28-746b0b87b1da.png)](https://youtu.be/sYn2cVTkfcM)
 
 
@@ -50,7 +50,7 @@ Add plugins by adding them to your build file - rerun the app to get new end poi
 
 Microserver is a plugin engine for building Spring and Spring Boot based microservices. Microserver supports pure microservice and micro-monolith development styles. The micro-monolith style involves packaging multiple services into a single deployment - offering developers the productivity of microservice development without the operational risk. This can help teams adopt a Microservices architecture on projects that are currently monoliths.
 
-Microserver plugins are orthogonal to Microservices. They solve a common problem in Microservice development where by services are broken up and deployed separately but code remains entangled in a monolithic common library. By making use of a plugin system that follows the same modular archictectural principals as microservice development, teams can keep cross-service concerns and infrastructure in properly size, coherent and cohesive plugin modules.
+Microserver plugins are orthogonal to Microservices. They solve a common problem in Microservice development whereby services are broken up and deployed separately but the code remains entangled in a monolithic common library. By making use of a plugin system that follows the same modular architectural principals as microservice development, teams can keep cross-service concerns and infrastructure in properly size, coherent and cohesive plugin modules.
 
 # Tutorial and overview
 
@@ -59,7 +59,7 @@ Microserver plugins are orthogonal to Microservices. They solve a common problem
 [Tutorial code](https://github.com/aol/micro-server/tree/master/micro-tutorial)
 
 ## Note on Fat Jars
-Microserver (& Cyclops) have a plugin architecture and make use of the Java Service Laoder mechanism. Make sure your Fat Jar implementation is configured to aggreagate services. With the Gradle Shadow Jar you do this with
+Microserver (& Cyclops) have a plugin architecture and make use of the Java Service Loader mechanism. Make sure your Fat Jar implementation is configured to aggregate services. With the Gradle Shadow Jar you do this with
  ```groovy
     shadowJar {
       mergeServiceFiles()  
@@ -149,7 +149,7 @@ Microserver core is a lightweight server configuration engine built using Spring
 
 ##Zero Configuration
 
-No directory structure is imposed by the server and no XML is required. There is no framework config. Just a jar file and your application. You can of course, configure your application without limit.
+No directory structure is imposed by the server and no XML is required. There is no framework config. Just a jar file and your application. You can, of course, configure your application without limit.
 
 Example working application :-
 
@@ -197,9 +197,9 @@ The core of Microserver is a Spring 4.x Dependency Injection container which is 
 
 ### Micro-monolith Architectural Overview
 
-Each Microservice is a Jersey REST Application, these can deployed independently as pure Microservices or together as a micro-monolith. Multiple Microservices can run on the same server, by adding them to the classpath at runtime. They share a common Spring Dependency Injection container (as they are smaller services, we feel it makes sense to share resources such as ThreadPools, Datasources etc), but act as totally separate Rest applications. 
+Each Microservice is a Jersey REST Application, these can be deployed independently as pure Microservices or together as a micro-monolith. Multiple Microservices can run on the same server, by adding them to the classpath at runtime. They share a common Spring Dependency Injection container (as they are smaller services, we feel it makes sense to share resources such as ThreadPools, Datasources etc), but act as totally separate Rest applications. 
 
-When creating embedded Microservices (multiple services colocated on the same JVM and Spring container), the development project should be independent, but the colocated instances should be tested as they will be depolyed in production. There will be more info to follow on the wiki, on how and why we have implemented and scaled this pattern (the goal is to achieve both the benefits of a full Microservice architecture, but minimise the costs as articulated by Robert (Uncle Bob) C. Martin and others - e.g. [here: Microservices and Jars](http://blog.cleancoder.com/uncle-bob/2014/09/19/MicroServicesAndJars.html) .
+When creating embedded Microservices (multiple services colocated on the same JVM and Spring container), the development project should be independent, but the colocated instances should be tested as they will be deployed in production. There will be more info to follow on the wiki, on how and why we have implemented and scaled this pattern (the goal is to achieve both the benefits of a full Microservice architecture, but minimise the costs as articulated by Robert (Uncle Bob) C. Martin and others - e.g. [here: Microservices and Jars](http://blog.cleancoder.com/uncle-bob/2014/09/19/MicroServicesAndJars.html) .
 
 Jersey REST Applications are configured by the Module interface (at least one of which must be specified on startup).
 
@@ -208,7 +208,7 @@ Jersey REST Applications are configured by the Module interface (at least one of
 
 ####Rest configuration
 
-The configuration of your Rest end points can be managed via the Module interface. The Module interface has a number of Java 8 default methods and a single abstract method (getContext).  It behaves as a functional interface, and can be defined by a lambda expression. When used in this way the lambda represents the context the Microserver will create Rest end points on.
+The configuration of your Rest endpoints can be managed via the Module interface. The Module interface has a number of Java 8 default methods and a single abstract method (getContext).  It behaves as a functional interface, and can be defined by a lambda expression. When used in this way the lambda represents the context the Microserver will create Rest end points on.
 
 e.g. 
 
@@ -283,9 +283,9 @@ Microserver supports auto-discovery of application.properties. Microserver will 
 
 1. System property 'application.property.file' and if present will load the property file from disk using that. 
 
-2. Otherwise Microserver will look for a System Property 'application.env' and will load the application property file from the classpath using the resource name 'application-${application.env}.properties. 
+2. Otherwise, Microserver will look for a System Property 'application.env' and will load the application property file from the classpath using the resource name 'application-${application.env}.properties. 
 
-3. Alternatively Microserver will load application.properties directly from the classpath.
+3. Alternatively, Microserver will load application.properties directly from the classpath.
 
 4. If still not found Microserver will load application.properties from disk in the current directory
 
@@ -297,15 +297,15 @@ Microserver application properties loading is configured by the class PropertyFi
 
 Microserver supports the embedding of multiple microservices within a single Microserver, this is not the default mode of operation and involves a little more work to setup. All Microservices will share a single Spring context, so some care needs to be taken when authoring such Microservices to avoid conflicts. This does mean that they can share resources (such as database connections) where it makes sense to do so.
 
-Embedded microservices should be collated at '''runtime only'''. There should be no compile time dependency between embedded microservices (otherwise you are not building microservices but a monolithc application).
+Embedded microservices should be collated at '''runtime only'''. There should be no compile time dependency between embedded microservices (otherwise you are not building microservices but a monolithic application).
 
 Embedding microservices is an optimisation that allows better performance, enhanced robustness and reliability and easier management  of microservices - while still maintaining the advantages of horizontal scalability offered by the microservices approach.
 
-###Embeded Microservices example
+###Embedded Microservices example
 
-This example will start two different Rest end points - one on context "test-app" and another on context "alternative-app".
-"test-app" will automagically wire in any Jersey end points that implement TestAppRestResource.
-"alternative-app" will automagically wire in any Jersey end points that implement AltAppRestResource.
+This example will start two different Rest endpoints - one on context "test-app" and another on context "alternative-app".
+"test-app" will automagically wire in any Jersey endpoints that implement TestAppRestResource.
+"alternative-app" will automagically wire in any Jersey endpoints that implement AltAppRestResource.
  ```java
 	@Microserver
 	public class EmbeddedAppRunnerTest {
