@@ -43,15 +43,18 @@ public class S3Utils {
     private final String tmpDirectory;
     private final ExecutorService uploaderService;
     private final Random r = new Random();
+    private final boolean aes256Encryption;
 
     @Autowired
     public S3Utils(AmazonS3Client client, TransferManager transferManager,
             @Value("${s3.tmp.dir:#{systemProperties['java.io.tmpdir']}}") String tmpDirectory,
+            @Value("${s3.aes256.enabled:false}}") boolean aes256Encryption,
             @Qualifier("s3UploadExecutorService") ExecutorService uploaderService) {
         this.client = client;
         this.transferManager = transferManager;
         this.tmpDirectory = tmpDirectory;
         this.uploaderService = uploaderService;
+        this.aes256Encryption = aes256Encryption;
     }
 
     public S3Reader reader(String bucket) {
@@ -63,7 +66,7 @@ public class S3Utils {
     public S3ObjectWriter writer(String bucket) {
         return new S3ObjectWriter(
                                   transferManager, bucket, new File(
-                                                                    tmpDirectory));
+                                                                    tmpDirectory), aes256Encryption);
     }
 
     public S3StringWriter stringWriter(String bucket) {

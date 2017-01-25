@@ -1,20 +1,25 @@
 package com.aol.micro.server.s3.data;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
 
+import org.apache.commons.io.FileUtils;
+
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
 import com.amazonaws.services.s3.transfer.model.UploadResult;
 import com.aol.cyclops.control.Eval;
 import com.aol.cyclops.control.FluentFunctions;
-import com.aol.cyclops.control.FutureW;
 import com.aol.cyclops.control.Try;
 
 import lombok.AllArgsConstructor;
-import lombok.val;
 
 @AllArgsConstructor
 public class S3ObjectWriter {
@@ -23,6 +28,7 @@ public class S3ObjectWriter {
     private final String bucket;
     private final File dir;
     private final Random r = new Random();
+    private final boolean aes256Encryption;
 
     /**
      * 
@@ -40,23 +46,37 @@ public class S3ObjectWriter {
 
         return Try.of(1, Throwable.class)
                   .map(FluentFunctions.ofChecked(i -> {
-                      String file = "" + System.currentTimeMillis() + "_" + r.nextLong();
-                      FileOutputStream fs = new FileOutputStream(
-                                                                 new File(
-                                                                          dir, file));
-
+                      String fileName = "" + System.currentTimeMillis() + "_" + r.nextLong();
+                      File file = new File(dir, fileName);
+                      FileOutputStream fs = new FileOutputStream(file);
+                      
                       ObjectOutputStream oos = new ObjectOutputStream(
                                                                       fs);
                       oos.writeObject(value);
                       oos.flush();
                       oos.close();
+                      
+                      byte[] ba = FileUtils.readFileToByteArray(file);
+                      InputStream is = new ByteArrayInputStream(ba);
 
-                      Upload upload = manager.upload(bucket, key, new File(
-                                                                           dir, file));
-
+                      PutObjectRequest putRequest = new PutObjectRequest(bucket, key, is, createMetadata());
+                      
+                      Upload upload = manager.upload(putRequest);
                       return upload;
                   }));
 
+    }
+
+    /**
+     * Metadata object creation
+     * 
+     * @return Metadata with AES_256 encryption if enabled
+     */
+    private ObjectMetadata createMetadata() {
+        ObjectMetadata metadata = new ObjectMetadata();
+        if(aes256Encryption)
+            metadata.setSSEAlgorithm(ObjectMetadata.AES_256_SERVER_SIDE_ENCRYPTION);
+        return metadata;
     }
 
     /**
