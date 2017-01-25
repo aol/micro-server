@@ -48,7 +48,7 @@ public class S3UtilsTest {
             }
         });
         S3Utils utils = new S3Utils(
-                                    client, null, null, null);
+                                    client, null, null, false, null);
         utils.getAllSummaries(new ListObjectsRequest());
         verify(objectListing, times(2)).getObjectSummaries();
     }
@@ -72,7 +72,7 @@ public class S3UtilsTest {
         // when(objectListing.getObjectSummaries()).thenReturn(summaries);
 
         S3Utils utils = new S3Utils(
-                                    client, null, null, null);
+                                    client, null, null, false, null);
         verify(objectListing, times(0)).getObjectSummaries();
         Stream<String> stream = utils.getSummariesStream(new ListObjectsRequest(), s -> {
             return s.getKey();
@@ -104,7 +104,7 @@ public class S3UtilsTest {
         // when(objectListing.getObjectSummaries()).thenReturn(summaries);
 
         S3Utils utils = new S3Utils(
-                                    client, null, null, null);
+                                    client, null, null, false, null);
         verify(objectListing, times(0)).getObjectSummaries();
         Stream<String> stream = utils.getSummariesStream(new ListObjectsRequest(), s -> {
             return s.getKey();
@@ -131,7 +131,7 @@ public class S3UtilsTest {
     public void deleteObjects() {
         AmazonS3Client client = mock(AmazonS3Client.class);
         S3Utils utils = new S3Utils(
-                                    client, null, null, null);
+                                    client, null, null, false, null);
         List<KeyVersion> keys = new ArrayList<>();
         for (int i = 0; i < 2000; i++) {
             keys.add(new KeyVersion(
@@ -156,7 +156,7 @@ public class S3UtilsTest {
                          .toFile();
         Assert.assertTrue(file.exists());
         S3Utils utils = new S3Utils(
-                                    client, transferManager, "test", null);
+                                    client, transferManager, "test", false, null);
 
         utils.getInputStream("", "", () -> file);
 
@@ -173,7 +173,7 @@ public class S3UtilsTest {
         when(transferManager.download(anyString(), anyString(), any())).thenReturn(download);
 
         S3Utils utils = new S3Utils(
-                                    client, transferManager, System.getProperty("java.io.tmpdir"), null);
+                                    client, transferManager, System.getProperty("java.io.tmpdir"), false, null);
         utils.getInputStream("", "");
         verify(download).waitForCompletion();
     }
