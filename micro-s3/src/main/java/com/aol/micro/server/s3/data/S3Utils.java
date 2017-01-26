@@ -42,7 +42,6 @@ public class S3Utils {
     private final TransferManager transferManager;
     private final String tmpDirectory;
     private final ExecutorService uploaderService;
-    private final Random r = new Random();
     private final boolean aes256Encryption;
 
     @Autowired
