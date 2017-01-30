@@ -144,41 +144,6 @@ public class S3UtilsTest {
     }
 
     @Test
-    public void getInputStreamSupplier()
-            throws AmazonServiceException, AmazonClientException, InterruptedException, IOException {
-        AmazonS3Client client = mock(AmazonS3Client.class);
-        TransferManager transferManager = mock(TransferManager.class);
-        Download download = mock(Download.class);
-
-        when(transferManager.download(anyString(), anyString(), any())).thenReturn(download);
-
-        File file = Files.createTempFile("micro-s3", "test")
-                         .toFile();
-        Assert.assertTrue(file.exists());
-        S3Utils utils = new S3Utils(
-                                    client, transferManager, "test", false, null);
-
-        utils.getInputStream("", "", () -> file);
-
-        Assert.assertFalse(file.exists());
-    }
-
-    @Test
-    public void getInputStreamDefaultSupplier()
-            throws AmazonServiceException, AmazonClientException, InterruptedException, IOException {
-        AmazonS3Client client = mock(AmazonS3Client.class);
-        TransferManager transferManager = mock(TransferManager.class);
-        Download download = mock(Download.class);
-
-        when(transferManager.download(anyString(), anyString(), any())).thenReturn(download);
-
-        S3Utils utils = new S3Utils(
-                                    client, transferManager, System.getProperty("java.io.tmpdir"), false, null);
-        utils.getInputStream("", "");
-        verify(download).waitForCompletion();
-    }
-
-    @Test
     public void emptyInputStream() throws IOException {
         assertEquals(0, S3Utils.emptyInputStream()
                                .available());

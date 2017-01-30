@@ -7,24 +7,26 @@ import static org.coursera.metrics.datadog.DatadogReporter.Expansion.P95;
 import static org.coursera.metrics.datadog.DatadogReporter.Expansion.P99;
 import static org.coursera.metrics.datadog.DatadogReporter.Expansion.RATE_15_MINUTE;
 import static org.coursera.metrics.datadog.DatadogReporter.Expansion.RATE_1_MINUTE;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Optional;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.coursera.metrics.datadog.DatadogReporter;
 import org.coursera.metrics.datadog.transport.HttpTransport;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
 
 import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.model.UploadResult;
 import com.aol.cyclops.control.FluentFunctions;
@@ -34,31 +36,30 @@ import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.SharedMetricRegistries;
 
 import lombok.extern.slf4j.Slf4j;
-import repeat.Repeat;
-import repeat.RepeatRule;
 
 @Slf4j
-public class S3ObjectWriterTest {
-    private static final String BUCKET = "aolp-lana-micro-s3";
-    private static final Optional<byte[]> nullableFile;
+public class S3DownloadSystemTest{
+    private static final String BUCKET = System.getProperty("s3.bucket");
 
     private static TransferManager manager;
     private static File tmpDir;
     private static Random r;
     private static MetricRegistry metricsRegistry = SharedMetricRegistries.getOrCreate("default");
-    private Histogram unencryptedHist = getHistogram("com.aol.micro.server.s3.test.latency.unencrypted");
-    private Histogram aes256Hist = getHistogram("com.aol.micro.server.s3.test.latency.aes256");
+    private final Histogram downloadHist = getHistogram("com.aol.micro.server.s3.test.latency.download");
 
     static {
-        final File file = new File(
-                                   System.getProperty("test.file.full.path"));
-        Try<byte[], Throwable> loadFileOperation = Try.of(1, Throwable.class)
-                                                      .map(FluentFunctions.ofChecked(i -> {
-                                                          return FileUtils.readFileToByteArray(file);
-                                                      }));
-        loadFileOperation.onFail(e -> log.error(e.getMessage()));
-        nullableFile = Optional.ofNullable(loadFileOperation.get());
+        manager = createManager();
+        tmpDir = new File(
+                          System.getProperty("java.io.tmpdir"));
+        r = new Random();
+        
+    }
 
+    private static Histogram getHistogram(String meterName) {
+        return metricsRegistry.histogram(MetricRegistry.name(S3DownloadSystemTest.class, meterName));
+    }
+
+    private static TransferManager createManager() {
         AWSCredentials credentials = new AWSCredentials() {
 
             @Override
@@ -72,18 +73,8 @@ public class S3ObjectWriterTest {
             }
 
         };
-        manager = new TransferManager(
+        return new TransferManager(
                                       credentials);
-        tmpDir = new File(
-                          System.getProperty("java.io.tmpdir"));
-        r = new Random();
-
-        assertTrue(nullableFile.isPresent());
-
-    }
-
-    private static Histogram getHistogram(String meterName) {
-        return metricsRegistry.histogram(MetricRegistry.name(S3ObjectWriterTest.class, meterName));
     }
 
     @BeforeClass
@@ -102,29 +93,23 @@ public class S3ObjectWriterTest {
         log.info("Reporting to datadog every {} {}", 5, reportUnit);
         reporter.start(reportPeriod, reportUnit);
     }
-
-    @Rule
-    public RepeatRule rule = new RepeatRule();
-
+  
     @Test
-    @Ignore
-    @Repeat(times = 1000, threads = 4)
-    public void upload() {
-        S3ObjectWriter writerWithoutEncryption = buildWriterWithEncryption(false);
-        long startNE = System.currentTimeMillis();
-        Try<UploadResult, Throwable> uploadWithoutEncryption = writerWithoutEncryption.putSync("uploadWithoutEncryption"
-                + r.nextLong(), nullableFile.get());
-        long endNE = System.currentTimeMillis();
-        assertTrue(uploadWithoutEncryption.isSuccess());
-        unencryptedHist.update(endNE - startNE);
-
+    public void download(){
         S3ObjectWriter writerWithEncryption = buildWriterWithEncryption(true);
-        long startWE = System.currentTimeMillis();
-        Try<UploadResult, Throwable> uploadWithEncryption = writerWithEncryption.putSync("uploadWithEncryption"
-                + r.nextLong(), nullableFile.get());
+        String name = "uploadWithEncryption" + r.nextLong();
+        Try<UploadResult, Throwable> uploadWithEncryption = writerWithEncryption.putSync(name, "Microserver");
         assertTrue(uploadWithEncryption.isSuccess());
-        long endWE = System.currentTimeMillis();
-        aes256Hist.update(endWE - startWE);
+        
+        ExecutorService executorService = mock(ExecutorService.class);
+        S3Utils s3Utils = new S3Utils((AmazonS3Client) manager.getAmazonS3Client(), manager, tmpDir.getAbsolutePath(), true, executorService);
+        S3Reader s3Reader = s3Utils.reader(BUCKET);
+        long startD = System.currentTimeMillis();
+        Try<String, Throwable> download = s3Reader.getAsObject(name);
+        long endD = System.currentTimeMillis();
+        assertTrue(download.isSuccess());
+        assertEquals("Microserver",download.firstValue());
+        downloadHist.update(endD - startD);
     }
 
     private S3ObjectWriter buildWriterWithEncryption(boolean aesEncryption) {
