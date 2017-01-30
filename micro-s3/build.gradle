@@ -5,6 +5,10 @@ dependencies {
 	compile 'com.amazonaws:aws-java-sdk:' + s3Version
 	compile project(':micro-core')
 	compile project(':micro-manifest-comparator')
+    compile group: 'org.springframework', name: 'spring-test', version: '4.0.5.RELEASE'
+    compile group: 'io.dropwizard.metrics', name: 'metrics-core', version: '3.1.0'
+    compile group: 'org.coursera', name: 'dropwizard-metrics-datadog', version: '1.1.6'
+    compile group: 'com.github.cbismuth', name: 'junit-repeat-rule', version: '1.1.0'
 	
 	compile 'commons-io:commons-io:'+commonsIOVersion
 	testCompile project(':micro-grizzly-with-jersey')

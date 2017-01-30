@@ -47,7 +47,7 @@ public class S3Utils {
     @Autowired
     public S3Utils(AmazonS3Client client, TransferManager transferManager,
             @Value("${s3.tmp.dir:#{systemProperties['java.io.tmpdir']}}") String tmpDirectory,
-            @Value("${s3.aes256.enabled:false}}") boolean aes256Encryption,
+            @Value("${s3.aes256.enabled:false}") boolean aes256Encryption,
             @Qualifier("s3UploadExecutorService") ExecutorService uploaderService) {
         this.client = client;
         this.transferManager = transferManager;
