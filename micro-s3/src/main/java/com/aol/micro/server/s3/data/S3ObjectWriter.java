@@ -1,20 +1,26 @@
 package com.aol.micro.server.s3.data;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
 
+import org.apache.commons.io.FileUtils;
+
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
 import com.amazonaws.services.s3.transfer.model.UploadResult;
 import com.aol.cyclops.control.Eval;
 import com.aol.cyclops.control.FluentFunctions;
-import com.aol.cyclops.control.FutureW;
 import com.aol.cyclops.control.Try;
 
 import lombok.AllArgsConstructor;
-import lombok.val;
 
 @AllArgsConstructor
 public class S3ObjectWriter {
@@ -23,6 +29,7 @@ public class S3ObjectWriter {
     private final String bucket;
     private final File dir;
     private final Random r = new Random();
+    private final boolean aes256Encryption;
 
     /**
      * 
@@ -38,25 +45,59 @@ public class S3ObjectWriter {
      */
     public Try<Upload, Throwable> put(String key, Object value) {
 
+        return createObjectRequest(key, value).map(por -> {
+            Upload upload = manager.upload(por);
+            return upload;
+        });
+
+    }
+
+    private Try<PutObjectRequest, Throwable> createObjectRequest(String key, Object value) {
+
+        return writeToTmpFile(value).map(FluentFunctions.ofChecked(f -> {
+            byte[] ba = FileUtils.readFileToByteArray(f);
+            InputStream is = new ByteArrayInputStream(
+                                                      ba);
+
+            ObjectMetadata md = createMetadata(ba.length);
+
+            PutObjectRequest pr = new PutObjectRequest(
+                                                       bucket, key, is, md);
+            return pr;
+        }));
+    }
+
+    private Try<File, Throwable> writeToTmpFile(Object value) {
+        String fileName = "" + System.currentTimeMillis() + "_" + r.nextLong();
+        File file = new File(
+                             dir, fileName);
+
         return Try.of(1, Throwable.class)
                   .map(FluentFunctions.ofChecked(i -> {
-                      String file = "" + System.currentTimeMillis() + "_" + r.nextLong();
                       FileOutputStream fs = new FileOutputStream(
-                                                                 new File(
-                                                                          dir, file));
+                                                                 file);
 
                       ObjectOutputStream oos = new ObjectOutputStream(
                                                                       fs);
                       oos.writeObject(value);
                       oos.flush();
                       oos.close();
-
-                      Upload upload = manager.upload(bucket, key, new File(
-                                                                           dir, file));
-
-                      return upload;
+                      return file;
                   }));
+    }
 
+    /**
+     * Metadata object creation
+     * @param length 
+     * 
+     * @return Metadata with AES_256 encryption if enabled
+     */
+    private ObjectMetadata createMetadata(int length) {
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(length);
+        if (aes256Encryption)
+            metadata.setSSEAlgorithm(ObjectMetadata.AES_256_SERVER_SIDE_ENCRYPTION);
+        return metadata;
     }
 
     /**
