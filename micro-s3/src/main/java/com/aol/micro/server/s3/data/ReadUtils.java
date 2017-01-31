@@ -20,8 +20,8 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class ReadUtils {
-    private TransferManager transferManager;
-    private String tmpDirectory;
+    private final TransferManager transferManager;
+    private final String tmpDirectory;
 
     /**
      * Method returns InputStream from S3Object. Multi-part download is used to
@@ -51,7 +51,7 @@ public class ReadUtils {
             file.delete();
         }
     }
-    
+
     /**
      * Method returns InputStream from S3Object. Multi-part download is used to
      * get file. s3.tmp.dir property used to store temporary files.
