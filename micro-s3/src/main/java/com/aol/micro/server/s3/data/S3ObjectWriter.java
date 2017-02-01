@@ -28,8 +28,8 @@ public class S3ObjectWriter {
     private final TransferManager manager;
     private final String bucket;
     private final File dir;
-    private final Random r = new Random();
     private final boolean aes256Encryption;
+    private final Random r = new Random();
 
     /**
      * 
