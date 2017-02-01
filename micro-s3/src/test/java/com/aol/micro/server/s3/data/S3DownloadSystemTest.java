@@ -14,22 +14,20 @@ import static org.mockito.Mockito.mock;
 import java.io.File;
 import java.util.Arrays;
 import java.util.EnumSet;
-import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.FileUtils;
 import org.coursera.metrics.datadog.DatadogReporter;
 import org.coursera.metrics.datadog.transport.HttpTransport;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.model.UploadResult;
-import com.aol.cyclops.control.FluentFunctions;
 import com.aol.cyclops.control.Try;
 import com.codahale.metrics.Histogram;
 import com.codahale.metrics.MetricRegistry;
@@ -95,6 +93,7 @@ public class S3DownloadSystemTest{
     }
   
     @Test
+    @Ignore
     public void download(){
         S3ObjectWriter writerWithEncryption = buildWriterWithEncryption(true);
         String name = "uploadWithEncryption" + r.nextLong();
