@@ -88,7 +88,7 @@ public class S3DownloadSystemTest{
         DatadogReporter reporter = builder.build();
         int reportPeriod = 5;
         TimeUnit reportUnit = TimeUnit.valueOf("SECONDS");
-        log.info("Reporting to datadog every {} {}", 5, reportUnit);
+        log.info("Reporting to datadog every {} {}", reportPeriod, reportUnit);
         reporter.start(reportPeriod, reportUnit);
     }
   
