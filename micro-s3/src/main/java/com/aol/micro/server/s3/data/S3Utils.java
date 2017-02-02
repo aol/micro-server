@@ -163,7 +163,7 @@ public class S3Utils {
      * @throws InterruptedException
      * @throws IOException
      * 
-     * This method is deprecated as it is now provided by ReadUtils
+     * @Deprecated see ReadUtils
      */
     @Deprecated
     public InputStream getInputStream(String bucketName, String key)
@@ -187,7 +187,7 @@ public class S3Utils {
      * @throws InterruptedException
      * @throws IOException
      * 
-     * This method is deprecated as it is now provided by ReadUtils
+     * @Deprecated see ReadUtils
      */
     @Deprecated
     public InputStream getInputStream(String bucketName, String key, Supplier<File> tempFileSupplier) throws AmazonServiceException, AmazonClientException, InterruptedException, IOException{
