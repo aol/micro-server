@@ -32,7 +32,7 @@ public class S3Utils {
     private final TransferManager transferManager;
     private final String tmpDirectory;
     private final ExecutorService uploaderService;
-    private final boolean aes256Encryption;
+    private boolean aes256Encryption;
     private final ReadUtils readUtils;
 
     @Autowired
@@ -45,7 +45,14 @@ public class S3Utils {
         this.tmpDirectory = tmpDirectory;
         this.uploaderService = uploaderService;
         this.aes256Encryption = aes256Encryption;
-        this.readUtils = new ReadUtils(transferManager, tmpDirectory);
+        this.readUtils = new ReadUtils(
+                                       transferManager, tmpDirectory);
+    }
+
+    public S3Utils(AmazonS3Client client, TransferManager transferManager, String tmpDirectory,
+            ExecutorService uploaderService) {
+        this(
+             client, transferManager, tmpDirectory, false, uploaderService);
     }
 
     public S3Reader reader(String bucket) {
@@ -57,7 +64,8 @@ public class S3Utils {
     public S3ObjectWriter writer(String bucket) {
         return new S3ObjectWriter(
                                   transferManager, bucket, new File(
-                                                                    tmpDirectory), aes256Encryption);
+                                                                    tmpDirectory),
+                                  aes256Encryption);
     }
 
     public S3StringWriter stringWriter(String bucket) {
