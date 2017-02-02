@@ -8,12 +8,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest.KeyVersion;
@@ -146,6 +149,49 @@ public class S3Utils {
      */
     public static InputStream emptyInputStream() {
         return emptyInputStream;
+    }
+    
+    /**
+     * Method returns InputStream from S3Object. Multi-part download is used to
+     * get file. s3.tmp.dir property used to store temporary files.
+     * 
+     * @param bucketName
+     * @param key
+     * @return
+     * @throws AmazonServiceException
+     * @throws AmazonClientException
+     * @throws InterruptedException
+     * @throws IOException
+     * 
+     * This method is deprecated as it is now provided by ReadUtils
+     */
+    @Deprecated
+    public InputStream getInputStream(String bucketName, String key)
+            throws AmazonServiceException, AmazonClientException, InterruptedException, IOException{
+        return readUtils.getInputStream(bucketName, key);
+    }
+    
+    /**
+     * Method returns InputStream from S3Object. Multi-part download is used to
+     * get file. s3.tmp.dir property used to store temporary files. You can
+     * specify temporary file name by using tempFileSupplier object.
+     * 
+     * @param bucketName
+     * @param key
+     *            -
+     * @param tempFileSupplier
+     *            - Supplier providing temporary filenames
+     * @return InputStream of
+     * @throws AmazonServiceException
+     * @throws AmazonClientException
+     * @throws InterruptedException
+     * @throws IOException
+     * 
+     * This method is deprecated as it is now provided by ReadUtils
+     */
+    @Deprecated
+    public InputStream getInputStream(String bucketName, String key, Supplier<File> tempFileSupplier) throws AmazonServiceException, AmazonClientException, InterruptedException, IOException{
+        return readUtils.getInputStream(bucketName, key, tempFileSupplier);
     }
 
     static class EmptyInputStream extends InputStream {
