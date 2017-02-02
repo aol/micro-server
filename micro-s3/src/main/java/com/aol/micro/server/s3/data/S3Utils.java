@@ -32,7 +32,7 @@ public class S3Utils {
     private final TransferManager transferManager;
     private final String tmpDirectory;
     private final ExecutorService uploaderService;
-    private boolean aes256Encryption;
+    private final boolean aes256Encryption;
     private final ReadUtils readUtils;
 
     @Autowired
