@@ -64,6 +64,7 @@ public class S3ObjectWriter {
             PutObjectRequest pr = new PutObjectRequest(
                                                        bucket, key, is, md);
             return pr;
+            is.close();
         }));
     }
 
