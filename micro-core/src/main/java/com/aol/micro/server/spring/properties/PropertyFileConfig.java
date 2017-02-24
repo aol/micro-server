@@ -36,7 +36,7 @@ public class PropertyFileConfig {
     }
 
     @Bean
-    public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {
+    public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() throws IOException {
 
         PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
         Properties props = propertyFactory();
@@ -47,7 +47,7 @@ public class PropertyFileConfig {
     }
 
     @Bean
-    public static Properties propertyFactory() throws IOException {
+    public Properties propertyFactory() throws IOException {
         List<Resource> resources = loadPropertyResource();
         PropertiesFactoryBean factory = new PropertiesFactoryBean();
         factory.setLocations(resources.toArray(new Resource[resources.size()]));
@@ -57,7 +57,6 @@ public class PropertyFileConfig {
         new ConfigAccessor().get()
                             .getProperties()
                             .entrySet()
-                            .stream()
                             .forEach(e -> {
                                 if (props.getProperty(e.getKey()) == null) {
                                     props.put(e.getKey(), e.getValue());
@@ -66,15 +65,12 @@ public class PropertyFileConfig {
 
         System.getProperties()
               .entrySet()
-              .stream()
-              .forEach(e -> {
-                  props.put(e.getKey(), e.getValue());
-              });
+              .forEach(e -> props.put(e.getKey(), e.getValue()));
 
         return props;
     }
 
-    private static List<Resource> loadPropertyResource() {
+    private List<Resource> loadPropertyResource() {
         List<Resource> resources = new ArrayList<>();
         String applicationPropertyFileName = new ConfigAccessor().get()
                                                                  .getPropertiesName();
@@ -91,7 +87,7 @@ public class PropertyFileConfig {
         return resources;
     }
 
-    private static Optional<Resource> loadProperties(String applicationPropertyFileName, String type) {
+    private Optional<Resource> loadProperties(String applicationPropertyFileName, String type) {
 
         Optional<Resource> resource = Optional.empty();
 
@@ -131,7 +127,7 @@ public class PropertyFileConfig {
         return resource;
     }
 
-    private static String createEnvBasedPropertyFileName(String applicationPropertyFileName) {
+    private String createEnvBasedPropertyFileName(String applicationPropertyFileName) {
         return applicationPropertyFileName.substring(0, applicationPropertyFileName.lastIndexOf(".")) + "-"
                 + System.getProperty("application.env") + ".properties";
     }
