@@ -1,7 +1,7 @@
 package com.aol.micro.server.spring.datasource;
 
 import lombok.Getter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,7 @@ public class HikariCPConfig {
 
 	@Autowired
 	public HikariCPConfig(@Value("${hikaricp.db.connection.max.pool.size:30}") int maxPoolSize, @Value("${hikaricp.db.connection.min.idle:2}") int minimumIdle,
-			@Value("${hikaricp.db.connection.idle.timeout:1800000}") long idleTimeout) {		
+			@Value("${hikaricp.db.connection.idle.timeout:1800000}") long idleTimeout) {
 		this.maxPoolSize = maxPoolSize;
 		this.minimumIdle = minimumIdle;
 		this.idleTimeout = idleTimeout;

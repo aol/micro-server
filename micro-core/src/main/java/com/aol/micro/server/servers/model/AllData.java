@@ -7,7 +7,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
 import lombok.Getter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 import org.pcollections.ConsPStack;
 import org.pcollections.PStack;
@@ -24,7 +24,7 @@ public class AllData {
 	private final PStack<ServletContextListener> servletContextListeners;
 	private final PStack<ServletRequestListener> servletRequestListeners;
 
-	public AllData(ServerData serverData, List<FilterData> filterDataList, 
+	public AllData(ServerData serverData, List<FilterData> filterDataList,
 				List<ServletData> servletDataList,
 				List<ServletContextListener> servletContextListeners,
 				List<ServletRequestListener> servletRequestListeners  ) {

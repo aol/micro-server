@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
@@ -24,10 +24,10 @@ public class ImmutableJavaslangEntity {
 	private final String value;
 	private final List<String> list;
 	private final Map<String,Set> mapOfSets;
-	
-	
+
+
 	public ImmutableJavaslangEntity() {
 		this(null,null,null);
 	}
-	
+
 }

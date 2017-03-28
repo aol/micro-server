@@ -6,7 +6,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import lombok.AllArgsConstructor;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -42,12 +42,12 @@ public class HibernateSessionBuilder {
 
 		if (env.getDdlAuto() != null)
 			p.setProperty("hibernate.hbm2ddl.auto", env.getDdlAuto());
-		
+
 		if(env.getInitializationFile() != null) {
 			p.setProperty("hibernate.hbm2ddl.import_files", env.getInitializationFile());
-			
+
 		}
-		
+
 		logger.info("Hibernate properties [  hibernate.dialect : {} ; hibernate.hbm2ddl.auto : {} ]", env.getDialect(), env.getDdlAuto());
 
 		sessionFactoryBean.setHibernateProperties(p);

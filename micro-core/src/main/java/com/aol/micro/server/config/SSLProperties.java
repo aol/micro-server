@@ -2,7 +2,7 @@ package com.aol.micro.server.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 import com.aol.cyclops.control.AnyM;
 
@@ -22,7 +22,7 @@ public class SSLProperties {
 	private final String clientAuth;
 	private final String ciphers;
 	private final String protocol;
-	
+
 	public AnyM<String> getKeyStoreType() {
 		return AnyM.ofNullable(keyStoreType);
 	}

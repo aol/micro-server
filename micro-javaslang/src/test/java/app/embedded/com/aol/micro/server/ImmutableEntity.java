@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 
 
@@ -23,9 +23,9 @@ public class ImmutableEntity {
 
 	private final String value;
 	private final List<String> list;
-	
+
 	public ImmutableEntity() {
 		this(null,null);
 	}
-	
+
 }

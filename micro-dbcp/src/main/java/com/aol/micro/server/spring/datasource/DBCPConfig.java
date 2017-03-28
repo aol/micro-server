@@ -1,7 +1,7 @@
 package com.aol.micro.server.spring.datasource;
 
 import lombok.Getter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

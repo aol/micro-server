@@ -13,7 +13,7 @@ import com.aol.cyclops.data.collections.extensions.standard.MapXs;
 
 import lombok.Getter;
 import lombok.ToString;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 @SuppressWarnings("PMD.UnusedPrivateField")
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -5,7 +5,7 @@ import javax.sql.DataSource;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DBCPDataSourceBuilder {
-	
+
 	@Resource(name = "mainEnv")
 	private JdbcConfig mainEnv;
 
@@ -35,12 +35,12 @@ public class DBCPDataSourceBuilder {
 		ds.setUrl(mainEnv.getUrl());
 		ds.setUsername(mainEnv.getUsername());
 		ds.setPassword(mainEnv.getPassword());
-		
+
 		retrySetup(ds);
 
 		return ds;
 	}
-	
+
 	private void retrySetup(BasicDataSource ds) {
 		if (!"org.hibernate.dialect.HSQLDialect".equals(mainEnv.getDialect())) {
 			ds.setTestOnBorrow(dbcpEnv.isTestOnBorrow());
