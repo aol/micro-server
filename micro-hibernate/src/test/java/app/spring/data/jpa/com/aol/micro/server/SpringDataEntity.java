@@ -13,7 +13,7 @@ import javax.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 @Entity
 @Table(name = "t_spring_data", uniqueConstraints = @UniqueConstraint(columnNames = {

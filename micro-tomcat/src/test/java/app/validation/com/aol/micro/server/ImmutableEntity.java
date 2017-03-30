@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
@@ -19,10 +19,10 @@ import lombok.experimental.Builder;
 public class ImmutableEntity {
 
 	private final String value;
-	
-	
+
+
 	public ImmutableEntity() {
 		this(null);
 	}
-	
+
 }

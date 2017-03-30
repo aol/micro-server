@@ -13,7 +13,7 @@ import com.google.common.eventbus.Subscribe;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 public class RequestTypes<T> {
     @Getter

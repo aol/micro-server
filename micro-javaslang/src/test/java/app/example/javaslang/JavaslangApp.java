@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import lombok.AllArgsConstructor;
-import lombok.experimental.Builder;
+import lombok.Builder;
 import lombok.Getter;
 
 import com.aol.micro.server.MicroserverApp;
@@ -35,7 +35,7 @@ public class JavaslangApp {
 
 	}
 
-	
+
 	@GET
 	@Produces("application/json")
 	@Path("/ping")
@@ -45,8 +45,8 @@ public class JavaslangApp {
 				.mapOfSets(HashMap.<String,Set>empty().put("key1",HashSet.ofAll(Arrays.asList(1, 2, 3))))
 				.build();
 	}
-	
-	
+
+
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "")
 	@XmlRootElement(name = "immutable")
@@ -58,12 +58,12 @@ public class JavaslangApp {
 		private final String value;
 		private final List<String> list;
 		private final Map<String,Set> mapOfSets;
-		
-		
+
+
 		public ImmutableJavaslangEntity() {
 			this(null,null,null);
 		}
-		
+
 	}
 
-}    
+}
