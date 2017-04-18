@@ -1,5 +1,5 @@
 
-#Microserver
+# Microserver
 
 [![Join the chat at https://gitter.im/aol/micro-server](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aol/micro-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -141,19 +141,19 @@ Microserver Spring Boot
  ```groovy	 
 	  compile group: 'com.aol.microservices', name:'micro-spring-boot', version:'x.yz'
  ```
-##Tech Stack
+## Tech Stack
 
 Microserver core is a lightweight server configuration engine built using Spring, Cyclops and Jackson.
 
 
 
-##Zero Configuration
+## Zero Configuration
 
 No directory structure is imposed by the server and no XML is required. There is no framework config. Just a jar file and your application. You can, of course, configure your application without limit.
 
 Example working application :-
 
-###The main class :-
+### The main class :-
 
 ```java   
      public class AppRunnerTest {
