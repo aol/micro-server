@@ -10,7 +10,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.aol.cyclops.control.FutureW;
 import com.aol.cyclops.control.Try;
-
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -20,6 +19,10 @@ public class S3StringWriter {
     private final String bucket;
     private final ExecutorService uploadService;
     private final boolean aes256Encryption;
+
+    S3StringWriter(AmazonS3Client client, String bucket, ExecutorService uploadService){
+        this(client, bucket, uploadService, false);
+    }
 
     /**
      * 
@@ -40,7 +43,6 @@ public class S3StringWriter {
             byte[] bytes = value.getBytes("UTF-8");
             ByteArrayInputStream stream = new ByteArrayInputStream(
                                                                    bytes);
-            //ObjectMetadata md = new ObjectMetadata();
             ObjectMetadata md = createMetadata(bytes.length);
             return client.putObject(bucket, key, stream, md);
 
