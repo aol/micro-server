@@ -215,7 +215,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
             data = oldData;
             versionedKey = oldKey;
             modified = oldModified;
-            logger.debug(e.getMessage(), e);
+            logger.info(e.getMessage(), e);
             throw ExceptionSoftener.throwSoftenedException(e);
         }
         return true;
@@ -288,7 +288,9 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
     @Override
     public synchronized void saveAndIncrement(T data) {
         Xor<Void, T> oldData = this.data;
+        final String oldKey = versionedKey;
         VersionedKey newVersionedKey = increment();
+        final String newKey = newVersionedKey.toJson();
         logger.info("Saving data with key {}, new version is {}", key, newVersionedKey.toJson());
 
         try {
@@ -298,6 +300,9 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
                   .peek(res -> {
                       this.data = Xor.primary(data);
                       delete(versionedKey);
+                  }).peekFailed((err) -> {
+                      String message = String.format("Failed to update manifest comparator file from %s to %s", oldKey, newKey);
+                      logger.warn(message, err);
                   });
 
         } finally {
