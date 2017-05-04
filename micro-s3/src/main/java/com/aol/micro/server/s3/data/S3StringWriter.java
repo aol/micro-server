@@ -23,7 +23,7 @@ public class S3StringWriter {
 
     /**
      * 
-     * Read data from defined S3 bucket with provided key to a String. Calling
+     * Writes String data to defined S3 bucket with provided key. Calling
      * map / flatMap on the returned try instance will catch any exceptions, any
      * exceptions thrown will convert a Success to a Failure
      * 
