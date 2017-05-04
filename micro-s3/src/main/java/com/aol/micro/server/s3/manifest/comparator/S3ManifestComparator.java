@@ -193,6 +193,13 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
     }
 
     /**
+     * @return true - if current data is stale and needs refreshed
+     */
+    private boolean needsData() {
+        return this.data.isSecondary();
+    }
+
+    /**
      * Load data from remote store if stale
      */
     @Override
@@ -201,7 +208,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
         long oldModified = modified;
         String oldKey = versionedKey;
         try {
-            if (isOutOfDate()) {
+            if (isOutOfDate() || needsData()) {
                 String newVersionedKey = reader.getAsString(key)
                                                .get();
                 val loaded = nonAtomicload(newVersionedKey);
