@@ -73,7 +73,7 @@ public class S3Utils {
 
     public S3StringWriter stringWriter(String bucket) {
         return new S3StringWriter(
-                                  client, bucket, uploaderService);
+                                  client, bucket, uploaderService, aes256Encryption);
     }
 
     public S3Deleter deleter(String bucket) {

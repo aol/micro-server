@@ -19,6 +19,7 @@ public class S3StringWriter {
     private final AmazonS3Client client;
     private final String bucket;
     private final ExecutorService uploadService;
+    private final boolean aes256Encryption;
 
     /**
      * 
@@ -39,8 +40,8 @@ public class S3StringWriter {
             byte[] bytes = value.getBytes("UTF-8");
             ByteArrayInputStream stream = new ByteArrayInputStream(
                                                                    bytes);
-            ObjectMetadata md = new ObjectMetadata();
-            md.setContentLength(bytes.length);
+            //ObjectMetadata md = new ObjectMetadata();
+            ObjectMetadata md = createMetadata(bytes.length);
             return client.putObject(bucket, key, stream, md);
 
         });
@@ -57,6 +58,20 @@ public class S3StringWriter {
     public FutureW<PutObjectResult> putAsync(String key, String value) {
         return FutureW.ofSupplier(() -> put(key, value), this.uploadService)
                       .map(Try::get);
+    }
+
+    /**
+     * Metadata object creation
+     * @param length
+     *
+     * @return Metadata with AES_256 encryption if enabled
+     */
+    private ObjectMetadata createMetadata(int length) {
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(length);
+        if (aes256Encryption)
+            metadata.setSSEAlgorithm(ObjectMetadata.AES_256_SERVER_SIDE_ENCRYPTION);
+        return metadata;
     }
 
 }
