@@ -10,10 +10,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import cyclops.collections.ListX;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.data.collections.extensions.standard.ListX;
 import com.aol.micro.server.auto.discovery.SingletonRestResource;
 import com.aol.micro.server.dist.lock.DistributedLockManager;
 

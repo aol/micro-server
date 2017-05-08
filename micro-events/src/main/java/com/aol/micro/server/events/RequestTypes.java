@@ -6,11 +6,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
-import com.aol.cyclops.data.collections.extensions.standard.MapX;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
+import cyclops.collections.MapX;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Builder;

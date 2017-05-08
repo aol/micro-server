@@ -3,12 +3,13 @@ package com.aol.micro.server.transactions;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import cyclops.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.experimental.Wither;
 
 import org.springframework.transaction.support.TransactionTemplate;
 
-import com.aol.cyclops.control.Try;
+
 
 /**
  * Stream-like monadic transaction processing

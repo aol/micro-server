@@ -2,8 +2,8 @@ package com.aol.micro.server.events;
 
 import java.util.stream.Stream;
 
-import com.aol.cyclops.control.Maybe;
 
+import cyclops.control.Maybe;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

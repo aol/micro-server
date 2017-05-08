@@ -1,10 +1,10 @@
 package app.streaming.com.aol.micro.server;
 
+import cyclops.async.QueueFactories;
+import cyclops.async.QueueFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.aol.cyclops.data.async.QueueFactories;
-import com.aol.cyclops.data.async.QueueFactory;
 
 @Configuration
 public class MyQueueFactoryConfig {

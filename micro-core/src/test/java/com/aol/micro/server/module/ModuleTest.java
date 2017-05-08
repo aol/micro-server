@@ -5,9 +5,10 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 
+import cyclops.stream.ReactiveSeq;
 import org.junit.Test;
 
-import com.aol.cyclops.control.ReactiveSeq;
+
 import com.aol.micro.server.Plugin;
 public class ModuleTest {
 
@@ -21,7 +22,7 @@ public class ModuleTest {
 				.fromStream(
 						Arrays.asList(new MyPlugin())
 								.stream()).filter(module -> module.providers()!=null)
-								.flatMapIterable(Plugin::providers)
+								.flatMapI(Plugin::providers)
 								.join(",");
 		
 		assertThat(additional, equalTo("com.my.new.provider,com.my.new.provider2"));

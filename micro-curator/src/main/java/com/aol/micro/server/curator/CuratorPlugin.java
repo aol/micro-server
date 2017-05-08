@@ -1,8 +1,8 @@
 package com.aol.micro.server.curator;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.curator.lock.CuratorDistributedLockServiceProvider;
+import cyclops.collections.immutable.PSetX;
 
 public class CuratorPlugin implements Plugin {
 	@Override

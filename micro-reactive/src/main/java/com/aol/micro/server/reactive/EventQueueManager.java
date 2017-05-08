@@ -4,20 +4,20 @@ import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import cyclops.async.Future;
+import cyclops.async.LazyReact;
+import cyclops.async.Pipes;
+import cyclops.async.QueueFactory;
+import cyclops.control.Eval;
+import cyclops.control.Maybe;
+import cyclops.function.FluentFunctions;
+import cyclops.stream.FutureStream;
+import cyclops.stream.ReactiveSeq;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import com.aol.cyclops.control.Eval;
-import com.aol.cyclops.control.FluentFunctions;
-import com.aol.cyclops.control.FutureW;
-import com.aol.cyclops.control.LazyReact;
-import com.aol.cyclops.control.Maybe;
-import com.aol.cyclops.control.Pipes;
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.data.async.QueueFactory;
-import com.aol.cyclops.types.futurestream.LazyFutureStream;
 
 /**
  * Class for pusing information across threads to various consumers.
@@ -59,7 +59,7 @@ public class EventQueueManager<T> {
 			pipes.reactiveSeq(key)
 				 .get()
 				 .futureOperations(ex)
-				 .forEach(reactor);
+				 .forEachX(Long.MAX_VALUE,reactor);
 		}
 		/**
 		 * @param key Register a new queue with supplied key
@@ -75,7 +75,7 @@ public class EventQueueManager<T> {
 		 * @param ex Executor to run on
 		 * @return FutureW that will eventually have data from the Queue
 		 */
-		public FutureW<T> future(String key,Executor ex){
+		public Future<T> future(String key, Executor ex){
 			return pipes.oneOrErrorAsync(key, ex);
 		}
 		/**
@@ -124,7 +124,7 @@ public class EventQueueManager<T> {
 		 * @param key Queue name
 		 * @return Maybe with next data point
 		 */
-		public  Maybe<T> maybe(String key){
+		public Maybe<T> maybe(String key){
 			if(!pipes.get(key).isPresent())
 				pipes.register(key, factory.build());
 			return pipes.oneValue(key);
@@ -147,7 +147,7 @@ public class EventQueueManager<T> {
 		 * @param key Queue name
 		 * @return Stream of futures
 		 */
-		public LazyFutureStream<T> ioFutureStream(String key){
+		public FutureStream<T> ioFutureStream(String key){
 			if(!pipes.get(key).isPresent())
 				pipes.register(key, factory.build());
 			return pipes.futureStream(key, io.get())

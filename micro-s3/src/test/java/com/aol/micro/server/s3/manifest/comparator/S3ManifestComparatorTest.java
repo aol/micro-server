@@ -1,12 +1,13 @@
 package com.aol.micro.server.s3.manifest.comparator;
 
-import com.aol.cyclops.control.Try;
+
 import com.aol.micro.server.manifest.Data;
 import com.aol.micro.server.manifest.VersionedKey;
 import com.aol.micro.server.s3.data.S3Deleter;
 import com.aol.micro.server.s3.data.S3ObjectWriter;
 import com.aol.micro.server.s3.data.S3Reader;
 import com.aol.micro.server.s3.data.S3StringWriter;
+import cyclops.control.Try;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

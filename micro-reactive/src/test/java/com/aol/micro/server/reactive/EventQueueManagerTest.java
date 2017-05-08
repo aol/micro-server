@@ -9,13 +9,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import cyclops.async.QueueFactories;
+import cyclops.control.Eval;
+import cyclops.control.Maybe;
+import cyclops.stream.ReactiveSeq;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.cyclops.control.Eval;
-import com.aol.cyclops.control.Maybe;
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.data.async.QueueFactories;
 
 public class EventQueueManagerTest {
 	
@@ -29,7 +29,7 @@ public class EventQueueManagerTest {
 	@Before
 	public void setup(){
 		recieved =null;
-		manager = EventQueueManager.of(ex,QueueFactories.boundedNonBlockingQueue(1000));
+		manager = EventQueueManager.of(ex, QueueFactories.boundedNonBlockingQueue(1000));
 	}
 	
 
@@ -68,7 +68,7 @@ public class EventQueueManagerTest {
 		
 		manager.stream("2")
 		        .futureOperations(ex)
-		        .forEach(a->recieved= a);
+		        .forEachX(Long.MAX_VALUE,a->recieved= a);
 		
 		manager.push("2", "world");
 		
@@ -85,7 +85,7 @@ public class EventQueueManagerTest {
 		ReactiveSeq.generate(()->"input")
 					.onePer(1,TimeUnit.SECONDS)
 					.futureOperations(ex)
-					.forEach(n->manager.push("lazy",n));
+					.forEachX(Long.MAX_VALUE,n->manager.push("lazy",n));
 					
 		Eval<String> lazy = manager.lazy("lazy");
 		
@@ -110,7 +110,7 @@ public class EventQueueManagerTest {
 					.map(s->s+":"+count.incrementAndGet())
 					.peek(System.out::println)
 					.futureOperations(ex)
-					.forEach(n->manager.push("lazy",n));
+					.forEachX(Long.MAX_VALUE,n->manager.push("lazy",n));
 					
 		Maybe<String> lazy1 = manager.maybe("lazy");
 		Maybe<String> lazy2 = manager.maybe("lazy");

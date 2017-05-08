@@ -2,11 +2,12 @@ package com.aol.micro.server.health;
 
 import java.util.Queue;
 
+import cyclops.control.Maybe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.control.Maybe;
+
 
 @Component
 public class HealthChecker {
