@@ -32,9 +32,7 @@ import lombok.experimental.Wither;
 
 @Builder
 @AllArgsConstructor
-
 public class ConfigurableModule implements Module {
-
     @Wither
     private final Set<Object> jaxRsResourceObjects;
     @Wither
