@@ -1,7 +1,8 @@
 package com.aol.micro.server.async.data.writer;
 
-import com.aol.cyclops.control.FutureW;
 
+
+import cyclops.async.Future;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,20 +19,20 @@ public class DummyDataWriter implements DataWriter<String> {
     boolean outofdate = false;
 
     @Override
-    public FutureW<String> loadAndGet() {
-        return FutureW.ofResult(data);
+    public Future<String> loadAndGet() {
+        return Future.ofResult(data);
     }
 
     @Override
-    public FutureW<Void> saveAndIncrement(String data) {
+    public Future<Void> saveAndIncrement(String data) {
         this.data = data;
         version++;
-        return FutureW.ofResult(null);
+        return Future.ofResult(null);
     }
 
     @Override
-    public FutureW<Boolean> isOutOfDate() {
-        return FutureW.ofResult(outofdate);
+    public Future<Boolean> isOutOfDate() {
+        return Future.ofResult(outofdate);
     }
 
 }

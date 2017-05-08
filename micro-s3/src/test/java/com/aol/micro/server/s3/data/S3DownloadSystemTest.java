@@ -18,6 +18,7 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import cyclops.control.Try;
 import org.coursera.metrics.datadog.DatadogReporter;
 import org.coursera.metrics.datadog.transport.HttpTransport;
 import org.junit.BeforeClass;
@@ -28,7 +29,7 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.model.UploadResult;
-import com.aol.cyclops.control.Try;
+
 import com.codahale.metrics.Histogram;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.SharedMetricRegistries;

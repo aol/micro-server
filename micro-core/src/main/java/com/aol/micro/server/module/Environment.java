@@ -8,9 +8,9 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+import cyclops.control.Try;
 import org.pcollections.HashTreePMap;
 
-import com.aol.cyclops.control.Try;
 
 public class Environment {
 

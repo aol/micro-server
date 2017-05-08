@@ -9,10 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import cyclops.control.Xor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.control.Xor;
+
 import com.aol.micro.server.auto.discovery.AutoFilterConfiguration;
 
 import lombok.Getter;

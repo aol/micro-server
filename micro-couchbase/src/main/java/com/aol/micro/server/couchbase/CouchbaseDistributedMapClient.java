@@ -3,10 +3,10 @@ package com.aol.micro.server.couchbase;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
+import com.aol.cyclops2.util.ExceptionSoftener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.micro.server.distributed.DistributedMap;
 import com.couchbase.client.CouchbaseClient;
 

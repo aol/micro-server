@@ -1,9 +1,10 @@
 package com.aol.micro.server.spring.metrics.health;
 
+import cyclops.Semigroups;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.Semigroups;
+
 import com.aol.micro.server.HealthStatusChecker;
 import com.codahale.metrics.health.HealthCheckRegistry;
 

@@ -7,9 +7,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
+import cyclops.stream.ReactiveSeq;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.cyclops.control.ReactiveSeq;
+
 import com.aol.micro.server.WorkerThreads;
 import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.auto.discovery.SingletonRestResource;
@@ -41,7 +42,7 @@ public class ActiveResource<T> implements CommonRestResource, SingletonRestResou
                                                   .get(typeToUse)
                                                   .toString())
                    .futureOperations(WorkerThreads.ioExecutor.get())
-                   .forEach(result -> asyncResponse.resume(result));
+                   .forEachX(Long.MAX_VALUE,result -> asyncResponse.resume(result));
 
     }
 
@@ -52,7 +53,7 @@ public class ActiveResource<T> implements CommonRestResource, SingletonRestResou
 
         ReactiveSeq.of(activeQueries.toString())
                    .futureOperations(WorkerThreads.ioExecutor.get())
-                   .forEach(result -> asyncResponse.resume(result));
+                   .forEachX(Long.MAX_VALUE,result -> asyncResponse.resume(result));
 
     }
 
@@ -64,7 +65,7 @@ public class ActiveResource<T> implements CommonRestResource, SingletonRestResou
         ReactiveSeq.of(this.activeJobs)
                    .map(JobsBeingExecuted::toString)
                    .futureOperations(WorkerThreads.ioExecutor.get())
-                   .forEach(str -> asyncResponse.resume(str));
+                   .forEachX(Long.MAX_VALUE,str -> asyncResponse.resume(str));
 
     }
 

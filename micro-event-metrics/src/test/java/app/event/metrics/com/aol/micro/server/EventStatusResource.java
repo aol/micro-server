@@ -6,10 +6,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import cyclops.collections.MapX;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.data.collections.extensions.standard.MapX;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.events.RequestEvents;
 import com.codahale.metrics.MetricRegistry;

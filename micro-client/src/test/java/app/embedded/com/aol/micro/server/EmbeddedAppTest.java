@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.NotFoundException;
 
+import cyclops.collections.immutable.PStackX;
 import jersey.repackaged.com.google.common.collect.ImmutableList;
 
 import org.junit.After;
@@ -18,7 +19,6 @@ import org.junit.Test;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.module.EmbeddedModule;
 import com.aol.micro.server.testing.RestAgent;

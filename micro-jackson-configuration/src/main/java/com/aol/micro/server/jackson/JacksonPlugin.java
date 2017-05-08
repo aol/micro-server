@@ -1,10 +1,11 @@
 package com.aol.micro.server.jackson;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.rest.jackson.JacksonFeature;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.datatype.pcollections.PCollectionsModule;
+import cyclops.collections.immutable.PSetX;
 
 public class JacksonPlugin implements Plugin {
 

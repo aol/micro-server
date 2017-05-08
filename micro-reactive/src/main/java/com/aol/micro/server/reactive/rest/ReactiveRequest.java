@@ -10,10 +10,11 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import cyclops.stream.ReactiveSeq;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 
-import com.aol.cyclops.control.ReactiveSeq;
+
 import com.aol.micro.server.rest.jackson.JacksonFeature;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.fasterxml.jackson.databind.JavaType;

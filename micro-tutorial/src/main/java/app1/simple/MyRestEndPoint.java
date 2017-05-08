@@ -10,11 +10,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
+import cyclops.async.LazyReact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
-import com.aol.cyclops.control.LazyReact;
+
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.events.RequestEvents;
 import com.aol.micro.server.ip.tracker.QueryIPRetriever;

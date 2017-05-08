@@ -1,8 +1,8 @@
 package com.aol.micro.server.dist.lock;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.dist.lock.rest.DistLockResource;
+import cyclops.collections.immutable.PSetX;
 
 /**
  * 

@@ -1,7 +1,8 @@
 package com.aol.micro.server.rest.client.nio;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+
 import com.aol.micro.server.Plugin;
+import cyclops.collections.immutable.PSetX;
 
 /**
  * 

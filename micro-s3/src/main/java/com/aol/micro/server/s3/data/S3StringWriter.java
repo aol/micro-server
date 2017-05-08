@@ -8,8 +8,9 @@ import java.util.concurrent.ExecutorService;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectResult;
-import com.aol.cyclops.control.FutureW;
-import com.aol.cyclops.control.Try;
+
+import cyclops.async.Future;
+import cyclops.control.Try;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -57,8 +58,8 @@ public class S3StringWriter {
      * @param value
      * @return
      */
-    public FutureW<PutObjectResult> putAsync(String key, String value) {
-        return FutureW.ofSupplier(() -> put(key, value), this.uploadService)
+    public Future<PutObjectResult> putAsync(String key, String value) {
+        return Future.ofSupplier(() -> put(key, value), this.uploadService)
                       .map(Try::get);
     }
 

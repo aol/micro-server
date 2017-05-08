@@ -2,11 +2,11 @@ package com.aol.micro.server.machine.stats.sigar;
 
 import java.util.Map;
 
+import cyclops.collections.MapXs;
 import org.hyperic.sigar.Sigar;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.data.collections.extensions.standard.MapXs;
 import com.aol.micro.server.StatsSupplier;
 
 @Component

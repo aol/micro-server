@@ -4,12 +4,13 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.BadRequestException;
 
+import com.aol.cyclops2.types.futurestream.SimpleReactStream;
+import cyclops.async.SimpleReact;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.cyclops.control.SimpleReact;
-import com.aol.cyclops.types.futurestream.SimpleReactStream;
+
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.testing.RestAgent;
 

@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-import com.aol.cyclops.control.ReactiveSeq;
+
 import com.aol.micro.server.servers.model.ServerData;
 
 public class ServerDataTest {

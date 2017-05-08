@@ -9,9 +9,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
+import cyclops.async.SimpleReact;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.control.SimpleReact;
+
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 import com.google.common.collect.ImmutableList;

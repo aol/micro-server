@@ -1,10 +1,11 @@
 package com.aol.micro.server;
 
+import cyclops.function.FluentFunctions;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
-import com.aol.cyclops.control.FluentFunctions;
 
 public class WorkerThreads {
 
