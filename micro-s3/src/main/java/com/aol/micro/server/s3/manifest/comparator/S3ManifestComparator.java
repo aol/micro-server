@@ -2,6 +2,9 @@ package com.aol.micro.server.s3.manifest.comparator;
 
 import java.util.Date;
 
+import com.aol.cyclops2.util.ExceptionSoftener;
+import cyclops.control.Try;
+import cyclops.control.Xor;
 import org.jooq.lambda.tuple.Tuple;
 import org.jooq.lambda.tuple.Tuple2;
 import org.slf4j.Logger;

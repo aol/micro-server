@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
 
+import cyclops.control.Eval;
 import cyclops.control.Try;
 import cyclops.function.FluentFunctions;
 import org.apache.commons.io.FileUtils;
