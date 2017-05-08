@@ -13,11 +13,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import cyclops.collections.immutable.PStackX;
 import org.junit.Test;
 import org.pcollections.ConsPStack;
 import org.pcollections.PStack;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
+
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 
 import lombok.Getter;
