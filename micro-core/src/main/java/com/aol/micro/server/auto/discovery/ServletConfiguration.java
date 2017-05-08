@@ -4,9 +4,10 @@ import java.util.Map;
 
 import javax.servlet.Servlet;
 
+import cyclops.control.Xor;
 import org.pcollections.HashTreePMap;
 
-import com.aol.cyclops.control.Xor;
+
 
 /*
 * If creating a Plugin, create a ServletConfiguration Spring Bean rather than a Servlet Spring Bean

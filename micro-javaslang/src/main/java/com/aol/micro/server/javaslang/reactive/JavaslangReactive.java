@@ -1,11 +1,14 @@
 package com.aol.micro.server.javaslang.reactive;
 
 
+import cyclops.async.LazyReact;
+import cyclops.stream.FutureStream;
+import cyclops.stream.Spouts;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
-import com.aol.cyclops.control.LazyReact;
-import com.aol.cyclops.javaslang.Javaslang;
+
+
 import com.aol.cyclops.types.futurestream.LazyFutureStream;
 import com.aol.cyclops.types.stream.reactive.SeqSubscriber;
 
@@ -20,10 +23,8 @@ import javaslang.collection.Traversable;
  *
  */
 public class JavaslangReactive {
-	
-	
-	
-	static <T> LazyFutureStream<T> futureStream(Traversable<T> seq, LazyReact lazyReact){
+
+	static <T> FutureStream<T> futureStream(Traversable<T> seq, LazyReact lazyReact){
 		return lazyReact.fromIterable(seq);
 	}
 	
@@ -36,11 +37,11 @@ public class JavaslangReactive {
 	 * @return Stream subscribed to publisher
 	 */
 	public static <T> Stream<T> publishStream(Publisher<T> publisher){
-		SeqSubscriber<T> sub=  SeqSubscriber.subscriber();
-		publisher.subscribe(sub);
-		return Stream.ofAll(sub.stream());
+
+		return Stream.ofAll(Spouts.from(publisher));
 	}
 	public static <T> void subsribeToValue(Value<T> s, Subscriber<T> sub){
+
 		Javaslang.value(s).subscribe(sub);
 		
 	}

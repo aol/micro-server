@@ -7,9 +7,7 @@ import org.jooq.lambda.tuple.Tuple2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.control.Try;
-import com.aol.cyclops.control.Xor;
-import com.aol.cyclops.util.ExceptionSoftener;
+
 import com.aol.micro.server.manifest.Data;
 import com.aol.micro.server.manifest.ManifestComparator;
 import com.aol.micro.server.manifest.ManifestComparatorKeyNotFoundException;

@@ -13,19 +13,19 @@ public class SSLConfigurationBuilder {
 	public void build(AbstractHttp11JsseProtocol<?> protocol,SSLProperties sslProperties) {
 	    protocol.setKeystoreFile(sslProperties.getKeyStoreFile()); // contains server keypair
         protocol.setKeyPass(sslProperties.getKeyStorePass());
-        sslProperties.getKeyStoreType().peek(type->protocol.setKeystoreType(type));
-        sslProperties.getKeyStoreProvider().peek(provider->protocol.setKeystoreProvider(provider));
+        sslProperties.getKeyStoreType().ifPresent(type->protocol.setKeystoreType(type));
+        sslProperties.getKeyStoreProvider().ifPresent(provider->protocol.setKeystoreProvider(provider));
 		
-        sslProperties.getTrustStoreFile().peek(file->protocol.setTruststoreFile(file)); // contains client certificate
-        sslProperties.getTrustStorePass().peek(pass->protocol.setTruststorePass(pass));
+        sslProperties.getTrustStoreFile().ifPresent(file->protocol.setTruststoreFile(file)); // contains client certificate
+        sslProperties.getTrustStorePass().ifPresent(pass->protocol.setTruststorePass(pass));
         
-        sslProperties.getTrustStoreType().peek(type->protocol.setTruststoreType(type));
-        sslProperties.getTrustStoreProvider().peek(provider->protocol.setTruststoreProvider(provider));
-		sslProperties.getClientAuth().peek(auth->protocol.setClientAuth(auth));
+        sslProperties.getTrustStoreType().ifPresent(type->protocol.setTruststoreType(type));
+        sslProperties.getTrustStoreProvider().ifPresent(provider->protocol.setTruststoreProvider(provider));
+		sslProperties.getClientAuth().ifPresent(auth->protocol.setClientAuth(auth));
 		
 		protocol.setSSLEnabled(true);
-		sslProperties.getCiphers().peek(ciphers->protocol.setCiphers(ciphers));
-		sslProperties.getProtocol().peek(pr->protocol.setSslProtocol(pr));
+		sslProperties.getCiphers().ifPresent(ciphers->protocol.setCiphers(ciphers));
+		sslProperties.getProtocol().ifPresent(pr->protocol.setSslProtocol(pr));
        
 	
 	}

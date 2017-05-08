@@ -12,15 +12,16 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 import javax.ws.rs.core.FeatureContext;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PMapX;
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
+
 import com.aol.micro.server.rest.RestConfiguration;
 import com.aol.micro.server.servers.ServerApplicationFactory;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.spring.SpringBuilder;
 import com.aol.micro.server.spring.SpringDBConfig;
 import com.fasterxml.jackson.databind.Module;
+import cyclops.collections.immutable.PMapX;
+import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PStackX;
 
 /**
  * To implement a plugin for Microserver, implement this interface in your library and add the fully resolved class name to 

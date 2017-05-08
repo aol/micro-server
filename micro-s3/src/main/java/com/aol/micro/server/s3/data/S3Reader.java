@@ -6,9 +6,10 @@ import java.io.ObjectInputStream;
 import java.util.Date;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.control.Try;
 
+
+import cyclops.control.Try;
+import cyclops.stream.ReactiveSeq;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

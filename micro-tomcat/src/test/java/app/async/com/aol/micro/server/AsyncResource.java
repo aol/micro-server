@@ -9,11 +9,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
+import cyclops.async.SimpleReact;
+import cyclops.stream.FutureStream;
+import cyclops.stream.ReactiveSeq;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.control.SimpleReact;
-import com.aol.cyclops.types.futurestream.LazyFutureStream;
+
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.testing.RestAgent;
 
@@ -34,7 +35,7 @@ public class AsyncResource implements RestResource{
         @Produces("text/plain")
         public void expensive(@Suspended AsyncResponse asyncResponse){
   
-        	LazyFutureStream.lazyFutureStreamFromIterable(urls)
+        	FutureStream.lazyFutureStreamFromIterable(urls)
 					.then(it->client.get(it))
 					.onFail(it -> "")
 					.peek(it -> 

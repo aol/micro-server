@@ -1,11 +1,12 @@
 package com.aol.micro.server.machine.stats.sigar.plugin;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.machine.stats.sigar.MachineStatsChecker;
 import com.aol.micro.server.machine.stats.sigar.SigarStats;
 import com.aol.micro.server.machine.stats.sigar.StatsServletContextListener;
 import com.aol.micro.server.machine.stats.sigar.rest.StatsResource;
+import cyclops.collections.immutable.PSetX;
 
 /**
  * 

@@ -1,8 +1,9 @@
 package com.aol.micro.server.auto.discovery;
 
+import cyclops.control.Xor;
+
 import javax.servlet.Servlet;
 
-import com.aol.cyclops.control.Xor;
 
 public interface AutoServletConfiguration extends Servlet,ServletConfiguration{
 

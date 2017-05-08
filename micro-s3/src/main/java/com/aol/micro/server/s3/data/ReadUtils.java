@@ -8,13 +8,14 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.function.Supplier;
 
+import com.aol.cyclops2.util.ExceptionSoftener;
 import org.apache.commons.io.FileUtils;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.transfer.Download;
 import com.amazonaws.services.s3.transfer.TransferManager;
-import com.aol.cyclops.util.ExceptionSoftener;
+
 
 import lombok.AllArgsConstructor;
 

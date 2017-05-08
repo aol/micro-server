@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import cyclops.stream.ReactiveSeq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +25,7 @@ import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.transfer.TransferManager;
-import com.aol.cyclops.control.ReactiveSeq;
+
 
 @Component
 public class S3Utils {

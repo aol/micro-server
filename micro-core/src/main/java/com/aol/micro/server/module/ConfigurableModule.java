@@ -18,13 +18,13 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PMapX;
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.utility.HashMapBuilder;
 
+import cyclops.collections.immutable.PMapX;
+import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PStackX;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.experimental.Wither;
@@ -32,26 +32,43 @@ import lombok.experimental.Wither;
 
 @Builder
 @AllArgsConstructor
-@Wither
+
 public class ConfigurableModule implements Module{
 
+	@Wither
 	private final Set<Object> jaxRsResourceObjects;
+    @Wither
 	private final Set<Class<?>> restResourceClasses;
+    @Wither
 	private final Set<Class<? extends Annotation>> restAnnotationClasses;
+    @Wither
 	private final List<Class<?>> defaultResources;
+    @Wither
 	private final List<ServletContextListener> listeners;
+    @Wither
 	private final List<ServletRequestListener> requestListeners;
+    @Wither
 	private final Map<String, Filter> filters;
+    @Wither
 	private final Map<String, Servlet> servlets;
+    @Wither
 	private final String jaxWsRsApplication;
+    @Wither
 	private final String providers;
+    @Wither
 	private final String context;
+    @Wither
 	private final Set<Class<?>> springConfigurationClasses;
+    @Wither
 	private final Map<String,String> propertyOverrides;
+    @Wither
 	private final List<String> defaultJaxRsPackages;
+
 	private final Consumer<WebServerProvider<?>> serverConfigManager;
 	private final Consumer<JaxRsProvider<?>> resourceConfigManager;
+    @Wither
 	private final Map<String, Object> serverProperties;
+    @Wither
 	final boolean resetAll;
 
 

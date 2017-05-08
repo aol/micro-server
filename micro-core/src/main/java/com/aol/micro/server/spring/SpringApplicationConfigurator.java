@@ -2,14 +2,13 @@ package com.aol.micro.server.spring;
 
 import java.util.List;
 
+import cyclops.Streams;
+import cyclops.stream.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.control.StreamUtils;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.config.Config;
@@ -54,7 +53,7 @@ public class SpringApplicationConfigurator implements SpringBuilder {
                                                                                           .stream())
                                                  .filter(module -> module.springDbConfigurer() != null)
                                                  .map(Plugin::springDbConfigurer)
-                                                 .flatMap(StreamUtils::optionalToStream)
+                                                 .flatMap(Streams::optionalToStream)
                                                  .toList();
         result.forEach(next -> {
 

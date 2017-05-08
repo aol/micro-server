@@ -2,10 +2,11 @@ package com.aol.micro.server.spring;
 
 import java.util.Optional;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.aol.micro.server.spring.datasource.jdbc.SQL;
+import cyclops.collections.immutable.PSetX;
 
 /**
  * 

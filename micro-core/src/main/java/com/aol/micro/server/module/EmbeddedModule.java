@@ -2,8 +2,8 @@ package com.aol.micro.server.module;
 
 import java.lang.annotation.Annotation;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 
+import cyclops.collections.immutable.PSetX;
 import lombok.Getter;
 @Getter
 public class EmbeddedModule implements Module {

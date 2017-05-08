@@ -1,10 +1,11 @@
 package com.aol.micro.server.logback;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.logback.rest.LogbackLoggerResource;
 import com.aol.micro.server.logback.rest.LogbackRootLoggerResource;
 import com.aol.micro.server.logback.service.LogbackRootLoggerChecker;
+import cyclops.collections.immutable.PSetX;
 
 /**
  * 

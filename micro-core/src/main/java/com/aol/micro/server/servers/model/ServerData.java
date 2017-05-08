@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import javax.ws.rs.Path;
 
+import cyclops.collections.immutable.PStackX;
+import cyclops.stream.ReactiveSeq;
 import lombok.Getter;
 import lombok.Builder;
 
@@ -14,8 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.module.Module;
 
 @Getter

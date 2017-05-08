@@ -13,11 +13,12 @@ import java.util.Map;
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServlet;
 
+import cyclops.collections.immutable.PStackX;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
+
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.utility.HashMapBuilder;
 
