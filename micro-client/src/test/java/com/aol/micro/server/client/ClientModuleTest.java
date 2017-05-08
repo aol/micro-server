@@ -5,9 +5,10 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 
+import cyclops.stream.ReactiveSeq;
 import org.junit.Test;
 
-import com.aol.cyclops.control.ReactiveSeq;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.module.Module;
@@ -23,7 +24,7 @@ public class ClientModuleTest {
 				.fromStream(
 						Arrays.<Plugin>asList(new TestPlugin())
 								.stream()).filter(module -> module.providers()!=null)
-								.flatMapIterable(Plugin::providers)
+								.flatMapI(Plugin::providers)
 								.join(",");
 		
 		assertThat(additional, equalTo(""));

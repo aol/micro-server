@@ -3,10 +3,11 @@ package com.aol.micro.server.async.data.writer;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+import cyclops.collections.ListX;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.cyclops.data.collections.extensions.standard.ListX;
+
 
 public class MultiDataWriterTest {
 

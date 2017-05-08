@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.function.BinaryOperator;
 
+import cyclops.collections.ListX;
+import cyclops.control.Maybe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.aol.cyclops.control.Maybe;
-import com.aol.cyclops.data.collections.extensions.standard.ListX;
+
 import com.aol.micro.server.manifest.ManifestComparator;
 import com.google.common.eventbus.EventBus;
 

@@ -7,10 +7,11 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import cyclops.async.Future;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.cyclops.control.FutureW;
+
 import com.aol.micro.server.events.SystemData;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
@@ -43,7 +44,7 @@ public class AsyncDataWriterTest {
     public void testLoadAndGet() {
         assertThat(eventRecieved.get(), equalTo(0));
         dummyMc.setData("hello world");
-        FutureW<String> res = writer.loadAndGet();
+        Future<String> res = writer.loadAndGet();
 
         assertThat(res.get(), equalTo("hello world"));
         assertThat(dummyMc.loadCalled.get(), equalTo(1));
@@ -54,7 +55,7 @@ public class AsyncDataWriterTest {
     public void testSaveAndIncrement() {
         assertThat(eventRecieved.get(), equalTo(0));
         writer.saveAndIncrement("boo!");
-        FutureW<String> res = writer.loadAndGet();
+        Future<String> res = writer.loadAndGet();
         assertThat(res.get(), equalTo("boo!"));
         assertThat(eventRecieved.get(), equalTo(2));
     }
