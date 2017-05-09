@@ -10,6 +10,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequestListener;
 
+import cyclops.collections.immutable.PStackX;
 import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
+
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.module.Environment;
 import com.aol.micro.server.module.Module;

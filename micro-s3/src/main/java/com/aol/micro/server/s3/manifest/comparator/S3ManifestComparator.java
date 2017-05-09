@@ -2,14 +2,15 @@ package com.aol.micro.server.s3.manifest.comparator;
 
 import java.util.Date;
 
+import com.aol.cyclops2.util.ExceptionSoftener;
+import cyclops.control.Try;
+import cyclops.control.Xor;
 import org.jooq.lambda.tuple.Tuple;
 import org.jooq.lambda.tuple.Tuple2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.control.Try;
-import com.aol.cyclops.control.Xor;
-import com.aol.cyclops.util.ExceptionSoftener;
+
 import com.aol.micro.server.manifest.Data;
 import com.aol.micro.server.manifest.ManifestComparator;
 import com.aol.micro.server.manifest.ManifestComparatorKeyNotFoundException;
@@ -193,6 +194,13 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
     }
 
     /**
+     * @return true - if current data is stale and needs refreshed
+     */
+    private boolean needsData() {
+        return this.data.isSecondary();
+    }
+
+    /**
      * Load data from remote store if stale
      */
     @Override
@@ -201,7 +209,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
         long oldModified = modified;
         String oldKey = versionedKey;
         try {
-            if (isOutOfDate()) {
+            if (isOutOfDate() || needsData()) {
                 String newVersionedKey = reader.getAsString(key)
                                                .get();
                 val loaded = nonAtomicload(newVersionedKey);
@@ -215,7 +223,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
             data = oldData;
             versionedKey = oldKey;
             modified = oldModified;
-            logger.debug(e.getMessage(), e);
+            logger.info(e.getMessage(), e);
             throw ExceptionSoftener.throwSoftenedException(e);
         }
         return true;
@@ -288,7 +296,9 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
     @Override
     public synchronized void saveAndIncrement(T data) {
         Xor<Void, T> oldData = this.data;
+        final String oldKey = versionedKey;
         VersionedKey newVersionedKey = increment();
+        final String newKey = newVersionedKey.toJson();
         logger.info("Saving data with key {}, new version is {}", key, newVersionedKey.toJson());
 
         try {
@@ -298,6 +308,9 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
                   .peek(res -> {
                       this.data = Xor.primary(data);
                       delete(versionedKey);
+                  }).peekFailed((err) -> {
+                      String message = String.format("Failed to update manifest comparator file from %s to %s", oldKey, newKey);
+                      logger.warn(message, err);
                   });
 
         } finally {

@@ -2,11 +2,12 @@ package com.aol.micro.server.ip.tracker;
 
 import javax.servlet.Filter;
 
+import cyclops.control.Xor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.aol.cyclops.control.Xor;
+
 import com.aol.micro.server.auto.discovery.FilterConfiguration;
 
 @Configuration

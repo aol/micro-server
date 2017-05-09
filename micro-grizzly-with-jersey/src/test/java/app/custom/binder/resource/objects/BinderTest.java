@@ -6,11 +6,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.ExecutionException;
 
+import cyclops.collections.immutable.PSetX;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.module.ConfigurableModule;

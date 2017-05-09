@@ -3,15 +3,16 @@ package com.aol.micro.server;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import com.aol.cyclops2.util.ExceptionSoftener;
+import cyclops.Streams;
+import cyclops.collections.ListX;
+import cyclops.stream.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.control.StreamUtils;
-import com.aol.cyclops.data.collections.extensions.standard.ListX;
-import com.aol.cyclops.util.ExceptionSoftener;
+
 import com.aol.micro.server.config.Config;
 import com.aol.micro.server.config.MicroserverConfigurer;
 import com.aol.micro.server.module.Module;
@@ -127,7 +128,7 @@ public class MicroserverApp {
                                                                                                           .stream())
                                                                  .filter(m -> m.serverApplicationFactory() != null)
                                                                  .map(Plugin::serverApplicationFactory)
-                                                                 .flatMap(StreamUtils::optionalToStream)
+                                                                 .flatMap(Streams::optionalToStream)
                                                                  .toList();
         if (applications.size() > 1) {
             logger.error("ERROR!  Multiple server application factories found : The solution is remove one these plugins from your classpath ",

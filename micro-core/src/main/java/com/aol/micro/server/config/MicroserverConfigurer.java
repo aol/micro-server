@@ -1,17 +1,15 @@
 package com.aol.micro.server.config;
 
+import com.aol.micro.server.Plugin;
+import com.aol.micro.server.PluginLoader;
+import cyclops.stream.ReactiveSeq;
+import org.pcollections.HashTreePMap;
+import org.pcollections.HashTreePSet;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.pcollections.HashTreePMap;
-import org.pcollections.HashTreePSet;
-
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.micro.server.Plugin;
-import com.aol.micro.server.PluginLoader;
 
 public class MicroserverConfigurer implements Configurer {
 

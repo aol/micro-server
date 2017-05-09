@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import com.aol.cyclops2.util.ExceptionSoftener;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
@@ -14,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
-import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 
 @Builder

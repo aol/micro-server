@@ -1,10 +1,11 @@
 package com.aol.micro.server.reactive;
 import java.util.concurrent.ScheduledExecutorService;
 
+import com.aol.cyclops2.types.stream.HotStream;
+import cyclops.stream.ReactiveSeq;
 import lombok.AllArgsConstructor;
 
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.types.stream.HotStream;
+
 import com.aol.micro.server.events.ScheduledJob;
 import com.aol.micro.server.events.SystemData;
 

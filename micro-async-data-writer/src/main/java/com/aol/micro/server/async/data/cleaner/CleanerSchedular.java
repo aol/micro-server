@@ -2,10 +2,11 @@ package com.aol.micro.server.async.data.cleaner;
 
 import java.util.concurrent.ScheduledExecutorService;
 
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.data.collections.extensions.standard.ListX;
+
 import com.google.common.eventbus.EventBus;
 
+import cyclops.collections.ListX;
+import cyclops.stream.ReactiveSeq;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

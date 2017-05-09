@@ -1,10 +1,11 @@
 package com.aol.micro.server.guava;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.guava.spring.GuavaConfig;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
+import cyclops.collections.immutable.PSetX;
 
 /**
  * 

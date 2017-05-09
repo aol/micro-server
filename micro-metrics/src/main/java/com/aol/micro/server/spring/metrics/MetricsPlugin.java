@@ -1,9 +1,10 @@
 package com.aol.micro.server.spring.metrics;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.spring.metrics.health.HealthCheckRunner;
 import com.aol.micro.server.spring.metrics.health.HealthResource;
+import cyclops.collections.immutable.PSetX;
 
 /**
  * 

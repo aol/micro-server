@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutionException;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
+import com.aol.cyclops2.util.ExceptionSoftener;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.accesslog.AccessLogBuilder;
@@ -15,7 +16,7 @@ import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.util.ExceptionSoftener;
+
 import com.aol.micro.server.InternalErrorCode;
 import com.aol.micro.server.config.SSLProperties;
 import com.aol.micro.server.module.WebServerProvider;

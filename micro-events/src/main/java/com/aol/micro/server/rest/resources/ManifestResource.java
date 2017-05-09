@@ -14,11 +14,12 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
 
+import cyclops.stream.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.control.ReactiveSeq;
+
 import com.aol.micro.server.WorkerThreads;
 import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.auto.discovery.SingletonRestResource;
@@ -40,7 +41,7 @@ public class ManifestResource implements CommonRestResource, SingletonRestResour
 					.map(url->context.getResourceAsStream(url))
 					.map(this::getManifest)
 					.futureOperations(WorkerThreads.ioExecutor.get())
-					.forEach(result->asyncResponse.resume(result));
+					.forEachX(Long.MAX_VALUE,result->asyncResponse.resume(result));
 					
 		
 	}

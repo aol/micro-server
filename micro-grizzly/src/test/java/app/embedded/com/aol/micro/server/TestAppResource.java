@@ -7,10 +7,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import cyclops.async.SimpleReact;
+import cyclops.stream.FutureStream;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.control.SimpleReact;
-import com.aol.cyclops.types.futurestream.LazyFutureStream;
+
 import com.aol.micro.server.testing.RestAgent;
 @Component
 @Path("/test-status")
@@ -37,7 +38,7 @@ public class TestAppResource implements TestAppRestResource {
 	@Path("/rest-calls")
 	public String restCallResult(){
 		
-		return LazyFutureStream.lazyFutureStreamFromIterable(urls)
+		return FutureStream.lazyFutureStreamFromIterable(urls)
 					.map(it ->template.get(it))
 					.then(it -> "*"+it)
 					.peek(loadedAndModified -> System.out.println(loadedAndModified))

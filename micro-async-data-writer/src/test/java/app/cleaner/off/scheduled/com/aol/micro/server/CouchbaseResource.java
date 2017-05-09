@@ -4,10 +4,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import cyclops.collections.immutable.PStackX;
+import cyclops.control.Maybe;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.cyclops.control.Maybe;
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
+
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.distributed.DistributedMap;
 import com.aol.micro.server.events.SystemData;

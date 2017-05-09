@@ -3,10 +3,11 @@ package app.s3.rw.map.com.aol.micro.server;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
+import cyclops.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.amazonaws.services.s3.transfer.Upload;
-import com.aol.cyclops.control.Try;
+
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.s3.data.S3Reader;
 import com.aol.micro.server.s3.data.S3Utils;

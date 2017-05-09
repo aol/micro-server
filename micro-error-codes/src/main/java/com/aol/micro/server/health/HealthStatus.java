@@ -9,8 +9,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.aol.cyclops.data.collections.extensions.standard.QueueX;
 
+import cyclops.collections.QueueX;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

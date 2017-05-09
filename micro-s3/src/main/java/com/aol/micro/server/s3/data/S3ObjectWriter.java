@@ -9,6 +9,9 @@ import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
 
+import cyclops.control.Eval;
+import cyclops.control.Try;
+import cyclops.function.FluentFunctions;
 import org.apache.commons.io.FileUtils;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -16,9 +19,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
 import com.amazonaws.services.s3.transfer.model.UploadResult;
-import com.aol.cyclops.control.Eval;
-import com.aol.cyclops.control.FluentFunctions;
-import com.aol.cyclops.control.Try;
+
 
 import lombok.AllArgsConstructor;
 
@@ -33,7 +34,7 @@ public class S3ObjectWriter {
 
     /**
      * 
-     * Read data from defined S3 bucket with provided key to a String. Calling
+     * Writes java Objects to defined S3 bucket with provided key. Calling
      * map / flatMap on the returned try instance will catch any exceptions, any
      * exceptions thrown will convert a Success to a Failure
      * 

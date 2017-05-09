@@ -1,9 +1,10 @@
 package com.aol.micro.server.events.plugin;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.events.ConfigureActiveJobsAspect;
 import com.aol.micro.server.rest.resources.ConfigureResources;
+import cyclops.collections.immutable.PSetX;
 
 
 /**

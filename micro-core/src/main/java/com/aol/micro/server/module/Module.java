@@ -1,35 +1,29 @@
 package com.aol.micro.server.module;
 
-import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
-
-import javax.servlet.Filter;
-import javax.servlet.Servlet;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletRequestListener;
-
-import org.springframework.util.StringUtils;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.WebApplicationContext;
-
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.control.StreamUtils;
-import com.aol.cyclops.data.collections.extensions.persistent.PMapX;
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
-import com.aol.cyclops.data.collections.extensions.standard.ListX;
-import com.aol.cyclops.data.collections.extensions.standard.SetX;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Classes;
 import com.aol.micro.server.servers.model.ServerData;
+import cyclops.Streams;
+import cyclops.collections.ListX;
+import cyclops.collections.SetX;
+import cyclops.collections.immutable.PMapX;
+import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PStackX;
+import cyclops.stream.ReactiveSeq;
+import org.springframework.util.StringUtils;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.WebApplicationContext;
+
+import javax.servlet.Filter;
+import javax.servlet.Servlet;
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRequestListener;
+import java.lang.annotation.Annotation;
+import java.util.*;
+import java.util.function.Consumer;
 
 public interface Module {
 
@@ -78,7 +72,7 @@ public interface Module {
         return PluginLoader.INSTANCE.plugins.get()
                                             .stream()
                                             .filter(module -> module.servletContextListeners() != null)
-                                            .flatMapIterable(Plugin::jaxRsPackages)
+                                            .flatMapI(Plugin::jaxRsPackages)
 
                                             .toPStackX();
 
@@ -87,7 +81,7 @@ public interface Module {
     default List<Class<?>> getDefaultResources() {
         return PluginLoader.INSTANCE.plugins.get()
                                             .stream()
-                                            .flatMapIterable(Plugin::jaxRsResources)
+                                            .flatMapI(Plugin::jaxRsResources)
                                             .toPStackX();
 
     }
@@ -103,7 +97,7 @@ public interface Module {
 
         PStackX<ServletContextListener> listeners = modules.stream()
                                                            .filter(module -> module.servletContextListeners() != null)
-                                                           .flatMapIterable(Plugin::servletContextListeners)
+                                                           .flatMapI(Plugin::servletContextListeners)
                                                            .map(fn -> fn.apply(data))
                                                            .toPStackX();
 
@@ -115,7 +109,7 @@ public interface Module {
         return PluginLoader.INSTANCE.plugins.get()
                                             .stream()
                                             .filter(module -> module.servletRequestListeners() != null)
-                                            .flatMapIterable(Plugin::servletRequestListeners)
+                                            .flatMapI(Plugin::servletRequestListeners)
                                             .map(fn -> fn.apply(data))
                                             .toPStackX();
 
@@ -150,7 +144,7 @@ public interface Module {
                                                                                              .stream())
                                                     .filter(module -> module.jaxWsRsApplication() != null)
                                                     .map(Plugin::jaxWsRsApplication)
-                                                    .flatMap(StreamUtils::optionalToStream)
+                                                    .flatMap(Streams::optionalToStream)
                                                     .toList();
         if (jaxRsApplications.size() > 1) {
             throw new IncorrectJaxRsPluginsException(
@@ -170,7 +164,7 @@ public interface Module {
                                                                                 .stream())
                                        .peek(System.out::println)
                                        .filter(module -> module.providers() != null)
-                                       .flatMapIterable(Plugin::providers)
+                                       .flatMapI(Plugin::providers)
                                        .join(",");
 
         if (StringUtils.isEmpty(additional))

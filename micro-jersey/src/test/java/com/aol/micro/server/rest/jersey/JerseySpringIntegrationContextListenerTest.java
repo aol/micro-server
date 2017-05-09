@@ -5,10 +5,10 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 
+import cyclops.collections.immutable.PStackX;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
 import com.aol.micro.server.servers.model.ServerData;
 
 public class JerseySpringIntegrationContextListenerTest {

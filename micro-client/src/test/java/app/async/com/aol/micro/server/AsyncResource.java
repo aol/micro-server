@@ -10,9 +10,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
+import cyclops.async.LazyReact;
 import org.springframework.stereotype.Component;
 
-import com.aol.cyclops.control.LazyReact;
+
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.rest.client.nio.AsyncRestClient;
 

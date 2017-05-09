@@ -3,11 +3,12 @@ package com.aol.micro.server.couchbase.base;
 import java.util.Date;
 import java.util.Optional;
 
+import com.aol.cyclops2.util.ExceptionSoftener;
+import cyclops.control.Xor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.control.Xor;
-import com.aol.cyclops.util.ExceptionSoftener;
+
 import com.aol.micro.server.distributed.DistributedMap;
 import com.aol.micro.server.manifest.Data;
 import com.aol.micro.server.manifest.ManifestComparator;

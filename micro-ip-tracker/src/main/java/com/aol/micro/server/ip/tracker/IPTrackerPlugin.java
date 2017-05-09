@@ -1,9 +1,7 @@
 package com.aol.micro.server.ip.tracker;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
-
-
+import cyclops.collections.immutable.PSetX;
 
 
 public class IPTrackerPlugin implements Plugin{

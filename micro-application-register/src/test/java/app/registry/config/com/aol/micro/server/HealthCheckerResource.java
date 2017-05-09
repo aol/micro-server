@@ -5,10 +5,10 @@ import java.util.Map;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-import com.aol.cyclops.data.collections.extensions.standard.MapXs;
 import com.aol.micro.server.HealthStatusChecker;
 import com.aol.micro.server.StatsSupplier;
 import com.aol.micro.server.auto.discovery.Rest;
+import cyclops.collections.MapXs;
 
 @Rest
 @Path("/health")

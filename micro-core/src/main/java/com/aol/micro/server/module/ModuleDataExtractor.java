@@ -8,10 +8,11 @@ import java.util.stream.Collectors;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 
+import cyclops.collections.immutable.PStackX;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
+
 import com.aol.micro.server.auto.discovery.JaxRsResource;
 import com.aol.micro.server.auto.discovery.JaxRsResourceWrapper;
 import com.aol.micro.server.servers.model.FilterData;
@@ -25,7 +26,7 @@ public class ModuleDataExtractor {
 
 	private final Module module;
 	
-	public  PStackX getRestResources( ApplicationContext rootContext){
+	public PStackX getRestResources(ApplicationContext rootContext){
 		
 			List resources = new ArrayList<>();
 			module.getRestResourceClasses().forEach(it -> resources.addAll(rootContext.getBeansOfType(it).values()));

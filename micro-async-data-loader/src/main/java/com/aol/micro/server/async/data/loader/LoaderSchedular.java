@@ -2,11 +2,12 @@ package com.aol.micro.server.async.data.loader;
 
 import java.util.concurrent.ScheduledExecutorService;
 
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.data.collections.extensions.standard.ListX;
+
 import com.aol.micro.server.events.SystemData;
 import com.google.common.eventbus.EventBus;
 
+import cyclops.collections.ListX;
+import cyclops.stream.ReactiveSeq;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class LoaderSchedular {
             // run on startup
             create(dl).limit(1)
                       .futureOperations(executor)
-                      .forEach(l -> {
+                      .forEachX(Long.MAX_VALUE,l -> {
             });
 
             // schedule

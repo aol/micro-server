@@ -5,14 +5,14 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.InternalServerErrorException;
 
+import com.aol.cyclops2.types.futurestream.SimpleReactStream;
+import cyclops.async.SimpleReact;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import app.guava.com.aol.micro.server.ImmutableGuavaEntity;
 
-import com.aol.cyclops.control.SimpleReact;
-import com.aol.cyclops.types.futurestream.SimpleReactStream;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.testing.RestAgent;

@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
+import com.aol.cyclops2.types.futurestream.SimpleReactStream;
+import cyclops.async.SimpleReact;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.cyclops.control.SimpleReact;
-import com.aol.cyclops.types.futurestream.SimpleReactStream;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
