@@ -1,8 +1,6 @@
 package com.aol.micro.server.elasticache;
 
-/**
- * Created by gordonmorrow on 4/24/17.
- */
+
 
 import lombok.extern.slf4j.Slf4j;
 import net.spy.memcached.*;
@@ -67,7 +65,6 @@ public class ConfigureElasticache {
             return new MemcachedClient(new InetSocketAddress(hostname, port));
         } catch (IOException e) {
             log.error("Could not initilise connection to elasticache cluster", e);
-            e.printStackTrace();
             return null;
         }
 

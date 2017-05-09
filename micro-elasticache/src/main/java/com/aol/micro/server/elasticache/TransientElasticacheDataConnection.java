@@ -6,9 +6,6 @@ import java.util.Optional;
 import net.spy.memcached.MemcachedClient;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * Created by gordonmorrow on 5/3/17.
- */
 
 @Slf4j
 public class TransientElasticacheDataConnection<V> implements DistributedCacheManager<V> {
@@ -42,7 +39,6 @@ public class TransientElasticacheDataConnection<V> implements DistributedCacheMa
                             .get();
                 } catch (final Exception e) {
                     log.warn("memcache set: {}", e.getMessage());
-                    System.out.println(e.getMessage());
                 }
             } while (!success && tryCount < maxTry);
 

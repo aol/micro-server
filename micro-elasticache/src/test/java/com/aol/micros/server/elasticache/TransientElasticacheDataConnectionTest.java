@@ -1,8 +1,5 @@
 package com.aol.micros.server.elasticache;
 
-/**
- * Created by gordonmorrow on 5/9/17.
- */
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.stub;
 import static org.junit.Assert.assertEquals;
