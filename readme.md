@@ -46,6 +46,34 @@ See the response  *hello world!*
 
 Add plugins by adding them to your build file - rerun the app to get new end points, Spring beans and more!
 
+## Easy to use async NIO based REST
+
+Return any reactive-streams Publisher from your REST end point to make them execute asynchronously automatically.
+
+E.g. Using Future from [cyclops-react](cyclops-react.io)
+```java
+   @GET
+   public Future<String> myEndPoint(){
+	  return Future.ofSupplier(()->{
+                                           sleep();
+                                           return "hello world!";
+		}, Executors.newFixedThreadPool(1));
+   }
+```
+
+Would be equivalent to the following code
+
+```java
+ @GET
+ public void myEndPoint(@Suspended AsyncResponse asyncResponse){
+      Future.ofSupplier(()->{
+                                           sleep();
+                                           asyncResponse.resume("hello world!");
+                                           return 1;
+		}, Executors.newFixedThreadPool(1));
+}
+```
+
 # Why Microserver?
 
 Microserver is a plugin engine for building Spring and Spring Boot based microservices. Microserver supports pure microservice and micro-monolith development styles. The micro-monolith style involves packaging multiple services into a single deployment - offering developers the productivity of microservice development without the operational risk. This can help teams adopt a Microservices architecture on projects that are currently monoliths.

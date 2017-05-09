@@ -24,3 +24,31 @@ Gradle
 ```groovy
     compile 'com.aol.microservices:micro-jersey:x.yz'
 ```
+
+## Baked in async NIO based REST
+
+Return any reactive-streams Publisher from your REST end point to make them execute asynchronously automatically.
+
+E.g. Using Future from [cyclops-react](cyclops-react.io)
+```java
+   @GET
+   public Future<String> myEndPoint(){
+	  return Future.ofSupplier(()->{
+                                           sleep();
+                                           return "hello world!";
+		}, Executors.newFixedThreadPool(1));
+   }
+```
+
+Would be equivalent to the following code
+
+```java
+ @GET
+ public void myEndPoint(@Suspended AsyncResponse asyncResponse){
+      Future.ofSupplier(()->{
+                                           sleep();
+                                           asyncResponse.resume("hello world!");
+                                           return 1;
+		}, Executors.newFixedThreadPool(1));
+}
+```
