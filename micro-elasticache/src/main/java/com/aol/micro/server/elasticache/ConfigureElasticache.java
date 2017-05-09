@@ -37,7 +37,7 @@ public class ConfigureElasticache {
     private final int maxRetries;
 
     @Autowired
-    public ConfigureElasticache( @Value("${elasticache.hostname:null}") String hostname, //TO-DO remove this before review
+    public ConfigureElasticache( @Value("${elasticache.hostname:null}") String hostname,
                                  @Value("${elasticache.port:6379}") int port,
                                  @Value("${elasticache.retry.after.seconds:1}") int retryAfterSecs,
                                  @Value("${elasticache.max.retries:3}") int maxRetries) {
