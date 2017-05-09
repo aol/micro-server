@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import net.spy.memcached.auth.AuthDescriptor;
 import net.spy.memcached.auth.PlainCallbackHandler;
 import net.spy.memcached.MemcachedClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,35 +30,43 @@ import java.util.Optional;
 @Configuration
 public class ConfigureElasticache {
 
-    private ClientMode mode = ClientMode.Dynamic;
 
-    @Value("${elasticache.hostname:lana-staging-ec.6o3auf.cfg.use1.cache.amazonaws.com")
-    private String hostname = "lana-staging-ec.6o3auf.cfg.use1.cache.amazonaws.com";
+    private final String hostname;
+    private final int port;
+    private final int retryAfterSecs;
+    private final int maxRetries;
 
-    @Value("${elasticache.port:6379")
-    private int port = 6379;
-
-    @Value("${elasticache.retries:3")
-    private int retries = 3;
-
-    @Value("${elastiache.retry.after.seconds:1")
-    private int retryAfterSeconds = 1;
-
-    private MemcachedClient cache;
-
-    InetSocketAddress socketAddress = new InetSocketAddress(hostname, port);
-
-    @Bean(name = "elasticacheClient")
-    public TransientElasticacheDataConnection transientCache() throws IOException, URISyntaxException {
-        log.info("Creating MemcacheClient for servers: {}", hostname);
-        return new TransientElasticacheDataConnection(createMemcachedClient(socketAddress), retries, retryAfterSeconds);
+    @Autowired
+    public ConfigureElasticache( @Value("${elasticache.hostname:null}") String hostname, //TO-DO remove this before review
+                                 @Value("${elasticache.port:6379}") int port,
+                                 @Value("${elasticache.retry.after.seconds:1}") int retryAfterSecs,
+                                 @Value("${elasticache.max.retries:3}") int maxRetries) {
+        this.hostname = hostname;
+        this.port = port;
+        this.retryAfterSecs = retryAfterSecs;
+        this.maxRetries = maxRetries;
     }
 
-    private MemcachedClient createMemcachedClient(InetSocketAddress socketAddress) throws IOException {
 
+    @Bean(name = "transientCache")
+    public DistributedCacheManager transientCache() throws IOException, URISyntaxException {
         try {
-            return new MemcachedClient(socketAddress);
+            log.info("Creating Memcached Data connection for elasticache cluster: {}", hostname);
+            return new TransientElasticacheDataConnection(createMemcachedClient(), retryAfterSecs, maxRetries);
+        }
+     catch (Exception e) {
+            log.error("Failed to create transient data connection", e);
+            return null;
+        }
+    }
+
+    @Bean(name = "memcachedClient")
+    public MemcachedClient createMemcachedClient() throws IOException {
+        try {
+            log.info("Starting an instance of memcache client towards elasticache cluster");
+            return new MemcachedClient(new InetSocketAddress(hostname, port));
         } catch (IOException e) {
+            log.error("Could not initilise connection to elasticache cluster", e);
             e.printStackTrace();
             return null;
         }

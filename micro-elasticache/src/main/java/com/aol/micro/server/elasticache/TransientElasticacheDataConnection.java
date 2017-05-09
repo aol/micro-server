@@ -4,33 +4,30 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
 import net.spy.memcached.MemcachedClient;
-
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 /**
  * Created by gordonmorrow on 5/3/17.
  */
-@Component
+
 @Slf4j
 public class TransientElasticacheDataConnection<V> implements DistributedCacheManager<V> {
 
         private volatile boolean available = false;
         private final MemcachedClient memcachedClient;
-        private final int maxTry, retryAfterSec;
+        private final int retryAfterSec;
+        private final int maxTry;
 
-        public TransientElasticacheDataConnection(MemcachedClient memcachedClient, final int maxTry, final int retryAfterSec) {
+        public TransientElasticacheDataConnection(MemcachedClient memcachedClient,int retryAfterSec, int maxTry) {
             this.memcachedClient = memcachedClient;
-            this.maxTry = maxTry;
             this.retryAfterSec = retryAfterSec;
+            this.maxTry = maxTry;
         }
 
         @Override
-        public boolean put(final String key, int exp, final V value) {
+        public boolean add(final String key, int exp, final Object value) {
 
-            log.trace("put '{}', value:{}", key, value);
+            log.trace("Memcached add operation on key '{}', with value:{}", key, value);
             boolean success = false;
             int tryCount = 0;
 
@@ -38,13 +35,14 @@ public class TransientElasticacheDataConnection<V> implements DistributedCacheMa
                 try {
                     if (tryCount > 0) {
                         Thread.sleep(retryAfterSec * 1000);
-                        log.warn("retry #{}", tryCount);
+                        log.warn("retrying operation  #{}", tryCount);
                     }
                     tryCount++;
-                    success = memcachedClient.set(key, exp, value)
+                    success = memcachedClient.add(key, exp, value)
                             .get();
                 } catch (final Exception e) {
-                    log.warn("memcache put: {}", e.getMessage());
+                    log.warn("memcache set: {}", e.getMessage());
+                    System.out.println(e.getMessage());
                 }
             } while (!success && tryCount < maxTry);
 
@@ -52,7 +50,7 @@ public class TransientElasticacheDataConnection<V> implements DistributedCacheMa
                 log.error("Failed to add key to Elasticache {}", key);
             }
             if (success && tryCount > 1) {
-                log.info("Connection restored OK");
+                log.info("Connection restored OK to Elasticache cluster");
             }
 
             available = success;
@@ -73,6 +71,4 @@ public class TransientElasticacheDataConnection<V> implements DistributedCacheMa
         public final void setConnectionTested(final boolean available) {
             this.available = available;
         }
-
-    }
-
+}

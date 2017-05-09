@@ -8,7 +8,8 @@ import com.aol.micro.server.Plugin;
  */
 public class ElasticachePlugin implements Plugin {
 
-       public PSetX<Class> springClasses() {
+    @Override
+    public PSetX<Class> springClasses() {
             return PSetX.of(ConfigureElasticache.class);
         }
 }

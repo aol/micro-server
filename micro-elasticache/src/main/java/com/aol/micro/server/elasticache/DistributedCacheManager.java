@@ -6,6 +6,6 @@ import java.util.Optional;
 public interface DistributedCacheManager<V> {
         void setConnectionTested(boolean result);
         boolean isAvailable();
-        boolean put(String key, int exp, V value);
+        boolean add(String key, int exp, Object value);
         Optional<V> get(String key);
 }
