@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,11 +33,14 @@ public class DatadogMetricsConfigurer extends MetricsConfigurerAdapter {
     @Getter
     private EnumSet<DatadogReporter.Expansion> expansions;
 
+    private final String host;
+
     @Autowired
     public DatadogMetricsConfigurer(@Value("${datadog.apikey}") String apiKey,
             @Value("${datadog.tags:{\"stage:dev\"}}") String tags, @Value("${datadog.report.period:1}") int period,
             @Value("${datadog.report.timeunit:SECONDS}") TimeUnit timeUnit,
-            @Value("${datadog.report.expansions:#{null}}") String expStr) {
+            @Value("${datadog.report.expansions:#{null}}") String expStr,
+	    @Value("${host.address:#{null}") String host){
         this.apiKey = apiKey;
         this.tags = Arrays.asList(Optional.ofNullable(tags)
                                           .orElse("")
@@ -44,6 +48,7 @@ public class DatadogMetricsConfigurer extends MetricsConfigurerAdapter {
         this.period = period;
         this.timeUnit = timeUnit;
         this.expansions = expansions(expStr);
+	this.host = host;
     }
 
     private EnumSet<DatadogReporter.Expansion> expansions(String expStr) {
@@ -63,11 +68,12 @@ public class DatadogMetricsConfigurer extends MetricsConfigurerAdapter {
         HttpTransport httpTransport = new HttpTransport.Builder().withApiKey(apiKey)
                                                                  .build();
         EnumSet<DatadogReporter.Expansion> expansions = DatadogReporter.Expansion.ALL;
-        DatadogReporter reporter = DatadogReporter.forRegistry(metricRegistry)
+	DatadogReporter.Builder builder = DatadogReporter.forRegistry(metricRegistry)
                                                   .withTransport(httpTransport)
                                                   .withExpansions(expansions)
-                                                  .withTags(tags)
-                                                  .build();
+                                                  .withTags(tags);
+ 
+        DatadogReporter reporter = (Objects.nonNull(host) ? builder.withHost(host) : builder).build();
         reporter.start(period, timeUnit);
         registerReporter(reporter);
     }

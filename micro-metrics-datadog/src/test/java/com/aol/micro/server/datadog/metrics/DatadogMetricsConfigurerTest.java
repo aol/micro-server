@@ -20,7 +20,7 @@ public class DatadogMetricsConfigurerTest {
     public void expansionsDefault() {
         String expStr = null;
         DatadogMetricsConfigurer c = new DatadogMetricsConfigurer(
-                                                                  apiKey, tags, period, timeUnit, expStr);
+                                                                  apiKey, tags, period, timeUnit, expStr, null);
         assertThat(c.getExpansions(), equalTo(DatadogReporter.Expansion.ALL));
     }
 
@@ -28,7 +28,7 @@ public class DatadogMetricsConfigurerTest {
     public void expansionsSingle() {
         String expStr = DatadogReporter.Expansion.MEDIAN.name();
         DatadogMetricsConfigurer c = new DatadogMetricsConfigurer(
-                                                                  apiKey, tags, period, timeUnit, expStr);
+                                                                  apiKey, tags, period, timeUnit, expStr, null);
         assertThat(c.getExpansions(), equalTo(EnumSet.of(DatadogReporter.Expansion.MEDIAN)));
     }
 
@@ -36,7 +36,7 @@ public class DatadogMetricsConfigurerTest {
     public void expansionsTwo() {
         String expStr = DatadogReporter.Expansion.MEDIAN.name() + "," + DatadogReporter.Expansion.RATE_15_MINUTE.name();
         DatadogMetricsConfigurer c = new DatadogMetricsConfigurer(
-                                                                  apiKey, tags, period, timeUnit, expStr);
+                                                                  apiKey, tags, period, timeUnit, expStr, null);
         assertThat(c.getExpansions(),
                    equalTo(EnumSet.of(DatadogReporter.Expansion.MEDIAN, DatadogReporter.Expansion.RATE_15_MINUTE)));
     }
@@ -46,7 +46,7 @@ public class DatadogMetricsConfigurerTest {
         String expStr = DatadogReporter.Expansion.MEDIAN.name() + " , "
                 + DatadogReporter.Expansion.RATE_15_MINUTE.name();
         DatadogMetricsConfigurer c = new DatadogMetricsConfigurer(
-                                                                  apiKey, tags, period, timeUnit, expStr);
+                                                                  apiKey, tags, period, timeUnit, expStr, null);
         assertThat(c.getExpansions(),
                    equalTo(EnumSet.of(DatadogReporter.Expansion.MEDIAN, DatadogReporter.Expansion.RATE_15_MINUTE)));
     }
