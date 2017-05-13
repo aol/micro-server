@@ -55,10 +55,10 @@ public class IntegrationTest {
     public void lock() {
         final String lockName = UUID.randomUUID().toString();
 
-        DistributedLockService lock = provider.getDistributedLock(1000);
+        DistributedLockService lock = provider.getDistributedLock(10000);
         Assert.assertTrue(lock.tryLock(lockName));
         Assert.assertTrue(lock.tryLock(lockName));
-        DistributedLockService lock2 = provider.getDistributedLock(1000);
+        DistributedLockService lock2 = provider.getDistributedLock(10000);
         Assert.assertFalse(lock2.tryLock(lockName));
     }
 

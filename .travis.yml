@@ -1,4 +1,9 @@
+sudo: true
 language: java
-install: gradle clean build
+install: gradle clean 
 jdk:
   - oraclejdk8
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
