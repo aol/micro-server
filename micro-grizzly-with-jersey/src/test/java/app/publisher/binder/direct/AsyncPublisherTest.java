@@ -38,9 +38,9 @@ public class AsyncPublisherTest {
     public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
 
 
-        //DirectMyIncovationHandler.captured=false;
+
         assertThat(rest.get("http://localhost:8080/binder/test"), is("hello world!"));
-        //assertTrue(DirectMyIncovationHandler.captured);
+        
 
 
     }
