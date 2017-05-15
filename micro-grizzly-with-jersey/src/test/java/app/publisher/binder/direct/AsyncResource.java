@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 @Path("/test")
 public class AsyncResource {
 
-	private void sleep(){
+    private void sleep() {
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
@@ -23,17 +23,18 @@ public class AsyncResource {
         }
     }
 
-	@GET
-	public Future<String> myEndPoint(){
-		return Future.ofSupplier(()->{
-            sleep();
-			return "hello world!";
-		}, Executors.newFixedThreadPool(1));
-	}
     @GET
-    public ReactiveSeq<String> async2(){
-        return Spouts.publishOn(Stream.of("hello"),Executors.newFixedThreadPool(1));
+    public Future<String> myEndPoint() {
+        return Future.ofSupplier(() -> {
+            sleep();
+            return "hello world!";
+        }, Executors.newFixedThreadPool(1));
     }
 
-	
+    @GET
+    public ReactiveSeq<String> async2() {
+        return Spouts.publishOn(Stream.of("hello"), Executors.newFixedThreadPool(1));
+    }
+
+
 }

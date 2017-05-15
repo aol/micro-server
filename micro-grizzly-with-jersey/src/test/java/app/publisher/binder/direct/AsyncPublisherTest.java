@@ -18,29 +18,30 @@ import static org.junit.Assert.assertTrue;
 
 @Microserver
 public class AsyncPublisherTest {
-	RestAgent rest = new RestAgent();
-	MicroserverApp server;
-	@Before
-	public void startServer(){
-		
-			server = new MicroserverApp(()->"binder");
-		server.start();
+    RestAgent rest = new RestAgent();
+    MicroserverApp server;
 
-	}
-	
-	@After
-	public void stopServer(){
-		server.stop();
-	}
-	
-	@Test
-	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
-		
-		
-		//DirectMyIncovationHandler.captured=false;
-		assertThat(rest.get("http://localhost:8080/binder/test"),is("hello world!"));
-		//assertTrue(DirectMyIncovationHandler.captured);
-		
-		
-	}
+    @Before
+    public void startServer() {
+
+        server = new MicroserverApp(() -> "binder");
+        server.start();
+
+    }
+
+    @After
+    public void stopServer() {
+        server.stop();
+    }
+
+    @Test
+    public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
+
+
+        //DirectMyIncovationHandler.captured=false;
+        assertThat(rest.get("http://localhost:8080/binder/test"), is("hello world!"));
+        //assertTrue(DirectMyIncovationHandler.captured);
+
+
+    }
 }
