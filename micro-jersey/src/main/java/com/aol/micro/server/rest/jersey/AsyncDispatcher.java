@@ -41,7 +41,7 @@ public class AsyncDispatcher implements ResourceMethodDispatcher {
 
     @AllArgsConstructor
     @NoArgsConstructor
-   static class AsyncDispatcherProvider implements Provider{
+    static class AsyncDispatcherProvider implements Provider{
         @Context
         private ServiceLocator serviceLocator;
        @Override
@@ -68,7 +68,7 @@ public class AsyncDispatcher implements ResourceMethodDispatcher {
            }
            return null;
        }
-   }
+    }
     @Override
     public Response dispatch(Object resource, ContainerRequest request) throws ProcessingException {
         final AsyncContext context = this.asyncContext.get();
