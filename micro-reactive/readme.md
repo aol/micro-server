@@ -4,6 +4,8 @@
 
 The micro-reactive plugin integrates [cyclops-react](https://github.com/aol/cyclops-react) and [Pivotal Reactor](http://projectreactor.io/) to provide a very rich integrated reactive programming environment on top of Spring. 
 
+*NB* Microserver's Jersey plugin already makes Publisher a valid return type, converts them to asynchronously executing REST End points
+
 Why?
 
 cyclops-react offers a range of functional datatypes and datastructures, many of which act as reactive-streams Publishers /subscribers. Pivotal Reactor offer advanced / specialized processing capabilities for reactive-streams Publishers and subscribers.
