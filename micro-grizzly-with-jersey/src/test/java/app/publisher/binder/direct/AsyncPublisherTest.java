@@ -36,12 +36,10 @@ public class AsyncPublisherTest {
 
     @Test
     public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
-
-
-
-        assertThat(rest.get("http://localhost:8080/binder/test"), is("hello world!"));
-        
-
-
+        assertThat(rest.get("http://localhost:8080/binder/test/myEndPoint"), is("hello world!"));
+    }
+    @Test
+    public void runAppAndBasicTest2() throws InterruptedException, ExecutionException {
+        assertThat(rest.get("http://localhost:8080/binder/test/async2"), is("hello"));
     }
 }

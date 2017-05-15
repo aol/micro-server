@@ -24,6 +24,7 @@ public class AsyncResource {
     }
 
     @GET
+    @Path("myEndPoint")
     public Future<String> myEndPoint() {
         return Future.ofSupplier(() -> {
             sleep();
@@ -32,6 +33,7 @@ public class AsyncResource {
     }
 
     @GET
+    @Path("async2")
     public ReactiveSeq<String> async2() {
         return Spouts.publishOn(Stream.of("hello"), Executors.newFixedThreadPool(1));
     }

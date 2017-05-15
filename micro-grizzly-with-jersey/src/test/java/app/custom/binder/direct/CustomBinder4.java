@@ -11,7 +11,5 @@ public class CustomBinder4 extends AbstractBinder {
         // this is where the magic happens!
         bind(DirectCustomResourceInvocationHandlerProvider.class).to(
                 ResourceMethodInvocationHandlerProvider.class);
-
-
     }
 }

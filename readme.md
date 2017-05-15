@@ -51,13 +51,14 @@ Add plugins by adding them to your build file - rerun the app to get new end poi
 Return any reactive-streams Publisher from your REST end point to make them execute asynchronously automatically.
 
 E.g. Using Future from [cyclops-react](cyclops-react.io)
+
 ```java
    @GET
    public Future<String> myEndPoint(){
-	  return Future.ofSupplier(()->{
-                                           sleep();
-                                           return "hello world!";
-		}, Executors.newFixedThreadPool(1));
+          return Future.ofSupplier(()->{
+                                        sleep();
+                                        return "hello world!";
+                                        }, Executors.newFixedThreadPool(1));
    }
 ```
 
