@@ -11,10 +11,6 @@ public class AsyncBinder extends AbstractBinder {
 
     @Override
     protected void configure() {
-
-        bind(AsyncInvocationHandler.class).to(
-                ResourceMethodInvocationHandlerProvider.class);
-
         bind(AsyncDispatcher.AsyncDispatcherProvider.class).to(
                 ResourceMethodDispatcher.Provider.class).in(Singleton.class)
                 .ranked(1);
