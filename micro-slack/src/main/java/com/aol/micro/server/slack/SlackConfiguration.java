@@ -13,7 +13,7 @@ public class SlackConfiguration {
     private final String webhookUri;
 
     @Autowired
-    public SlackConfiguration(@Value("${slack.webhookUri}") String webhookUri){
+    public SlackConfiguration(@Value("${micro.slack.webhook.uri}") String webhookUri){
         this.webhookUri = webhookUri;
     }
 }
