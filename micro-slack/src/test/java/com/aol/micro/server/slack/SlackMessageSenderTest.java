@@ -12,15 +12,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/context.xml")
 public class SlackMessageSenderTest {
-    
-    SlackMessageSender slackMessageSender;
-    
+
+    private SlackMessageSender slackMessageSender;
+
     @Value("${slack.webhookUri}")
     String webHookUri;
     
     @Before
     public void setup(){
-        System.out.println(webHookUri);
         slackMessageSender = new SlackMessageSender(new SlackConfiguration(webHookUri));
     }
 

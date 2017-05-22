@@ -22,6 +22,7 @@ public class SlackMessageSender {
     
     @Autowired
     public SlackMessageSender(SlackConfiguration slackConfiguration){
+
         this.slackConfiguration = slackConfiguration;
     }
 
@@ -34,7 +35,7 @@ public class SlackMessageSender {
 
             //add request header
             con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", "Mozilla/5.0");
+            con.setRequestProperty("User-Agent", "com.aol.micro.server");
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
     
