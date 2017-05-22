@@ -1,11 +1,12 @@
 package com.aol.micro.server.s3.plugin;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.s3.DirectoryCleaner;
 import com.aol.micro.server.s3.S3Configuration;
 import com.aol.micro.server.s3.data.S3DistributedMapClient;
 import com.aol.micro.server.s3.data.S3Utils;
+import cyclops.collections.immutable.PSetX;
 
 public class S3Plugin implements Plugin {
 

@@ -1,8 +1,9 @@
 package com.aol.micro.server;
 
-import com.aol.cyclops.data.collections.extensions.standard.ListX;
+
 import com.aol.micro.server.module.Module;
 
+import cyclops.collections.ListX;
 import lombok.Getter;
 import lombok.Setter;
 

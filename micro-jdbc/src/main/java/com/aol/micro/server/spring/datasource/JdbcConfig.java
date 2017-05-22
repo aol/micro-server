@@ -3,7 +3,7 @@ package com.aol.micro.server.spring.datasource;
 import java.util.Properties;
 
 import lombok.Getter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,7 +30,7 @@ public class JdbcConfig {
 	private final String name;
 	private final String generateDdl;
 	private final String initializationFile;
-	
+
 	public JdbcConfig(@Value("${db.connection.driver:}") String driverClassName, @Value("${db.connection.url:}") String url,
 			@Value("${db.connection.username:}") String username, @Value("${db.connection.password:}") String password,
 			@Value("${db.connection.hibernate.showsql:false}") String showSql, @Value("${db.connection.dialect:}") String dialect,
@@ -55,7 +55,7 @@ public class JdbcConfig {
 		this.showSql = UsefulStaticMethods.either(showSql, extract("connection.showsql"));
 		this.dialect = UsefulStaticMethods.either(dialect, extract("connection.dialect"));
 		this.ddlAuto = UsefulStaticMethods.either(ddlAuto, extract("connection.ddl.auto"));
-		this.generateDdl = UsefulStaticMethods.either(generateDdl, extract("connection.generate.ddl"));	
+		this.generateDdl = UsefulStaticMethods.either(generateDdl, extract("connection.generate.ddl"));
 		this.initializationFile = initializationFile;
 	}
 

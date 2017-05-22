@@ -4,10 +4,11 @@ import java.util.Random;
 import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 
+import cyclops.async.Future;
+import cyclops.collections.MapX;
 import org.jooq.lambda.tuple.Tuple;
 
-import com.aol.cyclops.control.FutureW;
-import com.aol.cyclops.data.collections.extensions.standard.MapX;
+
 import com.aol.micro.server.events.SystemData;
 import com.aol.micro.server.manifest.ManifestComparator;
 import com.aol.micro.server.utility.HashMapBuilder;
@@ -36,13 +37,13 @@ public class AsyncDataWriter<T> implements DataWriter<T> {
     }
 
     @Override
-    public FutureW<T> loadAndGet() {
+    public Future<T> loadAndGet() {
         String correlationId = "" + System.currentTimeMillis() + ":" + r.nextLong();
         Supplier<MapX<String, String>> dataMap = () -> MapX.fromMap(HashMapBuilder.map(MANIFEST_COMPARATOR_DATA_LOADER_KEY,
                                                                                        comparator.toString())
                                                                                   .build());
 
-        return FutureW.ofSupplier(() -> Tuple.tuple(comparator.load(), comparator.getData()), executorService)
+        return Future.ofSupplier(() -> Tuple.tuple(comparator.load(), comparator.getData()), executorService)
                       .peek(t -> bus.post(SystemData.<String, String> builder()
                                                     .correlationId(correlationId)
                                                     .dataMap(dataMap.get())
@@ -60,12 +61,12 @@ public class AsyncDataWriter<T> implements DataWriter<T> {
     }
 
     @Override
-    public FutureW<Void> saveAndIncrement(T data) {
+    public Future<Void> saveAndIncrement(T data) {
         String correlationId = "" + System.currentTimeMillis() + ":" + r.nextLong();
         Supplier<MapX<String, String>> dataMap = () -> MapX.fromMap(HashMapBuilder.map(MANIFEST_COMPARATOR_DATA_WRITER_KEY,
                                                                                        comparator.toString())
                                                                                   .build());
-        return FutureW.<Void> ofSupplier(() -> {
+        return Future.<Void> ofSupplier(() -> {
             comparator.saveAndIncrement(data);
             return null;
         } , executorService)
@@ -86,7 +87,7 @@ public class AsyncDataWriter<T> implements DataWriter<T> {
     }
 
     @Override
-    public FutureW<Boolean> isOutOfDate() {
-        return FutureW.ofSupplier(() -> comparator.isOutOfDate(), executorService);
+    public Future<Boolean> isOutOfDate() {
+        return Future.ofSupplier(() -> comparator.isOutOfDate(), executorService);
     }
 }

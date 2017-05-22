@@ -7,7 +7,7 @@ dependencies {
 	compile project(':micro-core')
 	testCompile project(':micro-jersey')
 	testCompile project(':micro-jackson-configuration')
-	testCompile 'commons-io:commons-io:2.4'
+	testCompile 'commons-io:commons-io:'+commonsIOVersion
 	
 
 }

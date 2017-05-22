@@ -27,28 +27,32 @@ public class JobsBeingExecuted {
     @Getter(AccessLevel.PACKAGE)
     private final ConcurrentHashMultiset<String> statCounter = ConcurrentHashMultiset.create();
     private final EventBus eventBus;
+    private final JobName.Types jobNameType;
 
     private final LoggingRateLimiter<Class> loggingRateLimiter;
 
-    private final int maxLoggingCapacity;
+    private final long maxLoggingCapacity;
 
     public JobsBeingExecuted(@Qualifier("microserverEventBus") EventBus bus,
-            @Value("${system.logging.max.per.hour:10}") int maxLoggingCapacity) {
+            @Value("${system.logging.max.per.hour:10}") long maxLoggingCapacity,
+            @Value("${micro.events.job.name.format:SIMPLE}") JobName.Types jobNameType) {
         this.eventBus = bus;
+        this.jobNameType = jobNameType;
         this.loggingRateLimiter = new LoggingRateLimiter<>();
         this.maxLoggingCapacity = maxLoggingCapacity;
     }
 
     public JobsBeingExecuted(EventBus bus) {
         this(
-             bus, 10);
+             bus, 10, JobName.Types.SIMPLE);
     }
 
     @Around("execution(* com.aol.micro.server.events.ScheduledJob.scheduleAndLog(..))")
     public Object aroundScheduledJob(ProceedingJoinPoint pjp) throws Throwable {
-        String type = pjp.getSignature()
-                         .getDeclaringType()
-                         .getName();
+
+        String type = jobNameType.getCreator()
+                                 .getType(pjp.getSignature()
+                                             .getDeclaringType());
 
         return executeScheduledJob(pjp, type);
 
@@ -86,8 +90,14 @@ public class JobsBeingExecuted {
             return retVal;
         } finally {
             logSystemEvent(pjp, type, data, retVal);
+            retVal = Optional.ofNullable(retVal)
+                             .orElse(SystemData.builder()
+                                               .correlationId("" + correlationId)
+                                               .errors(0l)
+                                               .processed(0l)
+                                               .build());
             eventBus.post(new JobCompleteEvent(
-                                               correlationId, type));
+                                               correlationId, type, retVal.getErrors(), retVal.getProcessed()));
         }
     }
 
@@ -98,7 +108,7 @@ public class JobsBeingExecuted {
                                                     .getClass());
         loggingRateLimiter.capacityAvailable(pjp.getTarget()
                                                 .getClass(),
-                                             10, new Runnable() {
+                                             this.maxLoggingCapacity, new Runnable() {
                                                  @Override
                                                  public void run() {
                                                      postEvent(pjp, type, data, active);

@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.experimental.Builder;
+import lombok.Builder;
 import lombok.experimental.Wither;
 
 @Builder
@@ -19,12 +19,12 @@ import lombok.experimental.Wither;
 public class SystemData<K, V> {
 
     private static final Random r = new Random();
-    private final Integer processed;
-    private final Integer errors;
+    private final long processed;
+    private final long errors;
     private final Map<K, V> dataMap;
     private String correlationId;
 
-    private SystemData(Integer processed, Integer errors, Map<K, V> dataMap) {
+    private SystemData(long processed, long errors, Map<K, V> dataMap) {
         this.processed = processed;
         this.errors = errors;
         this.dataMap = dataMap;

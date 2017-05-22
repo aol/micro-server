@@ -4,9 +4,10 @@ import java.util.Map;
 
 import javax.servlet.Filter;
 
+import cyclops.control.Xor;
 import org.pcollections.HashTreePMap;
 
-import com.aol.cyclops.control.Xor;
+
 
 /**
  * If creating a Plugin, create a FilterConfiguration Spring Bean rather than a Filter Spring Bean

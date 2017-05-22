@@ -19,9 +19,6 @@ import com.aol.micro.server.dist.lock.DistributedLockService;
 import lombok.AllArgsConstructor;
 import lombok.experimental.Wither;
 
-import lombok.AllArgsConstructor;
-import lombok.experimental.Wither;
-
 /**
  * DistributedLockService suitable for single threaded use only
  *
@@ -30,7 +27,7 @@ import lombok.experimental.Wither;
 @AllArgsConstructor
 public class DistributedLockServiceCuratorImpl implements DistributedLockService, ConnectionStateListener {
 
-   
+
 
     private final ConcurrentMap<String, InterProcessMutex> locks = new ConcurrentHashMap<>();
 
@@ -61,8 +58,8 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
         try {
             InterProcessMutex mutex = locks.computeIfAbsent(key,
                     __ -> new InterProcessMutex(curatorFramework, String.join("/", basePath, key)));
-            
-            
+
+
             boolean owned = mutex.isAcquiredInThisProcess();
             if(owned) {
                 return true;
@@ -89,7 +86,7 @@ public class DistributedLockServiceCuratorImpl implements DistributedLockService
 
     @Override
     public void stateChanged(CuratorFramework client, ConnectionState newState) {
-    	
+
         switch (newState) {
         case LOST:
         case SUSPENDED:

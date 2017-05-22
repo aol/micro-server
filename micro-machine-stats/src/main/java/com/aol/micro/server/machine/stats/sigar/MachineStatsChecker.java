@@ -23,7 +23,7 @@ public class MachineStatsChecker {
             cpuStats = getCpuStats(sigar);
             getMemoryStats(sigar);
 
-        } catch (SigarException e) {
+        } catch (SigarException | UnsatisfiedLinkError e) {
             logger.error("Error during sigar stats operation", e);
         } finally {
             sigar.close();
@@ -37,7 +37,7 @@ public class MachineStatsChecker {
         try {
             return getCpuStats(sigar);
 
-        } catch (SigarException e) {
+        } catch (SigarException | UnsatisfiedLinkError e) {
             logger.error("Error during sigar stats operation", e);
         } finally {
             sigar.close();

@@ -25,7 +25,7 @@ public class AccessLogConfigTest {
 	public void startServer() throws IOException {
 
 		logFile = new File(System.getProperty("user.home") + "/access-log-app-access.log");
-		FileUtils.forceDelete(logFile);
+		FileUtils.deleteQuietly(logFile);
 
 		assertThat(logFile.exists(), is(false));
 

@@ -2,9 +2,10 @@ package com.aol.micro.server.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
-import com.aol.cyclops.control.AnyM;
+import java.util.Optional;
+
 
 @Getter
 @Builder
@@ -22,26 +23,32 @@ public class SSLProperties {
 	private final String clientAuth;
 	private final String ciphers;
 	private final String protocol;
-	
-	public AnyM<String> getKeyStoreType() {
-		return AnyM.ofNullable(keyStoreType);
+
+	public Optional<String> getKeyStoreType() {
+		return Optional.ofNullable(keyStoreType);
 	}
-	public AnyM<String> getKeyStoreProvider() {
-		return AnyM.ofNullable(keyStoreProvider);
+	public Optional<String> getKeyStoreProvider() {
+		return Optional.ofNullable(keyStoreProvider);
 	}
-	public AnyM<String> getTrustStoreType() {
-		return AnyM.ofNullable(trustStoreType);
+	public Optional<String> getTrustStoreType() {
+		return Optional.ofNullable(trustStoreType);
 	}
-	public AnyM<String> getTrustStoreProvider() {
-		return AnyM.ofNullable(trustStoreProvider);
+	public Optional<String> getTrustStoreProvider() {
+		return Optional.ofNullable(trustStoreProvider);
 	}
-	public AnyM<String> getClientAuth() {
-		return AnyM.ofNullable(clientAuth);
+	public Optional<String> getClientAuth() {
+		return Optional.ofNullable(clientAuth);
 	}
-	public AnyM<String> getCiphers() {
-		return AnyM.ofNullable(ciphers);
+	public Optional<String> getCiphers() {
+		return Optional.ofNullable(ciphers);
 	}
-	public AnyM<String> getProtocol() {
-		return AnyM.ofNullable(protocol);
+	public Optional<String> getProtocol() {
+		return Optional.ofNullable(protocol);
+	}
+	public Optional<String> getTrustStoreFile() {
+		return Optional.ofNullable(trustStoreFile);
+	}
+	public Optional<String> getTrustStorePass() {
+		return Optional.ofNullable(trustStorePass);
 	}
 }

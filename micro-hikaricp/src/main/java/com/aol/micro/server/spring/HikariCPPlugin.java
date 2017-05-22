@@ -1,9 +1,10 @@
 package com.aol.micro.server.spring;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.spring.datasource.HikariCPConfig;
 import com.aol.micro.server.spring.datasource.HikariCPDataSourceBuilder;
+import cyclops.collections.immutable.PSetX;
 
 /**
  * 

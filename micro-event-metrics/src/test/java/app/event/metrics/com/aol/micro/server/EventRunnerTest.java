@@ -55,7 +55,7 @@ public class EventRunnerTest {
         String json2 = rest.getJson("http://localhost:8080/event-app/status/meters");
         Map<String, Integer> map2 = JacksonUtil.convertFromJson(json2, Map.class);
 
-        assertThat(json2, map2.get("com.aol.micro.server.event.metrics.MetricsCatcher.request-start-default"),
+        assertThat(json2, map2.get("com.aol.micro.server.event.metrics.MetricsCatcher.request-start-default-meter"),
                    greaterThan(0));
 
     }

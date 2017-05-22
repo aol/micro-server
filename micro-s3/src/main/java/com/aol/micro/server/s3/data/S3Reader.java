@@ -6,15 +6,16 @@ import java.io.ObjectInputStream;
 import java.util.Date;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.control.Try;
 
+
+import cyclops.control.Try;
+import cyclops.stream.ReactiveSeq;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class S3Reader {
 
-    private final S3Utils utils;
+    private final ReadUtils readUtils;
     private final AmazonS3Client client;
     private final String bucket;
 
@@ -34,7 +35,7 @@ public class S3Reader {
     public Try<String, Throwable> getAsString(String key) {
         return Try.withCatch(() -> ReactiveSeq.fromStream(new BufferedReader(
                                                                              new InputStreamReader(
-                                                                                                   utils.getInputStream(bucket,
+                                                                                                   readUtils.getInputStream(bucket,
                                                                                                                         key))).lines())
                                               .join("\n"));
 
@@ -43,7 +44,7 @@ public class S3Reader {
     public <T> Try<T, Throwable> getAsObject(String key) {
         return Try.withCatch(() -> {
             ObjectInputStream ois = new ObjectInputStream(
-                                                          utils.getInputStream(bucket, key));
+                                                          readUtils.getInputStream(bucket, key));
             return (T) ois.readObject();
         });
 

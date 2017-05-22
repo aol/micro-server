@@ -5,7 +5,7 @@ import javax.sql.DataSource;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HikariCPDataSourceBuilder {
-	
+
 	@Resource(name = "mainEnv")
 	private JdbcConfig mainEnv;
 

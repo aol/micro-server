@@ -1,20 +1,16 @@
 package com.aol.micro.server.s3.data;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import org.apache.commons.io.FileUtils;
+import cyclops.stream.ReactiveSeq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,10 +24,8 @@ import com.amazonaws.services.s3.model.DeleteObjectsRequest.KeyVersion;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.amazonaws.services.s3.transfer.Download;
 import com.amazonaws.services.s3.transfer.TransferManager;
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.util.ExceptionSoftener;
+
 
 @Component
 public class S3Utils {
@@ -42,33 +36,45 @@ public class S3Utils {
     private final TransferManager transferManager;
     private final String tmpDirectory;
     private final ExecutorService uploaderService;
-    private final Random r = new Random();
+    private final boolean aes256Encryption;
+    private final ReadUtils readUtils;
 
     @Autowired
     public S3Utils(AmazonS3Client client, TransferManager transferManager,
             @Value("${s3.tmp.dir:#{systemProperties['java.io.tmpdir']}}") String tmpDirectory,
+            @Value("${s3.aes256.enabled:false}") boolean aes256Encryption,
             @Qualifier("s3UploadExecutorService") ExecutorService uploaderService) {
         this.client = client;
         this.transferManager = transferManager;
         this.tmpDirectory = tmpDirectory;
         this.uploaderService = uploaderService;
+        this.aes256Encryption = aes256Encryption;
+        this.readUtils = new ReadUtils(
+                                       transferManager, tmpDirectory);
+    }
+
+    public S3Utils(AmazonS3Client client, TransferManager transferManager, String tmpDirectory,
+            ExecutorService uploaderService) {
+        this(
+             client, transferManager, tmpDirectory, false, uploaderService);
     }
 
     public S3Reader reader(String bucket) {
 
         return new S3Reader(
-                            this, client, bucket);
+                            readUtils, client, bucket);
     }
 
     public S3ObjectWriter writer(String bucket) {
         return new S3ObjectWriter(
                                   transferManager, bucket, new File(
-                                                                    tmpDirectory));
+                                                                    tmpDirectory),
+                                  aes256Encryption);
     }
 
     public S3StringWriter stringWriter(String bucket) {
         return new S3StringWriter(
-                                  client, bucket, uploaderService);
+                                  client, bucket, uploaderService, aes256Encryption);
     }
 
     public S3Deleter deleter(String bucket) {
@@ -135,6 +141,38 @@ public class S3Utils {
     }
 
     /**
+     * Provide empty InputStream.
+     * <p>
+     * This implementation can be convenient if you need to place some empty
+     * value to s3 bucket.
+     * 
+     * @return empty InputStream
+     */
+    public static InputStream emptyInputStream() {
+        return emptyInputStream;
+    }
+    
+    /**
+     * Method returns InputStream from S3Object. Multi-part download is used to
+     * get file. s3.tmp.dir property used to store temporary files.
+     * 
+     * @param bucketName
+     * @param key
+     * @return
+     * @throws AmazonServiceException
+     * @throws AmazonClientException
+     * @throws InterruptedException
+     * @throws IOException
+     * 
+     * @deprecated see ReadUtils
+     */
+    @Deprecated
+    public InputStream getInputStream(String bucketName, String key)
+            throws AmazonServiceException, AmazonClientException, InterruptedException, IOException{
+        return readUtils.getInputStream(bucketName, key);
+    }
+    
+    /**
      * Method returns InputStream from S3Object. Multi-part download is used to
      * get file. s3.tmp.dir property used to store temporary files. You can
      * specify temporary file name by using tempFileSupplier object.
@@ -149,52 +187,12 @@ public class S3Utils {
      * @throws AmazonClientException
      * @throws InterruptedException
      * @throws IOException
-     */
-    public InputStream getInputStream(String bucketName, String key, Supplier<File> tempFileSupplier)
-            throws AmazonServiceException, AmazonClientException, InterruptedException, IOException {
-        File file = tempFileSupplier.get();
-        try {
-            Download download = transferManager.download(bucketName, key, file);
-            download.waitForCompletion();
-            return new ByteArrayInputStream(
-                                            FileUtils.readFileToByteArray(file));
-        } finally {
-            file.delete();
-        }
-    }
-
-    /**
-     * Method returns InputStream from S3Object. Multi-part download is used to
-     * get file. s3.tmp.dir property used to store temporary files.
      * 
-     * @param bucketName
-     * @param key
-     * @return
-     * @throws AmazonServiceException
-     * @throws AmazonClientException
-     * @throws InterruptedException
-     * @throws IOException
+     * @deprecated see ReadUtils
      */
-    public InputStream getInputStream(String bucketName, String key)
-            throws AmazonServiceException, AmazonClientException, InterruptedException, IOException {
-        Supplier<File> tempFileSupplier = ExceptionSoftener.softenSupplier(() -> Files.createTempFile(FileSystems.getDefault()
-                                                                                                                 .getPath(tmpDirectory),
-                                                                                                      "micro-s3",
-                                                                                                      "file")
-                                                                                      .toFile());
-        return getInputStream(bucketName, key, tempFileSupplier);
-    }
-
-    /**
-     * Provide empty InputStream.
-     * <p>
-     * This implementation can be convenient if you need to place some empty
-     * value to s3 bucket.
-     * 
-     * @return empty InputStream
-     */
-    public static InputStream emptyInputStream() {
-        return emptyInputStream;
+    @Deprecated
+    public InputStream getInputStream(String bucketName, String key, Supplier<File> tempFileSupplier) throws AmazonServiceException, AmazonClientException, InterruptedException, IOException{
+        return readUtils.getInputStream(bucketName, key, tempFileSupplier);
     }
 
     static class EmptyInputStream extends InputStream {

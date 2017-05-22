@@ -10,10 +10,11 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+import cyclops.stream.ReactiveSeq;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 
-import com.aol.cyclops.control.ReactiveSeq;
+
 import com.aol.micro.server.rest.jackson.JacksonFeature;
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 import com.fasterxml.jackson.databind.JavaType;
@@ -58,6 +59,22 @@ public class ReactiveRequest {
         Client client = ClientBuilder.newClient(clientConfig);
 
         return client;
+
+    }
+
+    @SneakyThrows
+    public ReactiveSeq<String> getTextStream(final String url) {
+
+        final WebTarget webResource = client.target(url);
+
+        InputStream s = webResource.request(MediaType.TEXT_PLAIN)
+                                   .accept(MediaType.TEXT_PLAIN)
+                                   .get(InputStream.class);
+
+        BufferedReader reader = new BufferedReader(
+                                                   new InputStreamReader(
+                                                                         s, this.stringFormat));
+        return ReactiveSeq.fromStream(reader.lines());
 
     }
 

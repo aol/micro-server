@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
@@ -20,7 +20,7 @@ import lombok.experimental.Builder;
 public class Jdk8Entity {
 
 	private final Optional<String> name;
-	
+
 	public Jdk8Entity(){
 		name = Optional.empty();
 	}

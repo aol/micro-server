@@ -48,4 +48,19 @@ public class EventRunnerTest {
 
     }
 
+    @Test
+    public void runAppAndBasicTestCustom() throws InterruptedException, ExecutionException {
+
+        assertThat(rest.get("http://localhost:8080/event-app/status/ping-custom"), is("ok"));
+
+        assertThat(rest.getJson("http://localhost:8080/event-app/active/jobs?type=custom"),
+                   containsString("startedAt"));
+        assertThat(rest.getJson("http://localhost:8080/event-app/active/all-requests"), containsString("startedAt"));
+        assertThat(rest.getJson("http://localhost:8080/event-app/manifest"), containsString("Manifest"));
+        assertThat(rest.getJson("http://localhost:8080/event-app/manifest"), containsString("Manifest-Version"));
+
+        System.out.println(rest.getJson("http://localhost:8080/event-app/manifest"));
+
+    }
+
 }

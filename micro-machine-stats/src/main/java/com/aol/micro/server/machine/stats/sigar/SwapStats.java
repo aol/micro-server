@@ -9,11 +9,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.aol.cyclops.data.collections.extensions.standard.MapXs;
 
+import cyclops.collections.MapXs;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 @SuppressWarnings("PMD.UnusedPrivateField")
 @XmlAccessorType(XmlAccessType.FIELD)

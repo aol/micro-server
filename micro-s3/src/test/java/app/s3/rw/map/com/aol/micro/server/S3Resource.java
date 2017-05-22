@@ -3,7 +3,10 @@ package app.s3.rw.map.com.aol.micro.server;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
+import cyclops.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.amazonaws.services.s3.transfer.Upload;
 
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.s3.data.S3Reader;
@@ -33,7 +36,9 @@ public class S3Resource {
     @GET
     @Path("/put")
     public String put() {
-        writer.put("hello", "world");
-        return "added";
+        Try<Upload, Throwable> operation = writer.put("hello", "world");
+        if(operation.isSuccess())
+            return "added";
+        return operation.failureGet().getMessage();
     }
 }

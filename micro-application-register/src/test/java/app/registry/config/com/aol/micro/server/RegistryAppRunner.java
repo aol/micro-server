@@ -60,7 +60,7 @@ public class RegistryAppRunner {
         Thread.sleep(1000);
         System.out.println(rest.getJson("http://localhost:8080/registry-app/service-registry/list"));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
-                   containsString("[{\"port\":8081,"));
+                   containsString("{\"port\":8081,"));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
                    containsString("\"hostname\":\"test-host\""));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),

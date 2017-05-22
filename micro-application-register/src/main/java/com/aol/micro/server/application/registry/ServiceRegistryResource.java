@@ -10,11 +10,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
+import cyclops.stream.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.cyclops.control.ReactiveSeq;
+
 import com.aol.micro.server.WorkerThreads;
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.utility.HashMapBuilder;
@@ -44,7 +45,7 @@ public class ServiceRegistryResource{
 	public void list(@Suspended AsyncResponse response) {
 		ReactiveSeq.of(this)
 				.futureOperations(WorkerThreads.ioExecutor.get())
-				.forEach(next -> {
+				.forEachX(Long.MAX_VALUE,next -> {
 			try{
 				cleaner.clean();
 				response.resume(finder.find());
@@ -63,7 +64,7 @@ public class ServiceRegistryResource{
 	public void schedule(@Suspended AsyncResponse response) {
 		ReactiveSeq.of(this)
 				  .futureOperations(WorkerThreads.ioExecutor.get())
-				  .forEach(next -> {
+				  .forEachX(Long.MAX_VALUE,next -> {
 			try{
 				job.schedule();
 				response.resume(HashMapBuilder.of("status", "success"));
@@ -82,7 +83,7 @@ public class ServiceRegistryResource{
 	public void register(@Suspended AsyncResponse response,RegisterEntry entry) {
 		ReactiveSeq.of(this)
 			.futureOperations(WorkerThreads.ioExecutor.get())
-			.forEach(next -> {
+			.forEachX(Long.MAX_VALUE,next -> {
 			try{
 				register.register(entry);
 				response.resume(HashMapBuilder.of("status", "complete"));

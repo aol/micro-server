@@ -4,14 +4,15 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.function.BinaryOperator;
 
+import cyclops.collections.ListX;
+import cyclops.collections.SetX;
+import cyclops.stream.ReactiveSeq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.data.collections.extensions.standard.ListX;
-import com.aol.cyclops.data.collections.extensions.standard.SetX;
+
 import com.aol.micro.server.manifest.ManifestComparator;
 import com.google.common.eventbus.EventBus;
 
@@ -42,7 +43,7 @@ public class ConfigureSchedulingAsyncDataLoader {
                           .filter(i -> !comparatorSet.contains(i))
                           .map(mc -> new DataLoader(
                                                     mc, defaultCron))
-                          .concat(dataLoaders.stream())
+                          .appendS(dataLoaders.stream())
                           .toListX();
 
     }

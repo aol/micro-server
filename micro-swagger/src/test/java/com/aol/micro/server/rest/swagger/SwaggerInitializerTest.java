@@ -1,8 +1,9 @@
 package com.aol.micro.server.rest.swagger;
 
+import cyclops.collections.immutable.PStackX;
 import org.junit.Test;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
+
 import com.aol.micro.server.servers.model.ServerData;
 import com.google.common.collect.ImmutableList;
 

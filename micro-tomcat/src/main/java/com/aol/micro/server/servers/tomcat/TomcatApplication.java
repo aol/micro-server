@@ -8,10 +8,10 @@ import java.util.concurrent.ExecutionException;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
+import com.aol.cyclops2.util.ExceptionSoftener;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.Wither;
 
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.connector.Connector;
@@ -25,7 +25,7 @@ import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.util.ExceptionSoftener;
+
 import com.aol.micro.server.InternalErrorCode;
 import com.aol.micro.server.config.SSLProperties;
 import com.aol.micro.server.module.WebServerProvider;
@@ -49,8 +49,6 @@ public class TomcatApplication implements ServerApplication {
 	private final PStack<ServletData> servletData;
 	private final PStack<ServletContextListener> servletContextListenerData;
 	private final PStack<ServletRequestListener> servletRequestListenerData;
-	@Wither
-	private final SSLProperties SSLProperties;
 
 	public TomcatApplication(AllData serverData) {
 		this.serverData = serverData.getServerData();
@@ -58,7 +56,6 @@ public class TomcatApplication implements ServerApplication {
 		this.servletData = serverData.getServletDataList();
 		this.servletContextListenerData = serverData.getServletContextListeners();
 		this.servletRequestListenerData = serverData.getServletRequestListeners();
-		this.SSLProperties = null;
 	}
 
 	public void run(CompletableFuture start,  JaxRsServletConfigurer jaxRsConfigurer, CompletableFuture end) {
@@ -68,33 +65,29 @@ public class TomcatApplication implements ServerApplication {
 		tomcat.getEngine().setBackgroundProcessorDelay(-1);
 		 File docBase = new File(".");
 		 StandardContext context =(StandardContext)tomcat.addContext("", docBase.getAbsolutePath());
-		context.addServletContainerInitializer(new TomcatListener(jaxRsConfigurer, serverData, filterData, servletData, servletContextListenerData, servletRequestListenerData), 
+		context.addServletContainerInitializer(new TomcatListener(jaxRsConfigurer, serverData, filterData, servletData, servletContextListenerData, servletRequestListenerData),
 				new HashSet<>());
 		addAccessLog(tomcat,context);
-	
-		serverData.getModule().getServerConfigManager().accept(new WebServerProvider(tomcat));
-		
-		if(SSLProperties!=null){
-			addSSL(tomcat.getConnector(),SSLProperties);	
-		}
 
-		startServer( tomcat, start, end);
+		serverData.getModule().getServerConfigManager().accept(new WebServerProvider(tomcat));
+
+		addSSL(tomcat.getConnector());
+
+		startServer(tomcat, start, end);
 	}
 
-	private void addSSL(Connector connector,SSLProperties sslProperties) {
+	private void addSSL(Connector connector) {
+		SSLProperties sslProperties = serverData.getRootContext().getBean(SSLProperties.class);
 		ProtocolHandler handler = connector.getProtocolHandler();
-		if(handler instanceof AbstractHttp11JsseProtocol){
+		if(sslProperties!= null && handler instanceof AbstractHttp11JsseProtocol){
 			new SSLConfigurationBuilder().build((AbstractHttp11JsseProtocol)handler,sslProperties);
 			connector.setScheme("https");
 			connector.setSecure(true);
-			
 		}
-		
-		
 	}
 
 	private void startServer( Tomcat httpServer, CompletableFuture start, CompletableFuture end) {
-		
+
 		try {
 			logger.info("Starting application {} on port {}", serverData.getModule().getContext(), serverData.getPort());
 			logger.info("Browse to http://localhost:{}/{}/application.wadl", serverData.getPort(), serverData.getModule().getContext());
@@ -102,9 +95,9 @@ public class TomcatApplication implements ServerApplication {
 			serverData.extractResources().forEach(
 					t -> logger.info(t.v1() + " : " + "http://localhost:" + serverData.getPort() + "/" + serverData.getModule().getContext() + t.v2()));
 			;
-			
+
 				httpServer.start();
-			
+
 			start.complete(true);
 			end.get();
 
@@ -121,37 +114,37 @@ public class TomcatApplication implements ServerApplication {
 				httpServer.getConnector().destroy();
 				httpServer.getEngine().destroy();
 				httpServer.destroy();
-				
-				
-				
+
+
+
 			} catch (LifecycleException e) {
 			}
 				try{
 					Thread.sleep(5_000);
 				}
 			catch (InterruptedException e) {
-				
+
 			}
-			
+
 		}
 	}
 
 	private void addAccessLog(Tomcat httpServer, StandardContext context) {
 		try {
-			 
+
 			String accessLogLocation = serverData.getRootContext().getBean(AccessLogLocationBean.class).getAccessLogLocation();
 
 			accessLogLocation = accessLogLocation + "/" + replaceSlash(serverData.getModule().getContext()) + "-access.log";
-			
+
 			AccessLogValve accessLogValve = new AccessLogValve();
             accessLogValve.setDirectory(accessLogLocation);
             accessLogValve.setPattern(Constants.AccessLog.COMMON_ALIAS);
             accessLogValve.setSuffix(".log");
             accessLogValve.setRotatable(true);
             context.getPipeline().addValve(accessLogValve);
-			
+
 		} catch (Exception e) {
-			
+
 			logger.error(InternalErrorCode.SERVER_STARTUP_FAILED_TO_CREATE_ACCESS_LOG.toString() + ": " + e.getMessage());
 			if (e.getCause() != null)
 				logger.error("CAUSED BY: " + InternalErrorCode.SERVER_STARTUP_FAILED_TO_CREATE_ACCESS_LOG.toString() + ": " + e.getCause().getMessage());
@@ -159,8 +152,8 @@ public class TomcatApplication implements ServerApplication {
 		}
 
 	}
-	
-	
+
+
 
 	private String replaceSlash(String context) {
 		if (context != null && context.contains("/")) {

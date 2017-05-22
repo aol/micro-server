@@ -7,11 +7,12 @@ import java.util.function.Supplier;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
+import cyclops.function.FluentFunctions;
+import cyclops.stream.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.cyclops.control.FluentFunctions;
-import com.aol.cyclops.control.ReactiveSeq;
+
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

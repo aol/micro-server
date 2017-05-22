@@ -4,7 +4,7 @@
 
 This adds support for sending the metrics to Datadog if an api key is provided in the application.properties file. For more detailed info see [metrics-datadog](https://github.com/coursera/metrics-datadog/)
 
-This plugin in combination with the micro-event-metrics plugin will send some metrics to datadog by default. Refer here (https://github.com/aol/micro-server/blob/master/micro-event-metrics/src/main/java/com/aol/micro/server/event/metrics/MetricsCatcher.java)
+This plugin in combination with the micro-event-metrics plugin will send some metrics to datadog by default. Refer here (https://github.com/aol/micro-server/tree/master/micro-event-metrics) and (https://github.com/aol/micro-server/blob/master/micro-event-metrics/src/main/java/com/aol/micro/server/event/metrics/MetricsCatcher.java)
 
 ## To use
 
@@ -35,7 +35,10 @@ datadog.apikey = <your api key goes here>
 datadog.tags = "stage:dev", "owner:abc"
 datadog.report.period = 10
 datadog.report.timeunit = SECONDS
+datadog.report.expansions=<comma separated list of expansions>
 ```
+
+Default setting is to report all available expansions. List is available here [Datadog expansions](http://static.javadoc.io/org.coursera/metrics-datadog/1.1.6/org/coursera/metrics/datadog/DatadogReporter.Expansion.html).
 
 This will report the metrics to datadog with tags as "stage:dev" and "owner:abc" and for every 10 seconds
 

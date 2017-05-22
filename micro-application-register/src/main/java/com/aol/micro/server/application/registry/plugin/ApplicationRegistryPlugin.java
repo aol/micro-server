@@ -1,6 +1,5 @@
 package com.aol.micro.server.application.registry.plugin;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.application.registry.ApplicationRegisterImpl;
 import com.aol.micro.server.application.registry.Cleaner;
@@ -11,6 +10,7 @@ import com.aol.micro.server.application.registry.Register;
 import com.aol.micro.server.application.registry.RegisterConfig;
 import com.aol.micro.server.application.registry.ServiceRegistryResource;
 import com.aol.micro.server.application.registry.RegistryStatsChecker;
+import cyclops.collections.immutable.PSetX;
 
 public class ApplicationRegistryPlugin implements Plugin {
 

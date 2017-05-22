@@ -7,13 +7,14 @@ import java.util.function.Function;
 
 import javax.servlet.ServletContextListener;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
-import com.aol.cyclops.util.function.Lambda;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.servers.model.ServerData;
 import com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON;
 import com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider;
 import com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider;
+import cyclops.collections.immutable.PSetX;
+import cyclops.function.Lambda;
 
 /**
  * 

@@ -1,7 +1,8 @@
 package com.aol.micro.server.module;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
+
 import com.aol.micro.server.Plugin;
+import cyclops.collections.immutable.PStackX;
 
 public class MyPlugin implements Plugin{
 	public PStackX<String> providers(){

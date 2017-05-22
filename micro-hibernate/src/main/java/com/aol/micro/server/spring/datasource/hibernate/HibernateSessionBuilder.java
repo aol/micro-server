@@ -5,8 +5,9 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import com.aol.cyclops2.util.ExceptionSoftener;
 import lombok.AllArgsConstructor;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -14,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
-import com.aol.cyclops.util.ExceptionSoftener;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 
 @Builder
@@ -42,12 +42,12 @@ public class HibernateSessionBuilder {
 
 		if (env.getDdlAuto() != null)
 			p.setProperty("hibernate.hbm2ddl.auto", env.getDdlAuto());
-		
+
 		if(env.getInitializationFile() != null) {
 			p.setProperty("hibernate.hbm2ddl.import_files", env.getInitializationFile());
-			
+
 		}
-		
+
 		logger.info("Hibernate properties [  hibernate.dialect : {} ; hibernate.hbm2ddl.auto : {} ]", env.getDialect(), env.getDdlAuto());
 
 		sessionFactoryBean.setHibernateProperties(p);

@@ -27,6 +27,23 @@ Gradle
 1. [micro-reactive](https://github.com/aol/micro-server/tree/master/micro-reactive)
 2. [micro-guava](https://github.com/aol/micro-server/tree/master/micro-guava)
 
+
+## Properties 
+
+Job names are configurable as either 
+
+* SIMPLE (simple class name)
+* PACKAGE (last part of package + simple class name)
+* FULL (canononical class name)
+
+e.g.
+
+    micro.events.job.name.format:SIMPLE
+    
+or
+
+    micro.events.job.name.format:SIMPLE    
+
 ## Example resource capturing queries
 
  ```java

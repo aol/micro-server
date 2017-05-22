@@ -5,6 +5,7 @@ import java.util.List;
 
 import lombok.Getter;
 import nonautoscan.com.aol.micro.server.AopConfig;
+import nonautoscan.com.aol.micro.server.SSLConfig;
 import nonautoscan.com.aol.micro.server.ScheduleAndAsyncConfig;
 
 import com.aol.micro.server.module.ConfigureEnviroment;
@@ -28,7 +29,7 @@ public class Classes {
 	 * Codahale Metrics, Event tracking etc
 	 */
 	public static final  Classes CORE_CLASSES = new Classes(PropertyFileConfig.class, AopConfig.class,
-			 ScheduleAndAsyncConfig.class,  ConfigureEnviroment.class, AccessLogConfig.class);
+			 ScheduleAndAsyncConfig.class,  ConfigureEnviroment.class, AccessLogConfig.class, SSLConfig.class);
 	
 	
 	@Getter

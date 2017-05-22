@@ -2,10 +2,10 @@ package com.aol.micro.server.event.metrics;
 
 import java.util.concurrent.TimeUnit;
 
-import com.aol.cyclops.control.Maybe;
 import com.codahale.metrics.Timer.Context;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import cyclops.control.Maybe;
 
 public class TimerManager {
 

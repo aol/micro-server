@@ -1,8 +1,10 @@
 package com.aol.micro.server.auto.discovery;
 
+import cyclops.control.Xor;
+
 import javax.servlet.Filter;
 
-import com.aol.cyclops.control.Xor;
+
 
 public interface AutoFilterConfiguration extends Filter, FilterConfiguration{
 

@@ -11,10 +11,11 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
+import com.aol.cyclops2.util.ExceptionSoftener;
+import cyclops.stream.ReactiveSeq;
 import org.reactivestreams.Publisher;
 
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.util.ExceptionSoftener;
+
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 
 public class ReactiveResponse {
@@ -34,7 +35,7 @@ public class ReactiveResponse {
 
                 ReactiveSeq.fromPublisher(json)
                            .map(JacksonUtil::serializeToJson)
-                           .forEachEvent(ExceptionSoftener.softenConsumer(json -> {
+                           .forEach(ExceptionSoftener.softenConsumer(json -> {
 
                     writer.write(json);
                     writer.write("\n");

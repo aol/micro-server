@@ -20,12 +20,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
+import cyclops.stream.ReactiveSeq;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.cyclops.control.ReactiveSeq;
+
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Microserver;
@@ -97,12 +98,12 @@ public class SingleClassTest implements RestResource {
                     writer.write("test");
 
                     writer.flush();
-                    try {
+                    /**  try {
                         Thread.sleep(100l);
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
-                    }
+                    }**/
                 }
             }
         };

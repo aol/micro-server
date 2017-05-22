@@ -1,5 +1,6 @@
 package com.aol.micro.server.servers.grizzly;
 
+import cyclops.control.Maybe;
 import org.glassfish.grizzly.ssl.SSLContextConfigurator;
 import org.glassfish.grizzly.ssl.SSLEngineConfigurator;
 
@@ -14,17 +15,22 @@ public class SSLConfigurationBuilder {
 
         sslContext.setKeyStoreFile(sslProperties.getKeyStoreFile()); // contains server keypair
         sslContext.setKeyStorePass(sslProperties.getKeyStorePass());
-        sslContext.setTrustStoreFile(sslProperties.getTrustStoreFile()); // contains client certificate
-        sslContext.setTrustStorePass(sslProperties.getTrustStorePass());
+        
+        /**
+         * trustStore stores public key or certificates from CA (Certificate Authorities) 
+         * which is used to trust remote party or SSL connection. So should be optional
+         */
+        sslProperties.getTrustStoreFile().ifPresent(file->sslContext.setTrustStoreFile(file)); // contains client certificate
+        sslProperties.getTrustStorePass().ifPresent(pass->sslContext.setTrustStorePass(pass));
         
         
         
-        sslProperties.getKeyStoreType().peek(type->sslContext.setKeyStoreType(type));
-        sslProperties.getKeyStoreProvider().peek(provider->sslContext.setKeyStoreProvider(provider));
+        sslProperties.getKeyStoreType().ifPresent(type->sslContext.setKeyStoreType(type));
+        sslProperties.getKeyStoreProvider().ifPresent(provider->sslContext.setKeyStoreProvider(provider));
 		
         
-        sslProperties.getTrustStoreType().peek(type->sslContext.setTrustStoreType(type));
-        sslProperties.getTrustStoreProvider().peek(provider->sslContext.setTrustStoreProvider(provider));
+        sslProperties.getTrustStoreType().ifPresent(type->sslContext.setTrustStoreType(type));
+        sslProperties.getTrustStoreProvider().ifPresent(provider->sslContext.setTrustStoreProvider(provider));
 		
 		
 		
@@ -32,13 +38,13 @@ public class SSLConfigurationBuilder {
 		
         SSLEngineConfigurator sslConf = new SSLEngineConfigurator(sslContext).setClientMode(false);
         sslProperties.getClientAuth().filter(auth-> auth.toLowerCase().equals("want"))
-									.peek(auth->sslConf.setWantClientAuth(true));
+									.ifPresent(auth->sslConf.setWantClientAuth(true));
         sslProperties.getClientAuth().filter(auth-> auth.toLowerCase().equals("need"))
-							.peek(auth->sslConf.setNeedClientAuth(true));
-        sslProperties.getCiphers().peek(ciphers->sslConf.setEnabledCipherSuites(ciphers.split(",")))
-        			.peek(c-> sslConf.setCipherConfigured(true));
-        sslProperties.getProtocol().peek(pr->sslConf.setEnabledProtocols(pr.split(",")))
-        						.peek(p->sslConf.setProtocolConfigured(true));
+							.ifPresent(auth->sslConf.setNeedClientAuth(true));
+        Maybe.fromOptional(sslProperties.getCiphers()).peek(ciphers->sslConf.setEnabledCipherSuites(ciphers.split(",")))
+        			.forEach(c-> sslConf.setCipherConfigured(true));
+        Maybe.fromOptional(sslProperties.getProtocol()).peek(pr->sslConf.setEnabledProtocols(pr.split(",")))
+        						.forEach(p->sslConf.setProtocolConfigured(true));
         
         
         return sslConf;

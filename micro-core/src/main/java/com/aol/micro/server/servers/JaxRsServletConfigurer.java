@@ -5,13 +5,14 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import com.aol.cyclops.control.ReactiveSeq;
-import com.aol.cyclops.control.StreamUtils;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.module.IncorrectJaxRsPluginsException;
 import com.aol.micro.server.rest.RestConfiguration;
 import com.aol.micro.server.servers.model.ServerData;
+import cyclops.Streams;
+import cyclops.stream.ReactiveSeq;
 
 public class JaxRsServletConfigurer {
     public void addServlet(ServerData serverData, ServletContext webappContext) {
@@ -20,7 +21,7 @@ public class JaxRsServletConfigurer {
                                                                                                      .stream())
                                                             .filter(module -> module.restServletConfiguration() != null)
                                                             .map(Plugin::restServletConfiguration)
-                                                            .flatMap(StreamUtils::optionalToStream)
+                                                            .flatMap(Streams::optionalToStream)
                                                             .toList();
         if (restConfigList.size() > 1) {
             throw new IncorrectJaxRsPluginsException(

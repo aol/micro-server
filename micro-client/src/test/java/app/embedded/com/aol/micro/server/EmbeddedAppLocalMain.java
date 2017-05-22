@@ -1,9 +1,10 @@
 package app.embedded.com.aol.micro.server;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PStackX;
+
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.module.EmbeddedModule;
+import cyclops.collections.immutable.PStackX;
 
 @Microserver(basePackages = {    "app.embedded.com.aol.micro.server" })
 public class EmbeddedAppLocalMain {
