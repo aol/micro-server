@@ -4,7 +4,7 @@ package com.aol.micro.server.events.plugin;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.events.ConfigureActiveJobsAspect;
 import com.aol.micro.server.rest.resources.ConfigureResources;
-import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PersistentSetX;
 
 
 /**
@@ -19,8 +19,8 @@ import cyclops.collections.immutable.PSetX;
 public class EventsPlugin implements Plugin{
 	
 	@Override
-	public PSetX<Class> springClasses() {
-		return PSetX.of(
+	public PersistentSetX<Class> springClasses() {
+		return PersistentSetX.of(
 				ConfigureActiveJobsAspect.class,
 				ConfigureResources.class);
 	}

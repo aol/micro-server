@@ -6,7 +6,7 @@ import com.aol.micro.server.machine.stats.sigar.MachineStatsChecker;
 import com.aol.micro.server.machine.stats.sigar.SigarStats;
 import com.aol.micro.server.machine.stats.sigar.StatsServletContextListener;
 import com.aol.micro.server.machine.stats.sigar.rest.StatsResource;
-import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PersistentSetX;
 
 /**
  * 
@@ -20,8 +20,8 @@ import cyclops.collections.immutable.PSetX;
 public class MachineStatsPlugin implements Plugin {
 
     @Override
-    public PSetX<Class> springClasses() {
-        return PSetX.of(StatsResource.class, MachineStatsChecker.class, StatsServletContextListener.class,
+    public PersistentSetX<Class> springClasses() {
+        return PersistentSetX.of(StatsResource.class, MachineStatsChecker.class, StatsServletContextListener.class,
                         SigarStats.class);
     }
 

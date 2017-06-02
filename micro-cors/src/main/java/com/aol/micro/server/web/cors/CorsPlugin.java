@@ -2,13 +2,13 @@ package com.aol.micro.server.web.cors;
 
 
 import com.aol.micro.server.Plugin;
-import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PersistentSetX;
 
 public class CorsPlugin implements Plugin {
 
     @Override
-    public PSetX<Class> springClasses() {
-        return PSetX.of(ConfigureBeans.class);
+    public PersistentSetX<Class> springClasses() {
+        return PersistentSetX.of(ConfigureBeans.class);
     }
 
 }

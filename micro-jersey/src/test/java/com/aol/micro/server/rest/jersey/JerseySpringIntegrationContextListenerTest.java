@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 
-import cyclops.collections.immutable.PStackX;
+import cyclops.collections.immutable.LinkedListX;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ public class JerseySpringIntegrationContextListenerTest {
 	ServerData serverData;
 	@Before
 	public void setup (){
-		serverData = ServerData.builder().module(()->"hello").resources(PStackX.of()).build();
+		serverData = ServerData.builder().module(()->"hello").resources(LinkedListX.of()).build();
 		listener = new JerseySpringIntegrationContextListener(serverData);
 	}
 	

@@ -124,18 +124,18 @@ ListX.fromPublisher(Flux.just(1,2,3));
 Flux.just(1,2,3).collect(ListX::empty,(l,e)->l.add(e));
  ```  
  
- From a Flux to a PStackX
+ From a Flux to a LinkedListX
  
  ```java
-PStackX.fromPublisher(Flux.just(1,2,3));
+LinkedListX.fromPublisher(Flux.just(1,2,3));
   ```
   
- From a Flux to a PStackX
+ From a Flux to a LinkedListX
  
  ```java
 Flux.just(1,2,3)
-    .map(PStackX::of)
-    .reduce(Reducers.toPStackX());
+    .map(LinkedListX::of)
+    .reduce(Reducers.toLinkedListX());
   ```  
   
 ## To use

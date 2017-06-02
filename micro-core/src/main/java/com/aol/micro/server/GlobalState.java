@@ -3,7 +3,7 @@ package com.aol.micro.server;
 
 import com.aol.micro.server.module.Module;
 
-import cyclops.collections.ListX;
+import cyclops.collections.mutable.ListX;
 import lombok.Getter;
 import lombok.Setter;
 

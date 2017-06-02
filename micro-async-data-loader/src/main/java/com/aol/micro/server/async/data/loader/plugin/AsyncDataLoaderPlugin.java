@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.async.data.loader.ConfigureSchedulingAsyncDataLoader;
-import cyclops.collections.SetX;
+import cyclops.collections.mutable.SetX;
 
 public class AsyncDataLoaderPlugin implements Plugin {
 

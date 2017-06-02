@@ -6,7 +6,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import com.aol.micro.server.events.SystemData;
 import com.google.common.eventbus.EventBus;
 
-import cyclops.collections.ListX;
+import cyclops.collections.mutable.ListX;
 import cyclops.stream.ReactiveSeq;
 import lombok.AllArgsConstructor;
 
@@ -23,10 +23,9 @@ public class LoaderSchedular {
         loader.forEach(dl -> {
 
             // run on startup
-            create(dl).limit(1)
-                      .futureOperations(executor)
-                      .forEachX(Long.MAX_VALUE,l -> {
-            });
+            create(dl).limit(1).foldFuture(executor,
+                      s->s.forEach(Long.MAX_VALUE,l -> {
+            }));
 
             // schedule
             create(dl).schedule(dl.getCron(), executor);

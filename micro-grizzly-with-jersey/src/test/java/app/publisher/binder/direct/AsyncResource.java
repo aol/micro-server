@@ -35,7 +35,7 @@ public class AsyncResource {
     @GET
     @Path("async2")
     public ReactiveSeq<String> async2() {
-        return Spouts.publishOn(Stream.of("hello"), Executors.newFixedThreadPool(1));
+        return Spouts.reactive(Stream.of("hello"), Executors.newFixedThreadPool(1));
     }
 
 

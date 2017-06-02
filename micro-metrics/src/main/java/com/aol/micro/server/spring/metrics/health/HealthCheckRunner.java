@@ -1,6 +1,6 @@
 package com.aol.micro.server.spring.metrics.health;
 
-import cyclops.Semigroups;
+import cyclops.companion.Semigroups;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

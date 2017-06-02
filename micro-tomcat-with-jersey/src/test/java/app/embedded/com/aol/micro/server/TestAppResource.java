@@ -37,7 +37,7 @@ public class TestAppResource implements TestAppRestResource {
 	@Path("/rest-calls")
 	public String restCallResult(){
 		
-		return FutureStream.lazyFutureStreamFromIterable(urls)
+		return FutureStream.builder().fromIterable(urls)
 					.map(it ->template.get(it))
 					.then(it -> "*"+it)
 					.peek(loadedAndModified -> System.out.println(loadedAndModified))

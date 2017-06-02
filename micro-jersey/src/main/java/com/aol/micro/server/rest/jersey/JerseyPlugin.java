@@ -7,9 +7,9 @@ import java.util.function.Function;
 import javax.servlet.ServletContextListener;
 import javax.ws.rs.core.FeatureContext;
 
-import cyclops.collections.MapXs;
-import cyclops.collections.immutable.PMapX;
-import cyclops.collections.immutable.PSetX;
+import cyclops.companion.MapXs;
+import cyclops.collections.immutable.PersistentMapX;
+import cyclops.collections.immutable.PersistentSetX;
 import org.glassfish.jersey.CommonProperties;
 
 
@@ -26,7 +26,7 @@ public class JerseyPlugin implements Plugin{
 	}
 	@Override
 	public Function<FeatureContext,Map<String,Object>> jacksonFeatureProperties(){
-		return context-> PMapX.fromMap(MapXs.of(  CommonProperties.MOXY_JSON_FEATURE_DISABLE + '.'
+		return context-> PersistentMapX.fromMap(MapXs.of(  CommonProperties.MOXY_JSON_FEATURE_DISABLE + '.'
                 + context.getConfiguration().getRuntimeType().name().toLowerCase(),true));
 	}
 	
@@ -35,9 +35,9 @@ public class JerseyPlugin implements Plugin{
 		return Optional.of(JerseyRestApplication.class.getCanonicalName());
 	}
 	@Override
-	public PSetX<Function<ServerData,ServletContextListener>> servletContextListeners(){
+	public PersistentSetX<Function<ServerData,ServletContextListener>> servletContextListeners(){
 		Function<ServerData,ServletContextListener> f = serverData ->new JerseySpringIntegrationContextListener(serverData);
-		return PSetX.of(f);
+		return PersistentSetX.of(f);
 		
 	}
 	

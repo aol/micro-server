@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.NotFoundException;
 
-import cyclops.collections.immutable.PStackX;
+import cyclops.collections.immutable.LinkedListX;
 import jersey.repackaged.com.google.common.collect.ImmutableList;
 
 import org.junit.After;
@@ -32,8 +32,8 @@ public class EmbeddedAppTest {
 	@Before
 	public void startServer(){
 		server = new MicroserverApp(EmbeddedAppLocalMain.class, 
-				EmbeddedModule.tagInterfaceModule(PStackX.of(TestAppRestResource.class),"test-app"),
-				EmbeddedModule.tagInterfaceModule(PStackX.of(AltAppRestResource.class),"alternative-app"));
+				EmbeddedModule.tagInterfaceModule(LinkedListX.of(TestAppRestResource.class),"test-app"),
+				EmbeddedModule.tagInterfaceModule(LinkedListX.of(AltAppRestResource.class),"alternative-app"));
 		server.start();
 	}
 	

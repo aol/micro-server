@@ -1,13 +1,14 @@
 package com.aol.micro.server.slack.plugin;
 
-import com.aol.cyclops.data.collections.extensions.persistent.PSetX;
+
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.slack.*;
+import cyclops.collections.immutable.PersistentSetX;
 
 public class SlackPlugin implements Plugin {
 
     @Override
-    public PSetX<Class> springClasses() {
-        return PSetX.of(SlackConfiguration.class, SlackMessageSender.class);
+    public PersistentSetX<Class> springClasses() {
+        return PersistentSetX.of(SlackConfiguration.class, SlackMessageSender.class);
     }
 }

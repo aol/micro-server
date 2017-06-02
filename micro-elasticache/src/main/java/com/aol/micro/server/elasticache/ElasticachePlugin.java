@@ -1,12 +1,12 @@
 package com.aol.micro.server.elasticache;
 
 import com.aol.micro.server.Plugin;
-import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PersistentSetX;
 
 public class ElasticachePlugin implements Plugin {
 
     @Override
-    public PSetX<Class> springClasses() {
-            return PSetX.of(ConfigureElasticache.class);
+    public PersistentSetX<Class> springClasses() {
+            return PersistentSetX.of(ConfigureElasticache.class);
         }
 }

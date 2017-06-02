@@ -3,7 +3,7 @@ package com.aol.micro.server;
 import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
-import cyclops.collections.ListX;
+import cyclops.collections.mutable.ListX;
 import cyclops.function.FluentFunctions;
 import cyclops.stream.ReactiveSeq;
 import lombok.AccessLevel;

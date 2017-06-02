@@ -3,7 +3,7 @@ package com.aol.micro.server.async.data.writer;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-import cyclops.collections.ListX;
+import cyclops.collections.mutable.ListX;
 import org.junit.Before;
 import org.junit.Test;
 

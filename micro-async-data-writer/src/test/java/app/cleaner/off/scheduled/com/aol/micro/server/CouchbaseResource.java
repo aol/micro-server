@@ -4,7 +4,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import cyclops.collections.immutable.PStackX;
+import cyclops.collections.immutable.LinkedListX;
 import cyclops.control.Maybe;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,7 +21,7 @@ public class CouchbaseResource {
 
     private final DistributedMap client;
 
-    private volatile PStackX<SystemData> dataCleans = PStackX.empty();
+    private volatile LinkedListX<SystemData> dataCleans = LinkedListX.empty();
 
     @Autowired
     public CouchbaseResource(DistributedMap client, EventBus bus) {
@@ -37,7 +37,7 @@ public class CouchbaseResource {
     @GET
     @Path("/cleaning-events")
     @Produces("application/json")
-    public synchronized PStackX<SystemData> cleaningEvents() {
+    public synchronized LinkedListX<SystemData> cleaningEvents() {
         return dataCleans;
     }
 

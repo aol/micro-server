@@ -13,7 +13,7 @@ import com.aol.micro.server.servers.model.ServerData;
 import com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON;
 import com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider;
 import com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider;
-import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PersistentSetX;
 import cyclops.function.Lambda;
 
 /**
@@ -28,25 +28,25 @@ import cyclops.function.Lambda;
 public class SwaggerPlugin implements Plugin{
 	
 	@Override
-	public PSetX<Class> springClasses() {
-		return PSetX.empty();
+	public PersistentSetX<Class> springClasses() {
+		return PersistentSetX.empty();
 	}
 
 	@Override
-	public PSetX<Function<ServerData,ServletContextListener>> servletContextListeners(){
-		return PSetX.of(Lambda.l1(serverData -> new SwaggerInitializer(serverData)));
+	public PersistentSetX<Function<ServerData,ServletContextListener>> servletContextListeners(){
+		return PersistentSetX.of(Lambda.l1(serverData -> new SwaggerInitializer(serverData)));
 		
 	}
 
 	@Override
-	public PSetX<Class<?>> jaxRsResources() {
-		return PSetX.of(ApiListingResourceJSON.class,JerseyApiDeclarationProvider.class,
+	public PersistentSetX<Class<?>> jaxRsResources() {
+		return PersistentSetX.of(ApiListingResourceJSON.class,JerseyApiDeclarationProvider.class,
 				JerseyResourceListingProvider.class);
 	}
 
 	@Override
-	public PSetX<String> jaxRsPackages() {
-		return PSetX.of("com.wordnik.swagger.sample.resource",
+	public PersistentSetX<String> jaxRsPackages() {
+		return PersistentSetX.of("com.wordnik.swagger.sample.resource",
 				"com.wordnik.swagger.sample.util"	);
 	}
 }

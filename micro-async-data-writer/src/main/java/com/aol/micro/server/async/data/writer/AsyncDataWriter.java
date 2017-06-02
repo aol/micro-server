@@ -5,7 +5,7 @@ import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 
 import cyclops.async.Future;
-import cyclops.collections.MapX;
+import cyclops.collections.mutable.MapX;
 import org.jooq.lambda.tuple.Tuple;
 
 

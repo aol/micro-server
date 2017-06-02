@@ -43,9 +43,8 @@ public class ServiceRegistryResource{
 	@Path("/list")
 	@Produces("application/json")
 	public void list(@Suspended AsyncResponse response) {
-		ReactiveSeq.of(this)
-				.futureOperations(WorkerThreads.ioExecutor.get())
-				.forEachX(Long.MAX_VALUE,next -> {
+		ReactiveSeq.of(this).foldFuture(WorkerThreads.ioExecutor.get(),
+				s->s.forEach(Long.MAX_VALUE,next -> {
 			try{
 				cleaner.clean();
 				response.resume(finder.find());
@@ -53,7 +52,7 @@ public class ServiceRegistryResource{
 				logger.error(e.getMessage(),e);
 				response.resume(Arrays.asList("failed due to error"));
 			}
-		});
+		}));
 		
 	}
 
@@ -62,9 +61,8 @@ public class ServiceRegistryResource{
 	@Consumes("application/json")
 	@Produces("application/json")
 	public void schedule(@Suspended AsyncResponse response) {
-		ReactiveSeq.of(this)
-				  .futureOperations(WorkerThreads.ioExecutor.get())
-				  .forEachX(Long.MAX_VALUE,next -> {
+		ReactiveSeq.of(this).foldFuture(WorkerThreads.ioExecutor.get(),s->
+				  s.forEach(Long.MAX_VALUE,next -> {
 			try{
 				job.schedule();
 				response.resume(HashMapBuilder.of("status", "success"));
@@ -72,7 +70,7 @@ public class ServiceRegistryResource{
 				logger.error(e.getMessage(),e);
 				response.resume(HashMapBuilder.of("status", "failure"));
 			}
-		});
+		}));
 		
 	}
 
@@ -81,9 +79,8 @@ public class ServiceRegistryResource{
 	@Consumes("application/json")
 	@Produces("application/json")
 	public void register(@Suspended AsyncResponse response,RegisterEntry entry) {
-		ReactiveSeq.of(this)
-			.futureOperations(WorkerThreads.ioExecutor.get())
-			.forEachX(Long.MAX_VALUE,next -> {
+		ReactiveSeq.of(this).foldFuture(WorkerThreads.ioExecutor.get(),
+			s->s.forEach(Long.MAX_VALUE,next -> {
 			try{
 				register.register(entry);
 				response.resume(HashMapBuilder.of("status", "complete"));
@@ -91,7 +88,7 @@ public class ServiceRegistryResource{
 				logger.error(e.getMessage(),e);
 				response.resume(HashMapBuilder.of("status", "failure"));
 			}
-		});
+		}));
 		
 	}
 

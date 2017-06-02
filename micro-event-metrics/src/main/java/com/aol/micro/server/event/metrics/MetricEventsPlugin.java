@@ -2,7 +2,7 @@ package com.aol.micro.server.event.metrics;
 
 
 import com.aol.micro.server.Plugin;
-import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PersistentSetX;
 
 
 /**
@@ -17,8 +17,8 @@ import cyclops.collections.immutable.PSetX;
 public class MetricEventsPlugin implements Plugin{
 	
 	@Override
-	public PSetX<Class> springClasses() {
-		return PSetX.of(
+	public PersistentSetX<Class> springClasses() {
+		return PersistentSetX.of(
 				Configuration.class,
 				MetricsCatcher.class);
 	}

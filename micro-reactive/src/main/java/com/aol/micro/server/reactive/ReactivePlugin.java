@@ -2,14 +2,14 @@ package com.aol.micro.server.reactive;
 
 
 import com.aol.micro.server.Plugin;
-import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PersistentSetX;
 
 
 public class ReactivePlugin implements Plugin{
 
 	@Override
-	public PSetX<Class> springClasses() {
-		return PSetX.of(ResponderConfigurer.class);
+	public PersistentSetX<Class> springClasses() {
+		return PersistentSetX.of(ResponderConfigurer.class);
 	}
 	
 	

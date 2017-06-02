@@ -1,5 +1,6 @@
 package com.aol.micro.server.rest.jersey;
 
+import com.aol.cyclops2.types.mixins.Printable;
 import cyclops.stream.ReactiveSeq;
 import cyclops.stream.Spouts;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import java.lang.reflect.InvocationHandler;
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -47,7 +49,7 @@ public class AsyncDispatcher implements ResourceMethodDispatcher {
        @Override
        public ResourceMethodDispatcher create(Invocable method, InvocationHandler handler, ConfiguredValidator validator) {
            final Class<?> returnType = method.getHandlingMethod().getReturnType();
-           if(Publisher.class.isAssignableFrom(returnType)){
+           if(Publisher.class.isAssignableFrom(returnType) & !Collection.class.isAssignableFrom(returnType)){
               Set<Provider> providers = serviceLocator.getAllServiceHandles(ResourceMethodDispatcher.Provider.class)
                                                       .stream()
                                                       .filter(h->!h.getActiveDescriptor()

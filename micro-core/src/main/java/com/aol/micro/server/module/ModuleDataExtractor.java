@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 
-import cyclops.collections.immutable.PStackX;
+import cyclops.collections.immutable.LinkedListX;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
@@ -26,7 +26,7 @@ public class ModuleDataExtractor {
 
 	private final Module module;
 	
-	public PStackX getRestResources(ApplicationContext rootContext){
+	public LinkedListX getRestResources(ApplicationContext rootContext){
 		
 			List resources = new ArrayList<>();
 			module.getRestResourceClasses().forEach(it -> resources.addAll(rootContext.getBeansOfType(it).values()));
@@ -34,7 +34,7 @@ public class ModuleDataExtractor {
 			rootContext.getBeansWithAnnotation(JaxRsResource.class).forEach((n,it)->resources.add(it));
 			rootContext.getBeansOfType(JaxRsResourceWrapper.class).forEach((n,it)->resources.add(it.getResource()));
 			resources.addAll(module.getJaxRsResourceObjects());
-			return PStackX.fromCollection(resources);
+			return LinkedListX.fromIterable(resources);
 		
 	}
 	
