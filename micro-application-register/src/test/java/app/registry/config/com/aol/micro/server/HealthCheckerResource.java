@@ -8,7 +8,8 @@ import javax.ws.rs.Path;
 import com.aol.micro.server.HealthStatusChecker;
 import com.aol.micro.server.StatsSupplier;
 import com.aol.micro.server.auto.discovery.Rest;
-import cyclops.collections.MapXs;
+import cyclops.companion.MapXs;
+
 
 @Rest
 @Path("/health")

@@ -1,7 +1,7 @@
 package com.aol.micro.server.datadog.metrics;
 
 import com.aol.micro.server.Plugin;
-import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PersistentSetX;
 
 /**
  *
@@ -15,7 +15,7 @@ import cyclops.collections.immutable.PSetX;
 public class DatadogMetricsPlugin  implements Plugin {
 
     @Override
-    public PSetX<Class> springClasses() {
-        return PSetX.of( DatadogMetricsConfigurer.class);
+    public PersistentSetX<Class> springClasses() {
+        return PersistentSetX.of( DatadogMetricsConfigurer.class);
     }
 }

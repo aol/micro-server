@@ -11,7 +11,7 @@ import com.aol.micro.server.PluginLoader;
 import com.aol.micro.server.module.IncorrectJaxRsPluginsException;
 import com.aol.micro.server.rest.RestConfiguration;
 import com.aol.micro.server.servers.model.ServerData;
-import cyclops.Streams;
+import cyclops.companion.Streams;
 import cyclops.stream.ReactiveSeq;
 
 public class JaxRsServletConfigurer {

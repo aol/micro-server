@@ -9,7 +9,7 @@ import com.aol.micro.server.events.SystemData;
 import com.aol.micro.server.manifest.ManifestComparator;
 import com.aol.micro.server.utility.HashMapBuilder;
 
-import cyclops.collections.MapX;
+import cyclops.collections.mutable.MapX;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

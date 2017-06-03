@@ -10,7 +10,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequestListener;
 
-import cyclops.collections.immutable.PStackX;
+import cyclops.collections.immutable.LinkedListX;
 import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,11 +83,11 @@ public class BootFrontEndApplicationConfigurator  extends SpringBootServletIniti
 					rootContext, fullRestResource, module);
 			List<FilterData> filterDataList = extractor.createFilteredDataList(serverData);
 			List<ServletData> servletDataList = extractor.createServletDataList(serverData);
-			new ServletConfigurer(serverData, PStackX.fromIterable(servletDataList)).addServlets(webappContext);
+			new ServletConfigurer(serverData, LinkedListX.fromIterable(servletDataList)).addServlets(webappContext);
 
-			new FilterConfigurer(serverData, PStackX.fromIterable(filterDataList)).addFilters(webappContext);
-			PStack<ServletContextListener> servletContextListenerData = PStackX.fromCollection(module.getListeners(serverData)).filter(i->!(i instanceof ContextLoader));
-		    PStack<ServletRequestListener> servletRequestListenerData =	PStackX.fromCollection(module.getRequestListeners(serverData));
+			new FilterConfigurer(serverData, LinkedListX.fromIterable(filterDataList)).addFilters(webappContext);
+			PStack<ServletContextListener> servletContextListenerData = LinkedListX.fromIterable(module.getListeners(serverData)).filter(i->!(i instanceof ContextLoader));
+		    PStack<ServletRequestListener> servletRequestListenerData =	LinkedListX.fromIterable(module.getRequestListeners(serverData));
 			
 			new ServletContextListenerConfigurer(serverData, servletContextListenerData, servletRequestListenerData).addListeners(webappContext);
 			

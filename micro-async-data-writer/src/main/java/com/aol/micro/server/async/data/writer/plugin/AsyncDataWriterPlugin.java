@@ -6,7 +6,7 @@ import java.util.Set;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.async.data.cleaner.ConfigureSchedulingAsyncDataWriter;
 import com.aol.micro.server.async.data.writer.ConfigureDataWriter;
-import cyclops.collections.SetX;
+import cyclops.collections.mutable.SetX;
 
 public class AsyncDataWriterPlugin implements Plugin {
 

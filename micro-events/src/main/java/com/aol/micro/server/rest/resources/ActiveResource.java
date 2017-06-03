@@ -41,8 +41,8 @@ public class ActiveResource<T> implements CommonRestResource, SingletonRestResou
                    .map(typeToUse -> activeQueries.getMap()
                                                   .get(typeToUse)
                                                   .toString())
-                   .futureOperations(WorkerThreads.ioExecutor.get())
-                   .forEachX(Long.MAX_VALUE,result -> asyncResponse.resume(result));
+                   .foldFuture(WorkerThreads.ioExecutor.get(),
+                    s->s.forEach(Long.MAX_VALUE,result -> asyncResponse.resume(result)));
 
     }
 
@@ -52,8 +52,8 @@ public class ActiveResource<T> implements CommonRestResource, SingletonRestResou
     public void allActiveRequests(@Suspended AsyncResponse asyncResponse) {
 
         ReactiveSeq.of(activeQueries.toString())
-                   .futureOperations(WorkerThreads.ioExecutor.get())
-                   .forEachX(Long.MAX_VALUE,result -> asyncResponse.resume(result));
+                   .foldFuture(WorkerThreads.ioExecutor.get(),
+                   s->s.forEach(Long.MAX_VALUE,result -> asyncResponse.resume(result)));
 
     }
 
@@ -64,8 +64,8 @@ public class ActiveResource<T> implements CommonRestResource, SingletonRestResou
 
         ReactiveSeq.of(this.activeJobs)
                    .map(JobsBeingExecuted::toString)
-                   .futureOperations(WorkerThreads.ioExecutor.get())
-                   .forEachX(Long.MAX_VALUE,str -> asyncResponse.resume(str));
+                   .foldFuture(WorkerThreads.ioExecutor.get(),
+                   s->s.forEach(Long.MAX_VALUE,str -> asyncResponse.resume(str)));
 
     }
 

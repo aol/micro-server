@@ -6,7 +6,7 @@ import java.util.Optional;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.aol.micro.server.spring.datasource.jdbc.SQL;
-import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PersistentSetX;
 
 /**
  * 
@@ -25,8 +25,8 @@ public class JdbcPlugin implements Plugin {
 	}
 
 	@Override
-	public PSetX<Class> springClasses() {
-		return PSetX.of(JdbcConfig.class, SQL.class);
+	public PersistentSetX<Class> springClasses() {
+		return PersistentSetX.of(JdbcConfig.class, SQL.class);
 	}
 
 

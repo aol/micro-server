@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import com.aol.cyclops2.util.ExceptionSoftener;
-import cyclops.Streams;
-import cyclops.collections.ListX;
+import cyclops.companion.Streams;
+import cyclops.collections.mutable.ListX;
 import cyclops.stream.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

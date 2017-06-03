@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.ExecutionException;
 
-import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PersistentSetX;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class BinderTest {
 	public void startServer(){
 		
 		
-		server = new MicroserverApp(ConfigurableModule.builder().context("binder").jaxRsResourceObjects(PSetX.of(new CustomBinder3())).build());
+		server = new MicroserverApp(ConfigurableModule.builder().context("binder").jaxRsResourceObjects(PersistentSetX.of(new CustomBinder3())).build());
 	
 		server.start();
 

@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 import cyclops.async.Future;
 import cyclops.async.LazyReact;
 import cyclops.async.Pipes;
-import cyclops.async.QueueFactory;
+import cyclops.async.adapters.QueueFactory;
 import cyclops.control.Eval;
 import cyclops.control.Maybe;
 import cyclops.function.FluentFunctions;
@@ -57,9 +57,8 @@ public class EventQueueManager<T> {
 			if(!pipes.get(key).isPresent())
 				pipes.register(key, factory.build());
 			pipes.reactiveSeq(key)
-				 .get()
-				 .futureOperations(ex)
-				 .forEachX(Long.MAX_VALUE,reactor);
+				 .get().foldFuture(ex,
+				 s->s.forEach(Long.MAX_VALUE,reactor));
 		}
 		/**
 		 * @param key Register a new queue with supplied key

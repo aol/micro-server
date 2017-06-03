@@ -3,7 +3,7 @@ package com.aol.micro.server.async.data.writer;
 
 
 import cyclops.async.Future;
-import cyclops.collections.ListX;
+import cyclops.collections.mutable.ListX;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

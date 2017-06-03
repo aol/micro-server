@@ -2,7 +2,7 @@ package com.aol.micro.server.machine.stats.sigar;
 
 import java.util.Map;
 
-import cyclops.collections.MapXs;
+import cyclops.companion.MapXs;
 import org.hyperic.sigar.Sigar;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -67,8 +67,8 @@ public class EventQueueManagerTest {
 	
 		
 		manager.stream("2")
-		        .futureOperations(ex)
-		        .forEachX(Long.MAX_VALUE,a->recieved= a);
+				.foldFuture(ex,
+		        s->s.forEach(Long.MAX_VALUE,a->recieved= a));
 		
 		manager.push("2", "world");
 		
@@ -84,8 +84,8 @@ public class EventQueueManagerTest {
 		
 		ReactiveSeq.generate(()->"input")
 					.onePer(1,TimeUnit.SECONDS)
-					.futureOperations(ex)
-					.forEachX(Long.MAX_VALUE,n->manager.push("lazy",n));
+					.foldFuture(ex,
+							s->s.forEach(Long.MAX_VALUE,n->manager.push("lazy",n)));
 					
 		Eval<String> lazy = manager.lazy("lazy");
 		
@@ -109,8 +109,8 @@ public class EventQueueManagerTest {
 					.onePer(1,TimeUnit.SECONDS)
 					.map(s->s+":"+count.incrementAndGet())
 					.peek(System.out::println)
-					.futureOperations(ex)
-					.forEachX(Long.MAX_VALUE,n->manager.push("lazy",n));
+					.foldFuture(ex,
+					 s->s.forEach(Long.MAX_VALUE,n->manager.push("lazy",n)));
 					
 		Maybe<String> lazy1 = manager.maybe("lazy");
 		Maybe<String> lazy2 = manager.maybe("lazy");

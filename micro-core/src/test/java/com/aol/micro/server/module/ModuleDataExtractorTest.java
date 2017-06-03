@@ -13,7 +13,7 @@ import java.util.Map;
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServlet;
 
-import cyclops.collections.immutable.PStackX;
+import cyclops.collections.immutable.LinkedListX;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -41,7 +41,7 @@ public class ModuleDataExtractorTest {
 									.build();
 		extractor = new ModuleDataExtractor(module);
 		rootContext = mock(AnnotationConfigWebApplicationContext.class);
-		data = ServerData.builder().resources(PStackX.of()).module(module).build();
+		data = ServerData.builder().resources(LinkedListX.of()).module(module).build();
 		
 	}
 	

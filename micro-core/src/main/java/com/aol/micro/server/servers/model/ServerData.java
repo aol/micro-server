@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.ws.rs.Path;
 
-import cyclops.collections.immutable.PStackX;
+import cyclops.collections.immutable.LinkedListX;
 import cyclops.stream.ReactiveSeq;
 import lombok.Getter;
 import lombok.Builder;
@@ -26,7 +26,7 @@ public class ServerData {
 
 	private final int port;
 
-	private final PStackX<Object> resources;
+	private final LinkedListX<Object> resources;
 	private final ApplicationContext rootContext;
 	private final String baseUrlPattern;
 	private final Module module;
@@ -37,7 +37,7 @@ public class ServerData {
 
 		this.port = port;
 		this.module = module;
-		this.resources = resources==null ? PStackX.of() : PStackX.fromCollection(resources);
+		this.resources = resources==null ? LinkedListX.of() : LinkedListX.fromIterable(resources);
 		this.rootContext = rootContext;
 		this.baseUrlPattern = baseUrlPattern;
 	}

@@ -40,8 +40,8 @@ public class ManifestResource implements CommonRestResource, SingletonRestResour
 		ReactiveSeq.of("/META-INF/MANIFEST.MF")
 					.map(url->context.getResourceAsStream(url))
 					.map(this::getManifest)
-					.futureOperations(WorkerThreads.ioExecutor.get())
-					.forEachX(Long.MAX_VALUE,result->asyncResponse.resume(result));
+				.foldFuture(WorkerThreads.ioExecutor.get(),
+					s->s.forEach(Long.MAX_VALUE,result->asyncResponse.resume(result)));
 					
 		
 	}

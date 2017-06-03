@@ -4,7 +4,7 @@ package com.aol.micro.server.spring.metrics;
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.spring.metrics.health.HealthCheckRunner;
 import com.aol.micro.server.spring.metrics.health.HealthResource;
-import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PersistentSetX;
 
 /**
  * 
@@ -18,8 +18,8 @@ import cyclops.collections.immutable.PSetX;
 public class MetricsPlugin implements Plugin {
 
     @Override
-    public PSetX<Class> springClasses() {
-        return PSetX.of(CodahaleMetricsConfigurer.class, HealthCheckRunner.class, HealthResource.class);
+    public PersistentSetX<Class> springClasses() {
+        return PersistentSetX.of(CodahaleMetricsConfigurer.class, HealthCheckRunner.class, HealthResource.class);
     }
 
 }

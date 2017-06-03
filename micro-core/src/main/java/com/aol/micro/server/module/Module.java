@@ -6,12 +6,12 @@ import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Classes;
 import com.aol.micro.server.servers.model.ServerData;
-import cyclops.Streams;
-import cyclops.collections.ListX;
-import cyclops.collections.SetX;
-import cyclops.collections.immutable.PMapX;
-import cyclops.collections.immutable.PSetX;
-import cyclops.collections.immutable.PStackX;
+import cyclops.companion.Streams;
+import cyclops.collections.mutable.ListX;
+import cyclops.collections.mutable.SetX;
+import cyclops.collections.immutable.PersistentMapX;
+import cyclops.collections.immutable.PersistentSetX;
+import cyclops.collections.immutable.LinkedListX;
 import cyclops.stream.ReactiveSeq;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.ContextLoaderListener;
@@ -30,11 +30,11 @@ public interface Module {
     default Set<Object> getJaxRsResourceObjects() {
         return PluginLoader.INSTANCE.plugins.get()
                                             .flatMap(Plugin::jaxRsResourceObjects)
-                                            .toPSetX();
+                                            .to().persistentSetX();
     }
 
     default Map<String, Object> getServerProperties() {
-        return PMapX.empty();
+        return PersistentMapX.empty();
     }
 
     default <T> Consumer<WebServerProvider<T>> getServerConfigManager() {
@@ -48,19 +48,19 @@ public interface Module {
     }
 
     default List<String> getPackages() {
-        return PStackX.empty();
+        return LinkedListX.empty();
     }
 
     default Map<String, String> getPropertyOverrides() {
-        return PMapX.empty();
+        return PersistentMapX.empty();
     }
 
     default Set<Class<?>> getSpringConfigurationClasses() {
-        return PSetX.of(Classes.CORE_CLASSES.getClasses());
+        return PersistentSetX.of(Classes.CORE_CLASSES.getClasses());
     }
 
     default Set<Class<?>> getRestResourceClasses() {
-        return PSetX.of(RestResource.class);
+        return PersistentSetX.of(RestResource.class);
     }
 
     default Set<Class<? extends Annotation>> getRestAnnotationClasses() {
@@ -74,7 +74,7 @@ public interface Module {
                                             .filter(module -> module.servletContextListeners() != null)
                                             .flatMapI(Plugin::jaxRsPackages)
 
-                                            .toPStackX();
+                                            .to().linkedListX();
 
     }
 
@@ -82,7 +82,7 @@ public interface Module {
         return PluginLoader.INSTANCE.plugins.get()
                                             .stream()
                                             .flatMapI(Plugin::jaxRsResources)
-                                            .toPStackX();
+                                            .to().linkedListX();
 
     }
 
@@ -95,11 +95,11 @@ public interface Module {
 
         ListX<Plugin> modules = PluginLoader.INSTANCE.plugins.get();
 
-        PStackX<ServletContextListener> listeners = modules.stream()
+        LinkedListX<ServletContextListener> listeners = modules.stream()
                                                            .filter(module -> module.servletContextListeners() != null)
                                                            .flatMapI(Plugin::servletContextListeners)
                                                            .map(fn -> fn.apply(data))
-                                                           .toPStackX();
+                                                           .to().linkedListX();
 
         return listeners.plusAll(list);
     }
@@ -111,7 +111,7 @@ public interface Module {
                                             .filter(module -> module.servletRequestListeners() != null)
                                             .flatMapI(Plugin::servletRequestListeners)
                                             .map(fn -> fn.apply(data))
-                                            .toPStackX();
+                                             .to().linkedListX();
 
     }
 
@@ -124,7 +124,7 @@ public interface Module {
                    .map(module -> module.filters()
                                         .apply(data))
                    .forEach(pluginMap -> map.putAll(pluginMap));
-        return PMapX.fromMap(map);
+        return PersistentMapX.fromMap(map);
     }
 
     default Map<String, Servlet> getServlets(ServerData data) {
@@ -135,7 +135,7 @@ public interface Module {
                    .map(module -> module.servlets()
                                         .apply(data))
                    .forEach(pluginMap -> map.putAll(pluginMap));
-        return PMapX.fromMap(map);
+        return PersistentMapX.fromMap(map);
 
     }
 

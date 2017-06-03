@@ -1,8 +1,8 @@
 description = 'micro-slack'
 
 dependencies {
-    compile 'com.aol.microservices:micro-grizzly-with-jersey:0.87'
-    compile 'com.aol.microservices:micro-general-exception-mapper:0.87'
+    compile project(':micro-grizzly-with-jersey')
+    compile project(':micro-general-exception-mapper')
     
     testCompile group: 'junit', name: 'junit', version:'4.10'
     testCompile  'org.springframework.boot:spring-boot-starter-test:1.1.5.RELEASE'

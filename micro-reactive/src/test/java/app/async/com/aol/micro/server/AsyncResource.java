@@ -36,7 +36,7 @@ public class AsyncResource implements RestResource{
         @Produces("text/plain")
         public void expensive(@Suspended AsyncResponse asyncResponse){
   
-        	FutureStream.lazyFutureStreamFromIterable(urls)
+        	FutureStream.builder().fromIterable(urls)
 					.then(it->client.get(it))
 					.onFail(it -> "")
 					.peek(it -> 

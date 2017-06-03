@@ -8,7 +8,7 @@ import com.aol.micro.server.spring.datasource.JdbcConfig;
 import com.aol.micro.server.spring.datasource.hibernate.HibernateConfig;
 import com.aol.micro.server.spring.datasource.hibernate.SpringDataConfig;
 import com.aol.micro.server.spring.datasource.jdbc.SQL;
-import cyclops.collections.immutable.PSetX;
+import cyclops.collections.immutable.PersistentSetX;
 
 /**
  * 
@@ -27,8 +27,8 @@ public class HibernatePlugin implements Plugin {
 	}
 
 	@Override
-	public PSetX<Class> springClasses() {
-		return PSetX.of(JdbcConfig.class, SQL.class, SpringDataConfig.class, HibernateConfig.class);
+	public PersistentSetX<Class> springClasses() {
+		return PersistentSetX.of(JdbcConfig.class, SQL.class, SpringDataConfig.class, HibernateConfig.class);
 	}
 
 	

@@ -2,8 +2,8 @@ package com.aol.micro.server.application.registry;
 
 import java.util.List;
 
-import cyclops.Semigroups;
-import cyclops.collections.ListX;
+import cyclops.companion.Semigroups;
+import cyclops.collections.mutable.ListX;
 import cyclops.function.Monoid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

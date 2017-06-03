@@ -2,7 +2,7 @@ package com.aol.micro.server.spring;
 
 import java.util.List;
 
-import cyclops.Streams;
+import cyclops.companion.Streams;
 import cyclops.stream.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
