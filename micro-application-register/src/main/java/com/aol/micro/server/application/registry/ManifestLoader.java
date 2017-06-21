@@ -37,7 +37,7 @@ public class ManifestLoader {
                                               .getClassLoader()
                                               .getResourceAsStream(url))
                               .map(this::getManifest)
-                              .singleOptional()
+                              .single()
                               .orElse(null);
         } catch (Exception e) {
             logger.warn("Warning : can't load manifest due to exception {}", e.getMessage());

@@ -54,7 +54,7 @@ public interface JobName {
                         .stream()
                         .flatMap(Stream::of)
                         .takeRight(1)
-                        .singleOptional()
+                        .single()
                         .map(i -> i + ".")
                         .orElse("")
                     + c.getSimpleName();
