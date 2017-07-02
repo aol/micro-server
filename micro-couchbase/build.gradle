@@ -11,7 +11,6 @@ dependencies {
 	compile project(':micro-manifest-comparator')
 	compile project(':micro-core')
 	compile project(':micro-guava')
-	compile project(':micro-events')
 	testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.3.3'
 	testCompile(group: 'org.spockframework', name: 'spock-core', version:'0.7-groovy-2.0') { exclude(module: 'groovy-all') }
 	testCompile group: 'com.cyrusinnovation', name: 'mockito-groovy-support', version:'1.3'
