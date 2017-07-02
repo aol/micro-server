@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 import org.couchbase.mock.CouchbaseMock;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;

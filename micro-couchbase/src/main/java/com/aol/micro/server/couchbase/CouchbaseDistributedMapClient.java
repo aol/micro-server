@@ -29,6 +29,26 @@ public class CouchbaseDistributedMapClient<V> implements DistributedMap<V> {
 
     }
 
+    @Override
+    public boolean put(final String key, int expiry, final V value) {
+        logger.debug("put '{}', value:{}", key, value);
+        return couchbaseClient.map(c -> putInternalWithExpiry(c, key, value, expiry))
+                .orElse(false);
+
+    }
+
+    private boolean putInternalWithExpiry(final CouchbaseClient client, final String key, final V value, int expiry) {
+
+        try {
+            return client.set(key,expiry, value)
+                    .get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw ExceptionSoftener.throwSoftenedException(e);
+
+        }
+    }
+
+
     private boolean putInternal(final CouchbaseClient client, final String key, final V value) {
 
         try {
@@ -50,4 +70,5 @@ public class CouchbaseDistributedMapClient<V> implements DistributedMap<V> {
     public void delete(String key) {
         couchbaseClient.map(c -> c.delete(key));
     }
+
 }

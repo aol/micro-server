@@ -1,4 +1,4 @@
-package com.aol.micro.server.couchbase.base;
+package com.aol.micro.server.couchbase.manifest.comparator;
 
 import java.util.Date;
 import java.util.Optional;
