@@ -87,6 +87,7 @@ public class TransientElasticacheDataConnection<V> implements DistributedMap<V> 
 
     @Override
     public void delete(String key) {
+        memcachedClient.delete(key);
 
     }
 
