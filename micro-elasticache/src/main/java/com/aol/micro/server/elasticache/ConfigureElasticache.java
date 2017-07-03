@@ -1,8 +1,6 @@
 package com.aol.micro.server.elasticache;
 
-
-
-import com.aol.micro.server.distributed.DistributedMap;
+import com.aol.micro.server.distributed.DistributedCache;
 import lombok.extern.slf4j.Slf4j;
 import net.spy.memcached.MemcachedClient;
 
@@ -39,7 +37,7 @@ public class ConfigureElasticache {
 
 
     @Bean(name = "transientCache")
-    public DistributedMap transientCache() throws IOException, URISyntaxException {
+    public DistributedCache transientCache() throws IOException, URISyntaxException {
         try {
             log.info("Creating Memcached Data connection for elasticache cluster: {}", hostname);
             return new TransientElasticacheDataConnection(createMemcachedClient(), retryAfterSecs, maxRetries);

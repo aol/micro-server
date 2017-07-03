@@ -1,10 +1,6 @@
 package com.aol.micro.server.elasticache;
 
-/**
- * Created by gordonmorrow on 03/07/2017.
- */
-
-import com.aol.micro.server.distributed.DistributedMap;
+import com.aol.micro.server.distributed.DistributedCache;
 import com.aol.micro.server.events.ScheduledJob;
 import com.aol.micro.server.events.SystemData;
 import lombok.extern.slf4j.Slf4j;
@@ -17,10 +13,10 @@ import java.util.Random;
 
         private static final Random random = new Random();
 
-        private final DistributedMap cache;
+        private final DistributedCache cache;
         private final MemcachedClient memcachedClient;
 
-        public ElasticacheConnectionTester(DistributedMap cache, MemcachedClient memcachedClient) {
+        public ElasticacheConnectionTester(DistributedCache cache, MemcachedClient memcachedClient) {
 
             this.cache = cache;
             this.memcachedClient = memcachedClient;

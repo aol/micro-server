@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +20,9 @@ import com.couchbase.client.CouchbaseConnectionFactoryBuilder;
 
 import lombok.Setter;
 
+@Slf4j
 @Configuration
 public class ConfigureCouchbase {
-
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Value("${couchbase.manifest.comparison.key:default-key}")
     private String defaultCouchbaseManifestComparisonKey;
@@ -56,13 +54,13 @@ public class ConfigureCouchbase {
 
     @SuppressWarnings("rawtypes")
     @Bean(name = "couchbaseDistributedMap")
-    public CouchbaseDistributedMapClient simpleCouchbaseClient() throws IOException, URISyntaxException {
+    public CouchbaseDistributedCacheClient simpleCouchbaseClient() throws IOException, URISyntaxException {
         if (couchbaseClientEnabled) {
-            return new CouchbaseDistributedMapClient(
+            return new CouchbaseDistributedCacheClient(
                                                      couchbaseClient(), expiresAfterSeconds, maxTry,
                     retryAfterSec);
         } else {
-            return new CouchbaseDistributedMapClient(
+            return new CouchbaseDistributedCacheClient(
                                                      null, expiresAfterSeconds, maxTry,
                     retryAfterSec);
         }
@@ -71,7 +69,7 @@ public class ConfigureCouchbase {
     @Bean(name = "couchbaseClient")
     public CouchbaseClient couchbaseClient() throws IOException, URISyntaxException {
         if (couchbaseClientEnabled) {
-            logger.info("Creating CouchbaseClient for servers: {}", couchbaseServers);
+            log.info("Creating CouchbaseClient for servers: {}", couchbaseServers);
             CouchbaseConnectionFactoryBuilder builder = new CouchbaseConnectionFactoryBuilder();
             builder.setOpTimeout(opTimeout);
             CouchbaseConnectionFactory cf = builder.buildCouchbaseConnection(getServersList(), couchbaseBucket,
@@ -81,7 +79,6 @@ public class ConfigureCouchbase {
                                        cf);
         }
         return null;
-
     }
 
     @Bean

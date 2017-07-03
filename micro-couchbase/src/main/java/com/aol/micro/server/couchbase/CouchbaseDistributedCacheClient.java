@@ -4,15 +4,15 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import com.aol.cyclops2.util.ExceptionSoftener;
+import com.aol.micro.server.distributed.DistributedCache;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.micro.server.distributed.DistributedMap;
 import com.couchbase.client.CouchbaseClient;
 
 @Slf4j
-public class CouchbaseDistributedMapClient<V> implements DistributedMap<V> {
+public class CouchbaseDistributedCacheClient<V> implements DistributedCache<V> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private volatile boolean available = false;
@@ -20,8 +20,8 @@ public class CouchbaseDistributedMapClient<V> implements DistributedMap<V> {
     private final Optional<CouchbaseClient> couchbaseClient;
     private final int expiresAfterSeconds, maxTry, retryAfterSec;
 
-    public CouchbaseDistributedMapClient(CouchbaseClient couchbaseClient, final int expiresAfterSeconds,
-                                         final int maxTry, final int retryAfterSec) {
+    public CouchbaseDistributedCacheClient(CouchbaseClient couchbaseClient, final int expiresAfterSeconds,
+                                           final int maxTry, final int retryAfterSec) {
 
         this.couchbaseClient = Optional.ofNullable(couchbaseClient);
         this.expiresAfterSeconds = expiresAfterSeconds;
@@ -59,7 +59,7 @@ public class CouchbaseDistributedMapClient<V> implements DistributedMap<V> {
             log.info("Connection restored OK");
         }
 
-        available = success;
+        setConnectionTested(success);
 
         return success;
     }
@@ -92,7 +92,7 @@ public class CouchbaseDistributedMapClient<V> implements DistributedMap<V> {
             log.info("Connection restored OK");
         }
 
-        available = success;
+        setConnectionTested(success);
 
         return success;
 
@@ -124,12 +124,21 @@ public class CouchbaseDistributedMapClient<V> implements DistributedMap<V> {
     @Override
     public Optional<V> get(String key) {
         return couchbaseClient.map(c -> (V) c.get(key));
-
     }
 
     @Override
     public void delete(String key) {
         couchbaseClient.map(c -> c.delete(key));
+    }
+
+    @Override
+    public boolean isAvailable(){
+        return available;
+    }
+
+    @Override
+    public void setConnectionTested(boolean result){
+        available = result;
     }
 
 }

@@ -1,4 +1,6 @@
-package com.aol.micro.server.couchbase;
+package com.aol.micro.server.couchbase
+
+import com.aol.micro.server.distributed.DistributedCache;
 
 import static org.hamcrest.Matchers.is
 import static org.junit.Assert.*
@@ -8,18 +10,17 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
 
-import com.aol.micro.server.distributed.DistributedMap;
 import com.couchbase.client.CouchbaseClient
 
 class SimpleCouchbaseClientConnectionTest {
 
 	CouchbaseClient  client
-	DistributedMap con
+	DistributedCache con
 
 	@Before
 	public void setup() {
 		client = Mockito.mock(CouchbaseClient)
-		con  = new CouchbaseDistributedMapClient(client,1,1,1)
+		con  = new CouchbaseDistributedCacheClient(client,1,1,1)
 	}
 	@Test
 	public void testDelete() {
@@ -35,7 +36,7 @@ class SimpleCouchbaseClientConnectionTest {
 
 	@Test
 	public void testGetDistributedCacheDisabled() {
-		con  = new CouchbaseDistributedMapClient(null,1,1,1)
+		con  = new CouchbaseDistributedCacheClient(null,1,1,1)
 		Optional result = con.get("key")
 		assertThat(result, is(Optional.empty()))
 	}

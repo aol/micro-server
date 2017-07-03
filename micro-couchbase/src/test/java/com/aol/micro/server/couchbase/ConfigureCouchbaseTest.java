@@ -8,10 +8,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Optional;
 
+import com.aol.micro.server.distributed.DistributedCache;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.aol.micro.server.distributed.DistributedMap;
 
 public class ConfigureCouchbaseTest {
 
@@ -25,7 +24,7 @@ public class ConfigureCouchbaseTest {
     @Test
     public void createDistributedCacheMemcachedOff() throws IOException, URISyntaxException {
         config.setCouchbaseClientEnabled(false);
-        DistributedMap<Object> cache = config.simpleCouchbaseClient();
+        DistributedCache<Object> cache = config.simpleCouchbaseClient();
         assertThat(cache.get("hello"), is(Optional.empty()));
 
     }

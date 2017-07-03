@@ -1,6 +1,7 @@
 package com.aol.micro.server.elasticache.manifest.comparator;
 
 import com.aol.cyclops2.util.ExceptionSoftener;
+import com.aol.micro.server.distributed.DistributedCache;
 import com.aol.micro.server.distributed.DistributedMap;
 import com.aol.micro.server.manifest.Data;
 import com.aol.micro.server.manifest.ManifestComparator;
@@ -79,7 +80,7 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
 
         @Getter
         private volatile String versionedKey;
-        private final DistributedMap connection;
+        private final DistributedCache connection;
 
         /**
          * Create a ManifestComparator with the supplied distributed map client Data
@@ -90,7 +91,7 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
          * @param connection
          *            DistributedMapClient to store comparison data
          */
-        public ElasticacheManifestComparator(DistributedMap connection) {
+        public ElasticacheManifestComparator(DistributedCache connection) {
             this.key = "default";
             this.versionedKey = newKey(1L).toJson();
             this.connection = connection;
@@ -108,7 +109,7 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
          * @param connection
          *            DistributeMapClient connection
          */
-        public ElasticacheManifestComparator(String key, DistributedMap connection) {
+        public ElasticacheManifestComparator(String key, DistributedCache connection) {
             this.key = key;
             this.versionedKey = newKey(1L).toJson();
             this.connection = connection;

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import com.aol.cyclops2.util.ExceptionSoftener;
+import com.aol.micro.server.distributed.DistributedCache;
 import cyclops.control.Xor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +82,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 
     @Getter
     private volatile String versionedKey;
-    private final DistributedMap connection;
+    private final DistributedCache connection;
 
     /**
      * Create a ManifestComparator with the supplied distributed map client Data
@@ -92,7 +93,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
      * @param connection
      *            DistributedMapClient to store comparison data
      */
-    public CouchbaseManifestComparator(DistributedMap connection) {
+    public CouchbaseManifestComparator(DistributedCache connection) {
         this.key = "default";
         this.versionedKey = newKey(1L).toJson();
         this.connection = connection;
@@ -110,7 +111,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
      * @param connection
      *            DistributeMapClient connection
      */
-    public CouchbaseManifestComparator(String key, DistributedMap connection) {
+    public CouchbaseManifestComparator(String key, DistributedCache connection) {
         this.key = key;
         this.versionedKey = newKey(1L).toJson();
         this.connection = connection;

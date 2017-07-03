@@ -1,9 +1,7 @@
 package com.aol.micro.server.couchbase;
 
-/**
- * Created by gordonmorrow on 03/07/2017.
- */
 
+import com.aol.micro.server.distributed.DistributedCache;
 import com.aol.micro.server.distributed.DistributedMap;
 import com.aol.micro.server.events.ScheduledJob;
 import com.aol.micro.server.events.SystemData;
@@ -17,10 +15,10 @@ import java.util.Random;
 
         private static final Random random = new Random();
 
-        private final DistributedMap cache;
+        private final DistributedCache cache;
         private final CouchbaseClient couchbaseClient;
 
-        public CouchbaseConnectionTester(DistributedMap cache, CouchbaseClient couchbaseClient) {
+        public CouchbaseConnectionTester(DistributedCache cache, CouchbaseClient couchbaseClient) {
 
             this.cache = cache;
             this.couchbaseClient = couchbaseClient;

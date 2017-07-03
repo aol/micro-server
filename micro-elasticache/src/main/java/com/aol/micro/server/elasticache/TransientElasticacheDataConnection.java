@@ -1,20 +1,21 @@
 package com.aol.micro.server.elasticache;
 
+import com.aol.micro.server.distributed.DistributedCache;
 import lombok.extern.slf4j.Slf4j;
 import java.util.Optional;
 import net.spy.memcached.MemcachedClient;
-import com.aol.micro.server.distributed.DistributedMap;
-
 
 @Slf4j
-public class TransientElasticacheDataConnection<V> implements DistributedMap<V> {
+public class TransientElasticacheDataConnection<V> implements DistributedCache<V> {
 
         private final MemcachedClient memcachedClient;
         private final int retryAfterSec;
         private final int maxTry;
         private final int defaultExpiry = 3600;
+        private volatile boolean available = false;
 
-        public TransientElasticacheDataConnection(MemcachedClient memcachedClient,int retryAfterSec, int maxTry) {
+
+    public TransientElasticacheDataConnection(MemcachedClient memcachedClient,int retryAfterSec, int maxTry) {
             this.memcachedClient = memcachedClient;
             this.retryAfterSec = retryAfterSec;
             this.maxTry = maxTry;
@@ -46,6 +47,7 @@ public class TransientElasticacheDataConnection<V> implements DistributedMap<V> 
             if (success && tryCount > 1) {
                 log.info("Connection restored OK to Elasticache cluster");
             }
+            setConnectionTested(success);
             return success;
         }
 
@@ -75,6 +77,7 @@ public class TransientElasticacheDataConnection<V> implements DistributedMap<V> 
         if (success && tryCount > 1) {
             log.info("Connection restored OK to Elasticache cluster");
         }
+        setConnectionTested(success);
         return success;
     }
 
@@ -87,6 +90,17 @@ public class TransientElasticacheDataConnection<V> implements DistributedMap<V> 
     @Override
     public void delete(String key) {
         memcachedClient.delete(key);
+
+    }
+
+    @Override
+    public boolean isAvailable() {
+        return available;
+    }
+
+    @Override
+    public void setConnectionTested(boolean result) {
+        available = result;
 
     }
 
