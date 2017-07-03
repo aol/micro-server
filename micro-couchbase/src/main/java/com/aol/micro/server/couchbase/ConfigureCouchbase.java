@@ -44,13 +44,13 @@ public class ConfigureCouchbase {
     private long opTimeout;
 
     @Value("${distributed.cache.default.expiration:691200}")
-    private int expiresAfterSeconds = 691200;
+    private int expiresAfterSeconds;
 
     @Value("${distributed.cache.maxTry:5}")
-    private int maxTry = 5;
+    private int maxTry;
 
     @Value("${distributed.cache.retryAfterSec:1}")
-    private int retryAfterSec = 1;
+    private int retryAfterSec;
 
     @SuppressWarnings("rawtypes")
     @Bean(name = "couchbaseDistributedMap")

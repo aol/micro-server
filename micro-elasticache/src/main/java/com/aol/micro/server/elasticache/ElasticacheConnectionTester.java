@@ -30,7 +30,7 @@ import java.util.Random;
             try {
                 result = testConnection();
             } catch (RuntimeException e) {
-                log.debug("Could not connect to Cache" + e.getMessage());
+                log.error("Could not connect to Cache" + e.getMessage());
             }
                 cache.setConnectionTested(result);
 
