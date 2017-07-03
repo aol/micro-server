@@ -8,6 +8,7 @@ dependencies {
 	compile group: 'net.spy', name: 'spymemcached', version: '2.12.3'
 	compile project(':micro-core')
 	compile project(':micro-guava')
+	compile project(':micro-events')
 	compile project(':micro-manifest-comparator')
 	testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.3.3'
 	testCompile(group: 'org.spockframework', name: 'spock-core', version:'0.7-groovy-2.0') { exclude(module: 'groovy-all') }

@@ -4,36 +4,97 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import com.aol.cyclops2.util.ExceptionSoftener;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.aol.micro.server.distributed.DistributedMap;
 import com.couchbase.client.CouchbaseClient;
 
+@Slf4j
 public class CouchbaseDistributedMapClient<V> implements DistributedMap<V> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    private volatile boolean available = false;
 
     private final Optional<CouchbaseClient> couchbaseClient;
+    private final int expiresAfterSeconds, maxTry, retryAfterSec;
 
-    public CouchbaseDistributedMapClient(CouchbaseClient couchbaseClient) {
+    public CouchbaseDistributedMapClient(CouchbaseClient couchbaseClient, final int expiresAfterSeconds,
+                                         final int maxTry, final int retryAfterSec) {
 
         this.couchbaseClient = Optional.ofNullable(couchbaseClient);
+        this.expiresAfterSeconds = expiresAfterSeconds;
+        this.maxTry = maxTry;
+        this.retryAfterSec = retryAfterSec;
     }
 
     @Override
     public boolean put(final String key, final V value) {
-        logger.debug("put '{}', value:{}", key, value);
-        return couchbaseClient.map(c -> putInternal(c, key, value))
-                              .orElse(false);
 
+        log.trace("put '{}', value:{}", key, value);
+        boolean success = false;
+        int tryCount = 0;
+
+        do {
+            try {
+                if (tryCount > 0) {
+                    Thread.sleep(retryAfterSec * 1000);
+                    log.warn("retry #{}", tryCount);
+                }
+                tryCount++;
+                success = couchbaseClient.map(c -> putInternal(c, key, value))
+                        .orElse(false);
+
+            } catch (final Exception e) {
+
+                log.warn("memcache put: {}", e.getMessage());
+            }
+        } while (!success && tryCount < maxTry);
+
+        if (!success) {
+            log.error("Failed to place item in couchbase");
+        }
+        if (success && tryCount > 1) {
+            log.info("Connection restored OK");
+        }
+
+        available = success;
+
+        return success;
     }
 
     @Override
     public boolean put(final String key, int expiry, final V value) {
         logger.debug("put '{}', value:{}", key, value);
-        return couchbaseClient.map(c -> putInternalWithExpiry(c, key, value, expiry))
+        boolean success = false;
+        int tryCount = 0;
+
+        do {
+            try {
+                if (tryCount > 0) {
+                    Thread.sleep(retryAfterSec * 1000);
+                    log.warn("retry #{}", tryCount);
+                }
+                tryCount++;
+                success = couchbaseClient.map(c -> putInternalWithExpiry(c, key, value, expiry))
                 .orElse(false);
+            } catch (final Exception e) {
+
+                log.warn("memcache put: {}", e.getMessage());
+            }
+        } while (!success && tryCount < maxTry);
+
+        if (!success) {
+            log.error("Failed to place item in couchbase");
+        }
+        if (success && tryCount > 1) {
+            log.info("Connection restored OK");
+        }
+
+        available = success;
+
+        return success;
 
     }
 

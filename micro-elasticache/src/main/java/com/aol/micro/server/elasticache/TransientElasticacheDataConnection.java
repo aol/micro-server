@@ -1,10 +1,8 @@
 package com.aol.micro.server.elasticache;
 
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.Optional;
 import net.spy.memcached.MemcachedClient;
-import lombok.extern.slf4j.Slf4j;
 import com.aol.micro.server.distributed.DistributedMap;
 
 
@@ -80,8 +78,9 @@ public class TransientElasticacheDataConnection<V> implements DistributedMap<V> 
         return success;
     }
 
-        @Override
-        public Optional<V> get(String key) {
+
+    @Override
+    public Optional<V> get(String key) {
             return (Optional<V>) Optional.ofNullable(memcachedClient.get(key));
         }
 

@@ -19,7 +19,7 @@ class SimpleCouchbaseClientConnectionTest {
 	@Before
 	public void setup() {
 		client = Mockito.mock(CouchbaseClient)
-		con  = new CouchbaseDistributedMapClient(client)
+		con  = new CouchbaseDistributedMapClient(client,1,1,1)
 	}
 	@Test
 	public void testDelete() {
@@ -35,7 +35,7 @@ class SimpleCouchbaseClientConnectionTest {
 
 	@Test
 	public void testGetDistributedCacheDisabled() {
-		con  = new CouchbaseDistributedMapClient(null)
+		con  = new CouchbaseDistributedMapClient(null,1,1,1)
 		Optional result = con.get("key")
 		assertThat(result, is(Optional.empty()))
 	}

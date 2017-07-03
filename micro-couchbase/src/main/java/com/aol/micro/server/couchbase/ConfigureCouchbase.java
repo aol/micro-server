@@ -45,15 +45,26 @@ public class ConfigureCouchbase {
     @Value("${couchbaseClientOperationTimeout:120000}")
     private long opTimeout;
 
+    @Value("${distributed.cache.default.expiration:691200}")
+    private int expiresAfterSeconds = 691200;
+
+    @Value("${distributed.cache.maxTry:5}")
+    private int maxTry = 5;
+
+    @Value("${distributed.cache.retryAfterSec:1}")
+    private int retryAfterSec = 1;
+
     @SuppressWarnings("rawtypes")
     @Bean(name = "couchbaseDistributedMap")
     public CouchbaseDistributedMapClient simpleCouchbaseClient() throws IOException, URISyntaxException {
         if (couchbaseClientEnabled) {
             return new CouchbaseDistributedMapClient(
-                                                     couchbaseClient());
+                                                     couchbaseClient(), expiresAfterSeconds, maxTry,
+                    retryAfterSec);
         } else {
             return new CouchbaseDistributedMapClient(
-                                                     null);
+                                                     null, expiresAfterSeconds, maxTry,
+                    retryAfterSec);
         }
     }
 
