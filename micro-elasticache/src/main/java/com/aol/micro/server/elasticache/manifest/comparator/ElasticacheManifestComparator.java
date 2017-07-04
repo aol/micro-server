@@ -2,7 +2,6 @@ package com.aol.micro.server.elasticache.manifest.comparator;
 
 import com.aol.cyclops2.util.ExceptionSoftener;
 import com.aol.micro.server.distributed.DistributedCache;
-import com.aol.micro.server.distributed.DistributedMap;
 import com.aol.micro.server.manifest.Data;
 import com.aol.micro.server.manifest.ManifestComparator;
 import com.aol.micro.server.manifest.ManifestComparatorKeyNotFoundException;
@@ -13,12 +12,14 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.Optional;
 
+@Slf4j
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
 
@@ -70,13 +71,9 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
      * @param <T>
      */
 
-        private final Logger logger = LoggerFactory.getLogger(getClass());
-
         private final String key;
 
-        private volatile Xor<Void, T> data = Xor.secondary(null); // Void represents
-        // an unitialized
-        // state
+        private volatile Optional<T> data = Optional.empty();
 
         @Getter
         private volatile String versionedKey;
@@ -135,11 +132,11 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
         }
 
         private VersionedKey increment() {
-            VersionedKey currentVersionedKey = loadKeyFromCouchbase();
+            VersionedKey currentVersionedKey = loadKeyFromElasticache();
             return currentVersionedKey.withVersion(currentVersionedKey.getVersion() + 1);
         }
 
-        private VersionedKey loadKeyFromCouchbase() {
+        private VersionedKey loadKeyFromElasticache() {
             Optional<String> optionalKey = connection.get(key);
             return optionalKey.flatMap(val -> Optional.of(JacksonUtil.convertFromJson(val, VersionedKey.class)))
                     .orElse(newKey(0L));
@@ -149,7 +146,7 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
         @Override
         @SneakyThrows
         public T getData() {
-            while (data.isSecondary()) {
+            while (!data.isPresent()) {
                 Thread.sleep(500);
             }
             return data.get();
@@ -157,7 +154,7 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
 
         @Override
         public T getCurrentData() {
-            return data.visit(present -> present, () -> null);
+                return data.orElse(null);
         }
 
         /**
@@ -166,7 +163,7 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
         @Override
         public boolean isOutOfDate() {
 
-            return !versionedKey.equals(loadKeyFromCouchbase().toJson());
+            return !versionedKey.equals(loadKeyFromElasticache().toJson());
         }
 
         /**
@@ -174,13 +171,13 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
          */
         @Override
         public synchronized boolean load() {
-            Xor<Void, T> oldData = data;
+            Optional<T> oldData = data;
             String oldKey = versionedKey;
             try {
                 if (isOutOfDate()) {
                     String newVersionedKey = (String) connection.get(key)
                             .get();
-                    data = Xor.primary((T) nonAtomicload(newVersionedKey));
+                    data = (Optional<T>) nonAtomicload(newVersionedKey);
                     versionedKey = newVersionedKey;
                 } else {
                     return false;
@@ -188,7 +185,7 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
             } catch (Throwable e) {
                 data = oldData;
                 versionedKey = oldKey;
-                logger.debug(e.getMessage(), e);
+                log.debug(e.getMessage(), e);
                 throw ExceptionSoftener.throwSoftenedException(e);
             }
             return true;
@@ -203,7 +200,7 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
                                         + newVersionedKey
                                         + " - likely data changed during read");
                     });
-            logger.info("Loaded new data with date {} for key {}, versionedKey {}, versionedKey from data ",
+            log.info("Loaded new data with date {} for key {}, versionedKey {}, versionedKey from data ",
                     new Object[] { data.getDate(), key, newVersionedKey, data.getVersionedKey() });
             return data.getData();
         }
@@ -223,8 +220,8 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
          */
         @Override
         public void clean(int numberToClean) {
-            logger.info("Attempting to delete the last {} records for key {}", numberToClean, key);
-            VersionedKey currentVersionedKey = loadKeyFromCouchbase();
+            log.info("Attempting to delete the last {} records for key {}", numberToClean, key);
+            VersionedKey currentVersionedKey = loadKeyFromElasticache();
             long start = 0;
             if (numberToClean != -1)
                 start = currentVersionedKey.getVersion() - numberToClean;
@@ -232,7 +229,7 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
                 delete(currentVersionedKey.withVersion(i)
                         .toJson());
             }
-            logger.info("Finished deleting the last {} records for key {}", numberToClean, key);
+            log.info("Finished deleting the last {} records for key {}", numberToClean, key);
         }
 
         private void delete(String withVersion) {
@@ -253,14 +250,14 @@ public class ElasticacheManifestComparator<T> implements ManifestComparator<T> {
          */
         @Override
         public void saveAndIncrement(T data) {
-            Xor<Void, T> oldData = this.data;
+            Optional<T> oldData = this.data;
             VersionedKey newVersionedKey = increment();
-            logger.info("Saving data with key {}, new version is {}", key, newVersionedKey.toJson());
+            log.info("Saving data with key {}, new version is {}", key, newVersionedKey.toJson());
             connection.put(newVersionedKey.toJson(), new Data(
                     data, new Date(), newVersionedKey.toJson()));
             connection.put(key, newVersionedKey.toJson());
             try {
-                this.data = Xor.primary(data);
+                this.data = (Optional<T>) data;
                 delete(versionedKey);
 
             } catch (Throwable t) {
