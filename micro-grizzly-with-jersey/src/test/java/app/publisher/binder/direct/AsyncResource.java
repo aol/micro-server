@@ -26,7 +26,7 @@ public class AsyncResource {
     @GET
     @Path("myEndPoint")
     public Future<String> myEndPoint() {
-        return Future.ofSupplier(() -> {
+        return Future.of(() -> {
             sleep();
             return "hello world!";
         }, Executors.newFixedThreadPool(1));

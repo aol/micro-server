@@ -46,8 +46,8 @@ public class S3ManifestComparatorTest {
     private void setupExpectedData(Date lastModTime, String key, String data, long version) {
         expectedData = new Data<>(data, lastModTime, versionKey);
         versionKey = new VersionedKey(key, version).toJson();
-        when(reader.getAsString(key)).thenReturn(Try.of(versionKey));
-        when(reader.getAsObject(versionKey)).thenReturn(Try.of(expectedData));
+        when(reader.getAsString(key)).thenReturn(Try.success(versionKey));
+        when(reader.getAsObject(versionKey)).thenReturn(Try.success(expectedData));
         when(reader.getLastModified(versionKey)).thenReturn(lastModTime);
     }
 

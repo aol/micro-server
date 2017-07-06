@@ -59,7 +59,7 @@ public class S3StringWriter {
      * @return
      */
     public Future<PutObjectResult> putAsync(String key, String value) {
-        return Future.ofSupplier(() -> put(key, value), this.uploadService)
+        return Future.of(() -> put(key, value), this.uploadService)
                       .map(Try::get);
     }
 

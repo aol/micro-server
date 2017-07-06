@@ -43,7 +43,7 @@ public class AsyncDataWriter<T> implements DataWriter<T> {
                                                                                        comparator.toString())
                                                                                   .build());
 
-        return Future.ofSupplier(() -> Tuple.tuple(comparator.load(), comparator.getData()), executorService)
+        return Future.of(() -> Tuple.tuple(comparator.load(), comparator.getData()), executorService)
                       .peek(t -> bus.post(SystemData.<String, String> builder()
                                                     .correlationId(correlationId)
                                                     .dataMap(dataMap.get())
@@ -66,7 +66,7 @@ public class AsyncDataWriter<T> implements DataWriter<T> {
         Supplier<MapX<String, String>> dataMap = () -> MapX.fromMap(HashMapBuilder.map(MANIFEST_COMPARATOR_DATA_WRITER_KEY,
                                                                                        comparator.toString())
                                                                                   .build());
-        return Future.<Void> ofSupplier(() -> {
+        return Future.<Void> of(() -> {
             comparator.saveAndIncrement(data);
             return null;
         } , executorService)
@@ -88,6 +88,6 @@ public class AsyncDataWriter<T> implements DataWriter<T> {
 
     @Override
     public Future<Boolean> isOutOfDate() {
-        return Future.ofSupplier(() -> comparator.isOutOfDate(), executorService);
+        return Future.of(() -> comparator.isOutOfDate(), executorService);
     }
 }
