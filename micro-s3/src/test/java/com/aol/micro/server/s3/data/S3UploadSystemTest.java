@@ -63,7 +63,7 @@ public class S3UploadSystemTest{
     private static Optional<byte[]> createNullableFile() {
         final File file = new File(
                                    System.getProperty("test.file.full.path"));
-        Try<byte[], Throwable> loadFileOperation = Try.of(1, Throwable.class)
+        Try<byte[], Throwable> loadFileOperation = Try.success(1, Throwable.class)
                                                       .map(FluentFunctions.ofChecked(i -> {
                                                           return FileUtils.readFileToByteArray(file);
                                                       }));

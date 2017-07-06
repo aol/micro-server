@@ -55,7 +55,7 @@ E.g. Using Future from [cyclops-react](cyclops-react.io)
 ```java
    @GET
    public Future<String> myEndPoint(){
-          return Future.ofSupplier(()->{
+          return Future.of(()->{
                                         sleep();
                                         return "hello world!";
                                         }, Executors.newFixedThreadPool(1));
@@ -67,7 +67,7 @@ Would be equivalent to the following code
 ```java
  @GET
  public void myEndPoint(@Suspended AsyncResponse asyncResponse){
-      Future.ofSupplier(()->{
+      Future.of(()->{
                                            sleep();
                                            asyncResponse.resume("hello world!");
                                            return 1;

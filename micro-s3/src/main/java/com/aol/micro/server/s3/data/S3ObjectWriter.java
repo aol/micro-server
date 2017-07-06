@@ -73,7 +73,7 @@ public class S3ObjectWriter {
         File file = new File(
                              dir, fileName);
 
-        return Try.of(1, Throwable.class)
+        return Try.success(1, Throwable.class)
                   .map(FluentFunctions.ofChecked(i -> {
                       FileOutputStream fs = new FileOutputStream(
                                                                  file);
