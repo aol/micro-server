@@ -40,7 +40,7 @@ public class DatadogMetricsConfigurer extends MetricsConfigurerAdapter {
             @Value("${datadog.tags:{\"stage:dev\"}}") String tags, @Value("${datadog.report.period:1}") int period,
             @Value("${datadog.report.timeunit:SECONDS}") TimeUnit timeUnit,
             @Value("${datadog.report.expansions:#{null}}") String expStr,
-	    @Value("${host.address:#{null}") String host){
+	    @Value("${host.address:#{null}}") String host){
         this.apiKey = apiKey;
         this.tags = Arrays.asList(Optional.ofNullable(tags)
                                           .orElse("")
