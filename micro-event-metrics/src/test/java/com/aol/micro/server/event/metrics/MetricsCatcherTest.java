@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 
+import com.aol.micro.server.events.GenericEvent;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -168,6 +169,17 @@ public class MetricsCatcherTest {
                            .getMeanRate(),
                    greaterThan(0.00));
 
+    }
+
+    @Test
+    public void testGenericEvent() {
+        GenericEvent.trigger("generic", bus, "data", new String[] {"p1", "p2"});
+        assertThat(registry.meter(this.config.getPrefix() + ".event-generic-meter").getCount(), greaterThan(0L));
+        assertThat(registry.counter(this.config.getPrefix() + ".event-generic-count").getCount(), greaterThan(0L));
+        assertThat(registry.meter(this.config.getPrefix() + ".event-generic.p1-meter").getCount(), greaterThan(0L));
+        assertThat(registry.counter(this.config.getPrefix() + ".event-generic.p1-count").getCount(), greaterThan(0L));
+        assertThat(registry.meter(this.config.getPrefix() + ".event-generic.p1.p2-meter").getCount(), greaterThan(0L));
+        assertThat(registry.counter(this.config.getPrefix() + ".event-generic.p1.p2-count").getCount(), greaterThan(0L));
     }
 
 }
