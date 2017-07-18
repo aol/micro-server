@@ -1,5 +1,6 @@
 package com.aol.micro.server.event.metrics;
 
+import com.aol.micro.server.events.GenericEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,8 @@ import com.aol.micro.server.health.ErrorEvent;
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+
+import java.util.Objects;
 
 @Component
 public class MetricsCatcher<T> {
@@ -167,6 +170,21 @@ public class MetricsCatcher<T> {
         ErrorCode c = event.getCode();
         error(c);
 
+    }
+
+    @Subscribe
+    public void genericEvent(GenericEvent event) {
+        GenericEvent.GenericEventData eventData = event.getData();
+        String name = prefix + ".event-" + eventData.getName();
+        registry.counter(name + "-count").inc();
+        registry.meter(name + "-meter").mark();
+        if (Objects.nonNull(eventData.getSubTypes())) {
+            for (String subType : eventData.getSubTypes()) {
+                name = name + "." + subType;
+                registry.counter(name + "-count").inc();
+                registry.meter(name + "-meter").mark();
+            }
+        }
     }
 
     private String name(ErrorCode c) {
