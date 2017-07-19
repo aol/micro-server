@@ -1,28 +1,18 @@
 package com.aol.micro.server.elasticache;
 
-
-
+import com.aol.micro.server.distributed.DistributedCache;
 import lombok.extern.slf4j.Slf4j;
-import net.spy.memcached.*;
+import net.spy.memcached.MemcachedClient;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 
-
-import net.spy.memcached.auth.AuthDescriptor;
-import net.spy.memcached.auth.PlainCallbackHandler;
-import net.spy.memcached.MemcachedClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.StringUtils;
 
 import java.net.InetSocketAddress;
-
-import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Configuration
@@ -47,7 +37,7 @@ public class ConfigureElasticache {
 
 
     @Bean(name = "transientCache")
-    public DistributedCacheManager transientCache() throws IOException, URISyntaxException {
+    public DistributedCache transientCache() throws IOException, URISyntaxException {
         try {
             log.info("Creating Memcached Data connection for elasticache cluster: {}", hostname);
             return new TransientElasticacheDataConnection(createMemcachedClient(), retryAfterSecs, maxRetries);

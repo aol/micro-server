@@ -3,6 +3,7 @@ package app.couchbase.distributed.map.com.aol.micro.server;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
+import com.aol.micro.server.distributed.DistributedCache;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aol.micro.server.auto.discovery.Rest;
@@ -12,10 +13,10 @@ import com.aol.micro.server.distributed.DistributedMap;
 @Rest
 public class CouchbaseResource {
 
-    private final DistributedMap client;
+    private final DistributedCache client;
 
     @Autowired
-    public CouchbaseResource(DistributedMap client) {
+    public CouchbaseResource(DistributedCache client) {
         this.client = client;
     }
 

@@ -7,24 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 
-import com.aol.micro.server.couchbase.base.CouchbaseManifestComparator;
+import com.aol.micro.server.couchbase.manifest.comparator.CouchbaseManifestComparator;
 import com.couchbase.client.CouchbaseClient;
 import com.couchbase.client.CouchbaseConnectionFactory;
 import com.couchbase.client.CouchbaseConnectionFactoryBuilder;
 
 import lombok.Setter;
 
+@Slf4j
 @Configuration
 public class ConfigureCouchbase {
-
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Value("${couchbase.manifest.comparison.key:default-key}")
     private String defaultCouchbaseManifestComparisonKey;
@@ -45,22 +43,33 @@ public class ConfigureCouchbase {
     @Value("${couchbaseClientOperationTimeout:120000}")
     private long opTimeout;
 
+    @Value("${distributed.cache.default.expiration:691200}")
+    private int expiresAfterSeconds;
+
+    @Value("${distributed.cache.maxTry:5}")
+    private int maxTry;
+
+    @Value("${distributed.cache.retryAfterSec:1}")
+    private int retryAfterSec;
+
     @SuppressWarnings("rawtypes")
     @Bean(name = "couchbaseDistributedMap")
-    public CouchbaseDistributedMapClient simpleCouchbaseClient() throws IOException, URISyntaxException {
+    public CouchbaseDistributedCacheClient simpleCouchbaseClient() throws IOException, URISyntaxException {
         if (couchbaseClientEnabled) {
-            return new CouchbaseDistributedMapClient(
-                                                     couchbaseClient());
+            return new CouchbaseDistributedCacheClient(
+                                                     couchbaseClient(), expiresAfterSeconds, maxTry,
+                    retryAfterSec);
         } else {
-            return new CouchbaseDistributedMapClient(
-                                                     null);
+            return new CouchbaseDistributedCacheClient(
+                                                     null, expiresAfterSeconds, maxTry,
+                    retryAfterSec);
         }
     }
 
     @Bean(name = "couchbaseClient")
     public CouchbaseClient couchbaseClient() throws IOException, URISyntaxException {
         if (couchbaseClientEnabled) {
-            logger.info("Creating CouchbaseClient for servers: {}", couchbaseServers);
+            log.info("Creating CouchbaseClient for servers: {}", couchbaseServers);
             CouchbaseConnectionFactoryBuilder builder = new CouchbaseConnectionFactoryBuilder();
             builder.setOpTimeout(opTimeout);
             CouchbaseConnectionFactory cf = builder.buildCouchbaseConnection(getServersList(), couchbaseBucket,
@@ -70,7 +79,6 @@ public class ConfigureCouchbase {
                                        cf);
         }
         return null;
-
     }
 
     @Bean

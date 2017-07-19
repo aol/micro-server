@@ -4,6 +4,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import com.aol.micro.server.distributed.DistributedCache;
 import cyclops.collections.immutable.LinkedListX;
 import cyclops.control.Maybe;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,11 @@ import com.google.common.eventbus.Subscribe;
 @Rest
 public class CouchbaseResource {
 
-    private final DistributedMap client;
+    private final DistributedCache client;
     private volatile LinkedListX<SystemData> dataLoads = LinkedListX.empty();
 
     @Autowired
-    public CouchbaseResource(DistributedMap client, EventBus bus) {
+    public CouchbaseResource(DistributedCache client, EventBus bus) {
         this.client = client;
         bus.register(this);
     }
