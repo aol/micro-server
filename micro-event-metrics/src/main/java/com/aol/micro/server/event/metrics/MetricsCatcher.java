@@ -10,6 +10,8 @@ import com.aol.micro.server.events.JobCompleteEvent;
 import com.aol.micro.server.events.JobStartEvent;
 import com.aol.micro.server.events.RequestTypes.AddQuery;
 import com.aol.micro.server.events.RequestTypes.RemoveQuery;
+import com.aol.micro.server.events.RequestTypes.AddLabelledQuery;
+import com.aol.micro.server.events.RequestTypes.RemoveLabelledQuery;
 import com.aol.micro.server.events.RequestTypes.RequestData;
 import com.aol.micro.server.events.SystemData;
 import com.aol.micro.server.health.ErrorEvent;
@@ -90,6 +92,25 @@ public class MetricsCatcher<T> {
 
             registry.counter(prefix + ".requests-active-" + rd.getType() + "-count")
                     .dec();
+        }
+    }
+
+    @Subscribe
+    public void requestStart(AddLabelledQuery<T> data) {
+        if (this.configuration.isQueriesByType()) {
+            RequestData<T> rd = data.getData();
+
+            ((InstantGauge) registry.gauge(prefix + ".requests-started-" + rd.getType() + "-interval-count", () -> new InstantGauge()))
+                    .increment();
+        }
+    }
+
+    @Subscribe
+    public void requestComplete(RemoveLabelledQuery<T> data) {
+        if (this.configuration.isQueriesByType()) {
+            RequestData<T> rd = data.getData();
+            ((InstantGauge) registry.gauge(prefix + ".requests-completed-" + rd.getType() + "-interval-count", () -> new InstantGauge()))
+                    .increment();
         }
     }
 
