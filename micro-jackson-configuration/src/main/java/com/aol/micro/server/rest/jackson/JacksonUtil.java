@@ -94,6 +94,15 @@ public final class JacksonUtil {
 		return null;
 
 	}
+	
+	public static <T> T convertFromJson(String json, final TypeReference<T> type) {
+		try {
+			return JacksonUtil.getMapper().readValue(json, type);
+		} catch (final Exception ex) {
+			ExceptionSoftener.throwSoftenedException(ex);
+		}
+		return null;
+	}
 
 	public static Object serializeToJsonLogFailure(Object value) {
 		try {
