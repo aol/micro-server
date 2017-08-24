@@ -3,7 +3,12 @@ description = 'micro-jmx-metrics'
 dependencies {
 
 
-    compile ('com.ryantenney.metrics:metrics-spring:'+springMetricsVersion){ exclude(module: 'org.springframework') }
+    compile ('com.ryantenney.metrics:metrics-spring:'+springMetricsVersion){
+        exclude(module: 'org.springframework')
+        exclude(group: 'io.dropwizard.metrics', module: 'metrics-core')
+    }
+
+    compile("io.dropwizard.metrics:metrics-core:3.2.2")
 
     compile ("com.aol.simplereact:cyclops-react:$cyclopsReactVersion")
     compile project(':micro-core')

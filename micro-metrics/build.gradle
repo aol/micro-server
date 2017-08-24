@@ -1,8 +1,12 @@
 description = 'micro-metrics'
 dependencies {
-	compile ('com.ryantenney.metrics:metrics-spring:'+springMetricsVersion){
+	compile('com.ryantenney.metrics:metrics-spring:' + springMetricsVersion) {
 		exclude(module: 'org.springframework')
+		exclude(group: 'io.dropwizard.metrics', module: 'metrics-core')
 	}
+
+	compile("io.dropwizard.metrics:metrics-core:3.2.2")
+
 	compile project(':micro-core')
 	testCompile project(':micro-jackson-configuration')
 	testCompile project(':micro-grizzly')
