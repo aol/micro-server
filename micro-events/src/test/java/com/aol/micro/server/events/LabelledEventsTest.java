@@ -11,40 +11,40 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 
-public class UserEventsTest {
+public class LabelledEventsTest {
 
     String query;
     long corrId;
-    String user;
+    String label;
     String addData;
 
     @Before
     public void setUp() {
         query = "query as string";
         corrId = 1234;
-        user = "user";
+        label = "label";
         addData = "additional data";
     }
 
     @Test
     public void createAddLabelledQuery() {
 
-        AddLabelledQuery<String> userQuery = UserEvents.start(query, corrId, user);
+        AddLabelledQuery<String> userQuery = LabelledEvents.start(query, corrId, label);
         RequestData rd = userQuery.getData();
 
         assertThat(rd.getQuery(), is(query));
-        assertThat(rd.getType(), is(user));
+        assertThat(rd.getType(), is(label));
         assertThat(rd.getCorrelationId(), is(corrId));
     }
 
     @Test
     public void createAddLabelledQueryWithAdditionalData() {
 
-        AddLabelledQuery<String> userQuery = UserEvents.start(query, corrId, user, addData);
+        AddLabelledQuery<String> userQuery = LabelledEvents.start(query, corrId, label, addData);
         RequestData rd = userQuery.getData();
 
         assertThat(rd.getQuery(), is(query));
-        assertThat(rd.getType(), is(user));
+        assertThat(rd.getType(), is(label));
         assertThat(rd.getCorrelationId(), is(corrId));
         assertThat(rd.getAdditionalData(), is(addData));
     }
@@ -52,11 +52,11 @@ public class UserEventsTest {
     @Test
     public void createRemoveLabelledQuery() {
 
-        RemoveLabelledQuery<String> userQuery = UserEvents.finish(query, corrId, user);
+        RemoveLabelledQuery<String> userQuery = LabelledEvents.finish(query, corrId, label);
         RequestData<String> rd = userQuery.getData();
 
         assertThat(rd.getQuery(), is(query));
-        assertThat(rd.getType(), is(user));
+        assertThat(rd.getType(), is(label));
         assertThat(rd.getCorrelationId(), is(corrId));
     }
 }
