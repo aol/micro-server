@@ -87,6 +87,31 @@ public class MetricsCatcherTest {
     }
 
     @Test
+    public void queriesIntervalCounterInc() {
+
+        catcher.requestStart(new AddQuery(
+                RequestData.builder()
+                        .correlationId(10l)
+                        .type("test")
+                        .build()));
+        assertThat(registry.getGauges().size(), equalTo(1));
+        assertThat(registry.getGauges().get(this.config.getPrefix() + ".requests-started-interval-count").getValue(), equalTo(1l));
+    }
+
+    @Test
+    public void queriesIntervalCounterDec() {
+
+        catcher.requestComplete(new RemoveQuery(
+                RequestData.builder()
+                        .correlationId(10l)
+                        .type("test")
+                        .build()));
+        assertThat(registry.getGauges().size(), equalTo(1));
+        assertThat(registry.getGauges().get(this.config.getPrefix() + ".requests-completed-interval-count").getValue(),
+                equalTo(1l));
+    }
+
+    @Test
     public void jobsCounterDec() {
 
         catcher.jobComplete(new JobCompleteEvent(

@@ -79,6 +79,24 @@ public class RequestTypes<T> {
 
     }
 
+    public static class AddLabelledQuery<T> extends AddEvent<RequestData<T>> {
+
+        public AddLabelledQuery(RequestData<T> data) {
+            super(
+                    data);
+        }
+
+    }
+
+    public static class RemoveLabelledQuery<T> extends RemoveEvent<RequestData<T>> {
+
+        public RemoveLabelledQuery(RequestData data) {
+            super(
+                    data);
+        }
+
+    }
+
     @AllArgsConstructor
     @Builder
     @XmlAccessorType(XmlAccessType.FIELD)
