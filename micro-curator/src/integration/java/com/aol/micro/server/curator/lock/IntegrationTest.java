@@ -48,7 +48,13 @@ public class IntegrationTest {
             }
         }).start();
 
-        provider = new CuratorDistributedLockServiceProvider("localhost:12181", "1000", "1", "/test");
+        try {
+            // allow zooKeeperServer enough time to initialize
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+        }
+
+        provider = new CuratorDistributedLockServiceProvider("localhost:12182", "1000", "1", "/tmp/zookeeper");
     }
 
     @Test
