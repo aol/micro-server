@@ -15,6 +15,7 @@ import com.aol.micro.server.jackson.JacksonMapperConfigurator;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 public final class JacksonUtil {
 
@@ -93,6 +94,15 @@ public final class JacksonUtil {
 		}
 		return null;
 
+	}
+	
+	public static <T> T convertFromJson(String json, final TypeReference<T> type) {
+		try {
+			return JacksonUtil.getMapper().readValue(json, type);
+		} catch (final Exception ex) {
+			ExceptionSoftener.throwSoftenedException(ex);
+		}
+		return null;
 	}
 
 	public static Object serializeToJsonLogFailure(Object value) {
