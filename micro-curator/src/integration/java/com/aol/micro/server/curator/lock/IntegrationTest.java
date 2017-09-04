@@ -48,7 +48,7 @@ public class IntegrationTest {
             }
         }).start();
 
-        provider = new CuratorDistributedLockServiceProvider("localhost:12181", "1000", "1", "/test");
+        provider = new CuratorDistributedLockServiceProvider("localhost:12181", "1000", "1", "/tmp/zookeeper");
     }
 
     @Test
