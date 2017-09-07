@@ -1,11 +1,9 @@
 package com.aol.micro.server.application.registry;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
+import javax.ws.rs.QueryParam;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,45 +24,40 @@ import lombok.experimental.Wither;
 @Builder
 public class RegisterEntry {
 
-    private static SimpleDateFormat f = new SimpleDateFormat(
-                                                             "EEE, d MMM yyyy HH:mm:ss Z");
+    private static SimpleDateFormat f = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
     @Wither
-    int port;
+    private final int port;
     @Wither
-    String hostname;
+    private final String hostname;
     @Wither
-    String module;
+    private final String module;
     @Wither
-    String context;
-    Date time;
+    private final String context;
+    private final Date time;
     @Wither
-    String uuid;
+    private final String uuid;
     @Wither
-    String target;
-    String formattedDate;
-    Map<String, String> manifest = ManifestLoader.instance.getManifest();
+    private final String target;
+    private final String formattedDate;
+    private final Map<String, String> manifest = ManifestLoader.instance.getManifest();
     @Wither
-    Health health;
+    private final Health health;
     @Wither
-    List<Map<String, Map<String, String>>> stats;
+    private final List<Map<String, Map<String, String>>> stats;
     @Wither
-    int externalPort;
+    private final int externalPort;
 
     public RegisterEntry() {
-        this(
-             -1, null, null, null, null, null, null, -1);
+        this(-1, null, null, null, null, null, null, -1);
     }
 
     public RegisterEntry(int port, String hostname, String module, String context, Date time, String uuid,
-            String target, int externalPort) {
-        this(
-             port, hostname, module, context, time, UUID.randomUUID()
-                                                        .toString(),
-             target, null, Health.OK, null, externalPort);
+                         String target, int externalPort) {
+        this(port, hostname, module, context, time, UUID.randomUUID().toString(), target, Health.OK, null, externalPort);
     }
 
     private RegisterEntry(int port, String hostname, String module, String context, Date time, String uuid,
-            String target, String ignoreDate, Health health, List<Map<String, Map<String, String>>> stats,
+            String target, Health health, List<Map<String, Map<String, String>>> stats,
             int externalPort) {
         this.port = port;
         this.hostname = hostname;
@@ -85,11 +78,22 @@ public class RegisterEntry {
     }
 
     public RegisterEntry(int port, String hostname, String module, String context, Date time, String target,
-            int externalPort) {
-        this(
-             port, hostname, module, context, time, UUID.randomUUID()
-                                                        .toString(),
-             target, externalPort);
+                         int externalPort) {
+        this(port, hostname, module, context, time, UUID.randomUUID().toString(), target, externalPort);
+    }
+
+    public boolean matches(RegisterEntry re) {
+        return  (re.port == -1 || re.port == port) &&
+                (Objects.nonNull(re.hostname) || Objects.nonNull(hostname) && hostname.startsWith(re.hostname)) &&
+                (Objects.nonNull(re.module) || Objects.nonNull(module) && module.startsWith(re.module)) &&
+                (Objects.nonNull(re.context) || Objects.nonNull(context) && context.startsWith(re.context)) &&
+                (Objects.nonNull(re.health) || re.health.equals(health)) &&
+                (re.externalPort == -1 || re.externalPort != externalPort) &&
+                (Objects.nonNull(re.manifest) || (
+                        (!re.manifest.containsKey("Implementation-revision")) || re.manifest.get("Implementation-revision").equals(manifest.get("Implementation-revision")) &&
+                        (!re.manifest.containsKey("Implementation-Timestamp")) || re.manifest.get("Implementation-Timestamp").equals(manifest.get("Implementation-Timestamp")) &&
+                        (!re.manifest.containsKey("Implementation-Version")) || re.manifest.get("Implementation-Version").equals(manifest.get("Implementation-Version"))
+                ));
     }
 
 }
