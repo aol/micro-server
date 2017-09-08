@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +51,7 @@ public class CleanerTest {
                                                 System.currentTimeMillis() - 2000)));
 
         cleaner.clean();
-        List<RegisterEntry> list = finder.find();
+        List<RegisterEntry> list = finder.find(Optional.empty());
         assertThat(list.size(), equalTo(0));
     }
 }

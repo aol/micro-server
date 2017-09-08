@@ -95,4 +95,9 @@ public class RegistryAppRunner {
         }
     }
 
+    public static void main(String[] args) {
+        RegistryAppRunner appRunner = new RegistryAppRunner();
+        appRunner.startServer();
+    }
+
 }

@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThat;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class FinderTest {
     @Test
     public void testFind() {
         writer.register(entry);
-        List<RegisterEntry> list = finder.find();
+        List<RegisterEntry> list = finder.find(Optional.empty());
         assertThat(list.size(), greaterThan(0));
         assertThat(list.get(0)
                        .getContext(),
