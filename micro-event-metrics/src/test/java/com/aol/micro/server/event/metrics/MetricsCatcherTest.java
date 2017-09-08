@@ -94,8 +94,9 @@ public class MetricsCatcherTest {
                         .correlationId(10l)
                         .type("test")
                         .build()));
-        assertThat(registry.getGauges().size(), equalTo(1));
+        assertThat(registry.getGauges().size(), equalTo(2));
         assertThat(registry.getGauges().get(this.config.getPrefix() + ".requests-started-interval-count").getValue(), equalTo(1l));
+        assertThat(registry.getGauges().get(this.config.getPrefix() + ".requests-started-test-interval-count").getValue(), equalTo(1l));
     }
 
     @Test
@@ -106,9 +107,12 @@ public class MetricsCatcherTest {
                         .correlationId(10l)
                         .type("test")
                         .build()));
-        assertThat(registry.getGauges().size(), equalTo(1));
+        assertThat(registry.getGauges().size(), equalTo(2));
         assertThat(registry.getGauges().get(this.config.getPrefix() + ".requests-completed-interval-count").getValue(),
                 equalTo(1l));
+        assertThat(registry.getGauges().get(this.config.getPrefix() + ".requests-completed-test-interval-count").getValue(),
+                equalTo(1l));
+
     }
 
     @Test
