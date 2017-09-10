@@ -7,6 +7,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import cyclops.stream.ReactiveSeq;
@@ -18,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.aol.micro.server.WorkerThreads;
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.utility.HashMapBuilder;
+
+import static javax.ws.rs.core.Response.Status.*;
 
 
 @Rest
@@ -49,7 +53,7 @@ public class ServiceRegistryResource{
 				response.resume(finder.find(UriInfoParser.toRegisterEntry(uriInfo)));
 			}catch(Exception e){
 				logger.error(e.getMessage(),e);
-				response.resume(Arrays.asList("failed due to error"));
+				response.resume(Arrays.asList("Bad Request: " + e.getMessage()));
 			}
 		}));
 	}
