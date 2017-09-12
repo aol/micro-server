@@ -63,6 +63,9 @@ public class MetricsCatcher<T> {
                                                          .time());
             registry.counter(prefix + ".requests-active-" + rd.getType() + "-count")
                     .inc();
+            ((InstantGauge) registry.gauge(prefix + ".requests-started-" + rd.getType() + "-interval-count",
+                    () -> new InstantGauge())).increment();
+
         }
     }
 
@@ -92,6 +95,9 @@ public class MetricsCatcher<T> {
 
             registry.counter(prefix + ".requests-active-" + rd.getType() + "-count")
                     .dec();
+            ((InstantGauge) registry.gauge(prefix + ".requests-completed-" + rd.getType() + "-interval-count",
+                    () -> new InstantGauge())).increment();
+
         }
     }
 

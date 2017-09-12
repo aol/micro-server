@@ -5,7 +5,7 @@ dependencies {
 		exclude(group: 'io.dropwizard.metrics', module: 'metrics-core')
 	}
 
-	compile("io.dropwizard.metrics:metrics-core:3.2.2")
+	compile("io.dropwizard.metrics:metrics-core:3.2.3")
 
 	compile project(':micro-core')
 	testCompile project(':micro-jackson-configuration')
