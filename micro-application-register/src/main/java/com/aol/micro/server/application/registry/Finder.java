@@ -3,6 +3,8 @@ package com.aol.micro.server.application.registry;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
@@ -24,8 +26,13 @@ public class Finder {
 		this.config = config;
 	}
 
-	public List<RegisterEntry> find() {
-		return findDir(new File(config.getOutputDir()));
+	public List<RegisterEntry> find(final Optional<RegisterEntry> re) {
+
+		List<RegisterEntry> entries = findDir(new File(config.getOutputDir()));
+		if (re.isPresent()) {
+			entries = entries.stream().filter( e -> e.matches(re.get())).collect(Collectors.toList());
+		}
+		return entries;
 	}
 
 	private List<RegisterEntry> findDir(File dir) {

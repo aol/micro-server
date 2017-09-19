@@ -1,14 +1,15 @@
 package com.aol.micro.server.application.registry;
 
 import java.util.Arrays;
+import java.util.Optional;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 
 import cyclops.stream.ReactiveSeq;
 import org.slf4j.Logger;
@@ -19,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.aol.micro.server.WorkerThreads;
 import com.aol.micro.server.auto.discovery.Rest;
 import com.aol.micro.server.utility.HashMapBuilder;
+
+import static javax.ws.rs.core.Response.Status.*;
 
 
 @Rest
@@ -42,18 +45,17 @@ public class ServiceRegistryResource{
 	@GET
 	@Path("/list")
 	@Produces("application/json")
-	public void list(@Suspended AsyncResponse response) {
+	public void list(@Context UriInfo uriInfo, @Suspended AsyncResponse response) {
 		ReactiveSeq.of(this).foldFuture(WorkerThreads.ioExecutor.get(),
 				s->s.forEach(Long.MAX_VALUE,next -> {
 			try{
 				cleaner.clean();
-				response.resume(finder.find());
+				response.resume(finder.find(UriInfoParser.toRegisterEntry(uriInfo)));
 			}catch(Exception e){
 				logger.error(e.getMessage(),e);
-				response.resume(Arrays.asList("failed due to error"));
+				response.resume(Arrays.asList("Bad Request: " + e.getMessage()));
 			}
 		}));
-		
 	}
 
 	@POST
