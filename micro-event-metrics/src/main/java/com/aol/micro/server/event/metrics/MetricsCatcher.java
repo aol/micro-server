@@ -2,6 +2,8 @@ package com.aol.micro.server.event.metrics;
 
 import com.aol.micro.server.events.GenericEvent;
 import com.aol.micro.server.spring.metrics.InstantGauge;
+import com.codahale.metrics.SlidingTimeWindowArrayReservoir;
+import com.codahale.metrics.Timer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +22,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class MetricsCatcher<T> {
@@ -59,8 +62,7 @@ public class MetricsCatcher<T> {
             registry.meter(queryStartName(rd) + "-meter")
                     .mark();
 
-            queries.start(rd.getCorrelationId(), registry.timer(queryEndName(rd) + "-timer")
-                                                         .time());
+            queries.start(rd.getCorrelationId(), timer(queryEndName(rd) + "-timer").time());
             registry.counter(prefix + ".requests-active-" + rd.getType() + "-count")
                     .inc();
             ((InstantGauge) registry.gauge(prefix + ".requests-started-" + rd.getType() + "-interval-count",
@@ -135,8 +137,7 @@ public class MetricsCatcher<T> {
             registry.meter(prefix + ".job-meter-" + data.getType())
                     .mark();
 
-            jobs.start(data.getCorrelationId(), registry.timer(prefix + ".job-timer-" + data.getType())
-                                                        .time());
+            jobs.start(data.getCorrelationId(), timer(prefix + ".job-timer-" + data.getType()).time());
             registry.counter(prefix + ".jobs-active-" + data.getType() + "-count")
                     .inc();
         }
@@ -222,5 +223,9 @@ public class MetricsCatcher<T> {
 
     private String name(ErrorCode c) {
         return prefix + ".error-" + c.getSeverity() + "-" + c.getErrorId();
+    }
+
+    private Timer timer (String name) {
+        return registry.timer(name, () -> new Timer(new SlidingTimeWindowArrayReservoir(configuration.getTimerIntervalSeconds(), TimeUnit.SECONDS)));
     }
 }
