@@ -29,7 +29,7 @@ public class MetricsCatcherTest {
         registry = new MetricRegistry();
         bus = new EventBus();
         config = new Configuration(
-                                   true, true, true, true, 5, 6, 7, 8, "bob");
+                                   true, true, true, true, 5, 6, 7, 8, 10,"bob");
         catcher = new MetricsCatcher<>(
                                        registry, bus, config);
     }

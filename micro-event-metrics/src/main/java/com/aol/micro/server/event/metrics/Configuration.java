@@ -24,6 +24,7 @@ class Configuration {
 
     private final int numJobs;
     private final int holdJobsForMinutes;
+    private final int timerIntervalSeconds;
     private final String prefix;
 
     @Autowired
@@ -35,6 +36,7 @@ class Configuration {
             @Value("${event.metrics.capture.queries.minutes:180}") int holdQueriesForMinutes,
             @Value("${event.metrics.capture.number.of.jobs:10000}") int numJobs,
             @Value("${event.metrics.capture.jobs.minutes:180}") int holdJobsForMinutes,
+            @Value("${event.metrics.capture.timer.interval.seconds:10}") int timerIntervalSeconds,
             @Value("${event.metrics.capture.jobs.prefix:#{null}}") String prefix) {
         super();
         this.errorsByType = errorsByType;
@@ -45,6 +47,7 @@ class Configuration {
         this.holdQueriesForMinutes = holdQueriesForMinutes;
         this.numJobs = numJobs;
         this.holdJobsForMinutes = holdJobsForMinutes;
+        this.timerIntervalSeconds = timerIntervalSeconds;
         this.prefix = Optional.ofNullable(prefix)
                               .orElseGet(() -> MetricsCatcher.class.getTypeName());
     }
