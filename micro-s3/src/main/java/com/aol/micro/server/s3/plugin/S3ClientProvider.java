@@ -1,6 +1,7 @@
 package com.aol.micro.server.s3.plugin;
 
 import com.amazonaws.ClientConfiguration;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,14 +25,7 @@ public class S3ClientProvider {
     @Bean
     public AmazonS3Client getClient() {
 
-        AWSCredentials credentials;
-
-        if (s3Configuration.getSessionToken() == null) {
-            credentials = new BasicAWSCredentials(s3Configuration.getAccessKey(), s3Configuration.getSecretKey());
-        } else {
-            credentials = new BasicSessionCredentials(s3Configuration.getAccessKey(), s3Configuration.getSecretKey(),
-                                                      s3Configuration.getSessionToken());
-        }
+        AWSCredentials credentials = getAwsCredentials();
 
         AmazonS3Client amazonS3Client = new AmazonS3Client(credentials, getClientConfiguration());
 
@@ -41,6 +35,20 @@ public class S3ClientProvider {
         }
 
         return amazonS3Client;
+    }
+
+    AWSCredentials getAwsCredentials() {
+        AWSCredentials credentials;
+
+        if(s3Configuration.isDefaultChainEnabled()) {
+            credentials = new DefaultAWSCredentialsProviderChain().getCredentials();
+        } else if (s3Configuration.getSessionToken() == null) {
+            credentials = new BasicAWSCredentials(s3Configuration.getAccessKey(), s3Configuration.getSecretKey());
+        } else {
+            credentials = new BasicSessionCredentials(s3Configuration.getAccessKey(), s3Configuration.getSecretKey(),
+                                                      s3Configuration.getSessionToken());
+        }
+        return credentials;
     }
 
     private ClientConfiguration getClientConfiguration() {

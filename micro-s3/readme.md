@@ -181,8 +181,14 @@ Then inject in either  DistributedMap or it's concrete implementation S3Distribu
 
 ## Usage AmazonS3Client
 
-This plugin also provides an AmazonS3Client implementation bean. You should define properties for
-s3.accessKey, s3.secretKey and optionall s3.sessionToken (optionally - only for short term keys)
+This plugin also provides an AmazonS3Client implementation bean. 
+
+You may configure AWS credentials in one of two ways. 
+The first is to use the AWS default chain for configuration, by setting `s3.useDefaultChain` to `true`.
+This allows you to rely on instance roles if your client is hosted on AWS, or to specify your credentials as environment variables if not.
+For full details on the default AWS chain, see the [official AWS docs](http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/auth/DefaultAWSCredentialsProviderChain.html)
+
+The second option is to define properties for `s3.accessKey`, `s3.secretKey` and optionally `s3.sessionToken` (optionally - only for short term keys)
 [AmazonS3Client](http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/s3/AmazonS3Client.html)
 
 Configure the S3 Bucket for Manifest comparision via this property
