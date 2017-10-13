@@ -1,18 +1,10 @@
 <configuration scan="true">
 	
-
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%date{MMM dd yyyy h:mm:ss a z,EST} %-5p %c - %msg --
-				[%thread] %n</pattern>
+			<pattern>%date{MMM dd yyyy h:mm:ss a z,EST} %-5p %c - %msg -- [%thread] %n</pattern>
 		</encoder>
 	</appender>
-
-	
-
-	
-
-	
 
 	<root>
 		<level value="INFO" />
