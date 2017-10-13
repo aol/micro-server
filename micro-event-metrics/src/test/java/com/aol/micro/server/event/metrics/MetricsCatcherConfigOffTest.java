@@ -27,7 +27,7 @@ public class MetricsCatcherConfigOffTest {
         registry = new MetricRegistry();
         bus = new EventBus();
         config = new Configuration(
-                                   false, false, false, false, 5, 6, 7, 8, "bob");
+                                   false, false, false, false, 5, 6, 7, 8, 10, "bob");
         catcher = new MetricsCatcher<>(
                                        registry, bus, config);
     }

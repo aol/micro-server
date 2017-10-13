@@ -1,11 +1,9 @@
 package com.aol.micro.server.application.registry;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
+import javax.ws.rs.QueryParam;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,6 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.Wither;
 
@@ -24,43 +23,44 @@ import lombok.experimental.Wither;
 @Getter
 @Wither
 @Builder
+@ToString
 public class RegisterEntry {
 
-    private static SimpleDateFormat f = new SimpleDateFormat(
-                                                             "EEE, d MMM yyyy HH:mm:ss Z");
+    private static SimpleDateFormat f = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
     @Wither
-    int port;
+    private final int port;
     @Wither
-    String hostname;
+    private final String hostname;
     @Wither
-    String module;
+    private final String module;
     @Wither
-    String context;
-    Date time;
+    private final String context;
+    private final Date time;
     @Wither
-    String uuid;
+    private final String uuid;
     @Wither
-    String target;
-    String formattedDate;
-    Map<String, String> manifest = ManifestLoader.instance.getManifest();
+    private final String target;
+    private final String formattedDate;
+    private final Map<String, String> manifest = new HashMap<>();
     @Wither
-    Health health;
+    private final Health health;
     @Wither
-    List<Map<String, Map<String, String>>> stats;
+    private final List<Map<String, Map<String, String>>> stats;
     @Wither
-    int externalPort;
+    private final int externalPort;
 
     public RegisterEntry() {
-        this(
-             -1, null, null, null, null, null, null, -1);
+        this(-1, null, null, null, null, null, null, -1);
     }
 
     public RegisterEntry(int port, String hostname, String module, String context, Date time, String uuid,
-            String target, int externalPort) {
-        this(
-             port, hostname, module, context, time, UUID.randomUUID()
-                                                        .toString(),
-             target, null, Health.OK, null, externalPort);
+                         String target, int externalPort) {
+        this(port, hostname, module, context, time, uuid, target, null, Health.OK, null, externalPort);
+    }
+
+    public RegisterEntry(int port, String hostname, String module, String context, Date time, String target,
+                         int externalPort) {
+        this(port, hostname, module, context, time, UUID.randomUUID().toString(), target, externalPort);
     }
 
     private RegisterEntry(int port, String hostname, String module, String context, Date time, String uuid,
@@ -82,14 +82,28 @@ public class RegisterEntry {
         else
             this.formattedDate = null;
 
+        this.manifest.putAll(ManifestLoader.instance.getManifest());
+
     }
 
-    public RegisterEntry(int port, String hostname, String module, String context, Date time, String target,
-            int externalPort) {
-        this(
-             port, hostname, module, context, time, UUID.randomUUID()
-                                                        .toString(),
-             target, externalPort);
+    public boolean matches(RegisterEntry re) {
+        //Only the fields which make sense to query is added for now.
+        return  (re.port == -1 || re.port == port) &&
+                (Objects.isNull(re.hostname) || Objects.nonNull(hostname) && hostname.startsWith(re.hostname)) &&
+                (Objects.isNull(re.module) || Objects.nonNull(module) && module.startsWith(re.module)) &&
+                (Objects.isNull(re.context) || Objects.nonNull(context) && context.startsWith(re.context)) &&
+                (Objects.isNull(re.health) || re.health.equals(health)) &&
+                (re.externalPort == -1 || re.externalPort == externalPort) &&
+                (Objects.isNull(re.manifest) || re.manifest.isEmpty() || matchManifest(re.manifest));
     }
 
+    private boolean matchManifest(Map<String, String> manifest) {
+        return  match(manifest, this.manifest, "Implementation-revision") &&
+                match(manifest, this.manifest, "Implementation-Timestamp") &&
+                match(manifest, this.manifest, "Implementation-Version");
+    }
+
+    private boolean match(Map<String, String> map1, Map<String, String> map2, String key) {
+        return !map1.containsKey(key) || (map2.containsKey(key) && map2.get(key).startsWith(map1.get(key)));
+    }
 }

@@ -29,7 +29,7 @@ public class MetricsCatcherTest {
         registry = new MetricRegistry();
         bus = new EventBus();
         config = new Configuration(
-                                   true, true, true, true, 5, 6, 7, 8, "bob");
+                                   true, true, true, true, 5, 6, 7, 8, 10,"bob");
         catcher = new MetricsCatcher<>(
                                        registry, bus, config);
     }
@@ -84,6 +84,35 @@ public class MetricsCatcherTest {
         assertThat(registry.counter(this.config.getPrefix() + ".requests-active-test-count")
                            .getCount(),
                    equalTo(-1l));
+    }
+
+    @Test
+    public void queriesIntervalCounterInc() {
+
+        catcher.requestStart(new AddQuery(
+                RequestData.builder()
+                        .correlationId(10l)
+                        .type("test")
+                        .build()));
+        assertThat(registry.getGauges().size(), equalTo(2));
+        assertThat(registry.getGauges().get(this.config.getPrefix() + ".requests-started-interval-count").getValue(), equalTo(1l));
+        assertThat(registry.getGauges().get(this.config.getPrefix() + ".requests-started-test-interval-count").getValue(), equalTo(1l));
+    }
+
+    @Test
+    public void queriesIntervalCounterDec() {
+
+        catcher.requestComplete(new RemoveQuery(
+                RequestData.builder()
+                        .correlationId(10l)
+                        .type("test")
+                        .build()));
+        assertThat(registry.getGauges().size(), equalTo(2));
+        assertThat(registry.getGauges().get(this.config.getPrefix() + ".requests-completed-interval-count").getValue(),
+                equalTo(1l));
+        assertThat(registry.getGauges().get(this.config.getPrefix() + ".requests-completed-test-interval-count").getValue(),
+                equalTo(1l));
+
     }
 
     @Test

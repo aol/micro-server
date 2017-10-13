@@ -108,9 +108,14 @@ Number of active jobs to cache in memory
 
 ```text
 com.aol.micro.server.event.metrics.MetricsCatcher.requests-started
+com.aol.micro.server.event.metrics.MetricsCatcher.requests-started-interval-count
 com.aol.micro.server.event.metrics.MetricsCatcher.request-start-<TYPE>
+com.aol.micro.server.event.metrics.MetricsCatcher.request-start-<TYPE>-interval-count
 com.aol.micro.server.event.metrics.MetricsCatcher.requests-completed
+com.aol.micro.server.event.metrics.MetricsCatcher.requests-completed-interval-type
 com.aol.micro.server.event.metrics.MetricsCatcher.request-completed-<TYPE>
+com.aol.micro.server.event.metrics.MetricsCatcher.request-completed-<TYPE>-interval-count
+
 ```
 
 #### Timers :
@@ -172,6 +177,8 @@ event.metrics.capture.jobs.by.type=true # jobsByType,
 event.metrics.capture.number.of.queries=10000 # numQueries,
 event.metrics.capture.queries.minutes=180 # holdQueriesForMinutes,
 event.metrics.capture.number.of.jobs=10000 # numJobs,
-event.metrics.capture.jobs.minutes=180
+event.metrics.capture.jobs.minutes=180,
+event.metrics.capture.timer.interval.seconds=10
+event.metrics.capture.jobs.prefix=null
 ```
 

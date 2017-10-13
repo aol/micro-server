@@ -1,6 +1,9 @@
 package com.aol.micro.server.event.metrics;
 
 import com.aol.micro.server.events.GenericEvent;
+import com.aol.micro.server.spring.metrics.InstantGauge;
+import com.codahale.metrics.SlidingTimeWindowArrayReservoir;
+import com.codahale.metrics.Timer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +12,8 @@ import com.aol.micro.server.events.JobCompleteEvent;
 import com.aol.micro.server.events.JobStartEvent;
 import com.aol.micro.server.events.RequestTypes.AddQuery;
 import com.aol.micro.server.events.RequestTypes.RemoveQuery;
+import com.aol.micro.server.events.RequestTypes.AddLabelledQuery;
+import com.aol.micro.server.events.RequestTypes.RemoveLabelledQuery;
 import com.aol.micro.server.events.RequestTypes.RequestData;
 import com.aol.micro.server.events.SystemData;
 import com.aol.micro.server.health.ErrorEvent;
@@ -17,6 +22,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class MetricsCatcher<T> {
@@ -39,6 +45,7 @@ public class MetricsCatcher<T> {
         jobs = new TimerManager(
                                 configuration.getNumJobs(), configuration.getHoldJobsForMinutes());
         this.configuration = configuration;
+
     }
 
     @Subscribe
@@ -47,16 +54,20 @@ public class MetricsCatcher<T> {
                 .mark();
         registry.counter(prefix + ".requests-started-count")
                 .inc();
+        ((InstantGauge) registry.gauge(prefix + ".requests-started-interval-count", () -> new InstantGauge())).increment();
+
         if (this.configuration.isQueriesByType()) {
             RequestData<T> rd = data.getData();
 
             registry.meter(queryStartName(rd) + "-meter")
                     .mark();
 
-            queries.start(rd.getCorrelationId(), registry.timer(queryEndName(rd) + "-timer")
-                                                         .time());
+            queries.start(rd.getCorrelationId(), timer(queryEndName(rd) + "-timer").time());
             registry.counter(prefix + ".requests-active-" + rd.getType() + "-count")
                     .inc();
+            ((InstantGauge) registry.gauge(prefix + ".requests-started-" + rd.getType() + "-interval-count",
+                    () -> new InstantGauge())).increment();
+
         }
     }
 
@@ -74,6 +85,9 @@ public class MetricsCatcher<T> {
                 .mark();
         registry.counter(prefix + ".requests-completed-count")
                 .inc();
+        ((InstantGauge) registry.gauge(prefix + ".requests-completed-interval-count", () -> new InstantGauge()))
+                .increment();
+
         if (this.configuration.isQueriesByType()) {
             RequestData<T> rd = data.getData();
             registry.meter(queryEndName(rd))
@@ -83,8 +97,29 @@ public class MetricsCatcher<T> {
 
             registry.counter(prefix + ".requests-active-" + rd.getType() + "-count")
                     .dec();
-        }
+            ((InstantGauge) registry.gauge(prefix + ".requests-completed-" + rd.getType() + "-interval-count",
+                    () -> new InstantGauge())).increment();
 
+        }
+    }
+
+    @Subscribe
+    public void requestStart(AddLabelledQuery<T> data) {
+        if (this.configuration.isQueriesByType()) {
+            RequestData<T> rd = data.getData();
+
+            ((InstantGauge) registry.gauge(prefix + ".requests-started-" + rd.getType() + "-interval-count", () -> new InstantGauge()))
+                    .increment();
+        }
+    }
+
+    @Subscribe
+    public void requestComplete(RemoveLabelledQuery<T> data) {
+        if (this.configuration.isQueriesByType()) {
+            RequestData<T> rd = data.getData();
+            ((InstantGauge) registry.gauge(prefix + ".requests-completed-" + rd.getType() + "-interval-count", () -> new InstantGauge()))
+                    .increment();
+        }
     }
 
     @Subscribe
@@ -102,8 +137,7 @@ public class MetricsCatcher<T> {
             registry.meter(prefix + ".job-meter-" + data.getType())
                     .mark();
 
-            jobs.start(data.getCorrelationId(), registry.timer(prefix + ".job-timer-" + data.getType())
-                                                        .time());
+            jobs.start(data.getCorrelationId(), timer(prefix + ".job-timer-" + data.getType()).time());
             registry.counter(prefix + ".jobs-active-" + data.getType() + "-count")
                     .inc();
         }
@@ -189,5 +223,9 @@ public class MetricsCatcher<T> {
 
     private String name(ErrorCode c) {
         return prefix + ".error-" + c.getSeverity() + "-" + c.getErrorId();
+    }
+
+    private Timer timer (String name) {
+        return registry.timer(name, () -> new Timer(new SlidingTimeWindowArrayReservoir(configuration.getTimerIntervalSeconds(), TimeUnit.SECONDS)));
     }
 }

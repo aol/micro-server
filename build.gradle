@@ -24,9 +24,14 @@ task wrapper(type: Wrapper) {
 }
 
 subprojects {
+
+
+
 	apply plugin:'java'
 //	apply plugin: 'com.github.johnrengelman.shadow'
-	apply plugin: 'com.bmuschko.nexus'
+	if(project.name != "micro-tutorial") {
+		apply plugin: 'com.bmuschko.nexus'
+	}
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
 
