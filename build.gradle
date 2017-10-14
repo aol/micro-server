@@ -1,4 +1,3 @@
-def custom ={ "$rootDir/gradle/${it}.gradle"}
 
 buildscript {
 	repositories { jcenter()

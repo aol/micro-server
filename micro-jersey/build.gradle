@@ -14,7 +14,7 @@ dependencies {
 	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version:"$jerseyVersion"
 	
 	compile "org.glassfish.jersey.media:jersey-media-multipart:$jerseyVersion"
-	compile "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion"
+	compile "org.glassfish.jersey.ext:jersey-spring4:$jerseyVersion"
 	compile "org.glassfish.jersey.ext:jersey-bean-validation:$jerseyVersion"
 
 	testCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version:"$jerseyVersion"
