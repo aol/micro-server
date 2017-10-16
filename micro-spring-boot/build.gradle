@@ -15,7 +15,7 @@ dependencies {
 	compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version:"$jerseyVersion"
 	
 	compile "org.glassfish.jersey.media:jersey-media-multipart:$jerseyVersion"
-	compile "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion"
+	compile "org.glassfish.jersey.ext:jersey-spring4:$jerseyVersion"
 	compile "org.glassfish.jersey.ext:jersey-bean-validation:$jerseyVersion"
 	compile project(':micro-jackson-configuration')
 
