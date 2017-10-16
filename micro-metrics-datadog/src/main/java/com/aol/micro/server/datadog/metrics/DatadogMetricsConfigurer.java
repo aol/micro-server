@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import cyclops.control.Maybe;
+import lombok.extern.slf4j.Slf4j;
 import org.coursera.metrics.datadog.DatadogReporter;
 import org.coursera.metrics.datadog.transport.HttpTransport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import lombok.Getter;
 
 @Configuration
 @EnableMetrics
+@Slf4j
 public class DatadogMetricsConfigurer extends MetricsConfigurerAdapter {
 
     private String apiKey;
@@ -36,11 +38,12 @@ public class DatadogMetricsConfigurer extends MetricsConfigurerAdapter {
     private final String host;
 
     @Autowired
-    public DatadogMetricsConfigurer(@Value("${datadog.apikey}") String apiKey,
-            @Value("${datadog.tags:{\"stage:dev\"}}") String tags, @Value("${datadog.report.period:1}") int period,
-            @Value("${datadog.report.timeunit:SECONDS}") TimeUnit timeUnit,
-            @Value("${datadog.report.expansions:#{null}}") String expStr,
-	    @Value("${host.address:#{null}}") String host){
+    public DatadogMetricsConfigurer(@Value("${datadog.apikey:#{null}}") String apiKey,
+                                    @Value("${datadog.tags:{\"stage:dev\"}}") String tags,
+                                    @Value("${datadog.report.period:1}") int period,
+                                    @Value("${datadog.report.timeunit:SECONDS}") TimeUnit timeUnit,
+                                    @Value("${datadog.report.expansions:#{null}}") String expStr,
+                                    @Value("${host.address:#{null}}") String host){
         this.apiKey = apiKey;
         this.tags = Arrays.asList(Optional.ofNullable(tags)
                                           .orElse("")
@@ -48,7 +51,7 @@ public class DatadogMetricsConfigurer extends MetricsConfigurerAdapter {
         this.period = period;
         this.timeUnit = timeUnit;
         this.expansions = expansions(expStr);
-	this.host = host;
+        this.host = host;
     }
 
     private EnumSet<DatadogReporter.Expansion> expansions(String expStr) {
@@ -65,10 +68,14 @@ public class DatadogMetricsConfigurer extends MetricsConfigurerAdapter {
 
     @Override
     public void configureReporters(MetricRegistry metricRegistry) {
+        if (Objects.isNull(apiKey)) {
+           log.error("The 'datadog.apikey' is null. Datadog reporting will be ignored.");
+           return;
+        }
         HttpTransport httpTransport = new HttpTransport.Builder().withApiKey(apiKey)
                                                                  .build();
         EnumSet<DatadogReporter.Expansion> expansions = DatadogReporter.Expansion.ALL;
-	DatadogReporter.Builder builder = DatadogReporter.forRegistry(metricRegistry)
+        DatadogReporter.Builder builder = DatadogReporter.forRegistry(metricRegistry)
                                                   .withTransport(httpTransport)
                                                   .withExpansions(expansions)
                                                   .withTags(tags);
