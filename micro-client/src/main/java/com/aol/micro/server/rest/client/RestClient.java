@@ -7,8 +7,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import javax.net.ssl.HttpsURLConnection;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -62,7 +60,7 @@ public class RestClient<T> {
 		clientConfig.property(ClientProperties.READ_TIMEOUT, rt);
 
 		ClientBuilder.newBuilder().register(JacksonFeature.class);
-		Client client = ClientBuilder.newBuilder().withConfig(clientConfig).hostnameVerifier(HttpsURLConnection.getDefaultHostnameVerifier()).build();
+		Client client = ClientBuilder.newClient(clientConfig);
 		client.register(JacksonFeature.class);
 		JacksonJaxbJsonProvider provider = new JacksonJaxbJsonProvider();
 		provider.setMapper(JacksonUtil.getMapper());
