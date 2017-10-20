@@ -32,7 +32,6 @@ public class CustomRunnerTest {
 				.build());
 	
 		server.start();
-
 	}
 	
 	@After
@@ -42,13 +41,7 @@ public class CustomRunnerTest {
 	
 	@Test
 	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
-
-		
-		assertThat(rest.postString("http://localhost:8080/simple-app/status/ping","{\"primitive\":null}").getStatus(),is(500));
-		
-		
+		assertThat(rest.postString("http://localhost:8080/simple-app/status/ping","{\"primitive\":null}").getStatus(),is(400));
 	}
-	
-	
-	
+
 }

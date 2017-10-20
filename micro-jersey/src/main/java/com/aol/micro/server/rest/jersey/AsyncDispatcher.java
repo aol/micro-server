@@ -1,22 +1,17 @@
 package com.aol.micro.server.rest.jersey;
 
-import com.aol.cyclops2.types.mixins.Printable;
-import cyclops.stream.ReactiveSeq;
 import cyclops.stream.Spouts;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.glassfish.hk2.api.ServiceHandle;
 import org.glassfish.hk2.api.ServiceLocator;
+import org.glassfish.jersey.server.AsyncContext;
 import org.glassfish.jersey.server.ContainerRequest;
 import org.glassfish.jersey.server.internal.LocalizationMessages;
 import org.glassfish.jersey.server.internal.inject.ConfiguredValidator;
-import org.glassfish.jersey.server.internal.process.AsyncContext;
-import javax.inject.Provider;
-
 import org.glassfish.jersey.server.model.Invocable;
 import org.glassfish.jersey.server.spi.internal.ResourceMethodDispatcher;
 import org.reactivestreams.Publisher;
-
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -36,7 +31,6 @@ public class AsyncDispatcher implements ResourceMethodDispatcher {
     @Context
     private javax.inject.Provider<ContainerRequestContext> containerRequestContext;
 
-
     public AsyncDispatcher(ResourceMethodDispatcher originalDispatcher) {
         this.originalDispatcher = originalDispatcher;
     }
@@ -53,10 +47,10 @@ public class AsyncDispatcher implements ResourceMethodDispatcher {
               Set<Provider> providers = serviceLocator.getAllServiceHandles(ResourceMethodDispatcher.Provider.class)
                                                       .stream()
                                                       .filter(h->!h.getActiveDescriptor()
-                                                              .getImplementationClass()
-                                                              .equals(AsyncDispatcherProvider.class))
-                                                        .map(ServiceHandle::getService)
-                                                        .collect(Collectors.toSet());
+                                                                   .getImplementationClass()
+                                                                   .equals(AsyncDispatcherProvider.class))
+                                                      .map(ServiceHandle::getService)
+                                                      .collect(Collectors.toSet());
 
                for (ResourceMethodDispatcher.Provider provider : providers) {
                    ResourceMethodDispatcher dispatcher = provider.create(method, handler, validator);
@@ -71,20 +65,20 @@ public class AsyncDispatcher implements ResourceMethodDispatcher {
            return null;
        }
     }
+
     @Override
     public Response dispatch(Object resource, ContainerRequest request) throws ProcessingException {
         final AsyncContext context = this.asyncContext.get();
         if(!context.suspend())
             throw new ProcessingException(LocalizationMessages.ERROR_SUSPENDING_ASYNC_REQUEST());
-        final ContainerRequestContext requestContext = containerRequestContext.get();
 
         Publisher pub = (Publisher)originalDispatcher.dispatch(resource, request)
-                          .getEntity();
-        Spouts.from(pub).onEmptySwitch(()->Spouts.of(Response.noContent().build()))
-                    .forEach(1,context::resume, context::resume);
+                                                     .getEntity();
+        Spouts.from(pub)
+              .onEmptySwitch(() -> Spouts.of(Response.noContent().build()))
+              .forEach(1,context::resume, context::resume);
 
         return null;
     }
-
 
 }
