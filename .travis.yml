@@ -1,6 +1,6 @@
 sudo: true
 language: java
-install: gradle clean 
+install: ./gradlew clean
 jdk:
   - oraclejdk8
 addons:

@@ -1,80 +1,79 @@
 description = 'micro-manifest-comparator'
-dependencies {
 
-	compile project(':micro-jackson-configuration')
-	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:hamcrestVersion
-	
+dependencies {
+  compile project(':micro-jackson-configuration')
+  testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: hamcrestVersion
 }
 
 sourceSets {
-	main {
-		java { srcDirs = ['src/main/java']}
-		resources { srcDir 'src/main/resources' }
-	}
+  main {
+    java { srcDirs = ['src/main/java'] }
+    resources { srcDir 'src/main/resources' }
+  }
 
-	test {
-		java { srcDirs = []}
-		resources { srcDir 'src/test/resources' }
-	}
-	
+  test {
+    java { srcDirs = [] }
+    resources { srcDir 'src/test/resources' }
+  }
+
 }
 
 modifyPom {
-	project {
-		name 'Microserver Manifest Comparator'
-		description 'Pattern for loading cached data for BASE microservices'
-		url 'https://github.com/aol/micro-server'
-		inceptionYear '2016'
+  project {
+    name 'Microserver Manifest Comparator'
+    description 'Pattern for loading cached data for BASE microservices'
+    url 'https://github.com/aol/micro-server'
+    inceptionYear '2016'
 
-		groupId 'com.aol.microservices'
-		artifactId 'micro-manifest-comparator'
-		version "$version" 
-		
-		
-		scm {
-			url 'scm:git@github.com:aol/micro-server.git'
-			connection 'scm:git@github.com:aol/micro-server.git'
-			developerConnection 'scm:git@github.com:aol/micro-server.git'
-		}
+    groupId 'com.aol.microservices'
+    artifactId 'micro-manifest-comparator'
+    version "$version"
 
-		licenses {
-			license {
-				name 'The Apache Software License, Version 2.0'
-				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-				distribution 'repo'
-			}
-		}
 
-		developers {
-			developer {
-				id 'johnmcclean-aol'
-				name 'John McClean'
-				email 'john.mcclean@teamaol.com'
-			}
-			developer {
-				id 'kewangie'
-				name 'Ke Wang'
-				email 'ke.wang@teamaol.com'
-			}
-			developer {
-				id 'pbujko'
-				name 'Przemyslaw Bujko'
-				email 'przemyslaw.bujko@teamaol.com'
-			}
-		}
-		
-	}
+    scm {
+      url 'scm:git@github.com:aol/micro-server.git'
+      connection 'scm:git@github.com:aol/micro-server.git'
+      developerConnection 'scm:git@github.com:aol/micro-server.git'
+    }
+
+    licenses {
+      license {
+        name 'The Apache Software License, Version 2.0'
+        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        distribution 'repo'
+      }
+    }
+
+    developers {
+      developer {
+        id 'johnmcclean-aol'
+        name 'John McClean'
+        email 'john.mcclean@teamaol.com'
+      }
+      developer {
+        id 'kewangie'
+        name 'Ke Wang'
+        email 'ke.wang@teamaol.com'
+      }
+      developer {
+        id 'pbujko'
+        name 'Przemyslaw Bujko'
+        email 'przemyslaw.bujko@teamaol.com'
+      }
+    }
+
+  }
 }
 
 extraArchive {
-	sources = true
-	tests = true
-	javadoc = true
+  sources = true
+  tests = true
+  javadoc = true
 }
 
 nexus {
-	sign = true
-	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+  sign = true
+  repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+  snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
 }
 

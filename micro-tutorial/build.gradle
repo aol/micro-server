@@ -1,13 +1,13 @@
 description = 'micro-tutorial'
+
 dependencies {
-	compile project(':micro-hibernate')
-	compile project(':micro-swagger')
-	compile project(':micro-metrics')
-	compile project(':micro-guava')
-	compile project(':micro-events')
-	compile project(':micro-client')
-	compile project(':micro-ip-tracker')
-	compile project(':micro-grizzly')
-	compile project(':micro-jersey')
-	
+  compile project(':micro-hibernate')
+  compile project(':micro-swagger')
+  compile project(':micro-metrics')
+  compile project(':micro-guava')
+  compile project(':micro-events')
+  compile project(':micro-client')
+  compile project(':micro-ip-tracker')
+  compile project(':micro-grizzly')
+  compile project(':micro-jersey')
 }

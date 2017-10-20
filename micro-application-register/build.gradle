@@ -1,6 +1,6 @@
 description = 'micro-application-register'
+
 dependencies {
-	
 	compile 'commons-io:commons-io:'+commonsIOVersion
 	compile project(':micro-core')
 	compile project(':micro-client')
@@ -18,9 +18,9 @@ modifyPom {
 
 		groupId 'com.aol.microservices'
 		artifactId 'micro-application-register'
-		version "$version" 
-		
-		
+		version "$version"
+
+
 		scm {
 			url 'scm:git@github.com:aol/micro-server.git'
 			connection 'scm:git@github.com:aol/micro-server.git'
@@ -42,7 +42,7 @@ modifyPom {
 				email 'john.mcclean@teamaol.com'
 			}
 		}
-		
+
 	}
 }
 
