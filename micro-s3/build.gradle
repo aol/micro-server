@@ -1,75 +1,75 @@
 description = 'micro-s3'
 
 dependencies {
-	compile ("com.aol.simplereact:cyclops-react:$cyclopsReactVersion")
-	compile 'com.amazonaws:aws-java-sdk:' + s3Version
-	compile project(':micro-core')
-	compile project(':micro-manifest-comparator')
-    testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
-    testCompile group: 'io.dropwizard.metrics', name: 'metrics-core', version: '3.1.0'
-    testCompile group: 'org.coursera', name: 'dropwizard-metrics-datadog', version: '1.1.6'
-    testCompile group: 'com.github.cbismuth', name: 'junit-repeat-rule', version: '1.1.0'
-	
-	compile 'commons-io:commons-io:'+commonsIOVersion
-	testCompile project(':micro-grizzly-with-jersey')
+  compile("com.aol.simplereact:cyclops-react:$cyclopsReactVersion")
+  compile 'com.amazonaws:aws-java-sdk:' + s3Version
+  compile project(':micro-core')
+  compile project(':micro-manifest-comparator')
+  testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
+  testCompile group: 'io.dropwizard.metrics', name: 'metrics-core', version: '3.1.0'
+  testCompile group: 'org.coursera', name: 'dropwizard-metrics-datadog', version: '1.1.6'
+  testCompile group: 'com.github.cbismuth', name: 'junit-repeat-rule', version: '1.1.0'
+
+  compile 'commons-io:commons-io:' + commonsIOVersion
+  testCompile project(':micro-grizzly-with-jersey')
 }
 
 modifyPom {
-	project {
-		name 'Microserver s3 integration'
-		description 'Opinionated rest microservices'
-		url 'https://github.com/aol/micro-server'
-		inceptionYear '2015'
+  project {
+    name 'Microserver s3 integration'
+    description 'Opinionated rest microservices'
+    url 'https://github.com/aol/micro-server'
+    inceptionYear '2015'
 
-		groupId 'com.aol.microservices'
-		artifactId 'micro-s3'
-		version "$version" 
-		
-		
-		scm {
-			url 'scm:git@github.com:aol/micro-server.git'
-			connection 'scm:git@github.com:aol/micro-server.git'
-			developerConnection 'scm:git@github.com:aol/micro-server.git'
-		}
+    groupId 'com.aol.microservices'
+    artifactId 'micro-s3'
+    version "$version"
 
-		licenses {
-			license {
-				name 'The Apache Software License, Version 2.0'
-				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-				distribution 'repo'
-			}
-		}
 
-		developers {
-                        developer {
-                                id 'johnmcclean-aol'
-                                name 'John McClean'
-                                email 'john.mcclean@teamaol.com'
-                        }
-                        developer {
-                                id 'kewangie'
-                                name 'Ke Wang'
-                                email 'ke.wang@teamaol.com'
-                        }
-                        developer {
-                                id 'earlzero'
-                                name 'Nikita Sapozhnikov'
-                                email 'nikita.sapozhnikov@teamaol.com'
-                        }
-		}
-		
-	}
+    scm {
+      url 'scm:git@github.com:aol/micro-server.git'
+      connection 'scm:git@github.com:aol/micro-server.git'
+      developerConnection 'scm:git@github.com:aol/micro-server.git'
+    }
+
+    licenses {
+      license {
+        name 'The Apache Software License, Version 2.0'
+        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        distribution 'repo'
+      }
+    }
+
+    developers {
+      developer {
+        id 'johnmcclean-aol'
+        name 'John McClean'
+        email 'john.mcclean@teamaol.com'
+      }
+      developer {
+        id 'kewangie'
+        name 'Ke Wang'
+        email 'ke.wang@teamaol.com'
+      }
+      developer {
+        id 'earlzero'
+        name 'Nikita Sapozhnikov'
+        email 'nikita.sapozhnikov@teamaol.com'
+      }
+    }
+
+  }
 }
 
 extraArchive {
-	sources = true
-	tests = true
-	javadoc = true
+  sources = true
+  tests = true
+  javadoc = true
 }
 
 nexus {
-	sign = true
-	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+  sign = true
+  repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+  snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
 }
 

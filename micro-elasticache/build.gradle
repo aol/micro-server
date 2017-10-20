@@ -1,86 +1,90 @@
+description = 'micro-elasticache'
+
 apply plugin: 'groovy'
 apply plugin: 'java'
+
 repositories {}
 
-description = 'micro-elasticache'
 dependencies {
-	compile group: 'com.amazonaws', name: 'aws-java-sdk-elasticache', version: '1.11.126'
-	compile group: 'net.spy', name: 'spymemcached', version: '2.12.3'
-	compile project(':micro-core')
-	compile project(':micro-guava')
-	testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version:'2.3.3'
-	testCompile(group: 'org.spockframework', name: 'spock-core', version:'0.7-groovy-2.0') { exclude(module: 'groovy-all') }
-	testCompile group: 'com.cyrusinnovation', name: 'mockito-groovy-support', version:'1.3'
-	testCompile 'cglib:cglib-nodep:2.2'
-	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:hamcrestVersion
-	testCompile project(':micro-grizzly-with-jersey')
+  compile group: 'com.amazonaws', name: 'aws-java-sdk-elasticache', version: '1.11.126'
+  compile group: 'net.spy', name: 'spymemcached', version: '2.12.3'
+  compile project(':micro-core')
+  compile project(':micro-guava')
+  testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.3.3'
+  testCompile(group: 'org.spockframework', name: 'spock-core', version: '0.7-groovy-2.0') {
+    exclude(module: 'groovy-all')
+  }
+  testCompile group: 'com.cyrusinnovation', name: 'mockito-groovy-support', version: '1.3'
+  testCompile 'cglib:cglib-nodep:2.2'
+  testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: hamcrestVersion
+  testCompile project(':micro-grizzly-with-jersey')
 }
 
 sourceSets {
-	main {
-		java { srcDirs = ['src/main/java']}
-		resources { srcDir 'src/main/resources' }
-	}
+  main {
+    java { srcDirs = ['src/main/java'] }
+    resources { srcDir 'src/main/resources' }
+  }
 
-	test {
-		java { srcDirs = []}
-		groovy { srcDirs = ['src/test/java'] }
-		resources { srcDir 'src/test/resources' }
-	}
-	
+  test {
+    java { srcDirs = [] }
+    groovy { srcDirs = ['src/test/java'] }
+    resources { srcDir 'src/test/resources' }
+  }
+
 }
 
 modifyPom {
-	project {
-		name 'Microserver elasticache'
-		description 'Opinionated rest microservices'
-		url 'https://github.com/aol/micro-server'
-		inceptionYear '2015'
+  project {
+    name 'Microserver elasticache'
+    description 'Opinionated rest microservices'
+    url 'https://github.com/aol/micro-server'
+    inceptionYear '2015'
 
-		groupId 'com.aol.microservices'
-		artifactId 'micro-elasticache'
-		version "$version" 
-		
-		
-		scm {
-			url 'scm:git@github.com:aol/micro-server.git'
-			connection 'scm:git@github.com:aol/micro-server.git'
-			developerConnection 'scm:git@github.com:aol/micro-server.git'
-		}
+    groupId 'com.aol.microservices'
+    artifactId 'micro-elasticache'
+    version "$version"
 
-		licenses {
-			license {
-				name 'The Apache Software License, Version 2.0'
-				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-				distribution 'repo'
-			}
-		}
 
-		developers {
-			developer {
-				id 'johnmcclean-aol'
-				name 'John McClean'
-				email 'john.mcclean@teamaol.com'
-			}
-			developer {
-				id 'morrowgi'
-				name 'Gordon Morrow'
-				email 'gordon.morrow@teamaol.com'
-			}
-		}
-		
-	}
+    scm {
+      url 'scm:git@github.com:aol/micro-server.git'
+      connection 'scm:git@github.com:aol/micro-server.git'
+      developerConnection 'scm:git@github.com:aol/micro-server.git'
+    }
+
+    licenses {
+      license {
+        name 'The Apache Software License, Version 2.0'
+        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        distribution 'repo'
+      }
+    }
+
+    developers {
+      developer {
+        id 'johnmcclean-aol'
+        name 'John McClean'
+        email 'john.mcclean@teamaol.com'
+      }
+      developer {
+        id 'morrowgi'
+        name 'Gordon Morrow'
+        email 'gordon.morrow@teamaol.com'
+      }
+    }
+
+  }
 }
 
 extraArchive {
-	sources = true
-	tests = true
-	javadoc = true
+  sources = true
+  tests = true
+  javadoc = true
 }
 
 nexus {
-	sign = true
-	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+  sign = true
+  repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+  snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
 }
 

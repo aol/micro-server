@@ -1,91 +1,82 @@
 description = 'micro-core'
+
 dependencies {
-	compile 'javax.servlet:javax.servlet-api:3.1.0'
-	
-	compile ("com.aol.simplereact:cyclops-react:$cyclopsReactVersion")
-	compile group: 'org.aspectj', name: 'aspectjrt', version:aspectJVersion
-	compile group: 'org.aspectj', name: 'aspectjweaver', version:aspectJVersion
-
-	
-	compile group: 'org.springframework', name: 'spring-web', version:"${springVersion}"
-	compile group: 'org.springframework', name: 'spring-context', version:"${springVersion}"
-	compile group: 'org.springframework', name: 'spring-context-support', version:"${springVersion}"
-	compile group: 'ch.qos.logback', name: 'logback-classic', version:logbackVersion
-	compile group: 'ch.qos.logback', name: 'logback-core', version:logbackVersion
-	compile group: 'org.slf4j', name: 'jcl-over-slf4j', version:slf4jVersion
-
-
-	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version:"$jacksonVersion"
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:"$jacksonVersion"
-	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:"$jacksonVersion"
-	compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version:"$jacksonVersion"
-	compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-base', version:"$jacksonVersion"
-	
-	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version:"$jacksonVersion"
-	
-	compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version:'2.0'
-	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:hamcrestVersion
-	
-
-
+  compile 'javax.servlet:javax.servlet-api:3.1.0'
+  compile("com.aol.simplereact:cyclops-react:$cyclopsReactVersion")
+  compile group: 'org.aspectj', name: 'aspectjrt', version: aspectJVersion
+  compile group: 'org.aspectj', name: 'aspectjweaver', version: aspectJVersion
+  compile group: 'org.springframework', name: 'spring-web', version: "${springVersion}"
+  compile group: 'org.springframework', name: 'spring-context', version: "${springVersion}"
+  compile group: 'org.springframework', name: 'spring-context-support', version: "${springVersion}"
+  compile group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+  compile group: 'ch.qos.logback', name: 'logback-core', version: logbackVersion
+  compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: slf4jVersion
+  compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: "$jacksonVersion"
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "$jacksonVersion"
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "$jacksonVersion"
+  compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: "$jacksonVersion"
+  compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-base', version: "$jacksonVersion"
+  compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version: "$jacksonVersion"
+  compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0'
+  testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: hamcrestVersion
 }
 
 modifyPom {
-	project {
-		name 'Microserver'
-		description 'Opinionated rest microservices'
-		url 'https://github.com/aol/micro-server'
-		inceptionYear '2015'
+  project {
+    name 'Microserver'
+    description 'Opinionated rest microservices'
+    url 'https://github.com/aol/micro-server'
+    inceptionYear '2015'
 
-		groupId 'com.aol.microservices'
-		artifactId 'micro-core'
-		version "$version" 
-		
-		
-		scm {
-			url 'scm:git@github.com:aol/micro-server.git'
-			connection 'scm:git@github.com:aol/micro-server.git'
-			developerConnection 'scm:git@github.com:aol/micro-server.git'
-		}
+    groupId 'com.aol.microservices'
+    artifactId 'micro-core'
+    version "$version"
 
-		licenses {
-			license {
-				name 'The Apache Software License, Version 2.0'
-				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-				distribution 'repo'
-			}
-		}
 
-		developers {
-			developer {
-				id 'johnmcclean-aol'
-				name 'John McClean'
-				email 'john.mcclean@teamaol.com'
-			}
-			developer {
-				id 'kewangie'
-				name 'Ke Wang'
-				email 'ke.wang@teamaol.com'
-			}
-			developer {
-				id 'earlzero'
-				name 'Nikita Sapozhnikov'
-				email 'nikita.sapozhnikov@teamaol.com '
-			}
-		}
-		
-	}
+    scm {
+      url 'scm:git@github.com:aol/micro-server.git'
+      connection 'scm:git@github.com:aol/micro-server.git'
+      developerConnection 'scm:git@github.com:aol/micro-server.git'
+    }
+
+    licenses {
+      license {
+        name 'The Apache Software License, Version 2.0'
+        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        distribution 'repo'
+      }
+    }
+
+    developers {
+      developer {
+        id 'johnmcclean-aol'
+        name 'John McClean'
+        email 'john.mcclean@teamaol.com'
+      }
+      developer {
+        id 'kewangie'
+        name 'Ke Wang'
+        email 'ke.wang@teamaol.com'
+      }
+      developer {
+        id 'earlzero'
+        name 'Nikita Sapozhnikov'
+        email 'nikita.sapozhnikov@teamaol.com '
+      }
+    }
+
+  }
 }
 
 extraArchive {
-	sources = true
-	tests = true
-	javadoc = true
+  sources = true
+  tests = true
+  javadoc = true
 }
 
 nexus {
-	sign = true
-	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+  sign = true
+  repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+  snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
 }
 

@@ -1,61 +1,61 @@
 description = 'micro-metrics-datadog'
+
 dependencies {
-    compile ('org.coursera:metrics-datadog:'+datadogMetricsVersion)
-    compile project(':micro-metrics')
-    compile project(':micro-event-metrics')
-    testCompile project(':micro-jackson-configuration')
-    testCompile project(':micro-grizzly')
-    testCompile project(':micro-jersey')
-    testCompile project(':micro-error-codes')
+  compile('org.coursera:metrics-datadog:' + datadogMetricsVersion)
+  compile project(':micro-metrics')
+  compile project(':micro-event-metrics')
+  testCompile project(':micro-jackson-configuration')
+  testCompile project(':micro-grizzly')
+  testCompile project(':micro-jersey')
+  testCompile project(':micro-error-codes')
 }
 
 modifyPom {
-    project {
-        name 'Microserver metrics'
-        description 'Opinionated rest microservices'
-        url 'https://github.com/aol/micro-server'
-        inceptionYear '2015'
+  project {
+    name 'Microserver metrics'
+    description 'Opinionated rest microservices'
+    url 'https://github.com/aol/micro-server'
+    inceptionYear '2015'
 
-        groupId 'com.aol.microservices'
-        artifactId 'micro-metrics-datadog'
-        version "$version"
+    groupId 'com.aol.microservices'
+    artifactId 'micro-metrics-datadog'
+    version "$version"
 
-
-        scm {
-            url 'scm:git@github.com:aol/micro-server.git'
-            connection 'scm:git@github.com:aol/micro-server.git'
-            developerConnection 'scm:git@github.com:aol/micro-server.git'
-        }
-
-        licenses {
-            license {
-                name 'The Apache Software License, Version 2.0'
-                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                distribution 'repo'
-            }
-        }
-
-        developers {
-            developer {
-                id 'arunbcodes '
-                name 'Arun Balakrishnan'
-                email 'arun.balakrishnan@teamaol.com'
-            }
-        }
-
+    scm {
+      url 'scm:git@github.com:aol/micro-server.git'
+      connection 'scm:git@github.com:aol/micro-server.git'
+      developerConnection 'scm:git@github.com:aol/micro-server.git'
     }
+
+    licenses {
+      license {
+        name 'The Apache Software License, Version 2.0'
+        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        distribution 'repo'
+      }
+    }
+
+    developers {
+      developer {
+        id 'arunbcodes '
+        name 'Arun Balakrishnan'
+        email 'arun.balakrishnan@teamaol.com'
+      }
+    }
+
+  }
 }
 
 extraArchive {
-    sources = true
-    tests = true
-    javadoc = true
+  sources = true
+  tests = true
+  javadoc = true
 }
 
 nexus {
-    sign = true
-    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+  sign = true
+  repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+  snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
 }
 
 
