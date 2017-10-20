@@ -1,6 +1,7 @@
 
 # Microserver
 
+[![Build Status](https://travis-ci.org/aol/micro-server.svg)](https://travis-ci.org/aol/micro-server)
 [![Join the chat at https://gitter.im/aol/micro-server](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aol/micro-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 A convenient modular engine for Microservices. Microserver plugins offer seamless integration with Spring (core), Jersey, Guava, Tomcat, Grizzly, reactive programming, Hibernate (& Spring Data), Spring Boot, Codahale Metrics, Swagger and more to come!
