@@ -148,3 +148,5 @@ gradle-app.setting
 hs_err_pid*
 
 
+# Package jar files are excluded but gradle-wrapper is required.
+!/gradle/wrapper/gradle-wrapper.jar
