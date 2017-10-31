@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 import cyclops.collections.mutable.ListX;
+import cyclops.control.Try;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,17 +32,18 @@ public class MultiDataWriterTest {
         writer.saveAndIncrement("hello world");
         assertThat(dataWriter1.loadAndGet()
                               .get(),
-                   equalTo("hello world"));
+                   equalTo(Try.success("hello world")));
         assertThat(dataWriter2.loadAndGet()
                               .get(),
-                   equalTo("hello world"));
+                   equalTo(Try.success("hello world")));
     }
 
     @Test
     public void emptySaveAndIncrement() {
+
         assertThat(empty.saveAndIncrement("hello world")
                         .get(),
-                   equalTo(null));
+                   equalTo(Try.success(null)));
     }
 
     @Test

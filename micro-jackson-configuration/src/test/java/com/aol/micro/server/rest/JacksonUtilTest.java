@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import cyclops.collections.immutable.LinkedListX;
 import cyclops.data.Seq;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -49,7 +50,7 @@ public class JacksonUtilTest {
                           .contains("blah"));
     }
 
-    @Test
+    @Test @Ignore
     public void serializeToPersistentList() {
 
         LinkedListX<Integer> list = LinkedListX.of(1, 2, 3, 4);

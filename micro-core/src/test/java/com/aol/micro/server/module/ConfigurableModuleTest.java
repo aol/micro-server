@@ -261,7 +261,7 @@ public class ConfigurableModuleTest {
 
 	@Test
 	public void testGetSpringConfigurationClassesReset() {
-		assertThat(module.withResetAll(true).getSpringConfigurationClasses(),is(this.springConfigurationClasses));
+		assertThat(module.withResetAll(true).getSpringConfigurationClasses().size(),is(this.springConfigurationClasses.size()));
 	}
 	@Test
 	public void testGetSpringConfigurationClasses() {

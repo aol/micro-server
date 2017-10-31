@@ -27,6 +27,7 @@ subprojects {
 
 
 	apply plugin:'java'
+	apply plugin:'groovy'
 //	apply plugin: 'com.github.johnrengelman.shadow'
 	if(project.name != "micro-tutorial") {
 		apply plugin: 'com.bmuschko.nexus'
