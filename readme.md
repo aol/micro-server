@@ -362,4 +362,4 @@ plugins {
 }
  ```
 Maven users can use Shade plugin or equivalent (Maven assembly plugin).
-
+ 
