@@ -58,7 +58,7 @@ public class MultiDataWriterTest {
     @Test
     public void loadAndGetReturnsNullForEmpty() {
         String data = empty.loadAndGet()
-                           .orElse(null);
+                           .orElse("null!!");
         assertThat(data, equalTo(null));
     }
 

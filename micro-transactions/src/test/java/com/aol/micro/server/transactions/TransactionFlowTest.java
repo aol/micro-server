@@ -39,6 +39,8 @@ public class TransactionFlowTest {
 										.flatMap(this::newTransaction)
 										.execute(10)
 										.orElse("");
+
+		assertThat(result,equalTo("data:10"));
 		
 	}
 	

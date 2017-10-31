@@ -7,7 +7,6 @@ import org.junit.Test
 
 class DistributedLockServiceConfigurationTest {
 
-/**
 	private DistributedLockServiceConfiguration configuration = new DistributedLockServiceConfiguration()
 
 	@Test
@@ -23,5 +22,5 @@ class DistributedLockServiceConfigurationTest {
 		configuration.keyTimeoutInSeconds = 100
 		assertThat(configuration.distributedLockService() instanceof DistributedLockServiceMySqlImpl, is(true));
 	}
-	 **/
+
 }
