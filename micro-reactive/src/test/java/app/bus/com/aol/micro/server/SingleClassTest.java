@@ -30,11 +30,10 @@ public class SingleClassTest implements RestResource {
 
     MicroserverApp server;
 
-    static String lastRecieved = null;
 
     @Before
     public void startServer() {
-        lastRecieved = null;
+
         server = new MicroserverApp(
                                     SingleClassTest.class, () -> "simple-app");
         server.start();
@@ -53,7 +52,7 @@ public class SingleClassTest implements RestResource {
 
         assertThat(rest.get("http://localhost:8080/simple-app/single/ping"), is("ok"));
         Thread.sleep(500);
-        assertThat(lastRecieved, equalTo("input"));
+
 
     }
 
