@@ -5,6 +5,9 @@ import com.aol.micro.server.Plugin;
 import com.aol.micro.server.events.ConfigureActiveJobsAspect;
 import com.aol.micro.server.rest.resources.ConfigureResources;
 import cyclops.collections.immutable.PersistentSetX;
+import cyclops.collections.mutable.SetX;
+
+import java.util.Set;
 
 
 /**
@@ -19,8 +22,8 @@ import cyclops.collections.immutable.PersistentSetX;
 public class EventsPlugin implements Plugin{
 	
 	@Override
-	public PersistentSetX<Class> springClasses() {
-		return PersistentSetX.of(
+	public Set<Class> springClasses() {
+		return SetX.of(
 				ConfigureActiveJobsAspect.class,
 				ConfigureResources.class);
 	}

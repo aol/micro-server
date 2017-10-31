@@ -2,7 +2,7 @@ description = 'micro-reactive'
 dependencies {
 	
 
-	compile 'com.aol.cyclops:cyclops-reactor:'+cyclopsVersion
+	//compile 'com.aol.cyclops:cyclops-reactor:'+cyclopsVersion
 	compile project(':micro-core')
     compile project(':micro-client')
 	compile project(':micro-events')

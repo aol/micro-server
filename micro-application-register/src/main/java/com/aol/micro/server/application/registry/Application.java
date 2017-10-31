@@ -3,11 +3,11 @@ package com.aol.micro.server.application.registry;
 import java.util.Iterator;
 import java.util.List;
 
+import com.oath.cyclops.types.persistent.PersistentList;
+import cyclops.data.Seq;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
-import org.pcollections.ConsPStack;
-import org.pcollections.PStack;
 
 import com.aol.micro.server.rest.jackson.JacksonUtil;
 
@@ -15,10 +15,10 @@ import com.aol.micro.server.rest.jackson.JacksonUtil;
 public class Application implements Iterable<RegisterEntry>{
 	
 	
-	PStack<RegisterEntry> entries;
+	PersistentList<RegisterEntry> entries;
 
 	public Application(final List<RegisterEntry> entries) {
-		this.entries = ConsPStack.from(entries);
+		this.entries = Seq.fromIterable(entries);
 	}
 
 	@Override

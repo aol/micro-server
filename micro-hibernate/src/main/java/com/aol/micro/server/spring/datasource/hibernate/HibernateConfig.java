@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.aol.micro.server.config.ConfigAccessor;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableTransactionManagement
 public class HibernateConfig {
@@ -31,8 +33,8 @@ public class HibernateConfig {
 	@Bean
 	public SessionFactory sessionFactory(){
 		return HibernateSessionBuilder.builder()
-				.packages(new ConfigAccessor().get().getDataSources().get(new ConfigAccessor().get()
-									.getDefaultDataSourceName()))
+				.packages(new ConfigAccessor().get().getDataSources().getOrElse(new ConfigAccessor().get()
+									.getDefaultDataSourceName(), Arrays.asList()))
 				.env(env)
 				.dataSource(dataSource)
 				.build().sessionFactory();

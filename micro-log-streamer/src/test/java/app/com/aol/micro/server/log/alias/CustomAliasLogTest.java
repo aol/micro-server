@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.reactive.EventQueueManager;
 import com.aol.micro.server.reactive.rest.ReactiveRequest;
 import com.aol.micro.server.testing.RestAgent;
 
@@ -28,8 +27,7 @@ public class CustomAliasLogTest implements RestResource {
     RestAgent rest = new RestAgent();
     File testFile = new File(
                              "/tmp/tailer-test-file2");
-    @Autowired
-    EventQueueManager<String> manager;
+
     MicroserverApp server;
 
     static String lastRecieved = null;
@@ -62,10 +60,6 @@ public class CustomAliasLogTest implements RestResource {
         server.stop();
     }
 
-    @PostConstruct
-    public void busManager() {
-        manager.forEach("ping", in -> lastRecieved = in);
-    }
 
     @Test
     public void runAppAndBasicTest() throws InterruptedException, ExecutionException {

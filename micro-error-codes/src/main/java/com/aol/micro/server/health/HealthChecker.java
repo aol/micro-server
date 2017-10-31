@@ -32,7 +32,7 @@ public class HealthChecker {
 
     private Maybe<ErrorEvent> selectLatestError(Queue<ErrorEvent> errors, Queue<ErrorEvent> fatal) {
         if (errors.size() == 0 && fatal.size() == 0) {
-            return Maybe.none();
+            return Maybe.nothing();
         }
         if (fatal.size() > 0) {
             return Maybe.just(fatal.peek());

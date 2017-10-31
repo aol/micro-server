@@ -28,7 +28,7 @@ public class TransactionFlowTest {
 										.map(this::load)
 										.map(this::save)
 										.execute(10)
-										.get();
+										.orElse(-1);
 		
 		assertThat(result,equalTo(-1));
 	}
@@ -38,7 +38,7 @@ public class TransactionFlowTest {
 		String result = TransactionFlow.of(transactionTemplate, this::load)
 										.flatMap(this::newTransaction)
 										.execute(10)
-										.get();
+										.orElse("");
 		
 	}
 	

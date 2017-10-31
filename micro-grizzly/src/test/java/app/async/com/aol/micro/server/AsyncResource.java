@@ -10,8 +10,8 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
 import cyclops.async.SimpleReact;
-import cyclops.stream.FutureStream;
-import cyclops.stream.ReactiveSeq;
+import cyclops.reactive.FutureStream;
+import cyclops.reactive.ReactiveSeq;
 import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.auto.discovery.RestResource;

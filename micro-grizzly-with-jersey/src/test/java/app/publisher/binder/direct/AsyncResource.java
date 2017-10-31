@@ -2,8 +2,8 @@ package app.publisher.binder.direct;
 
 import com.aol.micro.server.auto.discovery.Rest;
 import cyclops.async.Future;
-import cyclops.stream.ReactiveSeq;
-import cyclops.stream.Spouts;
+import cyclops.reactive.ReactiveSeq;
+import cyclops.reactive.Spouts;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

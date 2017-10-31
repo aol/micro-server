@@ -1,16 +1,16 @@
 package com.aol.micro.server.config;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+
+
+import com.oath.cyclops.types.persistent.PersistentMap;
+import com.oath.cyclops.types.persistent.PersistentSet;
+import cyclops.data.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.pcollections.HashTreePMap;
-import org.pcollections.HashTreePSet;
-import org.pcollections.PMap;
-import org.pcollections.PSet;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,20 +29,20 @@ import lombok.experimental.Wither;
 public class Config {
 
     private final String defaultDataSourceName;
-    private final PSet<Class> classes;
-    private final PMap<String, String> properties;
+    private final PersistentSet<Class> classes;
+    private final PersistentMap<String, String> properties;
 
     private final String propertiesName;
     private final String instancePropertiesName;
     private final String serviceTypePropertiesName;
-    private final PMap<String, List<String>> dataSources;
+    private final PersistentMap<String, List<String>> dataSources;
     private final boolean allowCircularReferences;
     private final String[] basePackages;
 
     public Config() {
-        classes = HashTreePSet.empty();
-        properties = HashTreePMap.empty();
-        dataSources = HashTreePMap.empty();
+        classes = HashSet.empty();
+        properties = HashMap.empty();
+        dataSources = HashMap.empty();
         defaultDataSourceName = "db";
         propertiesName = "application.properties";
         instancePropertiesName = "instance.properties";
@@ -75,10 +75,8 @@ public class Config {
     }
 
     public Config withEntityScanDataSource(String dataSource, String... packages) {
-        Map<String, List<String>> newMap = new HashMap<>(
-                                                         dataSources);
-        newMap.put(dataSource, Arrays.asList(packages));
-        return this.withDataSources(HashTreePMap.from(newMap));
+        PersistentMap<String, List<String>> nm = dataSources.put(dataSource, Arrays.asList(packages));
+        return this.withDataSources(nm);
     }
 
     /**
@@ -89,18 +87,14 @@ public class Config {
      * @return New Config object, with configured packages
      */
     public Config withEntityScan(String... packages) {
-        Map<String, List<String>> newMap = new HashMap<>(
-                                                         dataSources);
-        newMap.put(defaultDataSourceName, Arrays.asList(packages));
-        return this.withDataSources(HashTreePMap.from(newMap));
+        return this.withDataSources(dataSources.put(defaultDataSourceName, Arrays.asList(packages)));
     }
 
     public Config withClassesArray(Class... classes) {
-        Set<Class> org = new HashSet<Class>(
-                                            this.getClasses());
+        PersistentSet<Class> org = this.classes;
         for (Class c : classes)
-            org.add(c);
-        return this.withClasses(HashTreePSet.from(org));
+            org = org.plus(c);
+        return this.withClasses(org);
     }
 
 }

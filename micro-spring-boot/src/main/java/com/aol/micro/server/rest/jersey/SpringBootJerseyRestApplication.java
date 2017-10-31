@@ -3,6 +3,7 @@ package com.aol.micro.server.rest.jersey;
 import java.util.List;
 import java.util.Map;
 
+import cyclops.collections.immutable.LinkedListX;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
@@ -20,14 +21,14 @@ public class SpringBootJerseyRestApplication extends ResourceConfig {
 
 	@Autowired(required=false)
 	public SpringBootJerseyRestApplication(ApplicationContext context){
-		this(context, GlobalState.state.getModules().firstValue());
+		this(context, GlobalState.state.getModules().firstValue(null));
 	}
 	
 	@Autowired(required=false)
 	public SpringBootJerseyRestApplication(ApplicationContext context,Module module){
 		ModuleDataExtractor extractor = new ModuleDataExtractor(module);
 		
-		List allResources = extractor.getRestResources(context);
+		LinkedListX allResources = extractor.getRestResources(context);
 		
 		System.out.println("Resources " + allResources);
 		Map<String, Object> serverProperties = module.getServerProperties();

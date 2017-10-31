@@ -9,7 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import cyclops.control.Xor;
+import cyclops.control.Either;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,9 +35,9 @@ public class AutodiscoveredFilter  implements AutoFilterConfiguration {
 	public String[] getMapping() {
 		return new String[] { "/*" };
 	}
-	public Xor<Class<? extends Filter>,Filter> getFilter(){
+	public Either<Class<? extends Filter>,Filter> getFilter(){
 
-		return Xor.secondary(org.springframework.web.filter.DelegatingFilterProxy.class);
+		return Either.left(org.springframework.web.filter.DelegatingFilterProxy.class);
 
 	}
 	public String getName(){

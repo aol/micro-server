@@ -14,9 +14,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import cyclops.collections.immutable.LinkedListX;
+import cyclops.data.Seq;
 import org.junit.Test;
-import org.pcollections.ConsPStack;
-import org.pcollections.PStack;
+
 
 
 import com.aol.micro.server.rest.jackson.JacksonUtil;
@@ -50,12 +50,12 @@ public class JacksonUtilTest {
     }
 
     @Test
-    public void serializeToPStack() {
+    public void serializeToPersistentList() {
 
         LinkedListX<Integer> list = LinkedListX.of(1, 2, 3, 4);
         String jsonString = JacksonUtil.serializeToJson(list);
 
-        PStack<Integer> stack = JacksonUtil.convertFromJson(jsonString, ConsPStack.class);
+        Seq<Integer> stack = JacksonUtil.convertFromJson(jsonString, Seq.class);
 
         assertThat(stack, equalTo(list.reverse()));
     }

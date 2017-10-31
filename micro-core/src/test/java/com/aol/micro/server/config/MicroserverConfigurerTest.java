@@ -7,7 +7,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import cyclops.data.tuple.Tuple2;
 import org.junit.Test;
+
+import java.util.Arrays;
 
 @Microserver(propertiesName = "test!", instancePropertiesName = "test2!",serviceTypePropertiesName = "servicetType!", 
 			properties = { "hello", "world" }, entityScan = { "packages" }, classes = { String.class, Integer.class }, 
@@ -18,8 +21,8 @@ public class MicroserverConfigurerTest {
 
 	@Test
 	public void properties() {
-		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getProperties().keySet(), hasItem("hello"));
-		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getProperties().values(), hasItem("world"));
+		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getProperties().stream().map(Tuple2::_1).toSet(), hasItem("hello"));
+		assertThat(configurer.buildConfig(MicroserverConfigurerTest.class).getProperties().stream().map(Tuple2::_2).toSet(), hasItem("world"));
 	}
 
 	@Test
@@ -42,7 +45,7 @@ public class MicroserverConfigurerTest {
 	@Test
 	public void entityScan() {
 		Config config = configurer.buildConfig(MicroserverConfigurerTest.class);
-		assertThat(config.getDataSources().get(config.getDefaultDataSourceName()), hasItem("packages"));
+		assertThat(config.getDataSources().getOrElse(config.getDefaultDataSourceName(), Arrays.asList()), hasItem("packages"));
 
 	}
 

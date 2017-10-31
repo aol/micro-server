@@ -7,10 +7,10 @@ import javax.servlet.Filter;
 import javax.servlet.FilterRegistration.Dynamic;
 import javax.servlet.ServletContext;
 
+import com.oath.cyclops.types.persistent.PersistentList;
 import lombok.AllArgsConstructor;
 
 
-import org.pcollections.PStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,7 @@ import com.aol.micro.server.servers.model.ServerData;
 public class FilterConfigurer {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final ServerData serverData;
-	private final PStack<FilterData> filterData;
+	private final PersistentList<FilterData> filterData;
 	
 	public void addFilters(ServletContext webappContext) {
 

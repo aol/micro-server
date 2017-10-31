@@ -7,7 +7,7 @@ import com.aol.micro.server.events.SystemData;
 import com.google.common.eventbus.EventBus;
 
 import cyclops.collections.mutable.ListX;
-import cyclops.stream.ReactiveSeq;
+import cyclops.reactive.ReactiveSeq;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

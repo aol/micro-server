@@ -23,10 +23,11 @@ import javax.servlet.ServletRequestListener;
 
 import cyclops.collections.mutable.SetX;
 import cyclops.collections.immutable.LinkedListX;
+import cyclops.data.HashSet;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.pcollections.HashTreePSet;
+
 
 
 import com.aol.micro.server.auto.discovery.CommonRestResource;
@@ -48,7 +49,7 @@ public class ConfigurableModuleTest {
 	private Set<Class<?>> resourceClasses;
 	private Set<Class<? extends Annotation>> resourceAnnotationClasses;
 	private Map<String, Servlet> servlets;
-	private Set<Class<?>> springConfigurationClasses;
+	private HashSet<Class<?>> springConfigurationClasses;
 	private List<String> defaultJaxRsPackages;
 	
 	private Map<String, Object> serverProperties = HashMapBuilder.<String, Object>map(SERVER_PROPERTIES_KEY, 1).build();
@@ -73,7 +74,7 @@ public class ConfigurableModuleTest {
 		resourceClasses = SetX.empty();
 		resourceAnnotationClasses = SetX.of(Rest.class);
 		servlets = new HashMap<>();
-		springConfigurationClasses = HashTreePSet.singleton(this.getClass());
+		springConfigurationClasses = HashSet.of(this.getClass());
 		
 		
 		module = ConfigurableModule.builder()
@@ -88,7 +89,7 @@ public class ConfigurableModuleTest {
 									.providers(providers)
 									.restResourceClasses(resourceClasses)
 									.servlets(servlets)
-									.springConfigurationClasses(springConfigurationClasses)
+									.springConfigurationClasses(springConfigurationClasses.toSet())
 									.serverProperties(serverProperties)
 									.build();
 		
@@ -330,7 +331,7 @@ public class ConfigurableModuleTest {
 
 	@Test
 	public void testWithSpringConfigurationClasses() {
-		assertThat(unchanged.withSpringConfigurationClasses(this.springConfigurationClasses).getSpringConfigurationClasses(),is(module.getSpringConfigurationClasses()));
+		assertThat(unchanged.withSpringConfigurationClasses(this.springConfigurationClasses.toSet()).getSpringConfigurationClasses(),is(module.getSpringConfigurationClasses()));
 
 	}
 	

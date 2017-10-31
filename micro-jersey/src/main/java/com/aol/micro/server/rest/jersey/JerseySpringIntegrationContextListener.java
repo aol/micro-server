@@ -4,6 +4,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import com.aol.micro.server.servers.model.ServerData;
+import cyclops.collections.mutable.ListX;
 
 public class JerseySpringIntegrationContextListener implements ServletContextListener {
 
@@ -20,7 +21,7 @@ public class JerseySpringIntegrationContextListener implements ServletContextLis
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		JerseyRestApplication.getResourcesMap().put(serverData.getModule().getContext(), serverData.getResources());
+		JerseyRestApplication.getResourcesMap().put(serverData.getModule().getContext(), ListX.fromIterable(serverData.getResources()));
 		JerseyRestApplication.getPackages().put(serverData.getModule().getContext(), serverData.getModule().getDefaultJaxRsPackages());
 		JerseyRestApplication.getResourcesClasses().put(serverData.getModule().getContext(), serverData.getModule().getDefaultResources());
 		JerseyRestApplication.getResourceConfigManager().put(serverData.getModule().getContext(), serverData.getModule().getResourceConfigManager());

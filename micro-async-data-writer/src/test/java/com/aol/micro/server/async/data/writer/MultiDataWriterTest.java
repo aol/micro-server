@@ -49,14 +49,14 @@ public class MultiDataWriterTest {
         dataWriter1.setData("one");
         dataWriter2.setData("two");
         String data = writer.loadAndGet()
-                            .get();
+                         .orElse(null);
         assertThat(data, equalTo("one"));
     }
 
     @Test
     public void loadAndGetReturnsNullForEmpty() {
         String data = empty.loadAndGet()
-                           .get();
+                           .orElse(null);
         assertThat(data, equalTo(null));
     }
 
@@ -65,7 +65,7 @@ public class MultiDataWriterTest {
         dataWriter1.setOutofdate(true);
         dataWriter2.setOutofdate(false);
         boolean outofdate = writer.isOutOfDate()
-                                  .get();
+                             .orElse(null);
         assertThat(outofdate, equalTo(true));
     }
 
@@ -74,7 +74,7 @@ public class MultiDataWriterTest {
         dataWriter1.setOutofdate(false);
         dataWriter2.setOutofdate(true);
         boolean outofdate = writer.isOutOfDate()
-                                  .get();
+                                 .orElse(null);
         assertThat(outofdate, equalTo(true));
     }
 
@@ -83,7 +83,7 @@ public class MultiDataWriterTest {
         dataWriter1.setOutofdate(false);
         dataWriter2.setOutofdate(false);
         boolean outofdate = writer.isOutOfDate()
-                                  .get();
+                              .orElse(null);
         assertThat(outofdate, equalTo(false));
     }
 
@@ -92,7 +92,7 @@ public class MultiDataWriterTest {
         dataWriter1.setOutofdate(true);
         dataWriter2.setOutofdate(true);
         boolean outofdate = writer.isOutOfDate()
-                                  .get();
+                                .orElse(null);
         assertThat(outofdate, equalTo(true));
     }
 
@@ -100,7 +100,7 @@ public class MultiDataWriterTest {
     public void isOutofDateWorksEmpty() {
 
         boolean outofdate = empty.isOutOfDate()
-                                 .get();
+                                 .orElse(null);
         assertThat(outofdate, equalTo(false));
     }
 }

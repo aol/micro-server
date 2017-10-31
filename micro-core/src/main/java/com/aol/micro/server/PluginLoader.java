@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 import cyclops.collections.mutable.ListX;
 import cyclops.function.FluentFunctions;
-import cyclops.stream.ReactiveSeq;
+import cyclops.reactive.ReactiveSeq;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
