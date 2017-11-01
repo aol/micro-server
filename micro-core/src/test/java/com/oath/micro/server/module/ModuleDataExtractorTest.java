@@ -1,6 +1,6 @@
-package com.aol.micro.server.module;
+package com.oath.micro.server.module;
 
-import static com.aol.micro.server.module.RestResourceTagBuilder.restResourceTags;
+import static com.oath.micro.server.module.RestResourceTagBuilder.restResourceTags;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -19,8 +19,8 @@ import org.junit.Test;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 
-import com.aol.micro.server.servers.model.ServerData;
-import com.aol.micro.server.utility.HashMapBuilder;
+import com.oath.micro.server.servers.model.ServerData;
+import com.oath.micro.server.utility.HashMapBuilder;
 
 public class ModuleDataExtractorTest {
 

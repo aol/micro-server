@@ -1,4 +1,4 @@
-package com.aol.micro.server.servers.model;
+package com.oath.micro.server.servers.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.Builder;
 
 
-import com.aol.micro.server.utility.UsefulStaticMethods;
+import com.oath.micro.server.utility.UsefulStaticMethods;
 
 @Getter
 @Builder

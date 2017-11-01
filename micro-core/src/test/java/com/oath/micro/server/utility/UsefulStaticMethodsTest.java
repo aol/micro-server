@@ -1,6 +1,6 @@
-package com.aol.micro.server.utility;
+package com.oath.micro.server.utility;
 
-import static com.aol.micro.server.utility.UsefulStaticMethods.either;
+import static com.oath.micro.server.utility.UsefulStaticMethods.either;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 

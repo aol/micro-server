@@ -1,4 +1,4 @@
-package com.aol.micro.server.utility;
+package com.oath.micro.server.utility;
 
 import java.util.Collections;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.aol.micro.server.auto.discovery;
+package com.oath.micro.server.auto.discovery;
 
 import java.util.HashMap;
 import java.util.Map;

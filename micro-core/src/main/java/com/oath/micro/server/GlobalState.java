@@ -1,7 +1,7 @@
-package com.aol.micro.server;
+package com.oath.micro.server;
 
 
-import com.aol.micro.server.module.Module;
+import com.oath.micro.server.module.Module;
 
 import cyclops.collections.mutable.ListX;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.aol.micro.server.module;
+package com.oath.micro.server.module;
 
-import static com.aol.micro.server.utility.UsefulStaticMethods.concat;
+import static com.oath.micro.server.utility.UsefulStaticMethods.concat;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -18,9 +18,9 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
-import com.aol.micro.server.auto.discovery.CommonRestResource;
-import com.aol.micro.server.servers.model.ServerData;
-import com.aol.micro.server.utility.HashMapBuilder;
+import com.oath.micro.server.auto.discovery.CommonRestResource;
+import com.oath.micro.server.servers.model.ServerData;
+import com.oath.micro.server.utility.HashMapBuilder;
 
 import com.oath.cyclops.types.persistent.PersistentMap;
 import cyclops.collections.immutable.PersistentMapX;

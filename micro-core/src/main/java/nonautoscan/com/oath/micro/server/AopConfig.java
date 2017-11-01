@@ -1,4 +1,4 @@
-package nonautoscan.com.aol.micro.server;
+package nonautoscan.com.oath.micro.server;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;

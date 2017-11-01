@@ -1,7 +1,7 @@
-package com.aol.micro.server.simpleserver;
+package com.oath.micro.server.simpleserver;
 
 
-import com.aol.micro.server.MicroserverApp;
+import com.oath.micro.server.MicroserverApp;
  
 public class TestMicroserverApp {
  

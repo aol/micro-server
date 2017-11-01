@@ -1,4 +1,4 @@
-package com.aol.micro.server.servers.model;
+package com.oath.micro.server.servers.model;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
-import com.aol.micro.server.module.Module;
+import com.oath.micro.server.module.Module;
 
 @Getter
 @Builder

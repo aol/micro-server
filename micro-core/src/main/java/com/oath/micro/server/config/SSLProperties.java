@@ -1,4 +1,4 @@
-package com.aol.micro.server.config;
+package com.oath.micro.server.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

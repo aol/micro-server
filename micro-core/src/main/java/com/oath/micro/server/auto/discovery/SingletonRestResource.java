@@ -1,4 +1,4 @@
-package com.aol.micro.server.auto.discovery;
+package com.oath.micro.server.auto.discovery;
 
 public interface SingletonRestResource extends RestResource{
 	default boolean isSingleton(){

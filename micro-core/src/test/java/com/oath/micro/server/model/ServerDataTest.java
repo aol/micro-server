@@ -1,4 +1,4 @@
-package com.aol.micro.server.model;
+package com.oath.micro.server.model;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 
-import com.aol.micro.server.servers.model.ServerData;
+import com.oath.micro.server.servers.model.ServerData;
 
 public class ServerDataTest {
 

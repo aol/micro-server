@@ -1,10 +1,10 @@
-package com.aol.micro.server.config;
+package com.oath.micro.server.config;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.auto.discovery.Rest;
 
 @Microserver
 @Rest

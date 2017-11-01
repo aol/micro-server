@@ -1,4 +1,4 @@
-package com.aol.micro.server.auto.discovery;
+package com.oath.micro.server.auto.discovery;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

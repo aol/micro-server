@@ -1,4 +1,4 @@
-package com.aol.micro.server.servers.model;
+package com.oath.micro.server.servers.model;
 
 import javax.servlet.Servlet;
 

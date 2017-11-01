@@ -1,7 +1,7 @@
-package com.aol.micro.server.config;
+package com.oath.micro.server.config;
 
-import com.aol.micro.server.Plugin;
-import com.aol.micro.server.PluginLoader;
+import com.oath.micro.server.Plugin;
+import com.oath.micro.server.PluginLoader;
 import cyclops.data.HashMap;
 import cyclops.data.HashSet;
 import cyclops.reactive.ReactiveSeq;

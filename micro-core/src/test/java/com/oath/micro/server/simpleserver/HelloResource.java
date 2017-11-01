@@ -1,10 +1,10 @@
-package com.aol.micro.server.simpleserver;
+package com.oath.micro.server.simpleserver;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
  
-import com.aol.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.auto.discovery.Rest;
  
 @Rest
 @Path("/foo")

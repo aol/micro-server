@@ -1,6 +1,6 @@
-package com.aol.micro.server.module;
+package com.oath.micro.server.module;
 
-import static com.aol.micro.server.utility.UsefulStaticMethods.concat;
+import static com.oath.micro.server.utility.UsefulStaticMethods.concat;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import com.aol.micro.server.auto.discovery.CommonRestResource;
+import com.oath.micro.server.auto.discovery.CommonRestResource;
 
 import lombok.Setter;
 

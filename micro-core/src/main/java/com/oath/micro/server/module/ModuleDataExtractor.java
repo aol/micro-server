@@ -1,4 +1,4 @@
-package com.aol.micro.server.module;
+package com.oath.micro.server.module;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +13,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 
-import com.aol.micro.server.auto.discovery.JaxRsResource;
-import com.aol.micro.server.auto.discovery.JaxRsResourceWrapper;
-import com.aol.micro.server.servers.model.FilterData;
-import com.aol.micro.server.servers.model.ServerData;
-import com.aol.micro.server.servers.model.ServletData;
+import com.oath.micro.server.auto.discovery.JaxRsResource;
+import com.oath.micro.server.auto.discovery.JaxRsResourceWrapper;
+import com.oath.micro.server.servers.model.FilterData;
+import com.oath.micro.server.servers.model.ServerData;
+import com.oath.micro.server.servers.model.ServletData;
 
 import lombok.AllArgsConstructor;
 

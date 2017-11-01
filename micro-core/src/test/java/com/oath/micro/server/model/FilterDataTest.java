@@ -1,4 +1,4 @@
-package com.aol.micro.server.model;
+package com.oath.micro.server.model;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -8,7 +8,7 @@ import javax.servlet.Filter;
 
 import org.junit.Test;
 
-import com.aol.micro.server.servers.model.FilterData;
+import com.oath.micro.server.servers.model.FilterData;
 
 public class FilterDataTest {
 

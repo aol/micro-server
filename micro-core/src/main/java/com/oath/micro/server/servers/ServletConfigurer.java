@@ -1,4 +1,4 @@
-package com.aol.micro.server.servers;
+package com.oath.micro.server.servers;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
@@ -7,9 +7,9 @@ import com.oath.cyclops.types.persistent.PersistentList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.micro.server.auto.discovery.ServletConfiguration;
-import com.aol.micro.server.servers.model.ServerData;
-import com.aol.micro.server.servers.model.ServletData;
+import com.oath.micro.server.auto.discovery.ServletConfiguration;
+import com.oath.micro.server.servers.model.ServerData;
+import com.oath.micro.server.servers.model.ServletData;
 
 import lombok.AllArgsConstructor;
 

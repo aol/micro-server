@@ -1,4 +1,4 @@
-package com.aol.micro.server.spring.properties;
+package com.oath.micro.server.spring.properties;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,8 +19,8 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
-import com.aol.micro.server.config.Config;
-import com.aol.micro.server.config.ConfigAccessor;
+import com.oath.micro.server.config.Config;
+import com.oath.micro.server.config.ConfigAccessor;
 
 @Configuration
 public class PropertyFileConfig {

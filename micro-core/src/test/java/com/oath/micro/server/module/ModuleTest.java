@@ -1,4 +1,4 @@
-package com.aol.micro.server.module;
+package com.oath.micro.server.module;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -9,13 +9,13 @@ import cyclops.reactive.ReactiveSeq;
 import org.junit.Test;
 
 
-import com.aol.micro.server.Plugin;
+import com.oath.micro.server.Plugin;
 public class ModuleTest {
 
 	@Test
 	public void testProviders(){
 		//test MyPlugin working
-		assertThat("com.aol.micro.server.rest.providers,com.my.new.provider,com.my.new.provider2",
+		assertThat("com.oath.micro.server.rest.providers,com.my.new.provider,com.my.new.provider2",
 				equalTo(ConfigurableModule.builder().build().getProviders()));
 		System.out.println(new ModuleImpl().getProviders());
 		String additional = ReactiveSeq

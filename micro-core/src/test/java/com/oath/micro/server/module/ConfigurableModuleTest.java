@@ -1,4 +1,4 @@
-package com.aol.micro.server.module;
+package com.oath.micro.server.module;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
@@ -30,10 +30,10 @@ import org.junit.Test;
 
 
 
-import com.aol.micro.server.auto.discovery.CommonRestResource;
-import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.servers.model.ServerData;
-import com.aol.micro.server.utility.HashMapBuilder;
+import com.oath.micro.server.auto.discovery.CommonRestResource;
+import com.oath.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.servers.model.ServerData;
+import com.oath.micro.server.utility.HashMapBuilder;
 
 public class ConfigurableModuleTest {
 

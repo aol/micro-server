@@ -1,6 +1,6 @@
-package com.aol.micro.server.module;
+package com.oath.micro.server.module;
 
-import static com.aol.micro.server.module.RestResourceTagBuilder.restAnnotations;
+import static com.oath.micro.server.module.RestResourceTagBuilder.restAnnotations;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertThat;
 

@@ -1,4 +1,4 @@
-package com.aol.micro.server.servers.model;
+package com.oath.micro.server.servers.model;
 
 public class RestResourceMissingPathException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package com.aol.micro.server.rest;
+package com.oath.micro.server.rest;
 
 import java.util.Map;
 

@@ -1,8 +1,8 @@
-package com.aol.micro.server.servers;
+package com.oath.micro.server.servers;
 
 import org.springframework.context.ApplicationContext;
 
-import com.aol.micro.server.module.Module;
+import com.oath.micro.server.module.Module;
 
 public interface ServerApplicationFactory {
 

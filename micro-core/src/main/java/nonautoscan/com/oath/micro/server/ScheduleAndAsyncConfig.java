@@ -1,4 +1,4 @@
-package nonautoscan.com.aol.micro.server;
+package nonautoscan.com.oath.micro.server;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import com.aol.micro.server.SchedulingConfiguration;
+import com.oath.micro.server.SchedulingConfiguration;
 
 @Configuration
 @EnableScheduling

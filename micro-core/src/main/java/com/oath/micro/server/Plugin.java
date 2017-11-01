@@ -1,4 +1,4 @@
-package com.aol.micro.server;
+package com.oath.micro.server;
 
 import java.util.List;
 import java.util.Map;
@@ -13,11 +13,11 @@ import javax.servlet.ServletRequestListener;
 import javax.ws.rs.core.FeatureContext;
 
 
-import com.aol.micro.server.rest.RestConfiguration;
-import com.aol.micro.server.servers.ServerApplicationFactory;
-import com.aol.micro.server.servers.model.ServerData;
-import com.aol.micro.server.spring.SpringBuilder;
-import com.aol.micro.server.spring.SpringDBConfig;
+import com.oath.micro.server.rest.RestConfiguration;
+import com.oath.micro.server.servers.ServerApplicationFactory;
+import com.oath.micro.server.servers.model.ServerData;
+import com.oath.micro.server.spring.SpringBuilder;
+import com.oath.micro.server.spring.SpringDBConfig;
 import com.fasterxml.jackson.databind.Module;
 import cyclops.collections.immutable.PersistentMapX;
 import cyclops.collections.immutable.PersistentSetX;
@@ -28,7 +28,7 @@ import cyclops.collections.mutable.SetX;
 
 /**
  * To implement a plugin for Microserver, implement this interface in your library and add the fully resolved class name to 
- * META-INF/services/com.aol.micro.server.Plugin
+ * META-INF/services/com.oath.micro.server.Plugin
  * 
  * in your library
  * 

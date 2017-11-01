@@ -1,4 +1,4 @@
-package com.aol.micro.server.servers;
+package com.oath.micro.server.servers;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +16,8 @@ import cyclops.data.Seq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.micro.server.module.Module;
-import com.aol.micro.server.servers.model.ServerData;
+import com.oath.micro.server.module.Module;
+import com.oath.micro.server.servers.model.ServerData;
 
 public class ServerRunner {
 	private final Logger logger = LoggerFactory.getLogger(getClass());

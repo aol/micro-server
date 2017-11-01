@@ -1,11 +1,11 @@
-package com.aol.micro.server.module;
+package com.oath.micro.server.module;
 
-import com.aol.micro.server.Plugin;
-import com.aol.micro.server.PluginLoader;
-import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.config.Classes;
-import com.aol.micro.server.servers.model.ServerData;
+import com.oath.micro.server.Plugin;
+import com.oath.micro.server.PluginLoader;
+import com.oath.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.auto.discovery.RestResource;
+import com.oath.micro.server.config.Classes;
+import com.oath.micro.server.servers.model.ServerData;
 import cyclops.collections.mutable.MapX;
 import cyclops.companion.Streams;
 import cyclops.collections.mutable.ListX;
@@ -169,8 +169,8 @@ public interface Module {
                                        .join(",");
 
         if (StringUtils.isEmpty(additional))
-            return "com.aol.micro.server.rest.providers";
-        return "com.aol.micro.server.rest.providers," + additional;
+            return "com.oath.micro.server.rest.providers";
+        return "com.oath.micro.server.rest.providers," + additional;
     }
 
     public String getContext();

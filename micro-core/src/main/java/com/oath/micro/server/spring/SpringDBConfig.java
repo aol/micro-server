@@ -1,9 +1,9 @@
-package com.aol.micro.server.spring;
+package com.oath.micro.server.spring;
 
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-import com.aol.micro.server.config.Config;
+import com.oath.micro.server.config.Config;
 
 public interface SpringDBConfig {
 	

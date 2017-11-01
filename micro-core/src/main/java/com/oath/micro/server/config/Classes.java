@@ -1,16 +1,16 @@
-package com.aol.micro.server.config;
+package com.oath.micro.server.config;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
-import nonautoscan.com.aol.micro.server.AopConfig;
-import nonautoscan.com.aol.micro.server.SSLConfig;
-import nonautoscan.com.aol.micro.server.ScheduleAndAsyncConfig;
+import nonautoscan.com.oath.micro.server.AopConfig;
+import nonautoscan.com.oath.micro.server.SSLConfig;
+import nonautoscan.com.oath.micro.server.ScheduleAndAsyncConfig;
 
-import com.aol.micro.server.module.ConfigureEnviroment;
-import com.aol.micro.server.servers.AccessLogConfig;
-import com.aol.micro.server.spring.properties.PropertyFileConfig;
+import com.oath.micro.server.module.ConfigureEnviroment;
+import com.oath.micro.server.servers.AccessLogConfig;
+import com.oath.micro.server.spring.properties.PropertyFileConfig;
 
 /**
  * 

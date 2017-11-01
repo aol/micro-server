@@ -1,4 +1,4 @@
-package com.aol.micro.server.servers;
+package com.oath.micro.server.servers;
 
 import java.util.EnumSet;
 
@@ -14,9 +14,9 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.aol.micro.server.auto.discovery.FilterConfiguration;
-import com.aol.micro.server.servers.model.FilterData;
-import com.aol.micro.server.servers.model.ServerData;
+import com.oath.micro.server.auto.discovery.FilterConfiguration;
+import com.oath.micro.server.servers.model.FilterData;
+import com.oath.micro.server.servers.model.ServerData;
 
 @AllArgsConstructor
 public class FilterConfigurer {

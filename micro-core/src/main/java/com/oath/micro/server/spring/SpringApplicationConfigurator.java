@@ -1,4 +1,4 @@
-package com.aol.micro.server.spring;
+package com.oath.micro.server.spring;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import com.aol.micro.server.Plugin;
-import com.aol.micro.server.PluginLoader;
-import com.aol.micro.server.config.Config;
-import com.aol.micro.server.config.ConfigAccessor;
+import com.oath.micro.server.Plugin;
+import com.oath.micro.server.PluginLoader;
+import com.oath.micro.server.config.Config;
+import com.oath.micro.server.config.ConfigAccessor;
 
 public class SpringApplicationConfigurator implements SpringBuilder {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
