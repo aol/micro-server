@@ -9,7 +9,6 @@ buildscript {
 		}
 		
 	}
-
 	dependencies {
 		classpath 'com.bmuschko:gradle-nexus-plugin:2.2'
 		classpath 'com.github.lkishalmi.gradle:gradle-bom-plugin:0.3'
@@ -28,6 +27,7 @@ subprojects {
 
 
 	apply plugin:'java'
+	apply plugin:'groovy'
 //	apply plugin: 'com.github.johnrengelman.shadow'
 	if(project.name != "micro-tutorial") {
 		apply plugin: 'com.bmuschko.nexus'

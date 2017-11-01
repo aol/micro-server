@@ -38,7 +38,7 @@ public class ConfigureSchedulingAsyncDataWriter {
         Maybe<DataCleaner> defaultDataCleaner = defaultComparators.size() == 1 ? Maybe.just(new DataCleaner(
                                                                                                             defaultComparators.get(0),
                                                                                                             defaultCronCleaner))
-                : Maybe.none();
+                : Maybe.nothing();
         return ListX.fromIterable(defaultDataCleaner)
                     .plusAll(dataCleaners);
 

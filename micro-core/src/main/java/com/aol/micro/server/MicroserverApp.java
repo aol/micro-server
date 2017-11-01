@@ -3,10 +3,10 @@ package com.aol.micro.server;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import com.aol.cyclops2.util.ExceptionSoftener;
+import com.oath.cyclops.util.ExceptionSoftener;
 import cyclops.companion.Streams;
 import cyclops.collections.mutable.ListX;
-import cyclops.stream.ReactiveSeq;
+import cyclops.reactive.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;

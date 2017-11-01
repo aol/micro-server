@@ -6,7 +6,7 @@ import java.util.function.BinaryOperator;
 
 import cyclops.collections.mutable.ListX;
 import cyclops.collections.mutable.SetX;
-import cyclops.stream.ReactiveSeq;
+import cyclops.reactive.ReactiveSeq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

@@ -1,11 +1,12 @@
 package com.aol.micro.server.auto.discovery;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.Filter;
 
-import cyclops.control.Xor;
-import org.pcollections.HashTreePMap;
+import cyclops.control.Either;
+
 
 
 
@@ -27,30 +28,30 @@ public interface FilterConfiguration {
 	
 	
 	/**
-	 * Xor is an eXclusive Or type. It holds one of two types, and one (and only one) must
+	 * Either is an eXclusive Or type. It holds one of two types, and one (and only one) must
 	 * be returned. In this case either a Filter class or a Filter Object.
 	 * 
 	 * {@code
 	 * <pre>
-	 *     return Xor.secondary(MyFilter.class);
+	 *     return Either.left(MyFilter.class);
 	 *     
 	 * </pre>
 	 * }
 	 * {@code
 	 * <pre>
-	 *     return Xor.primary(new MyFilter());
+	 *     return Either.right(new MyFilter());
 	 *     
 	 * </pre>
 	 * }
 	 * 
 	 * @return
 	 */
-	Xor<Class<? extends Filter>,Filter> getFilter();
+	Either<Class<? extends Filter>,Filter> getFilter();
 	
 	default String getName(){
 		return null;
 	}
 	default Map<String,String> getInitParameters(){
-		return HashTreePMap.empty();
+		return new HashMap<>();
 	}
 }

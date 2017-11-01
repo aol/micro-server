@@ -2,7 +2,7 @@ description = 'micro-core'
 dependencies {
 	compile 'javax.servlet:javax.servlet-api:3.1.0'
 	
-	compile ("com.aol.simplereact:cyclops-react:$cyclopsReactVersion")
+	compile ("com.oath.cyclops:cyclops:$cyclopsVersion")
 	compile group: 'org.aspectj', name: 'aspectjrt', version:aspectJVersion
 	compile group: 'org.aspectj', name: 'aspectjweaver', version:aspectJVersion
 

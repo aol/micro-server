@@ -50,14 +50,14 @@ public class ServerDataTest {
 	@Test
 	public void testExtractResourceClassName(){
 		
-		assertThat(serverData.extractResources().toList().get(0).v1(),is(ServletStatusResource.class.getName()));
+		assertThat(serverData.extractResources().toList().get(0)._1(),is(ServletStatusResource.class.getName()));
 		
 	}
 	@Test
 	public void testExtractResourcePath(){
 		
 		
-		assertThat(serverData.extractResources().toList().get(0).v2(),is("/servlet"));
+		assertThat(serverData.extractResources().toList().get(0)._2(),is("/servlet"));
 		
 	}
 

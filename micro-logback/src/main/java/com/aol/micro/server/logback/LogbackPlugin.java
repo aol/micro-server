@@ -6,6 +6,9 @@ import com.aol.micro.server.logback.rest.LogbackLoggerResource;
 import com.aol.micro.server.logback.rest.LogbackRootLoggerResource;
 import com.aol.micro.server.logback.service.LogbackRootLoggerChecker;
 import cyclops.collections.immutable.PersistentSetX;
+import cyclops.collections.mutable.SetX;
+
+import java.util.Set;
 
 /**
  * 
@@ -14,8 +17,8 @@ import cyclops.collections.immutable.PersistentSetX;
  */
 public class LogbackPlugin implements Plugin {
 	@Override
-	public PersistentSetX<Class> springClasses() {
-		return PersistentSetX.of(LogbackRootLoggerResource.class, LogbackRootLoggerChecker.class, LogbackLoggerResource.class);
+	public Set<Class> springClasses() {
+		return SetX.of(LogbackRootLoggerResource.class, LogbackRootLoggerChecker.class, LogbackLoggerResource.class);
 	}
 
 }

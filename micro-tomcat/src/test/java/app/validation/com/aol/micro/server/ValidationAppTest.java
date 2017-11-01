@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.BadRequestException;
 
-import com.aol.cyclops2.types.futurestream.SimpleReactStream;
+import com.oath.cyclops.types.futurestream.SimpleReactStream;
 import cyclops.async.SimpleReact;
 import org.junit.After;
 import org.junit.Before;

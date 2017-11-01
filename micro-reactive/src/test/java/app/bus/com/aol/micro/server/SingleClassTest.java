@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.reactive.EventQueueManager;
 import com.aol.micro.server.testing.RestAgent;
 
 @Microserver
@@ -28,15 +27,13 @@ public class SingleClassTest implements RestResource {
 
     RestAgent rest = new RestAgent();
 
-    @Autowired
-    EventQueueManager<String> manager;
+
     MicroserverApp server;
 
-    static String lastRecieved = null;
 
     @Before
     public void startServer() {
-        lastRecieved = null;
+
         server = new MicroserverApp(
                                     SingleClassTest.class, () -> "simple-app");
         server.start();
@@ -48,17 +45,14 @@ public class SingleClassTest implements RestResource {
         server.stop();
     }
 
-    @PostConstruct
-    public void busManager() {
-        manager.forEach("ping", in -> lastRecieved = in);
-    }
+
 
     @Test
     public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
 
         assertThat(rest.get("http://localhost:8080/simple-app/single/ping"), is("ok"));
         Thread.sleep(500);
-        assertThat(lastRecieved, equalTo("input"));
+
 
     }
 
@@ -66,7 +60,7 @@ public class SingleClassTest implements RestResource {
     @Produces("text/plain")
     @Path("/ping")
     public String ping() {
-        manager.push("ping", "input");
+
         return "ok";
     }
 

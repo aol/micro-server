@@ -2,11 +2,11 @@ package com.aol.micro.server.s3.manifest.comparator;
 
 import java.util.Date;
 
-import com.aol.cyclops2.util.ExceptionSoftener;
+import com.oath.cyclops.util.ExceptionSoftener;
 import cyclops.control.Try;
-import cyclops.control.Xor;
-import org.jooq.lambda.tuple.Tuple;
-import org.jooq.lambda.tuple.Tuple2;
+import cyclops.control.Either;
+import cyclops.data.tuple.Tuple;
+import cyclops.data.tuple.Tuple2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,7 +83,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 
     private final String key;
 
-    private volatile Xor<Void, T> data = Xor.secondary(null);
+    private volatile Either<Void, T> data = Either.left(null);
     private volatile long modified = -1;
 
     @Getter
@@ -119,10 +119,10 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
     @Override
     @SneakyThrows
     public T getData() {
-        while (data.isSecondary()) {
+        while (data.isLeft()) {
             Thread.sleep(500);
         }
-        return data.get();
+        return data.orElse(null);
     }
 
     @Override
@@ -197,7 +197,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
      * @return true - if current data is stale and needs refreshed
      */
     private boolean needsData() {
-        return this.data.isSecondary();
+        return this.data.isLeft();
     }
 
     /**
@@ -205,16 +205,16 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
      */
     @Override
     public synchronized boolean load() {
-        Xor<Void, T> oldData = data;
+        Either<Void, T> oldData = data;
         long oldModified = modified;
         String oldKey = versionedKey;
         try {
             if (isOutOfDate() || needsData()) {
                 String newVersionedKey = reader.getAsString(key)
-                                               .get();
+                                               .orElse(null);
                 val loaded = nonAtomicload(newVersionedKey);
-                data = Xor.primary((T) loaded.v2);
-                modified = loaded.v1;
+                data = Either.right((T) loaded._2());
+                modified = loaded._1();
                 versionedKey = newVersionedKey;
             } else {
                 return false;
@@ -239,8 +239,8 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
                 Thread.sleep(backoff);
         }
         Data data = reader.<Data> getAsObject(newVersionedKey)
-                          .orElseThrow(() -> {
-                              return new ManifestComparatorKeyNotFoundException(
+                .visit(t->t,e-> {
+                              throw new ManifestComparatorKeyNotFoundException(
                                                                                 "Missing versioned key "
                                                                                         + newVersionedKey
                                                                                         + " - likely data changed during read");
@@ -295,7 +295,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
      */
     @Override
     public synchronized void saveAndIncrement(T data) {
-        Xor<Void, T> oldData = this.data;
+        Either<Void, T> oldData = this.data;
         final String oldKey = versionedKey;
         VersionedKey newVersionedKey = increment();
         final String newKey = newVersionedKey.toJson();
@@ -306,7 +306,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
                                                               data, new Date(), newVersionedKey.toJson()))
                   .flatMap(res -> stringWriter.put(key, newVersionedKey.toJson()))
                   .peek(res -> {
-                      this.data = Xor.primary(data);
+                      this.data = Either.right(data);
                       delete(versionedKey);
                   }).peekFailed((err) -> {
                       String message = String.format("Failed to update manifest comparator file from %s to %s", oldKey, newKey);

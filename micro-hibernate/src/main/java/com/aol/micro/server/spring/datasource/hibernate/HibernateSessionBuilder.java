@@ -5,7 +5,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import com.aol.cyclops2.util.ExceptionSoftener;
+import com.oath.cyclops.util.ExceptionSoftener;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 

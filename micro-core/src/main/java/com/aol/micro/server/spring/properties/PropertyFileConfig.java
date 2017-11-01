@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
+import cyclops.data.tuple.Tuple2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -56,10 +57,10 @@ public class PropertyFileConfig {
 
         new ConfigAccessor().get()
                             .getProperties()
-                            .entrySet()
+                            .stream()
                             .forEach(e -> {
-                                if (props.getProperty(e.getKey()) == null) {
-                                    props.put(e.getKey(), e.getValue());
+                                if (props.getProperty(e._1()) == null) {
+                                    props.put(e._1(), e._2());
                                 }
                             });
 

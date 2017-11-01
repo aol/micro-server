@@ -1,10 +1,13 @@
 package com.aol.micro.server.spring.boot;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 import javax.ws.rs.core.FeatureContext;
 
+import cyclops.collections.mutable.MapX;
+import cyclops.collections.mutable.SetX;
 import cyclops.companion.MapXs;
 import cyclops.collections.immutable.PersistentMapX;
 import cyclops.collections.immutable.PersistentSetX;
@@ -31,14 +34,14 @@ public class BootPlugin implements Plugin{
 	}
 
 	@Override
-	public PersistentSetX<Class> springClasses() {
-		return PersistentSetX.of(SpringBootJerseyRestApplication.class);
+	public Set<Class> springClasses() {
+		return SetX.of(SpringBootJerseyRestApplication.class);
 	}
 
 	
 	@Override
 	public Function<FeatureContext,Map<String,Object>> jacksonFeatureProperties(){
-		return context-> PersistentMapX.fromMap(MapXs.of(  CommonProperties.MOXY_JSON_FEATURE_DISABLE + '.'
+		return context-> MapX.fromMap(MapXs.of(  CommonProperties.MOXY_JSON_FEATURE_DISABLE + '.'
                 + context.getConfiguration().getRuntimeType().name().toLowerCase(),true));
 	}
 	

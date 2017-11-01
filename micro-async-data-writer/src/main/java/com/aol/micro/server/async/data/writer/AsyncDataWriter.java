@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 import cyclops.async.Future;
 import cyclops.collections.mutable.MapX;
-import org.jooq.lambda.tuple.Tuple;
+import cyclops.data.tuple.Tuple;
 
 
 import com.aol.micro.server.events.SystemData;
@@ -48,7 +48,7 @@ public class AsyncDataWriter<T> implements DataWriter<T> {
                                                     .correlationId(correlationId)
                                                     .dataMap(dataMap.get())
                                                     .errors(0)
-                                                    .processed(t.v1 ? 1 : 0)
+                                                    .processed(t._1() ? 1 : 0)
                                                     .build())) // add
                                                                // recover
                                                                // option
@@ -57,7 +57,7 @@ public class AsyncDataWriter<T> implements DataWriter<T> {
                                                                // with
                                                                // cyclops-react
                                                                // 1.0.0-final
-                      .map(t -> t.v2);
+                      .map(t -> t._2());
     }
 
     @Override

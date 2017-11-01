@@ -2,9 +2,10 @@ package com.aol.micro.server.config;
 
 import com.aol.micro.server.Plugin;
 import com.aol.micro.server.PluginLoader;
-import cyclops.stream.ReactiveSeq;
-import org.pcollections.HashTreePMap;
-import org.pcollections.HashTreePSet;
+import cyclops.data.HashMap;
+import cyclops.data.HashSet;
+import cyclops.reactive.ReactiveSeq;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,10 +32,10 @@ public class MicroserverConfigurer implements Configurer {
 
 		Map<String, String> properties = buildProperties(microserver);
 
-		return Config.instance().withBasePackages(basePackages).withEntityScan(microserver.entityScan()).withClasses(HashTreePSet.from(classes))
+		return Config.instance().withBasePackages(basePackages).withEntityScan(microserver.entityScan()).withClasses(cyclops.data.HashSet.fromIterable(classes))
 				.withPropertiesName(microserver.propertiesName()).withInstancePropertiesName(microserver.instancePropertiesName())
 				.withServiceTypePropertiesName(microserver.serviceTypePropertiesName())
-				.withAllowCircularReferences(microserver.allowCircularDependencies()).withProperties(HashTreePMap.from(properties)).set();
+				.withAllowCircularReferences(microserver.allowCircularDependencies()).withProperties(HashMap.fromMap(properties)).set();
 	}
 
 	private Map<String, String> buildProperties(Microserver microserver) {

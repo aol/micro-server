@@ -7,12 +7,13 @@ import java.util.concurrent.ExecutionException;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
-import com.aol.cyclops2.util.ExceptionSoftener;
+import com.oath.cyclops.types.persistent.PersistentList;
+import com.oath.cyclops.util.ExceptionSoftener;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.NetworkListener;
 import org.glassfish.grizzly.http.server.accesslog.AccessLogBuilder;
 import org.glassfish.grizzly.servlet.WebappContext;
-import org.pcollections.PStack;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,10 +44,10 @@ public class GrizzlyApplication implements ServerApplication {
 	@Getter
 	private final ServerData serverData;
 
-	private final PStack<FilterData> filterData;
-	private final PStack<ServletData> servletData;
-	private final PStack<ServletContextListener> servletContextListenerData;
-	private final PStack<ServletRequestListener> servletRequestListenerData;
+	private final PersistentList<FilterData> filterData;
+	private final PersistentList<ServletData> servletData;
+	private final PersistentList<ServletContextListener> servletContextListenerData;
+	private final PersistentList<ServletRequestListener> servletRequestListenerData;
 	
 	public GrizzlyApplication(AllData serverData) {
 		this.serverData = serverData.getServerData();
@@ -93,7 +94,7 @@ public class GrizzlyApplication implements ServerApplication {
 			logger.info("Browse to http://localhost:{}/{}/application.wadl", serverData.getPort(), serverData.getModule().getContext());
 			logger.info("Configured resource classes :-");
 			serverData.extractResources()
-					.forEach(t -> logger.info(t.v1() + " : " + "http://localhost:" + serverData.getPort() + "/" + serverData.getModule().getContext() + t.v2()));
+					.forEach(t -> logger.info(t._1() + " : " + "http://localhost:" + serverData.getPort() + "/" + serverData.getModule().getContext() + t._2()));
 			;
 			httpServer.start();
 			start.complete(true);

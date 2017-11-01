@@ -10,7 +10,7 @@ dependencies {
 
     compile("io.dropwizard.metrics:metrics-core:3.2.2")
 
-    compile ("com.aol.simplereact:cyclops-react:$cyclopsReactVersion")
+    compile ("com.oath.cyclops:cyclops:$cyclopsVersion")
     compile project(':micro-core')
 
     testCompile project(':micro-grizzly-with-jersey')

@@ -68,7 +68,7 @@ public class S3UploadSystemTest{
                                                           return FileUtils.readFileToByteArray(file);
                                                       }));
         loadFileOperation.onFail(e -> log.error(e.getMessage()));
-        Optional<byte[]> nFile = Optional.ofNullable(loadFileOperation.get());
+        Optional<byte[]> nFile = loadFileOperation.toOptional();
 
         return nFile;
     }

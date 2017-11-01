@@ -1,5 +1,6 @@
 package com.aol.micro.server.rest.jersey;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -27,7 +28,7 @@ public class JerseySpringIntegrationContextListenerTest {
 		listener.contextInitialized(null);
 		
 		assertThat(JerseyRestApplication.getResourcesMap().get(serverData.getModule().getContext())
-				, is(serverData.getResources()));
+				, equalTo(Arrays.asList()));
 		assertThat(JerseyRestApplication.getPackages().get(serverData.getModule().getContext()),is( serverData.getModule().getDefaultJaxRsPackages()));
 		assertThat(JerseyRestApplication.getResourcesClasses().get(serverData.getModule().getContext()), 
 				is(serverData.getModule().getDefaultResources()));

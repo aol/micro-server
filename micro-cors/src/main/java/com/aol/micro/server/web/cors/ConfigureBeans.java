@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import javax.servlet.Filter;
 
-import cyclops.control.Xor;
+import cyclops.control.Either;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,8 +53,8 @@ public class ConfigureBeans {
 				return Optional.ofNullable(initParameters).orElse(new HashMap<>());
 			}
 			@Override
-			public Xor<Class<? extends Filter>, Filter> getFilter() {
-				return Xor.secondary(CrossDomainFilter.class);
+			public Either<Class<? extends Filter>, Filter> getFilter() {
+				return Either.left(CrossDomainFilter.class);
 			}
 		};
 	}
@@ -78,8 +78,8 @@ public class ConfigureBeans {
 				return Optional.ofNullable(initParameters).orElse(new HashMap<>());
 			}
 			@Override
-			public Xor<Class<? extends Filter>, Filter> getFilter() {
-				return Xor.secondary( org.ebaysf.web.cors.CORSFilter.class);
+			public Either<Class<? extends Filter>, Filter> getFilter() {
+				return Either.left( org.ebaysf.web.cors.CORSFilter.class);
 			}
 		};
 	}

@@ -1,11 +1,12 @@
 package com.aol.micro.server.auto.discovery;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.Servlet;
 
-import cyclops.control.Xor;
-import org.pcollections.HashTreePMap;
+import cyclops.control.Either;
+
 
 
 
@@ -22,26 +23,26 @@ public interface ServletConfiguration {
 		return null;
 	}
 	default Map<String,String> getInitParameters(){
-		return HashTreePMap.empty();
+		return new HashMap<>();
 	}
 	/**
-	 * Xor is an eXclusive Or type. It holds one of two types, and one (and only one) must
+	 * Either is an eXclusive Or type. It holds one of two types, and one (and only one) must
 	 * be returned. In this case either a Servlet class or a Servlet Object.
 	 * 
 	 * {@code
 	 * <pre>
-	 *     return Xor.secondary(MyServlet.class);
+	 *     return Either.left(MyServlet.class);
 	 *     
 	 * </pre>
 	 * }
 	 * 
 	 * {@code
 	 * <pre>
-	 *     return Xor.primary(new MyServlet());
+	 *     return Either.right(new MyServlet());
 	 *     
 	 * </pre>
 	 * }
 	 * 
 	 */
-	Xor<Class<? extends Servlet>,Servlet> getServlet();
+	Either<Class<? extends Servlet>,Servlet> getServlet();
 }

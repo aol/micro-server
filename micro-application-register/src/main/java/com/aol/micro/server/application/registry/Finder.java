@@ -7,8 +7,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import cyclops.collections.mutable.ListX;
 import org.apache.commons.io.FileUtils;
-import org.pcollections.ConsPStack;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,6 @@ public class Finder {
 						}
 					}
 				});
-		return ConsPStack.from(result);
+		return ListX.fromIterable(result);
 	}
 }

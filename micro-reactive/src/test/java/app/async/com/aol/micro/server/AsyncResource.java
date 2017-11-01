@@ -9,10 +9,10 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
 import cyclops.async.SimpleReact;
-import cyclops.stream.FutureStream;
-import cyclops.stream.ReactiveSeq;
-import org.pcollections.ConsPStack;
-import org.pcollections.PStack;
+import cyclops.data.Seq;
+import cyclops.reactive.FutureStream;
+import cyclops.reactive.ReactiveSeq;
+
 import org.springframework.stereotype.Component;
 
 
@@ -24,7 +24,7 @@ import com.aol.micro.server.testing.RestAgent;
 public class AsyncResource implements RestResource{
 
 	private final SimpleReact simpleReact =new SimpleReact();
-	private final PStack<String> urls = ConsPStack.from(Arrays.asList("http://localhost:8080/async-app/async/ping2",
+	private final Seq<String> urls = Seq.fromIterable(Arrays.asList("http://localhost:8080/async-app/async/ping2",
 			"http://localhost:8080/async-app/async/ping",
 			"http://localhost:8080/async-app/async/ping",
 			"http://localhost:8080/async-app/async/ping"));

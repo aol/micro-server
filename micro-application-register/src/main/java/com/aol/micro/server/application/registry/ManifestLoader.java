@@ -8,7 +8,7 @@ import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 import cyclops.function.FluentFunctions;
-import cyclops.stream.ReactiveSeq;
+import cyclops.reactive.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

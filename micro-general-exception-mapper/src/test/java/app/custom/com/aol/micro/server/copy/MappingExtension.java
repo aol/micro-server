@@ -4,8 +4,8 @@ import java.util.LinkedHashMap;
 
 import javax.ws.rs.core.Response.Status;
 
-import org.jooq.lambda.tuple.Tuple;
-import org.jooq.lambda.tuple.Tuple2;
+import cyclops.data.tuple.Tuple;
+import cyclops.data.tuple.Tuple2;
 import org.springframework.stereotype.Component;
 
 import com.aol.micro.server.general.exception.mapper.ExtensionMapOfExceptionsToErrorCodes;

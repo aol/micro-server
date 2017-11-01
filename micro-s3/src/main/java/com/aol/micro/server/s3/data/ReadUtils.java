@@ -8,7 +8,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.function.Supplier;
 
-import com.aol.cyclops2.util.ExceptionSoftener;
+import com.oath.cyclops.util.ExceptionSoftener;
 import org.apache.commons.io.FileUtils;
 
 import com.amazonaws.AmazonClientException;

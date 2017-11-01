@@ -22,9 +22,14 @@ import com.aol.micro.server.auto.discovery.CommonRestResource;
 import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.utility.HashMapBuilder;
 
+import com.oath.cyclops.types.persistent.PersistentMap;
 import cyclops.collections.immutable.PersistentMapX;
 import cyclops.collections.immutable.PersistentSetX;
 import cyclops.collections.immutable.LinkedListX;
+import cyclops.collections.mutable.ListX;
+import cyclops.collections.mutable.MapX;
+import cyclops.collections.mutable.SetX;
+import cyclops.data.HashMap;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.experimental.Wither;
@@ -87,7 +92,7 @@ public class ConfigurableModule implements Module {
     @Override
     public Set<Object> getJaxRsResourceObjects() {
         if (this.jaxRsResourceObjects != null)
-            return PersistentSetX.fromIterable(concat(this.jaxRsResourceObjects, extract(() -> Module.super.getJaxRsResourceObjects())));
+            return SetX.fromIterable(concat(this.jaxRsResourceObjects, extract(() -> Module.super.getJaxRsResourceObjects())));
         return Module.super.getJaxRsResourceObjects();
     }
 
@@ -110,9 +115,9 @@ public class ConfigurableModule implements Module {
     @Override
     public List<String> getDefaultJaxRsPackages() {
         if (defaultJaxRsPackages != null)
-            return LinkedListX.fromIterable(concat(defaultJaxRsPackages, extract(() -> Module.super.getDefaultJaxRsPackages())));
+            return ListX.fromIterable(concat(defaultJaxRsPackages, extract(() -> Module.super.getDefaultJaxRsPackages())));
 
-        return LinkedListX.fromIterable(Module.super.getDefaultJaxRsPackages());
+        return ListX.fromIterable(Module.super.getDefaultJaxRsPackages());
     }
 
     private <T> Collection<T> extract(Supplier<Collection<T>> s) {
@@ -121,16 +126,17 @@ public class ConfigurableModule implements Module {
         return Arrays.asList();
     }
 
-    private <K, V> Map<K, V> extractMap(Supplier<Map<K, V>> s) {
+    //@TODO revert to return Map after cyclops X bug is fixed
+    private <K, V> PersistentMap<K, V> extractMap(Supplier<Map<K, V>> s) {
         if (!resetAll)
-            return s.get();
-        return HashMapBuilder.of();
+            return HashMap.fromMap(s.get());
+        return HashMap.empty();
     }
 
     @Override
     public Set<Class<?>> getRestResourceClasses() {
         if (restResourceClasses != null)
-            return PersistentSetX.fromIterable(concat(restResourceClasses, extract(() -> Collections.singletonList(CommonRestResource.class))));
+            return SetX.fromIterable(concat(restResourceClasses, extract(() -> Collections.singletonList(CommonRestResource.class))));
 
         return Module.super.getRestResourceClasses();
     }
@@ -138,7 +144,7 @@ public class ConfigurableModule implements Module {
     @Override
     public Set<Class<? extends Annotation>> getRestAnnotationClasses() {
         if (restAnnotationClasses != null)
-            return PersistentSetX.fromIterable(concat(restAnnotationClasses, extract(() -> Module.super.getRestAnnotationClasses())));
+            return SetX.fromIterable(concat(restAnnotationClasses, extract(() -> Module.super.getRestAnnotationClasses())));
 
         return Module.super.getRestAnnotationClasses();
     }
@@ -146,7 +152,7 @@ public class ConfigurableModule implements Module {
     @Override
     public List<Class<?>> getDefaultResources() {
         if (this.defaultResources != null) {
-            return LinkedListX.fromIterable((concat(this.defaultResources, extract(() -> Module.super.getDefaultResources()))));
+            return ListX.fromIterable((concat(this.defaultResources, extract(() -> Module.super.getDefaultResources()))));
         }
 
         return Module.super.getDefaultResources();
@@ -155,7 +161,7 @@ public class ConfigurableModule implements Module {
     @Override
     public List<ServletContextListener> getListeners(ServerData data) {
         if (listeners != null)
-            return LinkedListX.fromIterable((concat(this.listeners, extract(() -> Module.super.getListeners(data)))));
+            return ListX.fromIterable((concat(this.listeners, extract(() -> Module.super.getListeners(data)))));
 
         return Module.super.getListeners(data);
     }
@@ -163,7 +169,7 @@ public class ConfigurableModule implements Module {
     @Override
     public List<ServletRequestListener> getRequestListeners(ServerData data) {
         if (requestListeners != null)
-            return LinkedListX.fromIterable(concat(this.requestListeners,
+            return ListX.fromIterable(concat(this.requestListeners,
                     extract(() -> Module.super.getRequestListeners(data))));
 
         return Module.super.getRequestListeners(data);
@@ -172,7 +178,7 @@ public class ConfigurableModule implements Module {
     @Override
     public Map<String, Filter> getFilters(ServerData data) {
         if (filters != null)
-            return PersistentMapX.fromMap(filters).plusAll(extractMap(() -> Module.super.getFilters(data)));
+            return MapX.fromMap(filters).plusAll(extractMap(() -> Module.super.getFilters(data)));
 
         return Module.super.getFilters(data);
     }
@@ -180,7 +186,7 @@ public class ConfigurableModule implements Module {
     @Override
     public Map<String, Servlet> getServlets(ServerData data) {
         if (servlets != null)
-            return PersistentMapX.fromMap(servlets).plusAll(extractMap(() -> Module.super.getServlets(data)));
+            return MapX.fromMap(servlets).plusAll(extractMap(() -> Module.super.getServlets(data)));
 
         return Module.super.getServlets(data);
     }
@@ -208,7 +214,7 @@ public class ConfigurableModule implements Module {
     @Override
     public Set<Class<?>> getSpringConfigurationClasses() {
         if (this.springConfigurationClasses != null)
-            return PersistentSetX.fromIterable(concat(this.springConfigurationClasses, extract(() -> Module.super.getSpringConfigurationClasses())));
+            return SetX.fromIterable(concat(this.springConfigurationClasses, extract(() -> Module.super.getSpringConfigurationClasses())));
 
         return Module.super.getSpringConfigurationClasses();
     }
@@ -216,7 +222,7 @@ public class ConfigurableModule implements Module {
     @Override
     public Map<String, Object> getServerProperties() {
         if (serverProperties != null) {
-            return PersistentMapX.fromMap(serverProperties).plusAll(extractMap(() -> Module.super.getServerProperties()));
+            return MapX.fromMap(serverProperties).plusAll(extractMap(() -> Module.super.getServerProperties()));
         } else {
             return Module.super.getServerProperties();
         }

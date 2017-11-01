@@ -1,7 +1,7 @@
 description = 'micro-s3'
 
 dependencies {
-	compile ("com.aol.simplereact:cyclops-react:$cyclopsReactVersion")
+	compile ("com.oath.cyclops:cyclops:$cyclopsVersion")
 	compile 'com.amazonaws:aws-java-sdk:' + s3Version
 	compile project(':micro-core')
 	compile project(':micro-manifest-comparator')

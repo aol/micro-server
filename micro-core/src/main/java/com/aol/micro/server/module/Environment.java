@@ -2,43 +2,48 @@ package com.aol.micro.server.module;
 
 import java.net.InetAddress;
 import java.util.Collection;
-import java.util.HashMap;
+import cyclops.data.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+import com.oath.cyclops.types.persistent.PersistentMap;
 import cyclops.control.Try;
-import org.pcollections.HashTreePMap;
+import cyclops.data.tuple.Tuple;
+import cyclops.reactive.ReactiveSeq;
+
+import static cyclops.data.tuple.Tuple.tuple;
 
 
 public class Environment {
 
-	private volatile Map<String, ModuleBean> modulePort;
+	private volatile PersistentMap<String, ModuleBean> modulePort;
 	private final Properties properties;
 	private volatile int nextPort = 8080;
 
 	public Environment(Properties propertyFactory, Collection<ModuleBean> modules) {
-		modulePort = modules.stream().collect(Collectors.toMap(key -> key.getModule().getContext(), value -> value));
+
+		modulePort = HashMap.fromStream(modules.stream().map(m-> tuple(m.getModule().getContext(),m)));
 		this.properties = propertyFactory;
 	}
 
 	public Environment(Properties propertyFactory) {
-		modulePort = HashTreePMap.empty();
+		modulePort = HashMap.empty();
 		this.properties = propertyFactory;
 
 	}
 
 	public ModuleBean getModuleBean(Module module) {
-		return modulePort.get(module.getContext());
+		return modulePort.getOrElse(module.getContext(),null);
 	}
 
 	public void assureModule(Module module) {
 		if (!modulePort.containsKey(module.getContext())) {
-			Map<String, ModuleBean> builder = new HashMap<>();
-			builder.putAll(modulePort);
-			builder.put(module.getContext(), ModuleBean.builder().host(getHost(module)).port(getPort(module)).build());
-			modulePort = HashTreePMap.from(builder);
+			HashMap<String, ModuleBean> builder = HashMap.empty();
+			builder = builder.putAll(modulePort);
+			builder = builder.put(module.getContext(), ModuleBean.builder().host(getHost(module)).port(getPort(module)).build());
+			modulePort = builder;
 		}
 
 	}

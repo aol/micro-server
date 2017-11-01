@@ -1,6 +1,7 @@
 package com.aol.micro.server.spring;
 
 import java.util.Optional;
+import java.util.Set;
 
 
 import com.aol.micro.server.Plugin;
@@ -9,6 +10,7 @@ import com.aol.micro.server.spring.datasource.hibernate.HibernateConfig;
 import com.aol.micro.server.spring.datasource.hibernate.SpringDataConfig;
 import com.aol.micro.server.spring.datasource.jdbc.SQL;
 import cyclops.collections.immutable.PersistentSetX;
+import cyclops.collections.mutable.SetX;
 
 /**
  * 
@@ -27,8 +29,8 @@ public class HibernatePlugin implements Plugin {
 	}
 
 	@Override
-	public PersistentSetX<Class> springClasses() {
-		return PersistentSetX.of(JdbcConfig.class, SQL.class, SpringDataConfig.class, HibernateConfig.class);
+	public Set<Class> springClasses() {
+		return SetX.of(JdbcConfig.class, SQL.class, SpringDataConfig.class, HibernateConfig.class);
 	}
 
 	

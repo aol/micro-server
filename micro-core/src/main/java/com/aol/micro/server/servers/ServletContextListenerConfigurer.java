@@ -6,6 +6,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
+import com.oath.cyclops.types.persistent.PersistentList;
+import cyclops.collections.mutable.ListX;
 import lombok.AllArgsConstructor;
 
 import org.slf4j.Logger;
@@ -20,6 +22,13 @@ public class ServletContextListenerConfigurer {
 	private final ServerData serverData;
 	private final List<ServletContextListener> listenerData;
 	private final List<ServletRequestListener> listenerRequestData;
+
+	public ServletContextListenerConfigurer(ServerData serverData,
+                                            PersistentList<ServletContextListener> listenerData, PersistentList<ServletRequestListener> listenerRequestData) {
+		this.serverData = serverData;
+		this.listenerData = ListX.fromIterable(listenerData);
+		this.listenerRequestData = ListX.fromIterable(listenerRequestData);
+	}
 
 	public void addListeners(ServletContext webappContext) {
 	

@@ -41,7 +41,7 @@ public class MinimalClassTest {
 	@Test
 	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
 		
-		
+		Thread.sleep(500);
 		
 		assertThat(rest.get("http://localhost:8080/minimal-app/single/ping"),is("ok"));
 	

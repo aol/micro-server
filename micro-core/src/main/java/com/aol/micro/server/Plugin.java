@@ -22,6 +22,9 @@ import com.fasterxml.jackson.databind.Module;
 import cyclops.collections.immutable.PersistentMapX;
 import cyclops.collections.immutable.PersistentSetX;
 import cyclops.collections.immutable.LinkedListX;
+import cyclops.collections.mutable.ListX;
+import cyclops.collections.mutable.MapX;
+import cyclops.collections.mutable.SetX;
 
 /**
  * To implement a plugin for Microserver, implement this interface in your library and add the fully resolved class name to 
@@ -50,7 +53,7 @@ public interface Plugin {
 	 * @return Jackson feature properties
 	 */
 	default Function<FeatureContext, Map<String, Object>> jacksonFeatureProperties(){
-		return context->PersistentMapX.empty();
+		return context-> MapX.empty();
 	}
 	/**
 	 * @return jax-rs Application name
@@ -69,25 +72,25 @@ public interface Plugin {
 	 * @return Jackson modules for this plugin
 	 */
 	default Set<Module> jacksonModules(){
-		return PersistentSetX.empty();
+		return SetX.empty();
 	}
 	/**
 	 *  @return jax-rs Resources (Objects) for this plugin
 	 */
 	default Set<Object> jaxRsResourceObjects(){
-		return PersistentSetX.empty();
+		return SetX.empty();
 	}
 	/**
 	 * @return jax-rs Resources (Classes) for this plugin
 	 */
 	default Set<Class<?>> jaxRsResources(){
-		return PersistentSetX.empty();
+		return SetX.empty();
 	}
 	/**
 	 * @return  jax-rs Packages for this plugin
 	 */
 	default Set<String> jaxRsPackages(){
-		return  PersistentSetX.empty();
+		return  SetX.empty();
 	}
 	/**
 	 * @return Used for configuring Data Beans (or other Beans) directly into the ApplicationContext
@@ -99,43 +102,43 @@ public interface Plugin {
 	 * @return Spring configuration classes for this plugin
 	 */
 	default Set<Class> springClasses(){
-		return PersistentSetX.empty();
+		return SetX.empty();
 	}
 	/**
 	 * @return Servlet Context Listeners for this plugin
 	 */
 	default Set<Function<ServerData,ServletContextListener>> servletContextListeners(){
-		return PersistentSetX.empty();
+		return SetX.empty();
 	}
 	/**
 	 * @return Servlet Request Listeners for this plugin
 	 */
 	default Set<Function<ServerData,ServletRequestListener>> servletRequestListeners(){
-		return PersistentSetX.empty();
+		return SetX.empty();
 	}
 	/**
 	 * @return Filters for this plugin
 	 */
 	default Function<ServerData,Map<String,Filter>> filters(){
-		return serverData -> PersistentMapX.empty();
+		return serverData -> MapX.empty();
 	}
 	/**
 	 * @return Servlets for this plugin
 	 */
 	default Function<ServerData,Map<String,Servlet>> servlets(){
-		return serverData -> PersistentMapX.empty();
+		return serverData -> MapX.empty();
 	}
 	/**
 	 * @return jax-rs Providers for this plugin
 	 */
 	default List<String> providers(){
-		return LinkedListX.empty();
+		return ListX.empty();
 	}
 	
 	/**
 	 * @return Jersey server properties for this plugin
 	 */
 	default Map<String, Object> getServerProperties() {		
-		return PersistentMapX.empty();
+		return MapX.empty();
 	}
 }

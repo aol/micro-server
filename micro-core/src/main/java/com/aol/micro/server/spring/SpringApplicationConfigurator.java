@@ -3,7 +3,8 @@ package com.aol.micro.server.spring;
 import java.util.List;
 
 import cyclops.companion.Streams;
-import cyclops.stream.ReactiveSeq;
+import cyclops.data.tuple.Tuple2;
+import cyclops.reactive.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -31,8 +32,8 @@ public class SpringApplicationConfigurator implements SpringBuilder {
         ConfigurableListableBeanFactory beanFactory = ((ConfigurableApplicationContext) rootContext).getBeanFactory();
 
         config.getDataSources()
-              .keySet()
               .stream()
+                .map(Tuple2::_1)
               .filter(it -> !new ConfigAccessor().get()
                                                  .getDefaultDataSourceName()
                                                  .equals(it))

@@ -1,6 +1,6 @@
 package com.aol.micro.server.auto.discovery;
 
-import cyclops.control.Xor;
+import cyclops.control.Either;
 
 import javax.servlet.Filter;
 
@@ -9,7 +9,7 @@ import javax.servlet.Filter;
 public interface AutoFilterConfiguration extends Filter, FilterConfiguration{
 
 	@Override
-	default Xor<Class<? extends Filter>,Filter> getFilter(){
-		return Xor.primary(this);
+	default Either<Class<? extends Filter>,Filter> getFilter(){
+		return Either.right(this);
 	}
 }

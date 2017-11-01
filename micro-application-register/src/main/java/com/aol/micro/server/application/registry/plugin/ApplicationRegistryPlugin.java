@@ -11,12 +11,15 @@ import com.aol.micro.server.application.registry.RegisterConfig;
 import com.aol.micro.server.application.registry.ServiceRegistryResource;
 import com.aol.micro.server.application.registry.RegistryStatsChecker;
 import cyclops.collections.immutable.PersistentSetX;
+import cyclops.collections.mutable.SetX;
+
+import java.util.Set;
 
 public class ApplicationRegistryPlugin implements Plugin {
 
     @Override
-    public PersistentSetX<Class> springClasses() {
-        return PersistentSetX.of(ApplicationRegisterImpl.class, Cleaner.class, Register.class, ServiceRegistryResource.class,
+    public Set<Class> springClasses() {
+        return SetX.of(ApplicationRegisterImpl.class, Cleaner.class, Register.class, ServiceRegistryResource.class,
                         RegisterConfig.class, Job.class, Finder.class, RegistryHealthChecker.class, RegistryStatsChecker.class);
     }
 

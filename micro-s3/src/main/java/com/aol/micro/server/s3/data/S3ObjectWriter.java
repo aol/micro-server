@@ -124,7 +124,7 @@ public class S3ObjectWriter {
      */
     public Eval<UploadResult> putAsync(String key, Object value) {
         return Eval.later(() -> put(key, value))
-                   .map(t -> t.get())
+                   .map(t -> t.orElse(null))
                    .map(FluentFunctions.ofChecked(up -> up.waitForUploadResult()));
 
     }

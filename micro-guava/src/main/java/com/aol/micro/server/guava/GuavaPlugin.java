@@ -6,6 +6,9 @@ import com.aol.micro.server.guava.spring.GuavaConfig;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import cyclops.collections.immutable.PersistentSetX;
+import cyclops.collections.mutable.SetX;
+
+import java.util.Set;
 
 /**
  * 
@@ -19,12 +22,12 @@ import cyclops.collections.immutable.PersistentSetX;
 public class GuavaPlugin implements Plugin{
 	
 	@Override
-	public PersistentSetX<Class> springClasses() {
-		return PersistentSetX.of(GuavaConfig.class);
+	public Set<Class> springClasses() {
+		return SetX.of(GuavaConfig.class);
 	}
 	@Override
-	public PersistentSetX<Module> jacksonModules(){
-		return PersistentSetX.of(new GuavaModule());
+	public Set<Module> jacksonModules(){
+		return SetX.of(new GuavaModule());
 	}
 
 	
