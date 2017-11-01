@@ -93,8 +93,11 @@ public class MultiDataWriterTest {
     public void isOutOfDateReturnsTrueIfBothAreTrue() {
         dataWriter1.setOutofdate(true);
         dataWriter2.setOutofdate(true);
+
         boolean outofdate = writer.isOutOfDate()
                                 .orElse(null);
+
+
         assertThat(outofdate, equalTo(true));
     }
 
