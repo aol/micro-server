@@ -41,8 +41,8 @@ public class S3UploadSystemTest{
     private static File tmpDir;
     private static Random r;
     private static MetricRegistry metricsRegistry = SharedMetricRegistries.getOrCreate("default");
-    private final Histogram unencryptedHist = getHistogram("com.aol.micro.server.s3.test.latency.unencrypted");
-    private final Histogram aes256Hist = getHistogram("com.aol.micro.server.s3.test.latency.aes256");
+    private final Histogram unencryptedHist = getHistogram("com.oath.micro.server.s3.test.latency.unencrypted");
+    private final Histogram aes256Hist = getHistogram("com.oath.micro.server.s3.test.latency.aes256");
 
     static {
         nullableFile = createNullableFile();

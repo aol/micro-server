@@ -6,7 +6,7 @@ import com.oath.micro.server.config.Microserver;
 import com.oath.micro.server.module.EmbeddedModule;
 import cyclops.collections.immutable.LinkedListX;
 
-@Microserver(basePackages = {    "app.embedded.com.aol.micro.server" })
+@Microserver(basePackages = {    "app.embedded.com.oath.micro.server" })
 public class EmbeddedAppLocalMain {
 
 	

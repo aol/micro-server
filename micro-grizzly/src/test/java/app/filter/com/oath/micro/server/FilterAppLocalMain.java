@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.oath.micro.server.MicroserverApp;
 @Configuration
-@ComponentScan(basePackages = { "app.filter.com.aol.micro.server" })
+@ComponentScan(basePackages = { "app.filter.com.oath.micro.server" })
 public class FilterAppLocalMain {
 
 	

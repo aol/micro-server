@@ -19,7 +19,7 @@ public class ExceptionMapperPlugin implements Plugin{
 
 	@Override
 	public Set<String> jaxRsPackages() {
-		return SetX.of("com.aol.micro.server.general.exception.mapper");
+		return SetX.of("com.oath.micro.server.general.exception.mapper");
 		
 	}
 

@@ -25,7 +25,7 @@ import cyclops.collections.mutable.SetX;
 
 /**
  * To implement a plugin for Microserver, implement this interface in your library and add the fully resolved class name to 
- * META-INF/services/com.aol.micro.server.Plugin
+ * META-INF/services/com.oath.micro.server.Plugin
  * 
  * in your library
  * 

@@ -166,8 +166,8 @@ public interface Module {
                                        .join(",");
 
         if (StringUtils.isEmpty(additional))
-            return "com.aol.micro.server.rest.providers";
-        return "com.aol.micro.server.rest.providers," + additional;
+            return "com.oath.micro.server.rest.providers";
+        return "com.oath.micro.server.rest.providers," + additional;
     }
 
     public String getContext();

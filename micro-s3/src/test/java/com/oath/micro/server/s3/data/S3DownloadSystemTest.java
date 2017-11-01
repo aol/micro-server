@@ -44,7 +44,7 @@ public class S3DownloadSystemTest{
     private static File tmpDir;
     private static Random r;
     private static MetricRegistry metricsRegistry = SharedMetricRegistries.getOrCreate("default");
-    private final Histogram downloadHist = getHistogram("com.aol.micro.server.s3.test.latency.download");
+    private final Histogram downloadHist = getHistogram("com.oath.micro.server.s3.test.latency.download");
 
     static {
         manager = createManager();

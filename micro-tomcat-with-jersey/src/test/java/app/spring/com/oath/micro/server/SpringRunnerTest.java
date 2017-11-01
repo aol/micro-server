@@ -15,7 +15,7 @@ import com.oath.micro.server.MicroserverApp;
 import com.oath.micro.server.config.Microserver;
 import com.oath.micro.server.testing.RestAgent;
 /**@Configuration
-@ComponentScan(basePackages = { "app.spring.com.aol.micro.server" })**/
+@ComponentScan(basePackages = { "app.spring.com.oath.micro.server" })**/
 @Microserver
 public class SpringRunnerTest {
 

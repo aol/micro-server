@@ -32,7 +32,7 @@ public class JerseyRestApplicationTest {
 		public void testDefaultConstructor() {			
 			JerseyRestApplication app = new JerseyRestApplication();
 			assertTrue(app.isRegistered(ServletStatusResource.class));				
-			assertThat(	app.getApplication().getClasses().stream().map(c -> c.getName()).collect(Collectors.toSet()),hasItem("com.aol.micro.server.rest.jackson.JacksonFeature".intern()));
+			assertThat(	app.getApplication().getClasses().stream().map(c -> c.getName()).collect(Collectors.toSet()),hasItem("com.oath.micro.server.rest.jackson.JacksonFeature".intern()));
 			
 		}
 
@@ -41,7 +41,7 @@ public class JerseyRestApplicationTest {
 			JerseyRestApplication.getResourcesMap().clear();
 			ServerThreadLocalVariables.getContext().set(Thread.currentThread().getName());
 			JerseyRestApplication app = new JerseyRestApplication();
-			assertThat(app.getApplication().getClasses().stream().map(c -> c.getName()).collect(Collectors.toSet()),hasItem("com.aol.micro.server.rest.jackson.JacksonFeature"));
+			assertThat(app.getApplication().getClasses().stream().map(c -> c.getName()).collect(Collectors.toSet()),hasItem("com.oath.micro.server.rest.jackson.JacksonFeature"));
 			assertFalse(app.isRegistered(ServletStatusResource.class));
 			
 		}

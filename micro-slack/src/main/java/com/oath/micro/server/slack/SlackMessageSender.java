@@ -34,7 +34,7 @@ public class SlackMessageSender {
 
             //add request header
             con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", "com.aol.micro.server");
+            con.setRequestProperty("User-Agent", "com.oath.micro.server");
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
     

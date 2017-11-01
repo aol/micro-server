@@ -16,7 +16,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.oath.micro.server.s3.S3Configuration;
 
 @Configuration
-@ComponentScan(basePackages = {"com.aol.micro.server.s3"})
+@ComponentScan(basePackages = {"com.oath.micro.server.s3"})
 public class S3ClientProvider {
 
     @Autowired

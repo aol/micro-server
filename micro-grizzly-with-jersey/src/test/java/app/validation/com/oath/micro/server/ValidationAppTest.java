@@ -14,7 +14,7 @@ import org.junit.Test;
 import com.oath.micro.server.MicroserverApp;
 import com.oath.micro.server.testing.RestAgent;
 
-//@Microserver(basePackages = { "app.guava.com.aol.micro.server" })
+//@Microserver(basePackages = { "app.guava.com.oath.micro.server" })
 public class ValidationAppTest {
 
 	RestAgent rest = new RestAgent();

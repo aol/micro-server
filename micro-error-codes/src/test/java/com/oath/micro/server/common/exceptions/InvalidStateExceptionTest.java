@@ -11,7 +11,7 @@ import com.oath.micro.server.health.ErrorEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
-import app.errors.com.aol.micro.server.Errors;
+import app.errors.com.oath.micro.server.Errors;
 
 public class InvalidStateExceptionTest {
 
