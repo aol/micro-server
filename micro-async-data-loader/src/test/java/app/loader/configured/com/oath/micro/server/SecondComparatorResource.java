@@ -1,4 +1,4 @@
-package app.loader.configured.com.aol.micro.server;
+package app.loader.configured.com.oath.micro.server;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

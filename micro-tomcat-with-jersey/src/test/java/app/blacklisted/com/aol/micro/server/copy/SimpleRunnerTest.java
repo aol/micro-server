@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
-import nonautoscan.com.aol.micro.server.ScheduleAndAsyncConfig;
+import nonautoscan.com.oath.micro.server.ScheduleAndAsyncConfig;
 
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.junit.After;

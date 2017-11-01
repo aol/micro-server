@@ -47,7 +47,7 @@ public class JobsBeingExecuted {
              bus, 10, JobName.Types.SIMPLE);
     }
 
-    @Around("execution(* com.aol.micro.server.events.ScheduledJob.scheduleAndLog(..))")
+    @Around("execution(* com.oath.micro.server.events.ScheduledJob.scheduleAndLog(..))")
     public Object aroundScheduledJob(ProceedingJoinPoint pjp) throws Throwable {
 
         String type = jobNameType.getCreator()

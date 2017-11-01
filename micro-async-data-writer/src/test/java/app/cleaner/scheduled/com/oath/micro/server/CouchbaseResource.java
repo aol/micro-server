@@ -1,4 +1,4 @@
-package app.cleaner.scheduled.com.aol.micro.server;
+package app.cleaner.scheduled.com.oath.micro.server;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

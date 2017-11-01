@@ -1,4 +1,4 @@
-package app.boot.embedded.com.aol.micro.server;
+package app.boot.embedded.com.oath.micro.server;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

@@ -1,4 +1,4 @@
-package app.boot.embedded.com.aol.micro.server;
+package app.boot.embedded.com.oath.micro.server;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -1,4 +1,4 @@
-package app.loader.configured.com.aol.micro.server;
+package app.loader.configured.com.oath.micro.server;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;

@@ -9,7 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import nonautoscan.com.aol.micro.server.ScheduleAndAsyncConfig;
+import nonautoscan.com.oath.micro.server.ScheduleAndAsyncConfig;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
