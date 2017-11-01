@@ -1,4 +1,4 @@
-package app.loader.scheduled.com.aol.micro.server;
+package app.loader.scheduled.com.oath.micro.server;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
