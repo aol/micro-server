@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.aol.micro.server.dist.lock.DistributedLockManager;
-import com.aol.micro.server.dist.lock.DistributedLockService;
+import com.oath.micro.server.dist.lock.DistributedLockManager;
+import com.oath.micro.server.dist.lock.DistributedLockService;
 
 @Configuration
 public class ConfigureDistLock {

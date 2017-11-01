@@ -2,10 +2,10 @@ package app.boot.embedded.com.aol.micro.server;
 
 import java.util.Arrays;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.boot.config.Microboot;
-import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.module.EmbeddedModule;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.boot.config.Microboot;
+import com.oath.micro.server.config.Microserver;
+import com.oath.micro.server.module.EmbeddedModule;
 
 @Microserver @Microboot//(basePackages = {    "app.boot.embedded.com.aol.micro.server" })
 public class EmbeddedAppLocalMain {

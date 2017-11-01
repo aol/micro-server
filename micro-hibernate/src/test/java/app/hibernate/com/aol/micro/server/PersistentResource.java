@@ -13,7 +13,7 @@ import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.auto.discovery.RestResource;
+import com.oath.micro.server.auto.discovery.RestResource;
 
 @Component
 @Path("/persistence")

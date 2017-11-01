@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.testing.RestAgent;
 
 @Ignore
 public class S3RunnerTest {

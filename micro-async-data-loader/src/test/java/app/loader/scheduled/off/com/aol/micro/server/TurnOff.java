@@ -2,7 +2,7 @@ package app.loader.scheduled.off.com.aol.micro.server;
 
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.async.data.loader.ConditionallyLoad;
+import com.oath.micro.server.async.data.loader.ConditionallyLoad;
 
 @Component
 public class TurnOff implements ConditionallyLoad {

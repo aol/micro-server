@@ -10,8 +10,8 @@ import cyclops.collections.mutable.MapX;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.events.RequestEvents;
+import com.oath.micro.server.auto.discovery.RestResource;
+import com.oath.micro.server.events.RequestEvents;
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.eventbus.EventBus;
 

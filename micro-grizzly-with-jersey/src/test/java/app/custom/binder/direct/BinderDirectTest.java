@@ -12,11 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.module.ConfigurableModule;
-import com.aol.micro.server.module.Module;
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.config.Microserver;
+import com.oath.micro.server.module.ConfigurableModule;
+import com.oath.micro.server.testing.RestAgent;
 
 @Microserver
 public class BinderDirectTest {

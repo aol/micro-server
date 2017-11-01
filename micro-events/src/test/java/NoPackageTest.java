@@ -3,8 +3,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-import com.aol.micro.server.events.JobName;
-import com.aol.micro.server.events.JobName.Types;
+import com.oath.micro.server.events.JobName;
+import com.oath.micro.server.events.JobName.Types;
 
 public class NoPackageTest {
     JobName one = Types.PACKAGE.getCreator();

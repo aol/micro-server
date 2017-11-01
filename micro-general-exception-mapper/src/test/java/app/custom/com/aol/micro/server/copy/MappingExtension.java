@@ -8,7 +8,7 @@ import cyclops.data.tuple.Tuple;
 import cyclops.data.tuple.Tuple2;
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.general.exception.mapper.ExtensionMapOfExceptionsToErrorCodes;
+import com.oath.micro.server.general.exception.mapper.ExtensionMapOfExceptionsToErrorCodes;
 
 @Component
 public class MappingExtension implements ExtensionMapOfExceptionsToErrorCodes {

@@ -11,11 +11,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import app.guava.com.aol.micro.server.ImmutableGuavaEntity;
+import app.guava.com.oath.micro.server.ImmutableGuavaEntity;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.config.Microserver;
+import com.oath.micro.server.testing.RestAgent;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;

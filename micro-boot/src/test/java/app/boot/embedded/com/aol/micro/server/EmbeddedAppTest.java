@@ -17,9 +17,9 @@ import org.junit.Test;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.module.EmbeddedModule;
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.module.EmbeddedModule;
+import com.oath.micro.server.testing.RestAgent;
 import com.google.common.collect.ImmutableList;
 
 public class EmbeddedAppTest {

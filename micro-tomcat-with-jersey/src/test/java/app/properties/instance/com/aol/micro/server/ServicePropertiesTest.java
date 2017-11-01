@@ -14,10 +14,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.config.Microserver;
+import com.oath.micro.server.testing.RestAgent;
 
 @Rest
 @Path("/single")

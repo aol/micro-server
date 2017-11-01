@@ -8,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.WebApplicationContext;
 
-import com.aol.micro.server.auto.discovery.RestResource;
+import com.oath.micro.server.auto.discovery.RestResource;
 
 @Component
 @Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE)

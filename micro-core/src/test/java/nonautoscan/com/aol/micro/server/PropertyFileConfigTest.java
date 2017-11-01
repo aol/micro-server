@@ -7,8 +7,8 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.config.Config;
-import com.aol.micro.server.spring.properties.PropertyFileConfig;
+import com.oath.micro.server.config.Config;
+import com.oath.micro.server.spring.properties.PropertyFileConfig;
 public class PropertyFileConfigTest {
 
 	

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.auto.discovery.AutoServletConfiguration;
+import com.oath.micro.server.auto.discovery.AutoServletConfiguration;
 
 @Component
 public class AutodiscoveredServlet extends HttpServlet implements AutoServletConfiguration {

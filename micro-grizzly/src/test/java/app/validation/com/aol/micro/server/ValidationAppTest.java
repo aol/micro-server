@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.testing.RestAgent;
 
 //@Microserver(basePackages = { "app.guava.com.aol.micro.server" })
 public class ValidationAppTest {

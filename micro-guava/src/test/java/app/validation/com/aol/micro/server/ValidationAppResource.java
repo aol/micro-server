@@ -7,9 +7,9 @@ import javax.ws.rs.Produces;
 
 import org.springframework.stereotype.Component;
 
-import app.guava.com.aol.micro.server.ImmutableGuavaEntity;
+import app.guava.com.oath.micro.server.ImmutableGuavaEntity;
 
-import com.aol.micro.server.auto.discovery.RestResource;
+import com.oath.micro.server.auto.discovery.RestResource;
 @Component
 @Path("/status")
 public class ValidationAppResource implements RestResource {

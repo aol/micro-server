@@ -2,7 +2,7 @@ package app.jackson.custom.com.aol.micro.server;
 
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.jackson.JacksonMapperConfigurator;
+import com.oath.micro.server.jackson.JacksonMapperConfigurator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

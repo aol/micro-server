@@ -5,9 +5,9 @@ import javax.ws.rs.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.curator.lock.CuratorDistributedLockServiceProvider;
-import com.aol.micro.server.dist.lock.DistributedLockService;
+import com.oath.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.curator.lock.CuratorDistributedLockServiceProvider;
+import com.oath.micro.server.dist.lock.DistributedLockService;
 
 @Rest(isSingleton=true)
 @Path("/status")

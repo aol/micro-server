@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.MicroserverApp;
+import com.oath.micro.server.MicroserverApp;
 
 @Configuration
 @ComponentScan(basePackages = { "app.simple.com.aol.micro.server" })

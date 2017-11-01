@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.rest.client.nio.AsyncRestClient;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.rest.client.nio.AsyncRestClient;
 
 public class SimpleAppTest {
 

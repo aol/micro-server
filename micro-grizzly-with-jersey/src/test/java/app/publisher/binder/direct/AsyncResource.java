@@ -1,6 +1,6 @@
 package app.publisher.binder.direct;
 
-import com.aol.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.auto.discovery.Rest;
 import cyclops.async.Future;
 import cyclops.reactive.ReactiveSeq;
 import cyclops.reactive.Spouts;

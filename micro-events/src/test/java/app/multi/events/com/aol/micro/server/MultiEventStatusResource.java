@@ -7,8 +7,8 @@ import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.events.RequestEvents;
+import com.oath.micro.server.auto.discovery.RestResource;
+import com.oath.micro.server.events.RequestEvents;
 import com.google.common.eventbus.EventBus;
 
 @Component

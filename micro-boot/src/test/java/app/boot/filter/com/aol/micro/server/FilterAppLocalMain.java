@@ -3,7 +3,7 @@ package app.boot.filter.com.aol.micro.server;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import com.aol.micro.server.MicroserverApp;
+import com.oath.micro.server.MicroserverApp;
 @Configuration
 @ComponentScan(basePackages = { "app.filter.com.aol.micro.server" })
 public class FilterAppLocalMain {

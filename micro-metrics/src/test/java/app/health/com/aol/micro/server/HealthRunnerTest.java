@@ -13,9 +13,9 @@ import org.junit.Test;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.spring.metrics.CodahaleMetricsConfigurer;
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.spring.metrics.CodahaleMetricsConfigurer;
+import com.oath.micro.server.testing.RestAgent;
 
 import app.metrics.com.aol.micro.server.TestReporter;
 

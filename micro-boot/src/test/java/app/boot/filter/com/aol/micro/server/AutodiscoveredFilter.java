@@ -10,7 +10,7 @@ import javax.servlet.ServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.auto.discovery.AutoFilterConfiguration;
+import com.oath.micro.server.auto.discovery.AutoFilterConfiguration;
 
 import lombok.Getter;
 

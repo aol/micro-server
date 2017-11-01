@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.aol.micro.server.log.LogLookup;
+import com.oath.micro.server.log.LogLookup;
 
 @Component
 public class CustomAlias implements LogLookup {

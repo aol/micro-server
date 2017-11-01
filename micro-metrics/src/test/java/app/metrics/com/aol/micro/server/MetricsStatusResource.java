@@ -7,9 +7,7 @@ import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import app.metrics.com.aol.micro.server.TimedResource;
-
-import com.aol.micro.server.auto.discovery.RestResource;
+import com.oath.micro.server.auto.discovery.RestResource;
 
 @Component
 @Path("/metrics")

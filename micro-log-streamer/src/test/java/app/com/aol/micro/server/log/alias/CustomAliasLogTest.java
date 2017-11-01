@@ -7,19 +7,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.reactive.rest.ReactiveRequest;
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.auto.discovery.RestResource;
+import com.oath.micro.server.config.Microserver;
+import com.oath.micro.server.reactive.rest.ReactiveRequest;
+import com.oath.micro.server.testing.RestAgent;
 
 @Microserver(properties = { "log.tailer.file.location", "/tmp/tailer-test-file" })
 public class CustomAliasLogTest implements RestResource {

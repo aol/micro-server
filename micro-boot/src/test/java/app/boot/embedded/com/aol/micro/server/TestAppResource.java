@@ -8,7 +8,7 @@ import cyclops.async.SimpleReact;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import com.aol.micro.server.rest.client.nio.NIORestClient;
+import com.oath.micro.server.rest.client.nio.NIORestClient;
 import com.google.common.collect.ImmutableList;
 //@Component
 @TestAppRestResource

@@ -6,7 +6,7 @@ import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.auto.discovery.Rest;
 
 @Rest
 @Path("/persistence")

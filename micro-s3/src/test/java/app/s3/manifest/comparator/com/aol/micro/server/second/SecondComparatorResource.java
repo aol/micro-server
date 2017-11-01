@@ -5,8 +5,8 @@ import javax.ws.rs.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.manifest.ManifestComparator;
+import com.oath.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.manifest.ManifestComparator;
 
 @Path("/comparator2")
 @Rest

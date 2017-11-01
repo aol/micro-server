@@ -7,11 +7,9 @@ import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
-import app.jdbc.transaction.com.aol.micro.server.JdbcEntity;
-
-import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.spring.datasource.jdbc.SQL;
-import com.aol.micro.server.transactions.TransactionFlow;
+import com.oath.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.spring.datasource.jdbc.SQL;
+import com.oath.micro.server.transactions.TransactionFlow;
 
 @Rest
 @Path("/persistence")

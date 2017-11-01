@@ -1,11 +1,6 @@
 package app.blacklisted.com.aol.micro.server.copy;
 
-import java.util.Arrays;
-
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
-
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.module.ConfigurableModule;
+import com.oath.micro.server.MicroserverApp;
 
 public class SimpleApp {
 

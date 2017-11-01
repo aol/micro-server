@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.aol.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.auto.discovery.Rest;
 
 @Rest
 @Retention(RetentionPolicy.RUNTIME)

@@ -12,11 +12,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.module.ConfigurableModule;
-import com.aol.micro.server.rest.jackson.JacksonUtil;
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.config.Microserver;
+import com.oath.micro.server.module.ConfigurableModule;
+import com.oath.micro.server.rest.jackson.JacksonUtil;
+import com.oath.micro.server.testing.RestAgent;
 
 @Microserver(properties = { "couchbaseServers", "http://localhost:8091/pools", "couchbasePassword", "",
         "couchbaseBucket", "beer-sample", "async.data.schedular.cron.loader", "* * * * * ?",

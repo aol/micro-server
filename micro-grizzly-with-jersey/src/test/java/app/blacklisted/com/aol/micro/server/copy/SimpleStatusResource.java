@@ -18,7 +18,7 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
-import com.aol.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.auto.discovery.Rest;
 
 @Rest
 @Path("/status")

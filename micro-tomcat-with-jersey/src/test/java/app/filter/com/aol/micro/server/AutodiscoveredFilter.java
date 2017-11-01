@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-import com.aol.micro.server.auto.discovery.AutoFilterConfiguration;
+import com.oath.micro.server.auto.discovery.AutoFilterConfiguration;
 
 import lombok.Getter;
 import lombok.Setter;

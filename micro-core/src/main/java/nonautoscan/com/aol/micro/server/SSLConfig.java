@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
-import com.aol.micro.server.config.SSLProperties;
+import com.oath.micro.server.config.SSLProperties;
 
 @Configuration
 public class SSLConfig {

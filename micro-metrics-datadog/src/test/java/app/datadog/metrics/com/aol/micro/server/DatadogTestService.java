@@ -1,7 +1,7 @@
 package app.datadog.metrics.com.aol.micro.server;
 
-import com.aol.micro.server.errors.ErrorCode;
-import com.aol.micro.server.errors.InvalidStateException;
+import com.oath.micro.server.errors.ErrorCode;
+import com.oath.micro.server.errors.InvalidStateException;
 import org.springframework.stereotype.Component;
 
 @Component

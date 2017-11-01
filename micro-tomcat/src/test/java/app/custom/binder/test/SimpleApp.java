@@ -7,9 +7,9 @@ import javax.ws.rs.Path;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.module.ConfigurableModule;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.module.ConfigurableModule;
 
 
 
