@@ -1,74 +1,74 @@
 description = 'micro-async-data-writer'
+
 repositories {
-	
-	maven { url "https://jitpack.io" }
+  maven { url "https://jitpack.io" }
 }
 
 dependencies {
-	compile ("com.oath.cyclops:cyclops:$cyclopsVersion")
-	compile project(':micro-events')
-	compile project(':micro-manifest-comparator')
-	testCompile project(':micro-grizzly-with-jersey')
-	testCompile project(':micro-couchbase')
-	testCompile  'com.github.johnmcclean-aol:couchbasemock:master'
+  compile("com.oath.cyclops:cyclops:$cyclopsVersion")
+  compile project(':micro-events')
+  compile project(':micro-manifest-comparator')
+  testCompile project(':micro-grizzly-with-jersey')
+  testCompile project(':micro-couchbase')
+  testCompile 'com.github.johnmcclean-aol:couchbasemock:master'
 }
 
 modifyPom {
-	project {
-		name 'Microserver async data writing'
-		description 'Plugin for writing and cleaning data asyncrhonously via a micro-manifest-comparator implementation'
-		url 'https://github.com/aol/micro-server'
-		inceptionYear '2016'
+  project {
+    name 'Microserver async data writing'
+    description 'Plugin for writing and cleaning data asyncrhonously via a micro-manifest-comparator implementation'
+    url 'https://github.com/aol/micro-server'
+    inceptionYear '2016'
 
-		groupId 'com.aol.microservices'
-		artifactId 'micro-async-data-writer'
-		version "$version" 
-		
-		
-		scm {
-			url 'scm:git@github.com:aol/micro-server.git'
-			connection 'scm:git@github.com:aol/micro-server.git'
-			developerConnection 'scm:git@github.com:aol/micro-server.git'
-		}
+    groupId 'com.aol.microservices'
+    artifactId 'micro-async-data-writer'
+    version "$version"
 
-		licenses {
-			license {
-				name 'The Apache Software License, Version 2.0'
-				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-				distribution 'repo'
-			}
-		}
 
-		developers {
-                        developer {
-                                id 'johnmcclean-aol'
-                                name 'John McClean'
-                                email 'john.mcclean@teamaol.com'
-                        }
-                        developer {
-                                id 'kewangie'
-                                name 'Ke Wang'
-                                email 'ke.wang@teamaol.com'
-                        }
-                        developer {
-                                id 'earlzero'
-                                name 'Nikita Sapozhnikov'
-                                email 'nikita.sapozhnikov@teamaol.com'
-                        }
-		}
-		
-	}
+    scm {
+      url 'scm:git@github.com:aol/micro-server.git'
+      connection 'scm:git@github.com:aol/micro-server.git'
+      developerConnection 'scm:git@github.com:aol/micro-server.git'
+    }
+
+    licenses {
+      license {
+        name 'The Apache Software License, Version 2.0'
+        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        distribution 'repo'
+      }
+    }
+
+    developers {
+      developer {
+        id 'johnmcclean-aol'
+        name 'John McClean'
+        email 'john.mcclean@teamaol.com'
+      }
+      developer {
+        id 'kewangie'
+        name 'Ke Wang'
+        email 'ke.wang@teamaol.com'
+      }
+      developer {
+        id 'earlzero'
+        name 'Nikita Sapozhnikov'
+        email 'nikita.sapozhnikov@teamaol.com'
+      }
+    }
+
+  }
 }
 
 extraArchive {
-	sources = true
-	tests = true
-	javadoc = true
+  sources = true
+  tests = true
+  javadoc = true
 }
 
 nexus {
-	sign = true
-	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+  sign = true
+  repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+  snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
 }
 

@@ -30,7 +30,7 @@ modifyPom {
     groupId 'com.aol.microservices'
     artifactId 'micro-jersey'
     version "$version"
-    
+
     scm {
       url 'scm:git@github.com:aol/micro-server.git'
       connection 'scm:git@github.com:aol/micro-server.git'
