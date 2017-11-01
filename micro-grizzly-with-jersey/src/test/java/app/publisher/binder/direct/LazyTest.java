@@ -1,7 +1,7 @@
 package app.publisher.binder.direct;
 
 import cyclops.collections.mutable.ListX;
-import cyclops.stream.ReactiveSeq;
+import cyclops.reactive.ReactiveSeq;
 import org.junit.Test;
 
 import java.util.List;

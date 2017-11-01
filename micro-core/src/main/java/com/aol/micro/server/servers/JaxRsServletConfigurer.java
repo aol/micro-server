@@ -12,7 +12,7 @@ import com.aol.micro.server.module.IncorrectJaxRsPluginsException;
 import com.aol.micro.server.rest.RestConfiguration;
 import com.aol.micro.server.servers.model.ServerData;
 import cyclops.companion.Streams;
-import cyclops.stream.ReactiveSeq;
+import cyclops.reactive.ReactiveSeq;
 
 public class JaxRsServletConfigurer {
     public void addServlet(ServerData serverData, ServletContext webappContext) {

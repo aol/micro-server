@@ -1,5 +1,6 @@
 package com.aol.micro.server.spring;
 
+import java.util.Arrays;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -48,13 +49,13 @@ public class HibernateSpringConfigurer implements SpringDBConfig {
 	}
 
 	private HibernateTransactionManager buildTransactionManager(String name, Config config, DataSource dataSource, JdbcConfig jdbc) {
-		return HibernateSessionBuilder.builder().packages(config.getDataSources().get(name)).dataSource(dataSource).env(jdbc).build()
+		return HibernateSessionBuilder.builder().packages(config.getDataSources().getOrElse(name, Arrays.asList())).dataSource(dataSource).env(jdbc).build()
 				.transactionManager();
 	}
 
 	private SessionFactory buildSession(String name, Config config, DataSource dataSource, JdbcConfig jdbc) {
 
-		return HibernateSessionBuilder.builder().packages(config.getDataSources().get(name)).dataSource(dataSource).env(jdbc).build()
+		return HibernateSessionBuilder.builder().packages(config.getDataSources().getOrElse(name,Arrays.asList())).dataSource(dataSource).env(jdbc).build()
 				.sessionFactory();
 	}
 }

@@ -8,6 +8,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import cyclops.async.Future;
+import cyclops.control.Option;
+import cyclops.control.Try;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,7 +48,7 @@ public class AsyncDataWriterTest {
         dummyMc.setData("hello world");
         Future<String> res = writer.loadAndGet();
 
-        assertThat(res.get(), equalTo("hello world"));
+        assertThat(res.get(), equalTo(Try.success("hello world")));
         assertThat(dummyMc.loadCalled.get(), equalTo(1));
         assertThat(eventRecieved.get(), equalTo(1));
     }
@@ -56,7 +58,7 @@ public class AsyncDataWriterTest {
         assertThat(eventRecieved.get(), equalTo(0));
         writer.saveAndIncrement("boo!");
         Future<String> res = writer.loadAndGet();
-        assertThat(res.get(), equalTo("boo!"));
+        assertThat(res.get(), equalTo(Try.success("boo!")));
         assertThat(eventRecieved.get(), equalTo(2));
     }
 

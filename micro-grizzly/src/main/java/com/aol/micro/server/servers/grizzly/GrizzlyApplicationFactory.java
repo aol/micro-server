@@ -2,9 +2,10 @@ package com.aol.micro.server.servers.grizzly;
 
 import java.util.List;
 
+import com.oath.cyclops.types.persistent.PersistentList;
 import lombok.AllArgsConstructor;
 
-import org.pcollections.PStack;
+
 import org.springframework.context.ApplicationContext;
 
 import com.aol.micro.server.module.Environment;
@@ -25,7 +26,7 @@ public class GrizzlyApplicationFactory implements ServerApplicationFactory {
 	
 	public ServerApplication createApp(final  Module module, final ApplicationContext rootContext) {
 		 ModuleDataExtractor extractor = new ModuleDataExtractor(module);
-		PStack resources = extractor.getRestResources(rootContext);
+		PersistentList resources = extractor.getRestResources(rootContext);
 
 		Environment environment = rootContext.getBean(Environment.class);
 

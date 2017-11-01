@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
-import com.aol.cyclops2.types.futurestream.SimpleReactStream;
+import com.oath.cyclops.types.futurestream.SimpleReactStream;
 import cyclops.async.SimpleReact;
 import org.junit.After;
 import org.junit.Before;

@@ -3,6 +3,9 @@ package com.aol.micro.server.event.metrics;
 
 import com.aol.micro.server.Plugin;
 import cyclops.collections.immutable.PersistentSetX;
+import cyclops.collections.mutable.SetX;
+
+import java.util.Set;
 
 
 /**
@@ -17,8 +20,8 @@ import cyclops.collections.immutable.PersistentSetX;
 public class MetricEventsPlugin implements Plugin{
 	
 	@Override
-	public PersistentSetX<Class> springClasses() {
-		return PersistentSetX.of(
+	public Set<Class> springClasses() {
+		return SetX.of(
 				Configuration.class,
 				MetricsCatcher.class);
 	}

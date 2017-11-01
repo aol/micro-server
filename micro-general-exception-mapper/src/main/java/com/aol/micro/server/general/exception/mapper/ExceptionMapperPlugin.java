@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.aol.micro.server.Plugin;
 import cyclops.collections.immutable.PersistentSetX;
+import cyclops.collections.mutable.SetX;
 
 /**
  * 
@@ -19,14 +20,14 @@ import cyclops.collections.immutable.PersistentSetX;
 public class ExceptionMapperPlugin implements Plugin{
 
 	@Override
-	public PersistentSetX<String> jaxRsPackages() {
-		return PersistentSetX.of("com.aol.micro.server.general.exception.mapper");
+	public Set<String> jaxRsPackages() {
+		return SetX.of("com.aol.micro.server.general.exception.mapper");
 		
 	}
 
 	@Override
-	public PersistentSetX<Class> springClasses() {
-		return PersistentSetX.of(MapOfExceptionsToErrorCodes.class);
+	public Set<Class> springClasses() {
+		return SetX.of(MapOfExceptionsToErrorCodes.class);
 	}
 	
 	

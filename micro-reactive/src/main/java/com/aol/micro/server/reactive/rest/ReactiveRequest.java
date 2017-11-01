@@ -10,7 +10,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import cyclops.stream.ReactiveSeq;
+import cyclops.reactive.ReactiveSeq;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 

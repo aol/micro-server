@@ -14,6 +14,7 @@ import com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON;
 import com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider;
 import com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider;
 import cyclops.collections.immutable.PersistentSetX;
+import cyclops.collections.mutable.SetX;
 import cyclops.function.Lambda;
 
 /**
@@ -28,25 +29,25 @@ import cyclops.function.Lambda;
 public class SwaggerPlugin implements Plugin{
 	
 	@Override
-	public PersistentSetX<Class> springClasses() {
-		return PersistentSetX.empty();
+	public Set<Class> springClasses() {
+		return SetX.empty();
 	}
 
 	@Override
-	public PersistentSetX<Function<ServerData,ServletContextListener>> servletContextListeners(){
-		return PersistentSetX.of(Lambda.l1(serverData -> new SwaggerInitializer(serverData)));
+	public Set<Function<ServerData,ServletContextListener>> servletContextListeners(){
+		return SetX.of(Lambda.l1(serverData -> new SwaggerInitializer(serverData)));
 		
 	}
 
 	@Override
-	public PersistentSetX<Class<?>> jaxRsResources() {
-		return PersistentSetX.of(ApiListingResourceJSON.class,JerseyApiDeclarationProvider.class,
+	public Set<Class<?>> jaxRsResources() {
+		return SetX.of(ApiListingResourceJSON.class,JerseyApiDeclarationProvider.class,
 				JerseyResourceListingProvider.class);
 	}
 
 	@Override
-	public PersistentSetX<String> jaxRsPackages() {
-		return PersistentSetX.of("com.wordnik.swagger.sample.resource",
+	public Set<String> jaxRsPackages() {
+		return SetX.of("com.wordnik.swagger.sample.resource",
 				"com.wordnik.swagger.sample.util"	);
 	}
 }

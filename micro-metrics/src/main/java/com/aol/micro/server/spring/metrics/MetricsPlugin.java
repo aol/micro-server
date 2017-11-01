@@ -5,6 +5,9 @@ import com.aol.micro.server.Plugin;
 import com.aol.micro.server.spring.metrics.health.HealthCheckRunner;
 import com.aol.micro.server.spring.metrics.health.HealthResource;
 import cyclops.collections.immutable.PersistentSetX;
+import cyclops.collections.mutable.SetX;
+
+import java.util.Set;
 
 /**
  * 
@@ -18,8 +21,8 @@ import cyclops.collections.immutable.PersistentSetX;
 public class MetricsPlugin implements Plugin {
 
     @Override
-    public PersistentSetX<Class> springClasses() {
-        return PersistentSetX.of(CodahaleMetricsConfigurer.class, HealthCheckRunner.class, HealthResource.class);
+    public Set<Class> springClasses() {
+        return SetX.of(CodahaleMetricsConfigurer.class, HealthCheckRunner.class, HealthResource.class);
     }
 
 }

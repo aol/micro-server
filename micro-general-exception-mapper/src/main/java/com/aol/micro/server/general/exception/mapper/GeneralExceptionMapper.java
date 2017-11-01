@@ -1,7 +1,7 @@
 package com.aol.micro.server.general.exception.mapper;
 
 
-import static org.jooq.lambda.tuple.Tuple.tuple;
+
 
 import java.util.Map;
 import java.util.Optional;
@@ -13,10 +13,12 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import org.jooq.lambda.tuple.Tuple;
-import org.jooq.lambda.tuple.Tuple2;
+import cyclops.data.tuple.Tuple;
+import cyclops.data.tuple.Tuple2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static cyclops.data.tuple.Tuple.tuple;
 
 @Provider
 public class GeneralExceptionMapper implements ExceptionMapper<Exception> {
@@ -61,12 +63,12 @@ public class GeneralExceptionMapper implements ExceptionMapper<Exception> {
 				error = tuple(rsEx.getResponse().getStatusInfo().getReasonPhrase(),Status.fromStatusCode(rsEx.getResponse().getStatus()));
 				
 			}
-			logger.error( String.format("%s Error id: %s", error.v1(), errorTrackingId) + ex.getMessage(), ex);
+			logger.error( String.format("%s Error id: %s", error._1(), errorTrackingId) + ex.getMessage(), ex);
 		}
-		logger.warn( String.format("%s Error id: %s", error.v1(), errorTrackingId));
+		logger.warn( String.format("%s Error id: %s", error._1(), errorTrackingId));
 
-		return Response.status(error.v2())
-				.entity(new ExceptionWrapper(error.v1(), String.format("Error id: %s %s", errorTrackingId, ex.getMessage())))
+		return Response.status(error._2())
+				.entity(new ExceptionWrapper(error._1(), String.format("Error id: %s %s", errorTrackingId, ex.getMessage())))
 				.type(MediaType.APPLICATION_JSON_TYPE).build();
 	}
 }

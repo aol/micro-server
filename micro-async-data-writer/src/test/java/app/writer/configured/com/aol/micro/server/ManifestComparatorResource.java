@@ -33,15 +33,16 @@ public class ManifestComparatorResource {
     public String get() {
 
         return comparator.loadAndGet()
-                         .get();
+                         .visit(s->s,e->"Error loading " + e.getMessage());
 
     }
+
 
     @GET
     @Path("/check")
     public String check() {
         return "" + !comparator.isOutOfDate()
-                               .get();
+                               .getOrElse(null);
 
     }
 }

@@ -11,8 +11,8 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
-import com.aol.cyclops2.util.ExceptionSoftener;
-import cyclops.stream.ReactiveSeq;
+import com.oath.cyclops.util.ExceptionSoftener;
+import cyclops.reactive.ReactiveSeq;
 import org.reactivestreams.Publisher;
 
 

@@ -1,8 +1,8 @@
 package com.aol.micro.server.rest.jersey;
 
-import com.aol.cyclops2.types.mixins.Printable;
-import cyclops.stream.ReactiveSeq;
-import cyclops.stream.Spouts;
+import com.oath.cyclops.types.mixins.Printable;
+import cyclops.reactive.ReactiveSeq;
+import cyclops.reactive.Spouts;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.glassfish.hk2.api.ServiceHandle;

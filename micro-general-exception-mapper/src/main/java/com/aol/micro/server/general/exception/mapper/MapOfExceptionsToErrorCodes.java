@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import javax.ws.rs.core.Response.Status;
 
-import org.jooq.lambda.tuple.Tuple2;
+import cyclops.data.tuple.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

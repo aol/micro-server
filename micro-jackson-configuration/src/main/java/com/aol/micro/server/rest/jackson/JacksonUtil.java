@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import com.aol.cyclops2.util.ExceptionSoftener;
+import com.oath.cyclops.util.ExceptionSoftener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

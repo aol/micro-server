@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 
 import javax.ws.rs.core.Response.Status;
 
-import org.jooq.lambda.tuple.Tuple2;
+import cyclops.data.tuple.Tuple2;
 
 /**
  * Create a Spring that implements this interface to define your own mappings between 

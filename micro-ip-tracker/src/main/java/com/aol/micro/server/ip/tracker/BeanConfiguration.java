@@ -2,7 +2,7 @@ package com.aol.micro.server.ip.tracker;
 
 import javax.servlet.Filter;
 
-import cyclops.control.Xor;
+import cyclops.control.Either;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +27,8 @@ public class BeanConfiguration {
 			}
 
 			@Override
-			public Xor<Class<? extends Filter>, Filter> getFilter() {
-				return Xor.primary(new QueryIPRetriever(ipForwardingHeaderValue, mappingsValue));
+			public Either<Class<? extends Filter>, Filter> getFilter() {
+				return Either.right(new QueryIPRetriever(ipForwardingHeaderValue, mappingsValue));
 			}
 			
 		};

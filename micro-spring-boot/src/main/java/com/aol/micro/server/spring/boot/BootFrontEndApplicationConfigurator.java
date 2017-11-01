@@ -10,8 +10,9 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequestListener;
 
+import com.oath.cyclops.types.persistent.PersistentList;
 import cyclops.collections.immutable.LinkedListX;
-import org.pcollections.PStack;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,8 +87,8 @@ public class BootFrontEndApplicationConfigurator  extends SpringBootServletIniti
 			new ServletConfigurer(serverData, LinkedListX.fromIterable(servletDataList)).addServlets(webappContext);
 
 			new FilterConfigurer(serverData, LinkedListX.fromIterable(filterDataList)).addFilters(webappContext);
-			PStack<ServletContextListener> servletContextListenerData = LinkedListX.fromIterable(module.getListeners(serverData)).filter(i->!(i instanceof ContextLoader));
-		    PStack<ServletRequestListener> servletRequestListenerData =	LinkedListX.fromIterable(module.getRequestListeners(serverData));
+			PersistentList<ServletContextListener> servletContextListenerData = LinkedListX.fromIterable(module.getListeners(serverData)).filter(i->!(i instanceof ContextLoader));
+		    PersistentList<ServletRequestListener> servletRequestListenerData =	LinkedListX.fromIterable(module.getRequestListeners(serverData));
 			
 			new ServletContextListenerConfigurer(serverData, servletContextListenerData, servletRequestListenerData).addListeners(webappContext);
 			

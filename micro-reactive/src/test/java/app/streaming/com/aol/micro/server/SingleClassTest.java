@@ -20,7 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
-import cyclops.stream.ReactiveSeq;
+import cyclops.reactive.ReactiveSeq;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.aol.micro.server.MicroserverApp;
 import com.aol.micro.server.auto.discovery.RestResource;
 import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.reactive.EventQueueManager;
 import com.aol.micro.server.reactive.rest.ReactiveRequest;
 import com.aol.micro.server.reactive.rest.ReactiveResponse;
 import com.aol.micro.server.testing.RestAgent;
@@ -41,8 +40,7 @@ public class SingleClassTest implements RestResource {
 
     RestAgent rest = new RestAgent();
 
-    @Autowired
-    EventQueueManager<String> manager;
+
     MicroserverApp server;
 
     static String lastRecieved = null;
@@ -61,10 +59,7 @@ public class SingleClassTest implements RestResource {
         server.stop();
     }
 
-    @PostConstruct
-    public void busManager() {
-        manager.forEach("ping", in -> lastRecieved = in);
-    }
+
 
     @Test
     public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
@@ -130,7 +125,7 @@ public class SingleClassTest implements RestResource {
     @Produces("application/json")
     @Path("/infinite-boo")
     public Response boo() {
-        manager.push("ping", "input");
+
         Response response = ReactiveResponse.publishAsJson(ReactiveSeq.generate(() -> "boo!")
                                                                       .limit(5));
 
@@ -142,7 +137,7 @@ public class SingleClassTest implements RestResource {
     @Produces("application/json")
     @Path("/ping")
     public Response ping() {
-        manager.push("ping", "input");
+
         Response response = ReactiveResponse.publishAsJson(ReactiveSeq.of(1, 2, 3, 4)
                                                                       .limit(5));
         System.out.println("created response");

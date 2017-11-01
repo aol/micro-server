@@ -14,7 +14,7 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
 
-import cyclops.stream.ReactiveSeq;
+import cyclops.reactive.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

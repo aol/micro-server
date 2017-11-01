@@ -11,6 +11,7 @@ import com.aol.micro.server.servers.model.ServerData;
 import com.aol.micro.server.spring.datasource.DBCPConfig;
 import com.aol.micro.server.spring.datasource.DBCPDataSourceBuilder;
 import cyclops.collections.immutable.PersistentSetX;
+import cyclops.collections.mutable.SetX;
 
 /**
  * 
@@ -20,8 +21,8 @@ import cyclops.collections.immutable.PersistentSetX;
 public class DBCPPlugin implements Plugin {
 
 	@Override
-	public PersistentSetX<Class> springClasses() {
-		return PersistentSetX.of(DBCPConfig.class, DBCPDataSourceBuilder.class);
+	public Set<Class> springClasses() {
+		return SetX.of(DBCPConfig.class, DBCPDataSourceBuilder.class);
 	}
 
 	

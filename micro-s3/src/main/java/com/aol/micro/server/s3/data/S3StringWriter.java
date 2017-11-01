@@ -11,6 +11,7 @@ import com.amazonaws.services.s3.model.PutObjectResult;
 
 import cyclops.async.Future;
 import cyclops.control.Try;
+import cyclops.matching.Api;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -60,7 +61,7 @@ public class S3StringWriter {
      */
     public Future<PutObjectResult> putAsync(String key, String value) {
         return Future.of(() -> put(key, value), this.uploadService)
-                      .map(Try::get);
+                      .flatMap(t->t.visit(p->Future.ofResult(p),e->Future.ofError(e)));
     }
 
     /**

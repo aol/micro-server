@@ -1,60 +1,61 @@
 description = 'micro-guava'
-
 dependencies {
-  compile 'com.aol.cyclops:cyclops-guava:' + cyclopsVersion
-  compile 'com.fasterxml.jackson.datatype:jackson-datatype-guava:' + guavaDatatypeVersion
-  compile project(':micro-core')
-  compile project(':micro-jackson-configuration')
-  testCompile project(':micro-grizzly')
-  testCompile project(':micro-jersey')
+	//compile 'com.aol.cyclops:cyclops-guava:'+cyclopsVersion
+	compile 'com.fasterxml.jackson.datatype:jackson-datatype-guava:'+guavaDatatypeVersion
+	compile project(':micro-core')
+	compile project(':micro-jackson-configuration')
+	testCompile project(':micro-grizzly')
+	testCompile project(':micro-jersey')
+	
+	
 }
 
 modifyPom {
-  project {
-    name 'Microserver guava'
-    description 'Opinionated rest microservices'
-    url 'https://github.com/aol/micro-server'
-    inceptionYear '2015'
+	project {
+		name 'Microserver guava'
+		description 'Opinionated rest microservices'
+		url 'https://github.com/aol/micro-server'
+		inceptionYear '2015'
 
-    groupId 'com.aol.microservices'
-    artifactId 'micro-guava'
-    version "$version"
+		groupId 'com.aol.microservices'
+		artifactId 'micro-guava'
+		version "$version" 
+		
+		
+		scm {
+			url 'scm:git@github.com:aol/micro-server.git'
+			connection 'scm:git@github.com:aol/micro-server.git'
+			developerConnection 'scm:git@github.com:aol/micro-server.git'
+		}
 
+		licenses {
+			license {
+				name 'The Apache Software License, Version 2.0'
+				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+				distribution 'repo'
+			}
+		}
 
-    scm {
-      url 'scm:git@github.com:aol/micro-server.git'
-      connection 'scm:git@github.com:aol/micro-server.git'
-      developerConnection 'scm:git@github.com:aol/micro-server.git'
-    }
-
-    licenses {
-      license {
-        name 'The Apache Software License, Version 2.0'
-        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-        distribution 'repo'
-      }
-    }
-
-    developers {
-      developer {
-        id 'johnmcclean-aol'
-        name 'John McClean'
-        email 'john.mcclean@teamaol.com'
-      }
-    }
-
-  }
+		developers {
+			developer {
+				id 'johnmcclean-aol'
+				name 'John McClean'
+				email 'john.mcclean@teamaol.com'
+			}
+		}
+		
+	}
 }
 
 extraArchive {
-  sources = true
-  tests = true
-  javadoc = true
+	sources = true
+	tests = true
+	javadoc = true
 }
 
 nexus {
-  sign = true
-  repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-  snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+	sign = true
+	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
 }
 

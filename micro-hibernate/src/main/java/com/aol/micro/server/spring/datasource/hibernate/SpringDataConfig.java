@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.aol.micro.server.config.ConfigAccessor;
 import com.aol.micro.server.spring.datasource.JdbcConfig;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableTransactionManagement
 public class SpringDataConfig {
@@ -37,7 +39,8 @@ public class SpringDataConfig {
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
 
-		factory.setPackagesToScan(new ConfigAccessor().get().getDataSources().get(new ConfigAccessor().get().getDefaultDataSourceName())
+		factory.setPackagesToScan(new ConfigAccessor().get().getDataSources()
+                .getOrElse(new ConfigAccessor().get().getDefaultDataSourceName(), Arrays.asList())
 				.toArray(new String[0]));
 		factory.setDataSource(dataSource);
 		factory.afterPropertiesSet();

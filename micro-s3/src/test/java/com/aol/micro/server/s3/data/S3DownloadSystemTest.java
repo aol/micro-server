@@ -108,7 +108,7 @@ public class S3DownloadSystemTest{
         Try<String, Throwable> download = s3Reader.getAsObject(name);
         long endD = System.currentTimeMillis();
         assertTrue(download.isSuccess());
-        assertEquals("Microserver",download.firstValue());
+        assertEquals("Microserver",download.orElse(""));
         downloadHist.update(endD - startD);
     }
 

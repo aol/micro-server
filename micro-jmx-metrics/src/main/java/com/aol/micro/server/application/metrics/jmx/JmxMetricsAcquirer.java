@@ -111,7 +111,7 @@ public class JmxMetricsAcquirer {
 
         SetX<String> excluded = SetX.fromIterable(Arrays.asList(excludedString.split(",")));
 
-        return metricDescription.filter(t -> !excluded.contains(t.v1));
+        return metricDescription.filter(t -> !excluded.contains(t._1()));
     }
 
     @Autowired

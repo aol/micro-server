@@ -9,7 +9,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 
 
 import cyclops.control.Try;
-import cyclops.stream.ReactiveSeq;
+import cyclops.reactive.ReactiveSeq;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

@@ -3,7 +3,7 @@ package com.aol.micro.server.servers;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
-import org.pcollections.PStack;
+import com.oath.cyclops.types.persistent.PersistentList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ public class ServletConfigurer {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final ServerData serverData;
-	private final PStack<ServletData> servletData;
+	private final PersistentList<ServletData> servletData;
 	
 	public void addServlets(ServletContext webappContext) {
 		addExplicitlyDeclaredServlets(webappContext);

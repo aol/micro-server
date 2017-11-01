@@ -3,8 +3,8 @@ package com.aol.micro.server.couchbase.base;
 import java.util.Date;
 import java.util.Optional;
 
-import com.aol.cyclops2.util.ExceptionSoftener;
-import cyclops.control.Xor;
+import com.oath.cyclops.util.ExceptionSoftener;
+import cyclops.control.Either;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,7 +75,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 
     private final String key;
 
-    private volatile Xor<Void, T> data = Xor.secondary(null); // Void represents
+    private volatile Either<Void, T> data = Either.left(null); // Void represents
                                                               // an unitialized
                                                               // state
 
@@ -150,10 +150,10 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
     @Override
     @SneakyThrows
     public T getData() {
-        while (data.isSecondary()) {
+        while (data.isLeft()) {
             Thread.sleep(500);
         }
-        return data.get();
+        return data.orElse(null);
     }
 
     @Override
@@ -175,13 +175,13 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
      */
     @Override
     public synchronized boolean load() {
-        Xor<Void, T> oldData = data;
+        Either<Void, T> oldData = data;
         String oldKey = versionedKey;
         try {
             if (isOutOfDate()) {
                 String newVersionedKey = (String) connection.get(key)
                                                             .get();
-                data = Xor.primary((T) nonAtomicload(newVersionedKey));
+                data = Either.right((T) nonAtomicload(newVersionedKey));
                 versionedKey = newVersionedKey;
             } else {
                 return false;
@@ -254,14 +254,14 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
      */
     @Override
     public void saveAndIncrement(T data) {
-        Xor<Void, T> oldData = this.data;
+        Either<Void, T> oldData = this.data;
         VersionedKey newVersionedKey = increment();
         logger.info("Saving data with key {}, new version is {}", key, newVersionedKey.toJson());
         connection.put(newVersionedKey.toJson(), new Data(
                                                           data, new Date(), newVersionedKey.toJson()));
         connection.put(key, newVersionedKey.toJson());
         try {
-            this.data = Xor.primary(data);
+            this.data = Either.right(data);
             delete(versionedKey);
 
         } catch (Throwable t) {

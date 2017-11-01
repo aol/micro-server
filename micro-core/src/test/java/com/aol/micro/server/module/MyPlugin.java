@@ -3,9 +3,12 @@ package com.aol.micro.server.module;
 
 import com.aol.micro.server.Plugin;
 import cyclops.collections.immutable.LinkedListX;
+import cyclops.collections.mutable.ListX;
+
+import java.util.List;
 
 public class MyPlugin implements Plugin{
-	public LinkedListX<String> providers(){
-		return LinkedListX.of("com.my.new.provider","com.my.new.provider2");
+	public List<String> providers(){
+		return ListX.of("com.my.new.provider","com.my.new.provider2");
 	}
 }

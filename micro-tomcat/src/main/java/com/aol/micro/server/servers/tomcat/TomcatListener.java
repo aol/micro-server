@@ -8,8 +8,8 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequestListener;
 
-import org.pcollections.PStack;
 
+import com.oath.cyclops.types.persistent.PersistentList;
 import lombok.AllArgsConstructor;
 
 import com.aol.micro.server.servers.FilterConfigurer;
@@ -27,10 +27,10 @@ public class TomcatListener implements ServletContainerInitializer {
 	private final JaxRsServletConfigurer jaxRsConfigurer;
 	private final ServerData serverData;
 
-	private final PStack<FilterData> filterData;
-	private final PStack<ServletData> servletData;
-	private final PStack<ServletContextListener> servletContextListenerData;
-	private final PStack<ServletRequestListener> servletRequestListenerData;
+	private final PersistentList<FilterData> filterData;
+	private final PersistentList<ServletData> servletData;
+	private final PersistentList<ServletContextListener> servletContextListenerData;
+	private final PersistentList<ServletRequestListener> servletRequestListenerData;
 
 	
 	@Override

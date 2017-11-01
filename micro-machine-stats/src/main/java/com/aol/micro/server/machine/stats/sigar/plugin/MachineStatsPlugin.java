@@ -7,6 +7,9 @@ import com.aol.micro.server.machine.stats.sigar.SigarStats;
 import com.aol.micro.server.machine.stats.sigar.StatsServletContextListener;
 import com.aol.micro.server.machine.stats.sigar.rest.StatsResource;
 import cyclops.collections.immutable.PersistentSetX;
+import cyclops.collections.mutable.SetX;
+
+import java.util.Set;
 
 /**
  * 
@@ -20,8 +23,8 @@ import cyclops.collections.immutable.PersistentSetX;
 public class MachineStatsPlugin implements Plugin {
 
     @Override
-    public PersistentSetX<Class> springClasses() {
-        return PersistentSetX.of(StatsResource.class, MachineStatsChecker.class, StatsServletContextListener.class,
+    public Set<Class> springClasses() {
+        return SetX.of(StatsResource.class, MachineStatsChecker.class, StatsServletContextListener.class,
                         SigarStats.class);
     }
 
