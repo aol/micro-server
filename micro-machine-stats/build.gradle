@@ -1,64 +1,61 @@
 description = 'micro-machine-stats'
-dependencies {
-	compile 'io.kamon:sigar-loader:1.6.6-rev002'
-	compile group: 'org.fusesource', name: 'sigar', version:'1.6.4'
-	compile group: 'org.fusesource', name: 'sigar', version:'1.6.4', classifier:'native'
-	compile project(':micro-core')
-	
-	testCompile project(':micro-grizzly-with-jersey')
 
-	
+dependencies {
+  compile 'io.kamon:sigar-loader:1.6.6-rev002'
+  compile group: 'org.fusesource', name: 'sigar', version: '1.6.4'
+  compile group: 'org.fusesource', name: 'sigar', version: '1.6.4', classifier: 'native'
+  compile project(':micro-core')
+  testCompile project(':micro-grizzly-with-jersey')
 }
 
-
 modifyPom {
-	project {
-		name 'Microserver machine stats'
-		description 'Opinionated rest microservices'
-		url 'https://github.com/aol/micro-server'
-		inceptionYear '2015'
+  project {
+    name 'Microserver machine stats'
+    description 'Opinionated rest microservices'
+    url 'https://github.com/aol/micro-server'
+    inceptionYear '2015'
 
-		groupId 'com.aol.microservices'
-		artifactId 'micro-machine-stats'
-		version "$version" 
-		
-		
-		scm {
-			url 'scm:git@github.com:aol/micro-server.git'
-			connection 'scm:git@github.com:aol/micro-server.git'
-			developerConnection 'scm:git@github.com:aol/micro-server.git'
-		}
+    groupId 'com.aol.microservices'
+    artifactId 'micro-machine-stats'
+    version "$version"
 
-		licenses {
-			license {
-				name 'The Apache Software License, Version 2.0'
-				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-				distribution 'repo'
-			}
-		}
 
-		developers {
-			
-			developer {
-				id 'kewangie'
-				name 'Ke Wang'
-				email 'ke.wang@teamaol.com'
-			}
-			
-		}
-		
-	}
+    scm {
+      url 'scm:git@github.com:aol/micro-server.git'
+      connection 'scm:git@github.com:aol/micro-server.git'
+      developerConnection 'scm:git@github.com:aol/micro-server.git'
+    }
+
+    licenses {
+      license {
+        name 'The Apache Software License, Version 2.0'
+        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        distribution 'repo'
+      }
+    }
+
+    developers {
+
+      developer {
+        id 'kewangie'
+        name 'Ke Wang'
+        email 'ke.wang@teamaol.com'
+      }
+
+    }
+
+  }
 }
 
 extraArchive {
-	sources = true
-	tests = true
-	javadoc = true
+  sources = true
+  tests = true
+  javadoc = true
 }
 
 nexus {
-	sign = true
-	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+  sign = true
+  repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+  snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
 }
 
