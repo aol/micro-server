@@ -34,10 +34,8 @@ public class SpringContextFactory {
     private final SpringBuilder springBuilder;
 
     public SpringContextFactory(Config config, Class<?> c, Set<Class<?>> classes) {
-        PersistentSet<Class> s = config.getClasses();
-        for(Class next : classes){
-            s = s.plus(next);
-        }
+        PersistentSet<Class> s = config.getClasses()
+                        .plusAll(classes);
 
 
         s= s.plus(c);
