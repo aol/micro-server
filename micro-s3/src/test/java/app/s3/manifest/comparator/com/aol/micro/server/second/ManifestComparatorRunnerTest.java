@@ -11,7 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.testing.RestAgent;
 
 public class ManifestComparatorRunnerTest {
 
