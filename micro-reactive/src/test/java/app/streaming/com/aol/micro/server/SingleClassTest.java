@@ -11,7 +11,6 @@ import java.io.Writer;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import javax.annotation.PostConstruct;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -24,15 +23,14 @@ import cyclops.reactive.ReactiveSeq;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.auto.discovery.RestResource;
-import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.reactive.rest.ReactiveRequest;
-import com.aol.micro.server.reactive.rest.ReactiveResponse;
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.auto.discovery.RestResource;
+import com.oath.micro.server.config.Microserver;
+import com.oath.micro.server.reactive.rest.ReactiveRequest;
+import com.oath.micro.server.reactive.rest.ReactiveResponse;
+import com.oath.micro.server.testing.RestAgent;
 
 @Microserver
 @Path("/single")

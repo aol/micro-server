@@ -3,7 +3,7 @@ package app.custom.binder.noanno;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.aol.micro.server.auto.discovery.JaxRsResourceWrapper;
+import com.oath.micro.server.auto.discovery.JaxRsResourceWrapper;
 
 @Configuration
 public class Config {

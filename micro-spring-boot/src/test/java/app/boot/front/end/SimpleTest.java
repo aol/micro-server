@@ -6,7 +6,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.testing.RestAgent;
 
 
 public class SimpleTest {

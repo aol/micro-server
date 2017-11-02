@@ -16,11 +16,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 
-import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.events.RequestEvents;
-import com.aol.micro.server.ip.tracker.QueryIPRetriever;
-import com.aol.micro.server.rest.jackson.JacksonUtil;
-import com.aol.micro.server.spring.datasource.jdbc.SQL;
+import com.oath.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.events.RequestEvents;
+import com.oath.micro.server.ip.tracker.QueryIPRetriever;
+import com.oath.micro.server.rest.jackson.JacksonUtil;
+import com.oath.micro.server.spring.datasource.jdbc.SQL;
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
 import com.wordnik.swagger.annotations.Api;

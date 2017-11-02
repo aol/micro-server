@@ -1,8 +1,8 @@
 package app.boot.front.end;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.spring.boot.MicroSpringBoot;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.config.Microserver;
+import com.oath.micro.server.spring.boot.MicroSpringBoot;
 
 @Microserver
 @MicroSpringBoot

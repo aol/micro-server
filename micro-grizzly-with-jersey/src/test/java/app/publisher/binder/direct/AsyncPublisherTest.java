@@ -1,11 +1,8 @@
 package app.publisher.binder.direct;
 
-import com.aol.micro.server.MicroserverApp;
-import com.aol.micro.server.config.Microserver;
-import com.aol.micro.server.module.ConfigurableModule;
-import com.aol.micro.server.rest.jersey.AsyncBinder;
-import com.aol.micro.server.testing.RestAgent;
-import org.glassfish.jersey.server.ResourceConfig;
+import com.oath.micro.server.MicroserverApp;
+import com.oath.micro.server.config.Microserver;
+import com.oath.micro.server.testing.RestAgent;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

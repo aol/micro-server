@@ -1,7 +1,7 @@
 package app.datadog.metrics.com.aol.micro.server;
 
-import com.aol.micro.server.auto.discovery.Rest;
-import com.aol.micro.server.auto.discovery.RestResource;
+import com.oath.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.auto.discovery.RestResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

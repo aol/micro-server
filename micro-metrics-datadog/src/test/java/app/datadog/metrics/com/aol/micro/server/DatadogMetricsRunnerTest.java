@@ -1,6 +1,6 @@
 package app.datadog.metrics.com.aol.micro.server;
 
-import com.aol.micro.server.testing.RestAgent;
+import com.oath.micro.server.testing.RestAgent;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
