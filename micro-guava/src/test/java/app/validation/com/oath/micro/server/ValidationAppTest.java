@@ -21,7 +21,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 
-@Microserver(basePackages = { "app.guava.com.aol.micro.server" })
+@Microserver(basePackages = { "app.guava.com.oath.micro.server" })
 public class ValidationAppTest {
 
 	RestAgent rest = new RestAgent();

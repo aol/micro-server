@@ -16,7 +16,7 @@ import com.oath.micro.server.config.Microserver;
 import com.oath.micro.server.rest.client.nio.AsyncRestClient;
 import com.oath.micro.server.testing.RestAgent;
 
-@Microserver(entityScan="app.hibernate.com.aol.micro.server",properties={"db.connection.driver","org.hsqldb.jdbcDriver",
+@Microserver(entityScan="app.hibernate.com.oath.micro.server",properties={"db.connection.driver","org.hsqldb.jdbcDriver",
 																						    "db.connection.url","jdbc:hsqldb:mem:aname",
 																						    "db.connection.username", "sa",
 																						    "db.connection.dialect","org.hibernate.dialect.HSQLDialect",

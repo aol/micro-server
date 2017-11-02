@@ -6,7 +6,7 @@ import com.oath.micro.server.MicroserverApp;
 import com.oath.micro.server.config.Microserver;
 import com.oath.micro.server.module.EmbeddedModule;
 
-@Microserver(basePackages = {    "app.embedded.com.aol.micro.server" })
+@Microserver(basePackages = {    "app.embedded.com.oath.micro.server" })
 public class EmbeddedAppLocalMain {
 
 	

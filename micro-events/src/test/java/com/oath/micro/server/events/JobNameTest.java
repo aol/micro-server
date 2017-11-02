@@ -19,7 +19,7 @@ public class JobNameTest {
 
     @Test
     public void testFull() {
-        assertThat(full.getType(JobNameTest.class), equalTo("com.aol.micro.server.events.JobNameTest"));
+        assertThat(full.getType(JobNameTest.class), equalTo("com.oath.micro.server.events.JobNameTest"));
     }
 
     @Test

@@ -11,12 +11,12 @@ public class RestResourceTagBuilderTest {
 
 	@Test(expected=ClassNotFoundException.class)
 	public void testRestResourceTagNonsense() {
-		RestResourceTagBuilder.restResourceTags("com.aol.micro.server.module.RestResourceTagBuilderTest","nonsense");
+		RestResourceTagBuilder.restResourceTags("com.oath.micro.server.module.RestResourceTagBuilderTest","nonsense");
 		fail("should not get here, ClassNotFound expected");
 	}
 	@Test
 	public void testRestResourceTag() {
-		assertThat(RestResourceTagBuilder.restResourceTags("com.aol.micro.server.module.RestResourceTagBuilderTest"), hasItem( RestResourceTagBuilderTest.class));
+		assertThat(RestResourceTagBuilder.restResourceTags("com.oath.micro.server.module.RestResourceTagBuilderTest"), hasItem( RestResourceTagBuilderTest.class));
 	}
 	@Test
 	public void testRestResourceTagClasses() {
@@ -24,7 +24,7 @@ public class RestResourceTagBuilderTest {
 	}
 	@Test
 	public void testRestResourceTagDefaults() {
-		assertThat(RestResourceTagBuilder.restResourceTags("com.aol.micro.server.module.RestResourceTagBuilderTest"), hasItem( CommonRestResource.class));
+		assertThat(RestResourceTagBuilder.restResourceTags("com.oath.micro.server.module.RestResourceTagBuilderTest"), hasItem( CommonRestResource.class));
 	}
 	@Test
 	public void testRestResourceTagClassesDefaults() {
