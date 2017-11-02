@@ -15,7 +15,7 @@ import com.oath.micro.server.MicroserverApp;
 import com.oath.micro.server.testing.RestAgent;
 
 @Configuration
-@ComponentScan(basePackages = { "app.swagger.com.aol.micro.server" })
+@ComponentScan(basePackages = { "app.swagger.com.oath.micro.server" })
 public class SwaggerRunnerTest {
 
 
