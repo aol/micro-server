@@ -11,19 +11,19 @@ This plugin
 
 Simply add to the classpath
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-guava/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-guava)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-guava/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-guava)
 
 Maven 
 
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-guava</artifactId>
         <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-guava:x.yz'
+    compile 'com.oath.microservices:micro-guava:x.yz'
     
 
 # Example Guava Resource

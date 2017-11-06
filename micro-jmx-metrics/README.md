@@ -7,21 +7,21 @@ See also [micro-metrics-datadog](https://github.com/aol/micro-server/tree/master
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-jmx-metrics/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-jmx-metrics)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-jmx-metrics/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-jmx-metrics)
 
 Simply add to the classpath
 
 Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-jmx-metrics</artifactId>
         <version>x.yz</version>
      </dependency>
 ```   
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-jmx-metrics:x.yz'
+    compile 'com.oath.microservices:micro-jmx-metrics:x.yz'
 ```
 
 Metrics reported by this plugin:

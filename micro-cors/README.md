@@ -27,18 +27,18 @@ The Ebay CORS Filter offers much more configuration options  [https://github.com
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-cors/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-cors)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-cors/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-cors)
 
 Simply add to the classpath
 
 Maven 
 
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-cors</artifactId>
         <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-cors:x.yz'
+    compile 'com.oath.microservices:micro-cors:x.yz'

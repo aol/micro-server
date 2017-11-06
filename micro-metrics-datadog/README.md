@@ -8,21 +8,21 @@ This plugin in combination with the micro-event-metrics plugin will send some me
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-metrics-datadog/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-metrics-datadog)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-metrics-datadog/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-metrics-datadog)
 
 Simply add to the classpath
 
 Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-metrics-datadog</artifactId>
         <version>x.yz</version>
      </dependency>
 ```     
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-metrics-datadog:x.yz'
+    compile 'com.oath.microservices:micro-metrics-datadog:x.yz'
 ```
     
 # Configuring datadog metrics Reporters

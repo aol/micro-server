@@ -10,7 +10,7 @@ micro-logback plugin can be used in two ways:
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-logback/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-logback)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-logback/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-logback)
 
 Simply add to the classpath
 
@@ -18,14 +18,14 @@ Maven
 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-logback</artifactId>
         <version>x.yz</version>
      </dependency>
 ```   
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-logback:x.yz'
+    compile 'com.oath.microservices:micro-logback:x.yz'
 ```
 
 # Configuration endpoints

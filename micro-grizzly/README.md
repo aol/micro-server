@@ -7,18 +7,18 @@ Plugin that allows the Grizzly Web server to be used with Microserver.
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-grizzly/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-grizzly)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-grizzly/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-grizzly)
 
 Simply add to the classpath
 
 Maven 
 
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-grizzly</artifactId>
         <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-grizzly:x.yz'
+    compile 'com.oath.microservices:micro-grizzly:x.yz'

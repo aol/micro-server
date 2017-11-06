@@ -12,7 +12,7 @@ Adds a rest end point /stats/machine to view statistics about the current contai
 
 # To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-machine-stats/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-machine-stats)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-machine-stats/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-machine-stats)
 
 Simply add this plugin to your classpath
 
@@ -20,7 +20,7 @@ Maven
  ```xml
 
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-machine-stats</artifactId>
         <version>x.yz</version>
      </dependency>
@@ -28,7 +28,7 @@ Maven
 ```    
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-machine-stats:x.yz'
+    compile 'com.oath.microservices:micro-machine-stats:x.yz'
 ```
 
 

@@ -31,7 +31,7 @@ By default all incoming requests are tracked, an array of endpoints can be spefi
 
 Simply add to the classpath
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-ip-tracker/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-ip-tracker)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-ip-tracker/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-ip-tracker)
 
 
 
@@ -39,11 +39,11 @@ Simply add to the classpath
 ### Maven 
 
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-ip-tracker</artifactId>
         <version>x.yx</version>
      </dependency>
      
 ### Gradle
 
-    compile 'com.aol.microservices:micro-ip-tracker:x.yz'
+    compile 'com.oath.microservices:micro-ip-tracker:x.yz'

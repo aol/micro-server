@@ -141,20 +141,20 @@ Flux.just(1,2,3)
 ## To use
 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-reactive/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-reactive)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-reactive/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-reactive)
 
 Simply add to the classpath
 
 Maven 
  ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-reactive</artifactId>
         <version>x.yz</version>
      </dependency>
  ```    
 Gradle
  ```groovy
-    compile 'com.aol.microservices:micro-reactive:x.yz'
+    compile 'com.oath.microservices:micro-reactive:x.yz'
  ```
  

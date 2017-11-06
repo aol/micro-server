@@ -166,17 +166,17 @@ couchbaseClientOperationTimeout:120000
 
 ## Getting The Microserver Couchbase Plugin
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-couchbase/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-couchbase)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-couchbase/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-couchbase)
 
 ### Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-couchbase</artifactId>
         <version>x.yz</version>
      </dependency>
 ```
 ### Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-couchbase:x.yz'
+    compile 'com.oath.microservices:micro-couchbase:x.yz'
  ```
