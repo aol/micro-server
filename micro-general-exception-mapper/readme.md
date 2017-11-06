@@ -35,19 +35,19 @@ public class MappingExtension implements ExtensionMapOfExceptionsToErrorCodes {
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-general-exception-mapper/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-general-exception-mapper)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-general-exception-mapper/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-general-exception-mapper)
 
 Simply add to the classpath
 
 Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-general-exception-mapper</artifactId>
         <version>x.yz</version>
      </dependency>
 ```     
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-general-exception-mapper:x.yz'
+    compile 'com.oath.microservices:micro-general-exception-mapper:x.yz'
 ```

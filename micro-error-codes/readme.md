@@ -103,17 +103,17 @@ try{
 
 ## Getting The Microserver Error Codes
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-error-codes/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-error-codes)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-error-codes/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-error-codes)
 
 ### Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-error-codes</artifactId>
         <version>x.yz</version>
      </dependency>
 ```
 ### Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-error-codes:x.yz'
+    compile 'com.oath.microservices:micro-error-codes:x.yz'
  ```

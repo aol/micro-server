@@ -9,21 +9,21 @@ micro-log4j plugin can be used in two ways:
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-log4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-log4j)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-log4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-log4j)
 
 Simply add to the classpath
 
 Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-log4j</artifactId>
         <version>x.yz</version>
      </dependency>
 ```     
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-log4j:x.yz'
+    compile 'com.oath.microservices:micro-log4j:x.yz'
 ```
 
 # Configuration endpoints

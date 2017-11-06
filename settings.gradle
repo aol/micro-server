@@ -1,4 +1,4 @@
-rootProject.name = 'com.aol.microservices'
+rootProject.name = 'com.oath.microservices'
 include ':micro-manifest-comparator'
 include ':micro-core'
 include ':micro-grizzly'

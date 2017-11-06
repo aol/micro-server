@@ -142,17 +142,17 @@ e.g.
 
 ## Getting The Microserver Manifest comparator Plugin
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-couchbase/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-couchbase)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-couchbase/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-couchbase)
 
 ### Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-manifest-comparator</artifactId>
         <version>x.yz</version>
      </dependency>
 ```
 ### Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-manifest-comparator:x.yz'
+    compile 'com.oath.microservices:micro-manifest-comparator:x.yz'
  ```

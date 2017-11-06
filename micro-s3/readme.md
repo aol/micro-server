@@ -16,21 +16,21 @@ See also [micro-async-data-writer](https://github.com/aol/micro-server/tree/mast
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-s3/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-s3)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-s3/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-s3)
 
 Simply add to the classpath
 
 Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-s3</artifactId>
         <version>x.yz</version>
      </dependency>
 ```   
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-s3:x.yz'
+    compile 'com.oath.microservices:micro-s3:x.yz'
 ```
 
 # Manifest comparison

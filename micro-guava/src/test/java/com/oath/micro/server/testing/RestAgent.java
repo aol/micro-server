@@ -8,9 +8,26 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
 import com.oath.micro.server.rest.jackson.JacksonUtil;
+import cyclops.data.DIET;
+import cyclops.function.Predicates;
+import org.junit.Test;
+
+import static cyclops.data.Range.range;
+import static cyclops.matching.Api.Case;
+import static cyclops.matching.Api.Match;
+import static cyclops.matching.Api.MatchType;
 
 public class RestAgent {
+	@Test
+	public void diet(){
 
+		DIET<Integer> diet = DIET.cons(DIET.cons(range(1, 5)), range(6, 7), DIET.cons(range(10, 20)));
+        DIET<Integer> added = diet.add(range(50, 60));
+        DIET<Integer> removed = added.remove(range(2,4));
+		//[1 .. 2],[4 .. 5],[6 .. 7],[10 .. 20],[50 .. 60]
+
+
+	}
 	
 	public String getJson(String url) {
 

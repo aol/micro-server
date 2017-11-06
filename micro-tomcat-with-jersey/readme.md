@@ -11,19 +11,19 @@ Tomcat does not currently support the Microserver micro-monolith style of develo
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-grizzly-with-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-grizzly-with-jersey)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-grizzly-with-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-grizzly-with-jersey)
 
 Simply add to the classpath
 
 Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-tomcat-with-jersey</artifactId>
         <version>x.yz</version>
      </dependency>
 ```    
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-tomcat-with-jersey:x.yz'
+    compile 'com.oath.microservices:micro-tomcat-with-jersey:x.yz'
 ```

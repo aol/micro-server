@@ -6,21 +6,21 @@ This adds a facility to use curator locks.
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-curator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-curator)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-curator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-curator)
 
 Simply add to the classpath
 
 Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-curator</artifactId>
         <version>x.yz</version>
      </dependency>
 ```   
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-curator:x.yz'
+    compile 'com.oath.microservices:micro-curator:x.yz'
 ```
 ## Example api for taking lock
 

@@ -39,17 +39,17 @@ This plugin also provides a rest end point which can be used to check if a proce
 
 ## Getting The Microserver Distributed Lock Plugin
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-dist-lock/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-dist-lock)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-dist-lock/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-dist-lock)
 
 ### Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-dist-lock</artifactId>
         <version>x.yz</version>
      </dependency>
 ```
 ### Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-dist-lock:x.yz'
+    compile 'com.oath.microservices:micro-dist-lock:x.yz'
 ```

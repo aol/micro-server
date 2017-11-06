@@ -11,11 +11,11 @@ Simply add to the classpath
 Maven 
 
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-swagger</artifactId>
         <version>0.62</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-swagger:0.62'
+    compile 'com.oath.microservices:micro-swagger:0.62'

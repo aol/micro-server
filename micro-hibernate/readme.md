@@ -7,21 +7,21 @@ Adds Spring Data, and Hibernate support.
 ## To use
 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-hibernate/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-hibernate)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-hibernate/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-hibernate)
 
 Simply add to the classpath
 
 Maven 
 
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-hibernate</artifactId>
         <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-data:x.yz'
+    compile 'com.oath.microservices:micro-data:x.yz'
 
 # Configuring a data source
 

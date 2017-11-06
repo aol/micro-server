@@ -7,21 +7,21 @@ Creates a DataSource Spring Bean with name "mainDataSource". This will be based 
 ## To use
 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-hikaricp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-hikaricp)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-hikaricp/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-hikaricp)
 
 Simply add to the classpath
 
 Maven 
 
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-hikaricp</artifactId>
         <version>x.yz</version>
      </dependency>
      
 Gradle
 
-    compile 'com.aol.microservices:micro-hikaricp:x.yz'
+    compile 'com.oath.microservices:micro-hikaricp:x.yz'
 
 # Configuring a data source
 

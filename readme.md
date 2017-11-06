@@ -18,11 +18,11 @@ A convenient modular engine for Microservices. Microserver plugins offer seamles
 
 Install Microserver with Grizzly, Jackson and Jersey (Gradle config below)
 ```groovy
-    compile group: 'com.aol.microservices', name:'micro-grizzly-with-jersey', version:'x.yz'
+    compile group: 'com.oath.microservices', name:'micro-grizzly-with-jersey', version:'x.yz'
 ```   
 Install Microserver with Tomcat, Jackson and Jersey (Gradle config below)
  ```groovy
-    compile group: 'com.aol.microservices', name:'micro-tomcat-with-jersey', version:'x.yz'    
+    compile group: 'com.oath.microservices', name:'micro-tomcat-with-jersey', version:'x.yz'    
  ```
 Create and run a simple app 
  ```java
@@ -113,15 +113,15 @@ Microserver is a zero configuration, standards based, battle hardened library to
 ![Build health](https://travis-ci.org/aol/micro-server.svg)
 
 * micro-grizzly-with-jersey
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-grizzly-with-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-grizzly-with-jersey)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-grizzly-with-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-grizzly-with-jersey)
 * micro-tomcat-with-jersey
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-tomcat-with-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-tomcat-with-jersey)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-tomcat-with-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-tomcat-with-jersey)
 * micro-core 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-core)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-core)
 * micro-boot  : Microserver driving Spring Boot
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-boot)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-boot)
 * micro-spring-boot  : Spring Boot driving Microserver
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-spring-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-spring-boot)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-spring-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-spring-boot)
 
 
 ##Info
@@ -134,9 +134,9 @@ Microserver is a zero configuration, standards based, battle hardened library to
 
 [Example Apps : Microserver Boot](https://github.com/aol/micro-server/tree/master/micro-boot/src/test/java/app)
 
-[Java Doc : Microserver Core](http://www.javadoc.io/doc/com.aol.microservices/micro-core/0.62)
+[Java Doc : Microserver Core](http://www.javadoc.io/doc/com.oath.microservices/micro-core/0.62)
 
-[Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.aol.microservices/micro-core/0.62)
+[Java Doc : Microserver Boot](http://www.javadoc.io/doc/com.oath.microservices/micro-core/0.62)
 
 
 
@@ -145,7 +145,7 @@ Microserver is a zero configuration, standards based, battle hardened library to
 Microserver Grizzly with Jersey
  ```xml
     <dependency>
-      <groupId>com.aol.microservices</groupId>
+      <groupId>com.oath.microservices</groupId>
       <artifactId>micro-grizzly-with-jersey</artifactId>
       <version>x.yz</version>
     </dependency>
@@ -153,7 +153,7 @@ Microserver Grizzly with Jersey
 Microserver Spring Boot 
  ```xml
     <dependency>
-      <groupId>com.aol.microservices</groupId>
+      <groupId>com.oath.microservices</groupId>
       <artifactId>micro-spring-boot</artifactId>
       <version>x.yz</version>
     </dependency>
@@ -164,11 +164,11 @@ Microserver Spring Boot
 
 Microserver core 
  ```groovy	
-	 compile group: 'com.aol.microservices', name:'micro-core', version:'x.yz'
+	 compile group: 'com.oath.microservices', name:'micro-core', version:'x.yz'
  ```	 
 Microserver Spring Boot 
  ```groovy	 
-	  compile group: 'com.aol.microservices', name:'micro-spring-boot', version:'x.yz'
+	  compile group: 'com.oath.microservices', name:'micro-spring-boot', version:'x.yz'
  ```
 ## Tech Stack
 

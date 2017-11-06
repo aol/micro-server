@@ -6,7 +6,7 @@ Plugin that allows the Jersey to be used as the jax-rs implementation with Micro
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-jersey)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-jersey/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-jersey)
 
 Simply add to the classpath
 
@@ -14,7 +14,7 @@ Maven
  ```xml
 
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-jersey</artifactId>
         <version>x.yz</version>
      </dependency>
@@ -22,7 +22,7 @@ Maven
 ```    
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-jersey:x.yz'
+    compile 'com.oath.microservices:micro-jersey:x.yz'
 ```
 
 ## Baked in async NIO based REST

@@ -23,12 +23,12 @@ elasticache.max.retries is the maximum number of retries before client throws er
 ### Maven
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>
+        <groupId>com.oath.microservices</groupId>
         <artifactId>micro-elasticache</artifactId>
         <version>x.yz</version>
      </dependency>
 ```
 ### Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-elasticache:x.yz'
+    compile 'com.oath.microservices:micro-elasticache:x.yz'
  ```

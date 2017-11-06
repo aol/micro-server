@@ -19,7 +19,7 @@ modifyPom {
 		url 'https://github.com/aol/micro-server'
 		inceptionYear '2015'
 
-		groupId 'com.aol.microservices'
+		groupId 'com.oath.microservices'
 		artifactId 'micro-general-exception-mapper'
 		version "$version" 
 		
