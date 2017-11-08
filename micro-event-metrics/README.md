@@ -7,21 +7,21 @@ Captures Dropwizard metrics based on application events
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-event-metrics/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-event-metrics)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-event-metrics/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-event-metrics)
 
 Simply add to the classpath
 
 Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-event-metrics</artifactId>
         <version>x.yz</version>
      </dependency>
 ```   
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-event-metrics:x.yz'
+    compile 'com.oath.microservices:micro-event-metrics:x.yz'
 ```
 ### Depends on
 

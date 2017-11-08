@@ -54,21 +54,21 @@ public class SimpleResource{
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-boot)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-boot)
 
 Add micro-spring-boot to the classpath
 
 Maven
 
     <dependency>
-       <groupId>com.aol.microservices</groupId>  
+       <groupId>com.oath.microservices</groupId>  
        <artifactId>micro-spring-boot</artifactId>
        <version>x.yz</version>
     </dependency>
 
 Gradle
 
-    compile 'com.aol.microservices:micro-spring-boot:x.yz'
+    compile 'com.oath.microservices:micro-spring-boot:x.yz'
 
 
 

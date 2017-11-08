@@ -42,19 +42,19 @@ Custom extensions are  only guaranteed to be available once the configurations h
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-jackson-configuration/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-jackson-configuration)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-jackson-configuration/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-jackson-configuration)
 
 Simply add to the classpath
 
 Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-jackson-configuration</artifactId>
         <version>x.yz</version>
      </dependency>
 ``     
 Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-jackson-configuration:x.yz'
+    compile 'com.oath.microservices:micro-jackson-configuration:x.yz'
 ```

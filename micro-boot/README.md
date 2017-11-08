@@ -52,35 +52,35 @@ public class SimpleResource{
 
 ## To use
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-boot)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-boot)
 
 Add micro-boot to the classpath
 
 Maven
 
     <dependency>
-       <groupId>com.aol.microservices</groupId>  
+       <groupId>com.oath.microservices</groupId>  
        <artifactId>micro-boot</artifactId>
        <version>x.yz</version>
     </dependency>
 
 Gradle
 
-    compile 'com.aol.microservices:micro-boot:x.yz'
+    compile 'com.oath.microservices:micro-boot:x.yz'
 
 And also add Grizzly and Jersey (micro-grizzly-with-jersey will add both)
 
 Maven
 
     <dependency>
-       <groupId>com.aol.microservices</groupId>
+       <groupId>com.oath.microservices</groupId>
        <artifactId>micro-grizzly-with-jersey</artifactId>
        <version>x.yz</version>
     </dependency>
 
 Gradle
 
-    compile 'com.aol.microservices:micro-grizzly-with-jersey:x.yz'
+    compile 'com.oath.microservices:micro-grizzly-with-jersey:x.yz'
 
 
 ## Create a simple server

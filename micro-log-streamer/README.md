@@ -62,20 +62,20 @@ curl -v http://myhost:8080/my-app/log-tail/stream-file?alias-custom
 ## To use
 
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-reactive/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-reactive)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-reactive/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-reactive)
 
 Simply add to the classpath
 
 Maven 
  ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-log-streamer</artifactId>
         <version>x.yz</version>
      </dependency>
  ```    
 Gradle
  ```groovy
-    compile 'com.aol.microservices:micro-log-streamer:x.yz'
+    compile 'com.oath.microservices:micro-log-streamer:x.yz'
  ```
  

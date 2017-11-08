@@ -119,17 +119,17 @@ public class TurnOff implements ConditionallyClean {
 
 ## Getting The Microserver Async Data Writer Plugin
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-async-data-writer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-async-data-writer)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-async-data-writer/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-async-data-writer)
 
 ### Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-async-data-writer</artifactId>
         <version>x.yz</version>
      </dependency>
 ```
 ### Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-async-data-writer:x.yz'
+    compile 'com.oath.microservices:micro-async-data-writer:x.yz'
  ```

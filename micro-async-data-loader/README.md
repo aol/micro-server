@@ -114,17 +114,17 @@ Simply inject your ManifestComparator Bean into the service that needs the data 
 
 ## Getting The Microserver Async Data Loader Plugin
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-async-data-loader/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.aol.microservices/micro-async-data-loader)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-async-data-loader/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-async-data-loader)
 
 ### Maven 
 ```xml
      <dependency>
-        <groupId>com.aol.microservices</groupId>  
+        <groupId>com.oath.microservices</groupId>  
         <artifactId>micro-async-data-loader</artifactId>
         <version>x.yz</version>
      </dependency>
 ```
 ### Gradle
 ```groovy
-    compile 'com.aol.microservices:micro-async-data-loader:x.yz'
+    compile 'com.oath.microservices:micro-async-data-loader:x.yz'
  ```
