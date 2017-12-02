@@ -13,11 +13,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegisterConfig {
 
-	String outputDir;
+    String outputDir;
 
-	@Autowired
-	public RegisterConfig(@Value("${service.registry.dir:#{systemProperties['java.io.tmpdir']}/services}") String outputDir) {
-		this.outputDir = outputDir;
-	}
+    @Autowired
+    public RegisterConfig(
+        @Value("${service.registry.dir:#{systemProperties['java.io.tmpdir']}/services}") String outputDir) {
+        this.outputDir = outputDir;
+    }
 
 }

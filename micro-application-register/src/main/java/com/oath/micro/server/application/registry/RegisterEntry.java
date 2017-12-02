@@ -1,5 +1,8 @@
 package com.oath.micro.server.application.registry;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -52,19 +55,25 @@ public class RegisterEntry {
         this(-1, null, null, null, null, null, null, -1);
     }
 
-    public RegisterEntry(int port, String hostname, String module, String context, Date time, String uuid,
-                         String target, int externalPort) {
-        this(port, hostname, module, context, time, uuid, target, null, Health.OK, null, externalPort);
+    public RegisterEntry(int port, String hostname, String module, String context, Date time,
+        String uuid,
+        String target, int externalPort) {
+        this(port, hostname, module, context, time, uuid, target, null, Health.OK, null,
+            externalPort);
     }
 
-    public RegisterEntry(int port, String hostname, String module, String context, Date time, String target,
-                         int externalPort) {
-        this(port, hostname, module, context, time, UUID.randomUUID().toString(), target, externalPort);
+    public RegisterEntry(int port, String hostname, String module, String context, Date time,
+        String target,
+        int externalPort) {
+        this(port, hostname, module, context, time, UUID.randomUUID().toString(), target,
+            externalPort);
     }
 
-    private RegisterEntry(int port, String hostname, String module, String context, Date time, String uuid,
-            String target, String ignoreDate, Health health, List<Map<String, Map<String, String>>> stats,
-            int externalPort) {
+    private RegisterEntry(int port, String hostname, String module, String context, Date time,
+        String uuid,
+        String target, String ignoreDate, Health health,
+        List<Map<String, Map<String, String>>> stats,
+        int externalPort) {
         this.port = port;
         this.hostname = hostname;
         this.module = module;
@@ -76,10 +85,11 @@ public class RegisterEntry {
         this.stats = stats;
         this.externalPort = externalPort;
 
-        if (time != null)
+        if (time != null) {
             this.formattedDate = f.format(this.time);
-        else
+        } else {
             this.formattedDate = null;
+        }
 
         this.manifest.putAll(ManifestLoader.instance.getManifest());
 
@@ -87,22 +97,23 @@ public class RegisterEntry {
 
     public boolean matches(RegisterEntry re) {
         //Only the fields which make sense to query is added for now.
-        return  (re.port == -1 || re.port == port) &&
-                (Objects.isNull(re.hostname) || Objects.nonNull(hostname) && hostname.startsWith(re.hostname)) &&
-                (Objects.isNull(re.module) || Objects.nonNull(module) && module.startsWith(re.module)) &&
-                (Objects.isNull(re.context) || Objects.nonNull(context) && context.startsWith(re.context)) &&
-                (Objects.isNull(re.health) || re.health.equals(health)) &&
-                (re.externalPort == -1 || re.externalPort == externalPort) &&
-                (Objects.isNull(re.manifest) || re.manifest.isEmpty() || matchManifest(re.manifest));
+        return (re.port == -1 || re.port == port) &&
+            (isNull(re.hostname) || nonNull(hostname) && hostname.startsWith(re.hostname)) &&
+            (isNull(re.module) || nonNull(module) && module.startsWith(re.module)) &&
+            (isNull(re.context) || nonNull(context) && context.startsWith(re.context)) &&
+            (isNull(re.health) || re.health.equals(health)) &&
+            (re.externalPort == -1 || re.externalPort == externalPort) &&
+            (isNull(re.manifest) || re.manifest.isEmpty() || matchManifest(re.manifest));
     }
 
     private boolean matchManifest(Map<String, String> manifest) {
-        return  match(manifest, this.manifest, "Implementation-revision") &&
-                match(manifest, this.manifest, "Implementation-Timestamp") &&
-                match(manifest, this.manifest, "Implementation-Version");
+        return match(manifest, this.manifest, "Implementation-revision") &&
+            match(manifest, this.manifest, "Implementation-Timestamp") &&
+            match(manifest, this.manifest, "Implementation-Version");
     }
 
     private boolean match(Map<String, String> map1, Map<String, String> map2, String key) {
-        return !map1.containsKey(key) || (map2.containsKey(key) && map2.get(key).startsWith(map1.get(key)));
+        return !map1.containsKey(key) || (map2.containsKey(key) && map2.get(key)
+            .startsWith(map1.get(key)));
     }
 }

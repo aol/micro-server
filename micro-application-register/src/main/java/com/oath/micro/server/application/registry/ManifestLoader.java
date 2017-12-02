@@ -13,17 +13,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ManifestLoader {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public final static ManifestLoader instance = new ManifestLoader();
-    Supplier<Map<String, String>> fn = FluentFunctions.of(this::manifest)
-                                                      .memoize();
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    Supplier<Map<String, String>> fn = FluentFunctions.of(this::manifest).memoize();
 
     public Map<String, String> getManifest() {
         return fn.get();
@@ -33,12 +31,12 @@ public class ManifestLoader {
 
         try {
             return ReactiveSeq.of("META-INF/MANIFEST.MF")
-                              .map(url -> this.getClass()
-                                              .getClassLoader()
-                                              .getResourceAsStream(url))
-                              .map(this::getManifest)
-                              .single()
-                              .orElse(null);
+                .map(url -> this.getClass()
+                    .getClassLoader()
+                    .getResourceAsStream(url))
+                .map(this::getManifest)
+                .single()
+                .orElse(null);
         } catch (Exception e) {
             logger.warn("Warning : can't load manifest due to exception {}", e.getMessage());
         }
@@ -54,10 +52,7 @@ public class ManifestLoader {
             manifest.read(input);
             final Attributes attributes = manifest.getMainAttributes();
             for (final Map.Entry attribute : attributes.entrySet()) {
-                retMap.put(attribute.getKey()
-                                    .toString(),
-                           attribute.getValue()
-                                    .toString());
+                retMap.put(attribute.getKey().toString(), attribute.getValue().toString());
             }
         } catch (final Exception ex) {
             logger.error("Failed to load manifest ", ex);

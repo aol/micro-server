@@ -23,33 +23,27 @@ public class CleanerTest {
     public void setUp() throws Exception {
         try {
             new File(
-                     System.getProperty("java.io.tmpdir"), "lana-service-reg-cleaner").delete();
+                System.getProperty("java.io.tmpdir"), "lana-service-reg-cleaner").delete();
         } catch (Exception e) {
         }
 
         new File(
-                 System.getProperty("java.io.tmpdir"), "lana-service-reg-cleaner").mkdirs();
+            System.getProperty("java.io.tmpdir"), "lana-service-reg-cleaner").mkdirs();
         registerConfig = new RegisterConfig(
-                                            new File(
-                                                     System.getProperty("java.io.tmpdir"),
-                                                     "lana-service-reg-cleaner").getAbsolutePath());
-        writer = new Register(
-                              registerConfig);
-        finder = new Finder(
-                            registerConfig);
-        cleaner = new Cleaner(
-                              registerConfig, 1);
+            new File(
+                System.getProperty("java.io.tmpdir"),
+                "lana-service-reg-cleaner").getAbsolutePath());
+        writer = new Register(registerConfig);
+        finder = new Finder(registerConfig);
+        cleaner = new Cleaner(registerConfig, 1);
 
         entry = new RegisterEntry(
-                                  8080, "host", "module", "context", new Date(), null, 8080);
-
+            8080, "host", "module", "context", new Date(), null, 8080);
     }
 
     @Test
     public void testClean() {
-        writer.register(entry.withTime(new Date(
-                                                System.currentTimeMillis() - 2000)));
-
+        writer.register(entry.withTime(new Date(System.currentTimeMillis() - 2000)));
         cleaner.clean();
         List<RegisterEntry> list = finder.find(Optional.empty());
         assertThat(list.size(), equalTo(0));

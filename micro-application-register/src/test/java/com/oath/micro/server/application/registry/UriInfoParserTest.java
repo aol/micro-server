@@ -17,7 +17,7 @@ public class UriInfoParserTest {
     @Test
     public void toRegisterEntryFromQueryParameters() throws Exception {
         UriInfo uriInfo = Mockito.mock(UriInfo.class);
-        MultivaluedMap<String,String> data = new MultivaluedHashMap<>();
+        MultivaluedMap<String, String> data = new MultivaluedHashMap<>();
         data.put("port", Arrays.asList("8080"));
         data.put("externalPort", Arrays.asList("9090"));
         data.put("hostname", Arrays.asList("host1"));
@@ -54,6 +54,5 @@ public class UriInfoParserTest {
 
         Optional<RegisterEntry> re = UriInfoParser.toRegisterEntry(uriInfo);
         assertFalse(re.isPresent());
-
     }
 }

@@ -16,34 +16,33 @@ import com.oath.micro.server.servers.model.ServerData;
 
 public class ApplicationRegisterTest {
 
-	private ApplicationRegisterImpl applicationRegister;
-	private int count;
+    private ApplicationRegisterImpl applicationRegister;
+    private int count;
 
-	@Before
-	public void setUp() {
-		count = 0;
-	}
+    @Before
+    public void setUp() {
+        count = 0;
+    }
 
-	@Test
-	public void testConstructor() {
-		applicationRegister = new ApplicationRegisterImpl();
-		
-		assertThat(applicationRegister.getApplication(), is(nullValue()));
-	}
+    @Test
+    public void testConstructor() {
+        applicationRegister = new ApplicationRegisterImpl();
+        assertThat(applicationRegister.getApplication(), is(nullValue()));
+    }
 
-	@Test
-	public void testRegister() {
-		ServerData data1 = new ServerData(8080, new ArrayList<>(), null, "url", () -> "");
-		ServerData data2 = new ServerData(8080, new ArrayList<>(), null, "url", () -> "");
-		ServerData data3 = new ServerData(8080, new ArrayList<>(), null, "url", () -> "");
+    @Test
+    public void testRegister() {
+        ServerData data1 = new ServerData(8080, new ArrayList<>(), null, "url", () -> "");
+        ServerData data2 = new ServerData(8080, new ArrayList<>(), null, "url", () -> "");
+        ServerData data3 = new ServerData(8080, new ArrayList<>(), null, "url", () -> "");
 
-		List<ServerData> datas = Arrays.asList(data1, data2, data3);
+        List<ServerData> datas = Arrays.asList(data1, data2, data3);
 
-		applicationRegister = new ApplicationRegisterImpl();
+        applicationRegister = new ApplicationRegisterImpl();
 
-		ServerData[] dataArray = new ServerData[datas.size()];
-		applicationRegister.register(datas.toArray(dataArray));
-		applicationRegister.getApplication().forEach(it -> count++);
-		assertThat(count, is(3));
-	}
+        ServerData[] dataArray = new ServerData[datas.size()];
+        applicationRegister.register(datas.toArray(dataArray));
+        applicationRegister.getApplication().forEach(it -> count++);
+        assertThat(count, is(3));
+    }
 }

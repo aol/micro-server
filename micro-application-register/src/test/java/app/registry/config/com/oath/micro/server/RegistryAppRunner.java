@@ -19,22 +19,25 @@ import com.oath.micro.server.rest.client.nio.AsyncRestClient;
 import com.oath.micro.server.rest.jackson.JacksonUtil;
 import com.oath.micro.server.testing.RestAgent;
 
-@Microserver(properties = { "external.port.registry-app", "9090", "service.registry.url",
-        "http://localhost:8080/registry-app", "host.address", "test-host" })
+@Microserver(properties = {
+    "external.port.registry-app",
+    "9090",
+    "service.registry.url",
+    "http://localhost:8080/registry-app",
+    "host.address",
+    "test-host"
+})
 public class RegistryAppRunner {
 
-    RestAgent rest = new RestAgent();
     private final AsyncRestClient restAsync = new AsyncRestClient(
-                                                                  100, 2000);
+        100, 2000);
+    RestAgent rest = new RestAgent();
     MicroserverApp server;
 
     @Before
     public void startServer() {
-
-        server = new MicroserverApp(
-                                    () -> "registry-app");
+        server = new MicroserverApp(() -> "registry-app");
         server.start();
-
     }
 
     @After
@@ -48,46 +51,45 @@ public class RegistryAppRunner {
         Thread.sleep(1000);
 
         assertThat(rest.post("http://localhost:8080/registry-app/service-registry/schedule"),
-                   is("{\"status\":\"success\"}"));
+            is("{\"status\":\"success\"}"));
         Thread.sleep(1000);
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
-                   containsString("[{\"port\":8080,"));
+            containsString("[{\"port\":8080,"));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
-                   containsString("externalPort\":9090"));
+            containsString("externalPort\":9090"));
 
         sendPing(new RegisterEntry(
-                                   8081, "use-ip", "hello", "world", new Date(), "my-target", 8082));
+            8081, "use-ip", "hello", "world", new Date(), "my-target", 8082));
         Thread.sleep(1000);
-        System.out.println(rest.getJson("http://localhost:8080/registry-app/service-registry/list"));
+        System.out
+            .println(rest.getJson("http://localhost:8080/registry-app/service-registry/list"));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
-                   containsString("{\"port\":8081,"));
+            containsString("{\"port\":8081,"));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
-                   containsString("\"hostname\":\"test-host\""));
+            containsString("\"hostname\":\"test-host\""));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
-                   containsString("\"health\":\"OK\""));
+            containsString("\"health\":\"OK\""));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
-                   not(containsString("\"target\":\"configured-target\"")));
+            not(containsString("\"target\":\"configured-target\"")));
 
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
-                   not(containsString("\"stats\"")));
+            not(containsString("\"stats\"")));
         rest.getJson("http://localhost:8080/health/error");
         rest.getJson("http://localhost:8080/health/stats");
         rest.post("http://localhost:8080/registry-app/service-registry/schedule");
         Thread.sleep(1000);
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
-                   containsString("\"health\":\"ERROR\""));
+            containsString("\"health\":\"ERROR\""));
         assertThat(rest.getJson("http://localhost:8080/registry-app/service-registry/list"),
-                   containsString("\"stats\""));
+            containsString("\"stats\""));
 
     }
 
     private void sendPing(RegisterEntry entry) {
-
         try {
-
             restAsync.post("http://localhost:8080/registry-app/service-registry/register",
-                           JacksonUtil.serializeToJson(entry))
-                     .join();
+                JacksonUtil.serializeToJson(entry))
+                .join();
         } catch (Exception e) {
 
         }

@@ -23,23 +23,18 @@ public class FinderTest {
     public void setUp() throws Exception {
         try {
             new File(
-                     System.getProperty("java.io.tmpdir"), "service-reg-finder").delete();
+                System.getProperty("java.io.tmpdir"), "service-reg-finder").delete();
         } catch (Exception e) {
         }
 
-        new File(
-                 System.getProperty("java.io.tmpdir"), "service-reg-finder").mkdirs();
+        new File(System.getProperty("java.io.tmpdir"), "service-reg-finder").mkdirs();
         registerConfig = new RegisterConfig(
-                                            new File(
-                                                     System.getProperty("java.io.tmpdir"),
-                                                     "service-reg-finder").getAbsolutePath());
-        writer = new Register(
-                              registerConfig);
-        finder = new Finder(
-                            registerConfig);
-
+            new File(System.getProperty("java.io.tmpdir"),
+                "service-reg-finder").getAbsolutePath());
+        writer = new Register(registerConfig);
+        finder = new Finder(registerConfig);
         entry = new RegisterEntry(
-                                  8080, "host", "module", "context", new Date(), null, 8080);
+            8080, "host", "module", "context", new Date(), null, 8080);
     }
 
     @Test
@@ -47,8 +42,6 @@ public class FinderTest {
         writer.register(entry);
         List<RegisterEntry> list = finder.find(Optional.empty());
         assertThat(list.size(), greaterThan(0));
-        assertThat(list.get(0)
-                       .getContext(),
-                   equalTo("context"));
+        assertThat(list.get(0).getContext(), equalTo("context"));
     }
 }

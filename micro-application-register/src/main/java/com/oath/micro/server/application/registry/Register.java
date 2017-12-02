@@ -16,28 +16,28 @@ import com.oath.micro.server.rest.jackson.JacksonUtil;
 @Component
 public class Register {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
-	private final RegisterConfig config;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final RegisterConfig config;
 
-	@Autowired
-	public Register(RegisterConfig config) {
-		this.config = config;
-	}
+    @Autowired
+    public Register(RegisterConfig config) {
+        this.config = config;
+    }
 
-	public void register(final RegisterEntry entry) {
+    public void register(final RegisterEntry entry) {
 
-		File dir = new File(config.getOutputDir(), "" + entry.getModule());
-		dir.mkdirs();
+        File dir = new File(config.getOutputDir(), "" + entry.getModule());
+        dir.mkdirs();
 
-		File file = new File(dir, entry.getHostname() + "-" + entry.getModule() + "-" + entry.getUuid());
-		try {
-			final RegisterEntry entryToUse = "use-ip".equals(entry.getHostname()) ? 
-									entry.withHostname(QueryIPRetriever.getIpAddress()) : entry;
-			
-			
-			FileUtils.writeStringToFile(file, JacksonUtil.serializeToJson(entryToUse));
-		} catch (IOException e) {
-			logger.error("Error registering service to disk {}", JacksonUtil.serializeToJson(entry));
-		}
-	}
+        File file = new File(dir,
+            entry.getHostname() + "-" + entry.getModule() + "-" + entry.getUuid());
+        try {
+            final RegisterEntry entryToUse = "use-ip".equals(entry.getHostname()) ?
+                entry.withHostname(QueryIPRetriever.getIpAddress()) : entry;
+
+            FileUtils.writeStringToFile(file, JacksonUtil.serializeToJson(entryToUse));
+        } catch (IOException e) {
+            logger.error("Error registering service to disk {}", JacksonUtil.serializeToJson(entry));
+        }
+    }
 }
