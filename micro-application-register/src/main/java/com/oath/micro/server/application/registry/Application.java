@@ -11,24 +11,23 @@ import lombok.experimental.FieldDefaults;
 
 import com.oath.micro.server.rest.jackson.JacksonUtil;
 
-@FieldDefaults(makeFinal=true, level=AccessLevel.PRIVATE)
-public class Application implements Iterable<RegisterEntry>{
-	
-	
-	PersistentList<RegisterEntry> entries;
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+public class Application implements Iterable<RegisterEntry> {
 
-	public Application(final List<RegisterEntry> entries) {
-		this.entries = Seq.fromIterable(entries);
-	}
+    PersistentList<RegisterEntry> entries;
 
-	@Override
-	public Iterator<RegisterEntry> iterator() {
-		return entries.iterator();
-	}
-	
-	public String toString(){
-		return JacksonUtil.serializeToJson(entries);
-	}
-	
-	
+    public Application(final List<RegisterEntry> entries) {
+        this.entries = Seq.fromIterable(entries);
+    }
+
+    @Override
+    public Iterator<RegisterEntry> iterator() {
+        return entries.iterator();
+    }
+
+    public String toString() {
+        return JacksonUtil.serializeToJson(entries);
+    }
+
+
 }

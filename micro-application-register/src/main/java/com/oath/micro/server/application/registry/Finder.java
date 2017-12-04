@@ -19,42 +19,45 @@ import com.oath.micro.server.rest.jackson.JacksonUtil;
 
 @Component
 public class Finder {
-	private final Logger logger = LoggerFactory.getLogger(getClass());
-	private final RegisterConfig config;
 
-	@Autowired
-	public Finder(RegisterConfig config) {
-		this.config = config;
-	}
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final RegisterConfig config;
 
-	public List<RegisterEntry> find(final Optional<RegisterEntry> re) {
+    @Autowired
+    public Finder(RegisterConfig config) {
+        this.config = config;
+    }
 
-		List<RegisterEntry> entries = findDir(new File(config.getOutputDir()));
-		if (re.isPresent()) {
-			entries = entries.stream().filter( e -> e.matches(re.get())).collect(Collectors.toList());
-		}
-		return entries;
-	}
+    public List<RegisterEntry> find(final Optional<RegisterEntry> re) {
 
-	private List<RegisterEntry> findDir(File dir) {
-		List<RegisterEntry> result = new ArrayList<>();
-		
-		Stream.of(dir.listFiles()).forEach(
-				(next) -> {
+        List<RegisterEntry> entries = findDir(new File(config.getOutputDir()));
+        if (re.isPresent()) {
+            entries = entries.stream().filter(e -> e.matches(re.get()))
+                .collect(Collectors.toList());
+        }
+        return entries;
+    }
 
-					if (next.isDirectory())
-						result.addAll(findDir(next));
-					if (next.isFile()) {
-						try {
-							String fileString = FileUtils.readFileToString(next);
-							result.add(JacksonUtil.convertFromJson(fileString, RegisterEntry.class));
-						} catch (Exception e) {
-							logger.error("Error loading service entry from disk {}", e,
-									next.getAbsolutePath());
+    private List<RegisterEntry> findDir(File dir) {
+        List<RegisterEntry> result = new ArrayList<>();
 
-						}
-					}
-				});
-		return ListX.fromIterable(result);
-	}
+        Stream.of(dir.listFiles()).forEach(
+            (next) -> {
+
+                if (next.isDirectory()) {
+                    result.addAll(findDir(next));
+                }
+                if (next.isFile()) {
+                    try {
+                        String fileString = FileUtils.readFileToString(next);
+                        result.add(JacksonUtil.convertFromJson(fileString, RegisterEntry.class));
+                    } catch (Exception e) {
+                        logger.error("Error loading service entry from disk {}", e,
+                            next.getAbsolutePath());
+
+                    }
+                }
+            });
+        return ListX.fromIterable(result);
+    }
 }

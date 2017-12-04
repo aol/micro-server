@@ -18,15 +18,15 @@ public class RegisterEntryTest {
     @Before
     public void setUp() throws Exception {
         entry = RegisterEntry.builder()
-                .port(8080)
-                .hostname("host")
-                .module("module")
-                .context("context")
-                .time(new Date())
-                .uuid("1")
-                .target("target")
-                .externalPort(9090)
-                .build();
+            .port(8080)
+            .hostname("host")
+            .module("module")
+            .context("context")
+            .time(new Date())
+            .uuid("1")
+            .target("target")
+            .externalPort(9090)
+            .build();
         Map<String, String> manifest = entry.getManifest();
         manifest.put("Implementation-revision", "a2edfe4bc");
         manifest.put("Implementation-Version", "version");

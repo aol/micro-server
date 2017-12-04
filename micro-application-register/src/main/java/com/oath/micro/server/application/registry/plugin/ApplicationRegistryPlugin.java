@@ -18,8 +18,17 @@ public class ApplicationRegistryPlugin implements Plugin {
 
     @Override
     public Set<Class> springClasses() {
-        return SetX.of(ApplicationRegisterImpl.class, Cleaner.class, Register.class, ServiceRegistryResource.class,
-                        RegisterConfig.class, Job.class, Finder.class, RegistryHealthChecker.class, RegistryStatsChecker.class);
+        return SetX.of(
+            ApplicationRegisterImpl.class,
+            Cleaner.class,
+            Register.class,
+            ServiceRegistryResource.class,
+            RegisterConfig.class,
+            Job.class,
+            Finder.class,
+            RegistryHealthChecker.class,
+            RegistryStatsChecker.class
+        );
     }
 
 }

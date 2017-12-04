@@ -6,7 +6,7 @@ dependencies {
   compile project(':micro-client')
   compile project(':micro-ip-tracker')
   testCompile project(':micro-grizzly-with-jersey')
-  testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: hamcrestVersion
+  testCompile 'org.hamcrest:hamcrest-all:' + hamcrestVersion
 }
 
 modifyPom {
@@ -19,7 +19,6 @@ modifyPom {
     groupId 'com.oath.microservices'
     artifactId 'micro-application-register'
     version "$version"
-
 
     scm {
       url 'scm:git@github.com:aol/micro-server.git'

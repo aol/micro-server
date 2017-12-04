@@ -22,19 +22,20 @@ public class Job {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final AsyncRestClient rest = new AsyncRestClient(
-                                                             100, 2000);
+        100, 2000);
     private final String apiUrl;
     private final ApplicationRegisterImpl app;
     private final String uuid = UUID.randomUUID()
-                                    .toString();
+        .toString();
     private final String resourcePath;
     private final RegistryHealthChecker checker;
     private final RegistryStatsChecker statsChecker;
 
     @Autowired
     public Job(@Value("${service.registry.url:#{null}}") String apiUrl, ApplicationRegisterImpl app,
-            @Value("${resource.path:/service-registry/register}") String resourcePath, RegistryHealthChecker checker,
-            RegistryStatsChecker statsChecker) {
+        @Value("${resource.path:/service-registry/register}") String resourcePath,
+        RegistryHealthChecker checker,
+        RegistryStatsChecker statsChecker) {
 
         this.apiUrl = apiUrl;
         this.app = app;
@@ -48,9 +49,10 @@ public class Job {
     @Scheduled(fixedDelayString = "${service.registry.delay:1000}")
     public synchronized void schedule() {
         try {
-            if (app.getApplication() != null && apiUrl != null)
+            if (app.getApplication() != null && apiUrl != null) {
                 app.getApplication()
-                   .forEach(moduleEntry -> sendPing(moduleEntry));
+                    .forEach(moduleEntry -> sendPing(moduleEntry));
+            }
         } catch (Exception e) {
             logger.error("Failed to register services due to exception {}", e.getMessage(), e);
         }
@@ -58,23 +60,28 @@ public class Job {
 
     private void sendPing(RegisterEntry moduleEntry) {
         final RegisterEntry entry = moduleEntry.withTime(new Date())
-                                               .withUuid(uuid)
-                                               .withHealth(checker.isOk() ? Health.OK : Health.ERROR)
-                                               .withStats(nonEmptyOrNull(statsChecker.stats()));
+            .withUuid(uuid)
+            .withHealth(checker.isOk() ? Health.OK : Health.ERROR)
+            .withStats(nonEmptyOrNull(statsChecker.stats()));
         try {
 
-            logger.debug("Posting {} to " + apiUrl + resourcePath, JacksonUtil.serializeToJson(entry));
+            logger.debug("Posting {} to " + apiUrl + resourcePath,
+                JacksonUtil.serializeToJson(entry));
             rest.post(apiUrl + resourcePath, JacksonUtil.serializeToJson(entry))
                 .join();
         } catch (Exception e) {
-            logger.warn("Failed posting {} to {}" + resourcePath, JacksonUtil.serializeToJson(entry), apiUrl);
+            logger
+                .warn("Failed posting {} to {}" + resourcePath, JacksonUtil.serializeToJson(entry),
+                    apiUrl);
 
         }
     }
 
-    private List<Map<String, Map<String, String>>> nonEmptyOrNull(List<Map<String, Map<String, String>>> stats) {
-        if (stats == null || stats.isEmpty())
+    private List<Map<String, Map<String, String>>> nonEmptyOrNull(
+        List<Map<String, Map<String, String>>> stats) {
+        if (stats == null || stats.isEmpty()) {
             return null;
+        }
         return stats;
     }
 }

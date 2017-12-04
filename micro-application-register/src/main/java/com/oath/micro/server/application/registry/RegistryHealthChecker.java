@@ -25,8 +25,7 @@ public class RegistryHealthChecker {
     }
 
     public boolean isOk() {
-
-        return status.map(hs -> hs.isOk())
-                     .reduce(Monoid.of(true, Semigroups.booleanConjunction));
+        return status.map(HealthStatusChecker::isOk)
+            .reduce(Monoid.of(true, Semigroups.booleanConjunction));
     }
 }

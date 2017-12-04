@@ -19,29 +19,28 @@ public class WriterTest {
     public void setUp() throws Exception {
         try {
             FileUtils.deleteDirectory(new File(
-                                               System.getProperty("java.io.tmpdir"), "service-reg-writer"));
+                System.getProperty("java.io.tmpdir"), "service-reg-writer"));
         } catch (Exception e) {
         }
 
-        new File(
-                 System.getProperty("java.io.tmpdir"), "service-reg-writer").mkdirs();
+        new File(System.getProperty("java.io.tmpdir"), "service-reg-writer").mkdirs();
         writer = new Register(
-                              new RegisterConfig(
-                                                 new File(
-                                                          System.getProperty("java.io.tmpdir"),
-                                                          "service-reg-writer").getAbsolutePath()));
+            new RegisterConfig(
+                new File(
+                    System.getProperty("java.io.tmpdir"),
+                    "service-reg-writer").getAbsolutePath()));
 
         entry = new RegisterEntry(
-                                  8080, "host", "module", "context", new Date(), null, 8080);
+            8080, "host", "module", "context", new Date(), null, 8080);
     }
 
     @Test
     public void testRegister() {
         writer.register(entry);
         File dir = new File(
-                            new File(
-                                     System.getProperty("java.io.tmpdir"), "service-reg-writer"),
-                            "module");
+            new File(
+                System.getProperty("java.io.tmpdir"), "service-reg-writer"),
+            "module");
         assertThat(dir.listFiles().length, equalTo(1));
     }
 }

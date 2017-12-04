@@ -25,15 +25,15 @@ public class RegistryStatsChecker {
 
     @Autowired(required = false)
     public RegistryStatsChecker(final List<StatsSupplier> status,
-            @Value("${service.registry.stats.active:true}") boolean active) {
+        @Value("${service.registry.stats.active:true}") boolean active) {
         this.status = ListX.fromIterable(status);
         this.active = active;
     }
 
     public List<Map<String, Map<String, String>>> stats() {
-        if (!active)
+        if (!active) {
             return null;
-        return status.map(StatsSupplier::get)
-                     .filter(Objects::nonNull);
+        }
+        return status.map(StatsSupplier::get).filter(Objects::nonNull);
     }
 }
