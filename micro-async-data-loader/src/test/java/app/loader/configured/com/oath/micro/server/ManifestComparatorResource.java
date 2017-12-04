@@ -12,8 +12,8 @@ import com.oath.micro.server.manifest.ManifestComparator;
 @Rest
 public class ManifestComparatorResource {
 
-    private volatile int count = 1;
     private final ManifestComparator<String> comparator;
+    private volatile int count = 1;
 
     @Autowired
     public ManifestComparatorResource(ManifestComparator comparator) {

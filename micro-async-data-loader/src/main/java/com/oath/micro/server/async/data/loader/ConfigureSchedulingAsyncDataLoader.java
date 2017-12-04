@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 import com.oath.micro.server.manifest.ManifestComparator;
 import com.google.common.eventbus.EventBus;
 
@@ -38,26 +37,25 @@ public class ConfigureSchedulingAsyncDataLoader {
 
     private ListX<DataLoader> dataLoaders() {
         SetX<ManifestComparator> comparatorSet = SetX.fromIterable(dataLoaders)
-                                                     .map(dl -> dl.comparator);
+            .map(dl -> dl.comparator);
         return ReactiveSeq.fromIterable(defaultComparators)
-                          .filter(i -> !comparatorSet.contains(i))
-                          .map(mc -> new DataLoader(
-                                                    mc, defaultCron))
-                          .appendS(dataLoaders.stream())
-                          .toListX();
-
+            .filter(i -> !comparatorSet.contains(i))
+            .map(mc -> new DataLoader(mc, defaultCron))
+            .appendS(dataLoaders.stream())
+            .toListX();
     }
 
     @Bean
     public LoaderSchedular asyncDataLoader() {
         ConditionallyLoad cc = () -> true;
-        BinaryOperator<ConditionallyLoad> accumulator = (cc1, cc2) -> () -> cc1.shouldLoad() && cc2.shouldLoad();
+        BinaryOperator<ConditionallyLoad> accumulator = (cc1, cc2) -> () -> cc1.shouldLoad() && cc2
+            .shouldLoad();
 
         LoaderSchedular schedular = new LoaderSchedular(
-                                                        dataLoaders(),
-                                                        Executors.newScheduledThreadPool(schedularThreads), bus,
-                                                        predicates.stream()
-                                                                  .reduce(cc, accumulator));
+            dataLoaders(),
+            Executors.newScheduledThreadPool(schedularThreads),
+            bus,
+            predicates.stream().reduce(cc, accumulator));
         schedular.schedule();
         return schedular;
     }

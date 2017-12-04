@@ -31,7 +31,7 @@ public class SecondComparatorResource {
     public String get() {
         comparator.load();
         return comparator.getData()
-                         .toString();
+            .toString();
 
     }
 
