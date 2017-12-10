@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-  compile("com.oath.cyclops:cyclops:$cyclopsVersion")
+  compile 'com.oath.cyclops:cyclops:' + cyclopsVersion
   compile project(':micro-events')
   compile project(':micro-manifest-comparator')
   testCompile project(':micro-grizzly-with-jersey')

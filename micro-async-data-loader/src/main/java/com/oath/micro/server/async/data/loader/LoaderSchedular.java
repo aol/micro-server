@@ -13,10 +13,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class LoaderSchedular {
 
+    private ListX<DataLoader> loader;
     private final ScheduledExecutorService executor;
     private final EventBus bus;
     private final ConditionallyLoad condition;
-    private ListX<DataLoader> loader;
 
     public void schedule() {
 
