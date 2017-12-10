@@ -23,9 +23,7 @@ public class LoaderSchedular {
         loader.forEach(dl -> {
 
             // run on startup
-            create(dl).limit(1).foldFuture(executor,
-                      s->s.forEach(Long.MAX_VALUE,l -> {
-            }));
+            create(dl).limit(1).foldFuture(executor, s -> s.forEach(Long.MAX_VALUE, l -> {}));
 
             // schedule
             create(dl).schedule(dl.getCron(), executor);
@@ -34,8 +32,8 @@ public class LoaderSchedular {
 
     private ReactiveSeq<SystemData<String, String>> create(DataLoader dl) {
         return ReactiveSeq.generate(() -> 1)
-                          .filter(in -> condition.shouldLoad())
-                          .map(in -> dl.scheduleAndLog())
-                          .peek(sd -> bus.post(sd));
+            .filter(in -> condition.shouldLoad())
+            .map(in -> dl.scheduleAndLog())
+            .peek(sd -> bus.post(sd));
     }
 }

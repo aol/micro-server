@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-  compile("com.oath.cyclops:cyclops:$cyclopsVersion")
+  compile 'com.oath.cyclops:cyclops:' + cyclopsVersion
   compile project(':micro-events')
   compile project(':micro-manifest-comparator')
   testCompile project(':micro-grizzly-with-jersey')
@@ -24,7 +24,6 @@ modifyPom {
     groupId 'com.oath.microservices'
     artifactId 'micro-async-data-loader'
     version "$version"
-
 
     scm {
       url 'scm:git@github.com:aol/micro-server.git'

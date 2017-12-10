@@ -8,8 +8,6 @@ import cyclops.collections.immutable.LinkedListX;
 import cyclops.control.Maybe;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-
 import com.oath.micro.server.auto.discovery.Rest;
 import com.oath.micro.server.distributed.DistributedMap;
 import com.oath.micro.server.events.SystemData;
@@ -32,7 +30,6 @@ public class CouchbaseResource {
     @Subscribe
     public synchronized void events(SystemData event) {
         dataLoads = dataLoads.plus(event);
-
     }
 
     @GET
@@ -52,8 +49,7 @@ public class CouchbaseResource {
     @GET
     @Path("/get")
     public String bucket() {
-        return client.get("hello")
-                     .toString();
+        return client.get("hello").toString();
     }
 
     @GET
