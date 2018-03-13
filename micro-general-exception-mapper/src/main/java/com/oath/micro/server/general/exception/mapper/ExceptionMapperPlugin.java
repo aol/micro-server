@@ -27,10 +27,5 @@ public class ExceptionMapperPlugin implements Plugin{
 	public Set<Class> springClasses() {
 		return SetX.of(MapOfExceptionsToErrorCodes.class);
 	}
-	
-	
-	
-	
-	
 
 }
