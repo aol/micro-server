@@ -1,9 +1,5 @@
 package com.aol.micro.server.general.exception.mapper;
 
-import java.util.HashSet;
-import java.util.Set;
-
-
 import com.aol.micro.server.Plugin;
 import cyclops.collections.immutable.PersistentSetX;
 
@@ -28,10 +24,5 @@ public class ExceptionMapperPlugin implements Plugin{
 	public PersistentSetX<Class> springClasses() {
 		return PersistentSetX.of(MapOfExceptionsToErrorCodes.class);
 	}
-	
-	
-	
-	
-	
 
 }

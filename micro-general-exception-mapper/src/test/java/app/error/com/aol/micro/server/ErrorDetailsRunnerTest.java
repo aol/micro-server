@@ -2,6 +2,7 @@ package app.error.com.aol.micro.server;
 
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
@@ -17,8 +18,10 @@ import com.aol.micro.server.config.Microserver;
 import com.aol.micro.server.module.ConfigurableModule;
 import com.aol.micro.server.testing.RestAgent;
 
+import javax.ws.rs.core.Response;
+
 @Microserver
-public class ErrorRunnerTest {
+public class ErrorDetailsRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
@@ -32,7 +35,6 @@ public class ErrorRunnerTest {
 				.build());
 	
 		server.start();
-
 	}
 	
 	@After
@@ -42,13 +44,8 @@ public class ErrorRunnerTest {
 	
 	@Test
 	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
-
-		
-		assertThat(rest.get("http://localhost:8080/simple-app/status/ping").getStatus(),is(400));
-		
-		
+		Response response = rest.get("http://localhost:8080/simple-app/status/ping");
+		assertThat(response.getStatus(),is(400));
+		assertThat(response.readEntity(String.class), containsString("{\"errorCode\":\"EMPTY_REQUEST\",\"message\":\"Error id:"));
 	}
-	
-	
-	
 }

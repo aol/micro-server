@@ -27,8 +27,8 @@ public class MapOfExceptionsToErrorCodes {
 
 	private static LinkedHashMap<Class<? extends Exception>, Tuple2<String, Status>> createMap(){
 			LinkedHashMap<Class<? extends Exception>, Tuple2<String, Status>> mapOfExceptionsToErrorCodes = new LinkedHashMap<>();
-			mapOfExceptionsToErrorCodes.put(EOFException.class, new Tuple2<String, Status>(EMPTY_REQUEST, Status.BAD_REQUEST));
-			mapOfExceptionsToErrorCodes.put(JsonProcessingException.class, new Tuple2<String, Status>(JSON_PROCESSING_EXCEPTION, Status.BAD_REQUEST));
+			mapOfExceptionsToErrorCodes.put(EOFException.class, new Tuple2<>(EMPTY_REQUEST, Status.BAD_REQUEST));
+			mapOfExceptionsToErrorCodes.put(JsonProcessingException.class, new Tuple2<>(JSON_PROCESSING_EXCEPTION, Status.BAD_REQUEST));
 			return mapOfExceptionsToErrorCodes;
 	
 	}
