@@ -28,8 +28,8 @@ public class GeneralExceptionMapperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		mapper = new GeneralExceptionMapper();
 		mockLogger = mock(Logger.class);
+		mapper = new GeneralExceptionMapper(mockLogger, true);
 	}
 
 	@Test
@@ -63,7 +63,7 @@ public class GeneralExceptionMapperTest {
 
 	@Test
 	public void whenJacksonException_thenNotInternalServerError_NoErrorsLogged() {
-		mapper=  new GeneralExceptionMapper(mockLogger);
+		mapper=  new GeneralExceptionMapper(mockLogger, true);
 		assertThat(mapper.toResponse(new MyLocalException()).getStatus(), is((Status.INTERNAL_SERVER_ERROR.getStatusCode())));
 		verify(mockLogger, times(0)).error(any(String.class), any(Object[].class));
 		verify(mockLogger, times(0)).error(any(String.class), any(Throwable.class), any(Object[].class));
