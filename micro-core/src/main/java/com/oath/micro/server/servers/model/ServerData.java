@@ -71,5 +71,13 @@ public class ServerData {
 		}
 	}
 
+	public String getNormalizedContextPath(){
+	    if("".equals(module.getContext()))
+            return "";
+	    else
+	        return "/"+module.getContext();
+
+    }
+
 
 }

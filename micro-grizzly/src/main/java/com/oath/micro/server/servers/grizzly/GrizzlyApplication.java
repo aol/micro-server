@@ -48,13 +48,13 @@ public class GrizzlyApplication implements ServerApplication {
 	private final PersistentList<ServletData> servletData;
 	private final PersistentList<ServletContextListener> servletContextListenerData;
 	private final PersistentList<ServletRequestListener> servletRequestListenerData;
-	
+
 	public GrizzlyApplication(AllData serverData) {
 		this.serverData = serverData.getServerData();
 		this.filterData = serverData.getFilterDataList();
 		this.servletData = serverData.getServletDataList();
 		this.servletContextListenerData = serverData.getServletContextListeners();
-		this.servletRequestListenerData = serverData.getServletRequestListeners();		
+		this.servletRequestListenerData = serverData.getServletRequestListeners();
 	}
 
 	public void run(CompletableFuture start,  JaxRsServletConfigurer jaxRsConfigurer, CompletableFuture end) {
@@ -63,7 +63,7 @@ public class GrizzlyApplication implements ServerApplication {
 
 		new ServletContextListenerConfigurer(serverData, servletContextListenerData, servletRequestListenerData);
 
-		
+
 		jaxRsConfigurer.addServlet(this.serverData,webappContext);
 
 		new ServletConfigurer(serverData, servletData).addServlets(webappContext);
@@ -79,7 +79,7 @@ public class GrizzlyApplication implements ServerApplication {
 
 		startServer(webappContext, httpServer, start, end);
 	}
-	
+
 	private void addSSL(HttpServer httpServer) {
 		SSLProperties sslProperties = serverData.getRootContext().getBean(SSLProperties.class);
 		if (sslProperties != null) {
@@ -91,10 +91,10 @@ public class GrizzlyApplication implements ServerApplication {
 		webappContext.deploy(httpServer);
 		try {
 			logger.info("Starting application {} on port {}", serverData.getModule().getContext(), serverData.getPort());
-			logger.info("Browse to http://localhost:{}/{}/application.wadl", serverData.getPort(), serverData.getModule().getContext());
+			logger.info("Browse to http://localhost:{}{}/application.wadl", serverData.getPort(), serverData.getNormalizedContextPath());
 			logger.info("Configured resource classes :-");
 			serverData.extractResources()
-					.forEach(t -> logger.info(t._1() + " : " + "http://localhost:" + serverData.getPort() + "/" + serverData.getModule().getContext() + t._2()));
+					.forEach(t -> logger.info(t._1() + " : " + "http://localhost:" + serverData.getPort() + "/" + serverData.getNormalizedContextPath() + t._2()));
 			;
 			httpServer.start();
 			start.complete(true);
@@ -129,7 +129,7 @@ public class GrizzlyApplication implements ServerApplication {
 
 		}
 	}
-	
+
 
 	private NetworkListener createSSLListener(int port, SSLProperties sslProperties) {
 
