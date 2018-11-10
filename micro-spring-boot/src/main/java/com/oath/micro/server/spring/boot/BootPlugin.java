@@ -6,8 +6,8 @@ import java.util.function.Function;
 
 import javax.ws.rs.core.FeatureContext;
 
-import cyclops.collections.mutable.MapX;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.MapX;
+import cyclops.reactive.collections.mutable.SetX;
 import cyclops.companion.MapXs;
 import org.glassfish.jersey.CommonProperties;
 

@@ -6,7 +6,7 @@ import com.oath.micro.server.machine.stats.sigar.MachineStatsChecker;
 import com.oath.micro.server.machine.stats.sigar.SigarStats;
 import com.oath.micro.server.machine.stats.sigar.StatsServletContextListener;
 import com.oath.micro.server.machine.stats.sigar.rest.StatsResource;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 
 import java.util.Set;
 

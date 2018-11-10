@@ -3,7 +3,7 @@ package com.oath.micro.server;
 import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
-import cyclops.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.ListX;
 import cyclops.function.FluentFunctions;
 import cyclops.reactive.ReactiveSeq;
 import lombok.AccessLevel;
@@ -20,6 +20,6 @@ public class PluginLoader {
 																 .memoize();
 
 	private ListX<Plugin> load(){
-		 return  ReactiveSeq.fromIterable(ServiceLoader.load(Plugin.class)).toListX();
+		 return  ReactiveSeq.fromIterable(ServiceLoader.load(Plugin.class)).to(ListX::fromIterable);
 	}
 }

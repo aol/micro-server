@@ -3,7 +3,7 @@ package com.oath.micro.server.application.registry;
 import java.util.List;
 
 import cyclops.companion.Semigroups;
-import cyclops.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.ListX;
 import cyclops.function.Monoid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

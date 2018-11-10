@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import cyclops.collections.immutable.LinkedListX;
+import cyclops.reactive.collections.immutable.LinkedListX;
 import cyclops.data.Seq;
 import org.junit.Ignore;
 import org.junit.Test;

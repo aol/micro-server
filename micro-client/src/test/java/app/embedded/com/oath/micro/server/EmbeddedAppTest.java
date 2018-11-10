@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.NotFoundException;
 
-import cyclops.collections.immutable.LinkedListX;
+import cyclops.reactive.collections.immutable.LinkedListX;
 import jersey.repackaged.com.google.common.collect.ImmutableList;
 
 import org.junit.After;

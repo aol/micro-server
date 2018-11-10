@@ -1,6 +1,6 @@
 package app.publisher.binder.direct;
 
-import cyclops.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.ListX;
 import cyclops.reactive.ReactiveSeq;
 import org.junit.Test;
 

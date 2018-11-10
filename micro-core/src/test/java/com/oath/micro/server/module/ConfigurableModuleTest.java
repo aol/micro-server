@@ -21,8 +21,8 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
-import cyclops.collections.mutable.SetX;
-import cyclops.collections.immutable.LinkedListX;
+import cyclops.reactive.collections.mutable.SetX;
+import cyclops.reactive.collections.immutable.LinkedListX;
 import cyclops.data.HashSet;
 import org.junit.Assert;
 import org.junit.Before;

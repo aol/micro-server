@@ -4,7 +4,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import cyclops.collections.immutable.LinkedListX;
+import cyclops.reactive.collections.immutable.LinkedListX;
 import cyclops.control.Maybe;
 import org.springframework.beans.factory.annotation.Autowired;
 

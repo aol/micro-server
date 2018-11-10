@@ -22,7 +22,7 @@ public class ModuleTest {
 				.fromStream(
 						Arrays.asList(new MyPlugin())
 								.stream()).filter(module -> module.providers()!=null)
-								.flatMapI(Plugin::providers)
+								.concatMap(Plugin::providers)
 								.join(",");
 		
 		assertThat(additional, equalTo("com.my.new.provider,com.my.new.provider2"));

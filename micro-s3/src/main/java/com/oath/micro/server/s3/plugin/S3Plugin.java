@@ -6,7 +6,7 @@ import com.oath.micro.server.s3.DirectoryCleaner;
 import com.oath.micro.server.s3.S3Configuration;
 import com.oath.micro.server.s3.data.S3DistributedMapClient;
 import com.oath.micro.server.s3.data.S3Utils;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 
 import java.util.Set;
 

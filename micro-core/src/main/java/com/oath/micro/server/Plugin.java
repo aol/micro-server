@@ -19,9 +19,9 @@ import com.oath.micro.server.servers.model.ServerData;
 import com.oath.micro.server.spring.SpringBuilder;
 import com.oath.micro.server.spring.SpringDBConfig;
 import com.fasterxml.jackson.databind.Module;
-import cyclops.collections.mutable.ListX;
-import cyclops.collections.mutable.MapX;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.MapX;
+import cyclops.reactive.collections.mutable.SetX;
 
 /**
  * To implement a plugin for Microserver, implement this interface in your library and add the fully resolved class name to 

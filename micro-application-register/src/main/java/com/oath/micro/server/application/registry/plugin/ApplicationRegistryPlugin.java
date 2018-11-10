@@ -10,7 +10,7 @@ import com.oath.micro.server.application.registry.Register;
 import com.oath.micro.server.application.registry.RegisterConfig;
 import com.oath.micro.server.application.registry.ServiceRegistryResource;
 import com.oath.micro.server.application.registry.RegistryStatsChecker;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 
 import java.util.Set;
 

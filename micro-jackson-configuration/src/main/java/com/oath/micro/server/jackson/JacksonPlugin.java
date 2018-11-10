@@ -5,7 +5,7 @@ import com.oath.micro.server.Plugin;
 import com.oath.micro.server.rest.jackson.JacksonFeature;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.datatype.pcollections.PCollectionsModule;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 
 import java.util.Set;
 

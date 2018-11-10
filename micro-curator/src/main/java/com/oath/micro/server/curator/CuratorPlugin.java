@@ -2,7 +2,7 @@ package com.oath.micro.server.curator;
 
 import com.oath.micro.server.Plugin;
 import com.oath.micro.server.curator.lock.CuratorDistributedLockServiceProvider;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 
 import java.util.Set;
 

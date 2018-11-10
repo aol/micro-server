@@ -6,7 +6,7 @@ import java.util.Set;
 import com.oath.micro.server.Plugin;
 import com.oath.micro.server.async.data.cleaner.ConfigureSchedulingAsyncDataWriter;
 import com.oath.micro.server.async.data.writer.ConfigureDataWriter;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 
 public class AsyncDataWriterPlugin implements Plugin {
 

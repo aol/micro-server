@@ -4,7 +4,7 @@ package com.oath.micro.server.events.plugin;
 import com.oath.micro.server.Plugin;
 import com.oath.micro.server.events.ConfigureActiveJobsAspect;
 import com.oath.micro.server.rest.resources.ConfigureResources;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 
 import java.util.Set;
 

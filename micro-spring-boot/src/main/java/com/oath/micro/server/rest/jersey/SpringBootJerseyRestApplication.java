@@ -2,7 +2,7 @@ package com.oath.micro.server.rest.jersey;
 
 import java.util.Map;
 
-import cyclops.collections.immutable.LinkedListX;
+import cyclops.reactive.collections.immutable.LinkedListX;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;

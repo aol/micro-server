@@ -4,7 +4,7 @@ import java.util.Set;
 
 
 import com.oath.micro.server.Plugin;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 
 /**
  * 

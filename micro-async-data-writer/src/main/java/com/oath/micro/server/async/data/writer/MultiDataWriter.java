@@ -3,7 +3,7 @@ package com.oath.micro.server.async.data.writer;
 
 
 import cyclops.async.Future;
-import cyclops.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.ListX;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

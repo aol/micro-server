@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
-import cyclops.collections.mutable.QueueX;
+import cyclops.reactive.collections.mutable.QueueX;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

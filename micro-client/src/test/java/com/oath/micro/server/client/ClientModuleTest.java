@@ -24,7 +24,7 @@ public class ClientModuleTest {
 				.fromStream(
 						Arrays.<Plugin>asList(new TestPlugin())
 								.stream()).filter(module -> module.providers()!=null)
-								.flatMapI(Plugin::providers)
+								.concatMap(Plugin::providers)
 								.join(",");
 		
 		assertThat(additional, equalTo(""));

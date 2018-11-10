@@ -5,7 +5,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import com.google.common.eventbus.EventBus;
 
-import cyclops.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.ListX;
 import cyclops.reactive.ReactiveSeq;
 import lombok.AllArgsConstructor;
 

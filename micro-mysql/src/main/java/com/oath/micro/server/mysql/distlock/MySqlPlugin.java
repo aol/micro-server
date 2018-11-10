@@ -4,7 +4,7 @@ package com.oath.micro.server.mysql.distlock;
 import com.oath.micro.server.Plugin;
 import com.oath.micro.server.mysql.distlock.datasource.JdbcConfigDistLock;
 import com.oath.micro.server.mysql.distlock.datasource.MysqlDataSourceBuilder;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 
 import java.util.Set;
 

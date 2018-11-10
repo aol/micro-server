@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.function.BinaryOperator;
 
-import cyclops.collections.mutable.ListX;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.SetX;
 import cyclops.reactive.ReactiveSeq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -9,7 +9,7 @@ import com.oath.micro.server.events.SystemData;
 import com.oath.micro.server.manifest.ManifestComparator;
 import com.oath.micro.server.utility.HashMapBuilder;
 
-import cyclops.collections.mutable.MapX;
+import cyclops.reactive.collections.mutable.MapX;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

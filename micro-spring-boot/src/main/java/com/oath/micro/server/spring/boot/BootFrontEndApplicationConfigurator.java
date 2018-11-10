@@ -11,7 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequestListener;
 
 import com.oath.cyclops.types.persistent.PersistentList;
-import cyclops.collections.immutable.LinkedListX;
+import cyclops.reactive.collections.immutable.LinkedListX;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
