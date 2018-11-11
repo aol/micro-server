@@ -1,7 +1,7 @@
 package com.oath.micro.server.reactive;
 import java.util.concurrent.ScheduledExecutorService;
 
-import com.oath.cyclops.types.stream.HotStream;
+import com.oath.cyclops.types.stream.Connectable;
 import cyclops.reactive.ReactiveSeq;
 import lombok.AllArgsConstructor;
 
@@ -14,18 +14,18 @@ public class JobSchedular {
 	
 	private final ScheduledExecutorService ex;
 	
-	public <T,K,V> HotStream<SystemData<K,V>> schedule(String expression, ScheduledJob<T> job){
+	public <T,K,V> Connectable<SystemData<K,V>> schedule(String expression, ScheduledJob<T> job){
 		return ReactiveSeq.generate(()->"new job")
 						.<SystemData<K,V>>map(drop->job.scheduleAndLog())
 						.schedule(expression,ex); 
 	}
-	public <T,K,V> HotStream<SystemData<K,V>> scheduleFixedDelay(long fixedDelay, ScheduledJob<T> job){
+	public <T,K,V> Connectable<SystemData<K,V>> scheduleFixedDelay(long fixedDelay, ScheduledJob<T> job){
 		return ReactiveSeq.generate(()->"new job")
 						.<SystemData<K,V>>map(drop->job.scheduleAndLog())
 						.scheduleFixedDelay(fixedDelay,ex); 
 	}
 	
-	public <T,K,V> HotStream<SystemData<K,V>> scheduleFixedRate(long fixedRate, ScheduledJob<T> job){
+	public <T,K,V> Connectable<SystemData<K,V>> scheduleFixedRate(long fixedRate, ScheduledJob<T> job){
 		return ReactiveSeq.generate(()->"new job")
 						.<SystemData<K,V>>map(drop->job.scheduleAndLog())
 						.scheduleFixedRate(fixedRate,ex); 

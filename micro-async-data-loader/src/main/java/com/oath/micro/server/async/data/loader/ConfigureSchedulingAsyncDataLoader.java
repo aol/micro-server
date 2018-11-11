@@ -38,11 +38,11 @@ public class ConfigureSchedulingAsyncDataLoader {
     private ListX<DataLoader> dataLoaders() {
         SetX<ManifestComparator> comparatorSet = SetX.fromIterable(dataLoaders)
             .map(dl -> dl.comparator);
-        return ReactiveSeq.fromIterable(defaultComparators)
-            .filter(i -> !comparatorSet.contains(i))
-            .map(mc -> new DataLoader(mc, defaultCron))
-            .appendS(dataLoaders.stream())
-            .toListX();
+        return ListX.fromIterable(defaultComparators)
+                    .filter(i -> !comparatorSet.contains(i))
+                    .map(mc -> new DataLoader(mc, defaultCron))
+                    .appendAll(dataLoaders)
+                    .toListX();
     }
 
     @Bean

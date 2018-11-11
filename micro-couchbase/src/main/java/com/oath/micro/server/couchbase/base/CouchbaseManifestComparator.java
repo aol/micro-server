@@ -158,7 +158,7 @@ public class CouchbaseManifestComparator<T> implements ManifestComparator<T> {
 
     @Override
     public T getCurrentData() {
-        return data.visit(present -> present, () -> null);
+        return data.fold(present -> present, () -> null);
     }
 
     /**

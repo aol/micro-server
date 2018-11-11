@@ -1,7 +1,8 @@
 package app.streaming.com.aol.micro.server;
 
-import cyclops.async.QueueFactories;
-import cyclops.async.adapters.QueueFactory;
+import com.oath.cyclops.async.QueueFactories;
+import com.oath.cyclops.async.adapters.QueueFactory;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

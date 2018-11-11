@@ -7,6 +7,7 @@ dependencies {
   testCompile project(':micro-grizzly')
   testCompile project(':micro-jersey')
   testCompile project(':micro-jackson-configuration')
+  testCompile "com.oath.cyclops:cyclops-futurestream:$cyclopsVersion"
 }
 
 modifyPom {

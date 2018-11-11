@@ -28,6 +28,7 @@ dependencies {
   testCompile project(':micro-client')
   testCompile project(':micro-events')
   testCompile project(':micro-metrics')
+  testCompile "com.oath.cyclops:cyclops-futurestream:$cyclopsVersion"
 }
 
 test {

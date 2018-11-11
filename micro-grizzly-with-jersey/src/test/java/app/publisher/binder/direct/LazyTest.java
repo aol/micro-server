@@ -21,7 +21,7 @@ public class LazyTest {
     public void lazy(){
         ListX<Integer> list = ReactiveSeq.of(1,2,3)
                                          .peek(System.out::println)
-                                         .toListX();
+                                         .to(ListX::fromIterable);
 
 
         list.size();
