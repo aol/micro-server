@@ -8,7 +8,7 @@ import javax.ws.rs.core.FeatureContext;
 
 import cyclops.reactive.collections.mutable.MapX;
 import cyclops.reactive.collections.mutable.SetX;
-import cyclops.companion.MapXs;
+import cyclops.reactive.companion.MapXs;
 import org.glassfish.jersey.CommonProperties;
 
 

@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 import javax.ws.rs.InternalServerErrorException;
 
 import com.oath.cyclops.types.futurestream.SimpleReactStream;
-import cyclops.async.SimpleReact;
+import cyclops.futurestream.SimpleReact;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

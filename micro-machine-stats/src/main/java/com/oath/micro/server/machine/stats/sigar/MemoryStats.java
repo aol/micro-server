@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
-import cyclops.companion.MapXs;
+import cyclops.reactive.companion.MapXs;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.Builder;

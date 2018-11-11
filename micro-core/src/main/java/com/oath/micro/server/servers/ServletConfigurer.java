@@ -25,7 +25,7 @@ public class ServletConfigurer {
 		addAutoDiscoveredServlets(webappContext);
 	}
 	private void handleServlet(ServletConfiguration servlet,ServletContext webappContext){
-		servlet.getServlet().visit(clazz-> {
+		servlet.getServlet().fold(clazz-> {
 			setInitParameters(webappContext.addServlet(getName(servlet),
 						clazz), servlet)
 				.addMapping(servlet.getMapping());
