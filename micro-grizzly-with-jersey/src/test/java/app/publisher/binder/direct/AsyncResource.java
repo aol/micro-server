@@ -1,7 +1,7 @@
 package app.publisher.binder.direct;
 
 import com.oath.micro.server.auto.discovery.Rest;
-import cyclops.async.Future;
+import cyclops.control.Future;
 import cyclops.reactive.ReactiveSeq;
 import cyclops.reactive.Spouts;
 

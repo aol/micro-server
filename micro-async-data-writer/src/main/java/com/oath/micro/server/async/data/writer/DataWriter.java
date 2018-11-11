@@ -1,7 +1,7 @@
 package com.oath.micro.server.async.data.writer;
 
 
-import cyclops.async.Future;
+import cyclops.control.Future;
 
 public interface DataWriter<T> {
 
