@@ -95,7 +95,7 @@ public class MicroserverApp {
 
     private void initSpringProperties(Module m) {
 
-        System.setProperty("server.contextPath", "/" + m.getContext());
+        System.setProperty("server.servlet.context-path", "/" + m.getContext());
 
     }
 

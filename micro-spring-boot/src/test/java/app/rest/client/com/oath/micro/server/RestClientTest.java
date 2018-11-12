@@ -53,7 +53,7 @@ public class RestClientTest {
         }
         //SpringApplication.run(classes,new String[0]);
 		server = new MicroserverApp( RestClientTest.class, ()-> "rest-app");
-		System.out.println("paused");
+
 
 	}
 	
@@ -63,8 +63,7 @@ public class RestClientTest {
 	 */
 	@Test
 	public void testCRUD() throws InterruptedException, ExecutionException{
-		
-		
+
 		assertThat(listClient.get("http://localhost:8080/rest-app/rest/get").get().get(0),is("ok"));
 		assertThat(setClient.post("http://localhost:8080/rest-app/rest/post",ImmutableMap.of(1,"hello")).get(),is(ImmutableSet.of("hello")));
 		assertThat(setClient.put("http://localhost:8080/rest-app/rest/put",ImmutableMap.of(1,"hello")).get(),is(ImmutableSet.of("hello")));
