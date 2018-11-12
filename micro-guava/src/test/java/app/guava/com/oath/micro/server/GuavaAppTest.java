@@ -12,6 +12,7 @@ import com.oath.cyclops.types.futurestream.SimpleReactStream;
 import cyclops.futurestream.SimpleReact;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.oath.micro.server.MicroserverApp;
@@ -23,6 +24,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 
+@Ignore
 @Microserver(basePackages = { "app.guava.com.oath.micro.server" })
 public class GuavaAppTest {
 
