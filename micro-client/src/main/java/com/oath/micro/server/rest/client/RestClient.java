@@ -21,15 +21,19 @@ import com.oath.micro.server.rest.jackson.JacksonUtil;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 
-@Wither
+
 @Builder
 @AllArgsConstructor
 public class RestClient<T> {
 
+    @Wither
 	private final Client client;
+    @Wither
 	private final String contentType;
+    @Wither
 	private final String accept;
 	private final Class<T> response;
+    @Wither
 	private final JavaType genericResponse;
 
 	/**

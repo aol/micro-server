@@ -20,6 +20,7 @@ subprojects {
 
   apply plugin: 'java'
   apply plugin: 'groovy'
+  apply plugin: 'maven'
 
   if (project.name != "micro-tutorial") {
     apply plugin: 'com.bmuschko.nexus'

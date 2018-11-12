@@ -23,6 +23,7 @@ import com.oath.micro.server.config.Microserver;
 import lombok.AllArgsConstructor;
 import lombok.experimental.Wither;
 
+
 @AllArgsConstructor
 public class SpringContextFactory {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -91,6 +92,7 @@ public class SpringContextFactory {
 
     }
 
+
     public ApplicationContext createSpringContext() {
         try {
             ApplicationContext springContext = springBuilder.createSpringApp(config, classes.stream().toArray(i->new Class[classes.size()]));
@@ -100,6 +102,9 @@ public class SpringContextFactory {
             ExceptionSoftener.throwSoftenedException(e);
         }
         return null;
+    }
+    public Class[] classes() {
+            return springBuilder.classes(config, classes.stream().toArray(i->new Class[classes.size()]));
     }
 
 }

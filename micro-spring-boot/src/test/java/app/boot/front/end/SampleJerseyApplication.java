@@ -10,7 +10,8 @@ public class SampleJerseyApplication  {
 
 	public static void main(String[] args) {
 		
-		MicroserverApp app = new MicroserverApp(()->"hello");	
+		MicroserverApp app = new MicroserverApp(()->"hello");
+
 		
 	}
 

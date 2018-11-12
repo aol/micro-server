@@ -11,8 +11,10 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import app.boot.front.end.BootExample;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.boot.SpringApplication;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -45,8 +47,13 @@ public class RestClientTest {
 		if(run)
 			return;
 		run = true;
+		Class<?>[] classes = new MicroserverApp(true, RestClientTest.class, ()-> "rest-app").classes;
+		for(Class n : classes){
+		    System.out.println("Class " + n);
+        }
+        //SpringApplication.run(classes,new String[0]);
 		server = new MicroserverApp( RestClientTest.class, ()-> "rest-app");
-		
+		System.out.println("paused");
 
 	}
 	

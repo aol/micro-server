@@ -6,16 +6,17 @@ import java.util.Optional;
 import java.util.Properties;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.embedded.EmbeddedServletContainer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerException;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+
+import org.springframework.boot.web.server.WebServer;
+import org.springframework.boot.web.server.WebServerException;
+import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import com.oath.micro.server.module.Environment;
+import com.oath.micro.server.module.MicroserverEnvironment;
 import com.oath.micro.server.servers.AccessLogLocationBean;
 import com.oath.micro.server.spring.properties.PropertyFileConfig;
 
@@ -35,7 +36,7 @@ public class JerseyApplication extends SpringBootServletInitializer {
 		classes.addAll(classes2);
 		classes.add(JerseyApplication.class);
 		classes.add(PropertyFileConfig.class);
-		classes.add(Environment.class);
+		classes.add(MicroserverEnvironment.class);
 		classes.add(AccessLogLocationBean.class);
 	}
 
@@ -67,7 +68,7 @@ public class JerseyApplication extends SpringBootServletInitializer {
 
 	
 	@Bean
-	public EmbeddedServletContainerFactory servletContainer() {
+	public ServletWebServerFactory servletContainer() {
 
 		return (initializers) -> {
 			return new Container();
@@ -76,16 +77,16 @@ public class JerseyApplication extends SpringBootServletInitializer {
 
 	}
 
-	static class Container implements EmbeddedServletContainer {
+	static class Container implements WebServer {
 
 		@Override
-		public void start() throws EmbeddedServletContainerException {
+		public void start() throws WebServerException {
 		
 
 		}
 
 		@Override
-		public void stop() throws EmbeddedServletContainerException {
+		public void stop() throws WebServerException {
 		
 		}
 

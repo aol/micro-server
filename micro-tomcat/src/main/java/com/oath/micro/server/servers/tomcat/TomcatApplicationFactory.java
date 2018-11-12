@@ -3,12 +3,12 @@ package com.oath.micro.server.servers.tomcat;
 import java.util.List;
 
 import com.oath.cyclops.types.persistent.PersistentList;
+import com.oath.micro.server.module.MicroserverEnvironment;
 import lombok.AllArgsConstructor;
 
 
 import org.springframework.context.ApplicationContext;
 
-import com.oath.micro.server.module.Environment;
 import com.oath.micro.server.module.Module;
 import com.oath.micro.server.module.ModuleDataExtractor;
 import com.oath.micro.server.servers.ServerApplication;
@@ -28,12 +28,12 @@ public class TomcatApplicationFactory implements ServerApplicationFactory {
 		 ModuleDataExtractor extractor = new ModuleDataExtractor(module);
 		PersistentList resources = extractor.getRestResources(rootContext);
 
-		Environment environment = rootContext.getBean(Environment.class);
+		MicroserverEnvironment microserverEnvironment = rootContext.getBean(MicroserverEnvironment.class);
 
-		environment.assureModule(module);
+		microserverEnvironment.assureModule(module);
 		String fullRestResource = "/" + module.getContext() + "/*";
 
-		ServerData serverData = new ServerData(environment.getModuleBean(module).getPort(), 
+		ServerData serverData = new ServerData(microserverEnvironment.getModuleBean(module).getPort(),
 				resources,
 				rootContext, fullRestResource, module);
 		List<FilterData> filterDataList = extractor.createFilteredDataList(serverData);
