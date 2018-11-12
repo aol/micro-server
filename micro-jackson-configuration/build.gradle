@@ -1,7 +1,6 @@
 description = 'micro-jackson-configuration'
 
 dependencies {
-  compile "com.oath.cyclops:cyclops-jackson-integration:$cyclopsVersion"
   compile project(':micro-core')
 }
 
