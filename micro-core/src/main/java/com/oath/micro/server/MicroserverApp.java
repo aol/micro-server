@@ -81,7 +81,7 @@ public class MicroserverApp {
         classes=null;
 
     }
-    public MicroserverApp(boolean sb,Class c, Module... modules) {
+    MicroserverApp(boolean sb,Class c, Module... modules) {
 
         this.modules = ListX.of(modules);
         GlobalState.state.setModules(this.modules);

@@ -19,7 +19,7 @@ dependencies {
   testCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: "$jerseyVersion"
   testCompile project(':micro-jackson-configuration')
 }
-
+ 
 modifyPom {
   project {
     name 'Microserver Jersey'

@@ -50,7 +50,7 @@ public class SpringApplicationConfigurator implements SpringBuilder {
 
     @Override
     public Class[] classes(Config config, Class... classes) {
-        return new Class[0];
+        return classes;
     }
 
     private List<SpringDBConfig> getConfig(Config config, AnnotationConfigWebApplicationContext rootContext,
