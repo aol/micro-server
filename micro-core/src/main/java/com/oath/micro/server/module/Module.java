@@ -6,10 +6,10 @@ import com.oath.micro.server.auto.discovery.Rest;
 import com.oath.micro.server.auto.discovery.RestResource;
 import com.oath.micro.server.config.Classes;
 import com.oath.micro.server.servers.model.ServerData;
-import cyclops.collections.mutable.MapX;
+import cyclops.reactive.collections.mutable.MapX;
 import cyclops.companion.Streams;
-import cyclops.collections.mutable.ListX;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.SetX;
 import cyclops.reactive.ReactiveSeq;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.ContextLoaderListener;
@@ -27,7 +27,7 @@ public interface Module {
 
     default Set<Object> getJaxRsResourceObjects() {
         return PluginLoader.INSTANCE.plugins.get()
-                                            .flatMap(Plugin::jaxRsResourceObjects)
+                                            .concatMap(Plugin::jaxRsResourceObjects)
                                             .to().setX();
     }
 
@@ -70,17 +70,16 @@ public interface Module {
         return PluginLoader.INSTANCE.plugins.get()
                                             .stream()
                                             .filter(module -> module.servletContextListeners() != null)
-                                            .flatMapI(Plugin::jaxRsPackages)
-
-                                            .to().listX();
+                                            .concatMap(Plugin::jaxRsPackages)
+                                            .to(ListX::fromIterable);
 
     }
 
     default List<Class<?>> getDefaultResources() {
         return PluginLoader.INSTANCE.plugins.get()
                                             .stream()
-                                            .flatMapI(Plugin::jaxRsResources)
-                                            .to().listX();
+                                            .concatMap(Plugin::jaxRsResources)
+                                            .to(ListX::fromIterable);
 
     }
 
@@ -95,9 +94,9 @@ public interface Module {
 
         ListX<ServletContextListener> listeners = modules.stream()
                                                            .filter(module -> module.servletContextListeners() != null)
-                                                           .flatMapI(Plugin::servletContextListeners)
+                                                           .concatMap(Plugin::servletContextListeners)
                                                            .map(fn -> fn.apply(data))
-                                                           .to().listX();
+                                                           .to(ListX::fromIterable);
 
         return listeners.plusAll(list);
     }
@@ -107,9 +106,9 @@ public interface Module {
         return PluginLoader.INSTANCE.plugins.get()
                                             .stream()
                                             .filter(module -> module.servletRequestListeners() != null)
-                                            .flatMapI(Plugin::servletRequestListeners)
+                                            .concatMap(Plugin::servletRequestListeners)
                                             .map(fn -> fn.apply(data))
-                                             .to().listX();
+                                             .to(ListX::fromIterable);
 
     }
 
@@ -162,7 +161,7 @@ public interface Module {
                                                                                 .stream())
                                        .peek(System.out::println)
                                        .filter(module -> module.providers() != null)
-                                       .flatMapI(Plugin::providers)
+                                       .concatMap(Plugin::providers)
                                        .join(",");
 
         if (StringUtils.isEmpty(additional))

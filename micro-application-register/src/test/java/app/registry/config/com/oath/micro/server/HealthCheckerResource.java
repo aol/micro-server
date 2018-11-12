@@ -8,7 +8,7 @@ import javax.ws.rs.Path;
 import com.oath.micro.server.HealthStatusChecker;
 import com.oath.micro.server.StatsSupplier;
 import com.oath.micro.server.auto.discovery.Rest;
-import cyclops.companion.MapXs;
+import cyclops.reactive.companion.MapXs;
 
 
 @Rest

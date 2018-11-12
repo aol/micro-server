@@ -6,7 +6,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 
-import cyclops.collections.immutable.LinkedListX;
+import cyclops.reactive.collections.immutable.LinkedListX;
 import org.junit.Before;
 import org.junit.Test;
 

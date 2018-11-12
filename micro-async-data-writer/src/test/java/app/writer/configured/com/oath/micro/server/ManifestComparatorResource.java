@@ -33,7 +33,7 @@ public class ManifestComparatorResource {
     public String get() {
 
         return comparator.loadAndGet()
-                         .visit(s->s,e->"Error loading " + e.getMessage());
+                         .fold(s->s,e->"Error loading " + e.getMessage());
 
     }
 

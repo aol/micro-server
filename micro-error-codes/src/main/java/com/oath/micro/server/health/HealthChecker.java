@@ -42,7 +42,7 @@ public class HealthChecker {
     }
 
     private HealthStatus.State state(Maybe<ErrorEvent> errors) {
-        return errors.visit(this::handleError, () -> HealthStatus.State.Ok);
+        return errors.fold(this::handleError, () -> HealthStatus.State.Ok);
     }
 
     private HealthStatus.State handleError(ErrorEvent event) {

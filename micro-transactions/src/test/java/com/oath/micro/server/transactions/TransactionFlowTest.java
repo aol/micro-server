@@ -53,8 +53,8 @@ public class TransactionFlowTest {
 										.map(this::load)
 										.map(this::error)
 										.execute(10)
-										.toFailedOptional()
-										.get();
+                                        .toFailedOption()
+                                        .orElse(null);
 		
 		
 		assertThat(result,instanceOf(RuntimeException.class));
@@ -68,8 +68,8 @@ public class TransactionFlowTest {
 										.map(this::load)
 										.map(this::error2)
 										.execute(10,IllegalArgumentException.class)
-										.toFailedOptional()
-										.get();
+                                        .toFailedOption()
+                                        .orElse(null);
 		
 		
 		fail("exception expected!");
@@ -83,8 +83,8 @@ public class TransactionFlowTest {
 										.map(this::load)
 										.map(this::error2)
 										.execute(10,NullPointerException.class)
-										.toFailedOptional()
-										.get();
+                                        .toFailedOption()
+                                        .orElse(null);
 		
 		
 		assertThat(result,instanceOf(NullPointerException.class));

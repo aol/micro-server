@@ -127,7 +127,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
 
     @Override
     public T getCurrentData() {
-        return data.visit(present -> present, () -> null);
+        return data.fold(present -> present, () -> null);
     }
 
     /**
@@ -239,7 +239,7 @@ public class S3ManifestComparator<T> implements ManifestComparator<T> {
                 Thread.sleep(backoff);
         }
         Data data = reader.<Data> getAsObject(newVersionedKey)
-                .visit(t->t,e-> {
+                .fold(t->t,e-> {
                               throw new ManifestComparatorKeyNotFoundException(
                                                                                 "Missing versioned key "
                                                                                         + newVersionedKey

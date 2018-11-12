@@ -5,7 +5,7 @@ import com.oath.micro.server.Plugin;
 import com.oath.micro.server.logback.rest.LogbackLoggerResource;
 import com.oath.micro.server.logback.rest.LogbackRootLoggerResource;
 import com.oath.micro.server.logback.service.LogbackRootLoggerChecker;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 
 import java.util.Set;
 

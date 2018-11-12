@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.oath.cyclops.util.ExceptionSoftener;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

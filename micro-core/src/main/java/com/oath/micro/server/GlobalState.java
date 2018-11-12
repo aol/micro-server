@@ -3,7 +3,7 @@ package com.oath.micro.server;
 
 import com.oath.micro.server.module.Module;
 
-import cyclops.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.ListX;
 import lombok.Getter;
 import lombok.Setter;
 

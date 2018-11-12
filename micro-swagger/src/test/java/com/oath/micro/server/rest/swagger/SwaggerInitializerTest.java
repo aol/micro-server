@@ -1,6 +1,6 @@
 package com.oath.micro.server.rest.swagger;
 
-import cyclops.collections.immutable.LinkedListX;
+import cyclops.reactive.collections.immutable.LinkedListX;
 import org.junit.Test;
 
 

@@ -1,7 +1,6 @@
 description = 'micro-jackson-configuration'
 
 dependencies {
-  compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-pcollections', version: '2.8.4'
   compile project(':micro-core')
 }
 

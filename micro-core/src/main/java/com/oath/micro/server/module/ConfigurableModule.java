@@ -21,9 +21,9 @@ import com.oath.micro.server.auto.discovery.CommonRestResource;
 import com.oath.micro.server.servers.model.ServerData;
 
 import com.oath.cyclops.types.persistent.PersistentMap;
-import cyclops.collections.mutable.ListX;
-import cyclops.collections.mutable.MapX;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.MapX;
+import cyclops.reactive.collections.mutable.SetX;
 import cyclops.data.HashMap;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

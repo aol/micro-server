@@ -31,7 +31,7 @@ public class FilterConfigurer {
 	}
 
 	private void handleFilter(FilterConfiguration filter,ServletContext webappContext){
-		filter.getFilter().visit(clazz-> {
+		filter.getFilter().fold(clazz-> {
 			setInitParameters(webappContext.addFilter(getName(filter),
 						clazz), filter)
 				.addMappingForUrlPatterns(

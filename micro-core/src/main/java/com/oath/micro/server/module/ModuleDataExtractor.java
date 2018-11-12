@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 
-import cyclops.collections.immutable.LinkedListX;
+import cyclops.reactive.collections.immutable.LinkedListX;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 

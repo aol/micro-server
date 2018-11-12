@@ -12,7 +12,7 @@ import java.util.Map;
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServlet;
 
-import cyclops.collections.immutable.LinkedListX;
+import cyclops.reactive.collections.immutable.LinkedListX;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;

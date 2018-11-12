@@ -7,7 +7,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import cyclops.async.Future;
+import cyclops.control.Future;
 import cyclops.control.Try;
 import org.junit.Before;
 import org.junit.Test;

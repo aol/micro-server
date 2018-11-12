@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.ExecutionException;
 
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

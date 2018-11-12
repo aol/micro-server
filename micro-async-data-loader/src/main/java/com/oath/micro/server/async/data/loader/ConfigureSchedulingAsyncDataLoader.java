@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.function.BinaryOperator;
 
-import cyclops.collections.mutable.ListX;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.SetX;
 import cyclops.reactive.ReactiveSeq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,11 +38,11 @@ public class ConfigureSchedulingAsyncDataLoader {
     private ListX<DataLoader> dataLoaders() {
         SetX<ManifestComparator> comparatorSet = SetX.fromIterable(dataLoaders)
             .map(dl -> dl.comparator);
-        return ReactiveSeq.fromIterable(defaultComparators)
-            .filter(i -> !comparatorSet.contains(i))
-            .map(mc -> new DataLoader(mc, defaultCron))
-            .appendS(dataLoaders.stream())
-            .toListX();
+        return ListX.fromIterable(defaultComparators)
+                    .filter(i -> !comparatorSet.contains(i))
+                    .map(mc -> new DataLoader(mc, defaultCron))
+                    .appendAll(dataLoaders)
+                    .toListX();
     }
 
     @Bean

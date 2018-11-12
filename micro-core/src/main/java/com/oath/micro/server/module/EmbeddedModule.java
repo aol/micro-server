@@ -3,7 +3,7 @@ package com.oath.micro.server.module;
 import java.lang.annotation.Annotation;
 
 
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 import lombok.Getter;
 @Getter
 public class EmbeddedModule implements Module {

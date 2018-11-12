@@ -8,9 +8,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 
-import cyclops.async.SimpleReact;
+import cyclops.futurestream.SimpleReact;
 import cyclops.data.Seq;
-import cyclops.reactive.FutureStream;
+import cyclops.futurestream.FutureStream;
 import cyclops.reactive.ReactiveSeq;
 
 import org.springframework.stereotype.Component;

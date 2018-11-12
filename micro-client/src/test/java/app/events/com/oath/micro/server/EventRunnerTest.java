@@ -41,7 +41,7 @@ public class EventRunnerTest {
 	public void runAppAndBasicTest() throws InterruptedException, ExecutionException{
 		
 		
-		
+
 		assertThat(rest.get("http://localhost:8080/event-app/status/ping"),is("ok"));
 		
 		assertThat(client.get("http://localhost:8080/event-app/active/jobs").get(),

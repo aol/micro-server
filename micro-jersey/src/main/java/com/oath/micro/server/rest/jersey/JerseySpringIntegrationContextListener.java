@@ -4,7 +4,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import com.oath.micro.server.servers.model.ServerData;
-import cyclops.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.ListX;
 
 public class JerseySpringIntegrationContextListener implements ServletContextListener {
 

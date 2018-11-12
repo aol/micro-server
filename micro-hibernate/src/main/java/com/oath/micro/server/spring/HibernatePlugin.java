@@ -9,7 +9,7 @@ import com.oath.micro.server.spring.datasource.JdbcConfig;
 import com.oath.micro.server.spring.datasource.hibernate.HibernateConfig;
 import com.oath.micro.server.spring.datasource.hibernate.SpringDataConfig;
 import com.oath.micro.server.spring.datasource.jdbc.SQL;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 
 /**
  * 

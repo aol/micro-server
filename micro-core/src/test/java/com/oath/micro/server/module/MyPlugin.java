@@ -2,7 +2,7 @@ package com.oath.micro.server.module;
 
 
 import com.oath.micro.server.Plugin;
-import cyclops.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.ListX;
 
 import java.util.List;
 

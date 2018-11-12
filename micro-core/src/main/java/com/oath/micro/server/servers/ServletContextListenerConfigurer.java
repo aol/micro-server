@@ -7,7 +7,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestListener;
 
 import com.oath.cyclops.types.persistent.PersistentList;
-import cyclops.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.ListX;
 import lombok.AllArgsConstructor;
 
 import org.slf4j.Logger;

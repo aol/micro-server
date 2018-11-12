@@ -2,7 +2,7 @@ package com.oath.micro.server.async.data.writer;
 
 
 
-import cyclops.async.Future;
+import cyclops.control.Future;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -5,7 +5,7 @@ import java.util.List;
 import javax.ws.rs.Path;
 
 import com.oath.cyclops.types.persistent.PersistentList;
-import cyclops.collections.immutable.LinkedListX;
+import cyclops.reactive.collections.immutable.LinkedListX;
 import cyclops.data.Seq;
 import cyclops.reactive.ReactiveSeq;
 import lombok.Getter;

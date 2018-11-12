@@ -7,8 +7,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import cyclops.async.SimpleReact;
-import cyclops.reactive.FutureStream;
+import cyclops.futurestream.SimpleReact;
+import cyclops.futurestream.FutureStream;
 import org.springframework.stereotype.Component;
 
 import com.oath.micro.server.testing.RestAgent;

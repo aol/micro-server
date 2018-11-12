@@ -10,8 +10,9 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.NotFoundException;
 
-import cyclops.collections.immutable.LinkedListX;
-import jersey.repackaged.com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList;
+import cyclops.reactive.collections.immutable.LinkedListX;
+
 
 import org.junit.After;
 import org.junit.Before;
@@ -48,7 +49,7 @@ public class EmbeddedAppTest {
 		assertThat(rest.get("http://localhost:8080/test-app/test-status/ping"),is("test!"));
 		
 		
-		assertThat((List<String>)rest.post("http://localhost:8081/alternative-app/alt-status/ping",new ImmutableEntity("value",ImmutableList.of("hello","world")),List.class),
+		assertThat((List<String>)rest.post("http://localhost:8081/alternative-app/alt-status/ping",new ImmutableEntity("value", ImmutableList.of("hello","world")),List.class),
 				hasItem("hello"));
 	
 	}

@@ -11,7 +11,7 @@ import com.oath.micro.server.servers.model.ServerData;
 import com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON;
 import com.wordnik.swagger.jersey.listing.JerseyApiDeclarationProvider;
 import com.wordnik.swagger.jersey.listing.JerseyResourceListingProvider;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 import cyclops.function.Lambda;
 
 /**

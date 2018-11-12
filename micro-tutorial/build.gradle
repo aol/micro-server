@@ -10,4 +10,5 @@ dependencies {
   compile project(':micro-ip-tracker')
   compile project(':micro-grizzly')
   compile project(':micro-jersey')
+  compile "com.oath.cyclops:cyclops-futurestream:$cyclopsVersion"
 }

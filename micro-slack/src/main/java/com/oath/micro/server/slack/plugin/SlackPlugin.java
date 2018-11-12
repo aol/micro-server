@@ -3,7 +3,7 @@ package com.oath.micro.server.slack.plugin;
 
 import com.oath.micro.server.Plugin;
 import com.oath.micro.server.slack.*;
-import cyclops.collections.mutable.SetX;
+import cyclops.reactive.collections.mutable.SetX;
 
 import java.util.Set;
 

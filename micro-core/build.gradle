@@ -4,6 +4,7 @@ dependencies {
   compile 'javax.servlet:javax.servlet-api:3.1.0'
 
   compile("com.oath.cyclops:cyclops:$cyclopsVersion")
+  compile("com.oath.cyclops:cyclops-reactive-collections:$cyclopsVersion")
   compile group: 'org.aspectj', name: 'aspectjrt', version: aspectJVersion
   compile group: 'org.aspectj', name: 'aspectjweaver', version: aspectJVersion
 

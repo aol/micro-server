@@ -10,7 +10,7 @@ import com.oath.micro.server.rest.jackson.JacksonUtil;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
-import cyclops.collections.mutable.MapX;
+import cyclops.reactive.collections.mutable.MapX;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Builder;

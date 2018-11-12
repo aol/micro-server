@@ -40,7 +40,7 @@ public class MicroserverConfigurer implements Configurer {
 	private Map<String, String> buildProperties(Microserver microserver) {
 		Map<String, String> properties = ReactiveSeq.of(microserver.properties())
 													.grouped(2)
-													.toMap(prop -> prop.get(0), prop -> prop.get(1));
+													.toMap(prop -> prop.getOrElse(0,null), prop -> prop.getOrElse(1,null));
 		return properties;
 	}
 

@@ -3,7 +3,7 @@ package com.oath.micro.server.async.data.writer;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-import cyclops.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.ListX;
 import cyclops.control.Try;
 import org.junit.Before;
 import org.junit.Test;

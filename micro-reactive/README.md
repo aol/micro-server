@@ -79,7 +79,7 @@ bus.push("bus-2", myData2);
 ListX<Tuple<Integer,Integer>> list = For.Publishers.each(Flux.range(1,10),
 					 					   				  i-> ReactiveSeq.iterate(i,a->a+1),
 										  					 Tuple::tuple)
-												   .toListX();
+												   .to(ListX::fromIterable);
 
  ```
  

@@ -5,7 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 import com.oath.cyclops.util.ExceptionSoftener;
 import cyclops.companion.Streams;
-import cyclops.collections.mutable.ListX;
+import cyclops.reactive.collections.mutable.ListX;
 import cyclops.reactive.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
