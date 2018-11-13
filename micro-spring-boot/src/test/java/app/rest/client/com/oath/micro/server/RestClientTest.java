@@ -54,11 +54,7 @@ public class RestClientTest {
 		if(run)
 			return;
 		run = true;
-		Class<?>[] classes = new MicroserverPlugins(()-> "rest-app",RestClientTest.class).classes();
-		for(Class n : classes){
-		    System.out.println("Class " + n);
-        }
-        //SpringApplication.run(classes,new String[0]);
+
 		server = new MicroserverApp(RestClientTest.class, new Module() {
             @Override
             public Set<Object> getJaxRsResourceObjects() {
@@ -81,20 +77,20 @@ public class RestClientTest {
 	@Test
 	public void testCRUD() throws InterruptedException, ExecutionException{
 
-	//	assertThat(listClient.get("http://localhost:8080/rest-app/rest/get").get().get(0),is("ok"));
+	    assertThat(listClient.get("http://localhost:8080/rest-app/rest/get").get().get(0),is("ok"));
         try {
             setClient.post("http://localhost:8080/rest-app/rest/post", ImmutableMap.of(1, "hello")).get();
         }catch(Exception e){
             e.printStackTrace();
         }
 
-		//assertThat(setClient.post("http://localhost:8080/rest-app/rest/post",ImmutableMap.of(1,"hello")).get(),is(ImmutableSet.of("hello")));
+		assertThat(setClient.post("http://localhost:8080/rest-app/rest/post",ImmutableMap.of(1,"hello")).get(),is(ImmutableSet.of("hello")));
 
 
-		//	assertThat(setClient.put("http://localhost:8080/rest-app/rest/put",ImmutableMap.of(1,"hello")).get(),is(ImmutableSet.of("hello")));
-//		assertThat(listClient.delete("http://localhost:8080/rest-app/rest/delete").get().get(0),is("ok"));
+		assertThat(setClient.put("http://localhost:8080/rest-app/rest/put",ImmutableMap.of(1,"hello")).get(),is(ImmutableSet.of("hello")));
+        assertThat(listClient.delete("http://localhost:8080/rest-app/rest/delete").get().get(0),is("ok"));
 	}
-	/**
+
 	
 	@Test
 	public void testCRUDGenerics() throws InterruptedException, ExecutionException{
@@ -105,12 +101,11 @@ public class RestClientTest {
 		assertThat(genericsClient.put("http://localhost:8080/rest-app/generics/put",ImmutableMap.of(1,"hello")).get(),is(ImmutableList.of(new MyEntity())));
 		assertThat(genericsClient.delete("http://localhost:8080/rest-app/generics/delete").get().get(0),is(new MyEntity()));
 	}
-	**/
+
 	/**
 	 * More complex with Spring REST Template Based NIORestTemplate
 	 *
-
-	
+	 **/
 	@Test
 	public void testCRUDSpring() throws InterruptedException, ExecutionException, RestClientException, URISyntaxException{
 		
@@ -140,7 +135,7 @@ public class RestClientTest {
 				.get().getBody().get(0),is(new MyEntity()));
 		
 	}
-	**/
+
 	
 	
 }
