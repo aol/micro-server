@@ -13,6 +13,7 @@ import javax.servlet.ServletRequestListener;
 import com.oath.cyclops.types.persistent.PersistentList;
 import com.oath.micro.server.GlobalState;
 import com.oath.micro.server.module.MicroserverEnvironment;
+import cyclops.reactive.ReactiveSeq;
 import cyclops.reactive.collections.immutable.LinkedListX;
 
 import org.slf4j.Logger;
@@ -66,9 +67,9 @@ public class BootFrontEndApplicationConfigurator  extends SpringBootServletIniti
         classList.add(JerseySpringBootFrontEndApplication.class);
         classList.add(MyWebAppInitializer.class);
 
+        return ReactiveSeq.fromIterable(new JerseySpringBootFrontEndApplication(classList).classes).appendAll(classList)
+            .toArray(i->new Class[i]);
 
-
-        return new JerseySpringBootFrontEndApplication(classList).classes.toArray(new Class[0]);
     }
 
     @Component
