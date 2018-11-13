@@ -4,19 +4,6 @@ dependencies {
   compile 'org.springframework.boot:spring-boot:' + springBootVersion
   compile 'org.springframework.boot:spring-boot-autoconfigure:' + springBootVersion
   compile project(':micro-core')
-  /**
-  compile (group: 'org.springframework.boot', name: 'spring-boot-starter-jersey', version:springBootVersion){
-   // exclude (group: 'org.hibernate.validator')
-    /**
-    exclude (group: 'org.glassfish.hk2.external', module: 'javax.inject')
-    exclude (group: 'javax.el', module: 'javax.el-api')
-    exclude (group: 'org.glassfish.web', module: 'javax.el')
-    exclude (group: 'org.jvnet', module: 'tiger-types')
-    exclude (group: 'org.glassfish.hk2.external', module: 'bean-validator')
-     **/
-//  }
-
-  //compile (group: 'org.springframework.boot', name: 'spring-boot-starter-jetty',version:springBootVersion)
 
   compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: "$jerseyVersion"
   compile(group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: "$jerseyVersion") {
@@ -36,7 +23,6 @@ dependencies {
   testCompile 'org.springframework.boot:spring-boot-starter-test:' + springBootVersion
   testCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: "$jerseyVersion"
   testCompile 'org.apache.tomcat.embed:tomcat-embed-core:' + tomcatVersion
-//  testCompile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:' + tomcatVersion
 
   testCompile project(':micro-cors')
   testCompile project(':micro-swagger')
