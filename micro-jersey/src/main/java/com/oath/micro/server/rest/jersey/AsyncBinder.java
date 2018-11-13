@@ -10,8 +10,14 @@ public class AsyncBinder extends AbstractBinder {
 
     @Override
     protected void configure() {
+
         bind(AsyncDispatcher.AsyncDispatcherProvider.class).to(
                 ResourceMethodDispatcher.Provider.class).in(Singleton.class)
-                .ranked(1);
+                .ranked(Integer.MAX_VALUE);
+        /**
+        bind(AsyncInterceptionService.class).to(org.glassfish.hk2.api.InterceptionService.class)
+            .in(Singleton.class);
+            //.ranked(1);
+         **/
     }
 }

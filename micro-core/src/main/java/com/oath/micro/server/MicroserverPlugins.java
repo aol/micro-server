@@ -9,8 +9,9 @@ public class MicroserverPlugins {
 
     private final Class[] classes;
     public MicroserverPlugins(Class... classes){
-        this.classes = ReactiveSeq.of(classes)
-            .appendStream(ReactiveSeq.of(new MicroserverApp(extractClass(),()->"").classes))
+        ReactiveSeq<Class> rs=  classes!=null ? ReactiveSeq.of(classes) : ReactiveSeq.empty();
+        this.classes = rs
+            .appendStream(ReactiveSeq.of(new MicroserverApp(true,extractClass(),()->"").classes))
             .toArray(i->new Class[i]);
     }
     public MicroserverPlugins(Module mod, Class... classes){
