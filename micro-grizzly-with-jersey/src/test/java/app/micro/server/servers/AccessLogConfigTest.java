@@ -26,7 +26,7 @@ public class AccessLogConfigTest {
             logFile = new File(System.getProperty("user.home") + "/access-log-app-access.log");
             logFile.delete();
 
-           // assertThat(logFile.exists(), is(false));
+            assertThat(logFile.exists(), is(false));
 
             server = new MicroserverApp(() -> "access-log-app");
             server.start();
