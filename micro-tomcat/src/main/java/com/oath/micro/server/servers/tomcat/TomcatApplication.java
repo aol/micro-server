@@ -37,6 +37,7 @@ import com.oath.micro.server.servers.model.AllData;
 import com.oath.micro.server.servers.model.FilterData;
 import com.oath.micro.server.servers.model.ServerData;
 import com.oath.micro.server.servers.model.ServletData;
+import org.springframework.beans.factory.BeanNotOfRequiredTypeException;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class TomcatApplication implements ServerApplication {
@@ -77,15 +78,23 @@ public class TomcatApplication implements ServerApplication {
 		startServer(tomcat, start, end);
 	}
 
-	private void addSSL(Connector connector) {
-		SSLProperties sslProperties = serverData.getRootContext().getBean(SSLProperties.class);
-		ProtocolHandler handler = connector.getProtocolHandler();
-		if(sslProperties!= null && handler instanceof AbstractHttp11JsseProtocol){
-			new SSLConfigurationBuilder().build((AbstractHttp11JsseProtocol)handler,sslProperties);
-			connector.setScheme("https");
-			connector.setSecure(true);
-		}
-	}
+    private void addSSL(Connector connector) {
+        try {
+
+            SSLProperties sslProperties = serverData.getRootContext().getBean(SSLProperties.class);
+            ProtocolHandler handler = connector.getProtocolHandler();
+            if (sslProperties != null && handler instanceof AbstractHttp11JsseProtocol) {
+                new SSLConfigurationBuilder().build((AbstractHttp11JsseProtocol) handler, sslProperties);
+                connector.setScheme("https");
+                connector.setSecure(true);
+            }
+
+        } catch (BeanNotOfRequiredTypeException e) {
+
+        }
+
+
+    }
 
 	private void startServer( Tomcat httpServer, CompletableFuture start, CompletableFuture end) {
 

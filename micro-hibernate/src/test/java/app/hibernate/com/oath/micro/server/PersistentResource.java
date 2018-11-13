@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,10 +36,12 @@ public class PersistentResource implements RestResource {
 	public String createEntity() {
 		
 		final Session session = sessionFactory.openSession();
+		Transaction tx =session.beginTransaction();
 		session.save(HibernateEntity.builder()
 								.name("test")
 								.value("value").build());
 		session.flush();
+        tx.commit();
 		return "ok";
 	}
 	@GET
