@@ -16,9 +16,6 @@ public class MicroserverEnvironmentTest {
 
 	@Test
 	public void testGetModuleBean() {
-		
-		
-		
 		MicroserverEnvironment microserverEnvironment = new MicroserverEnvironment(new Properties(),
 				Arrays.asList(new ModuleBean(8081, "host1", () -> "test")));
 		assertThat(microserverEnvironment.getModuleBean(()-> "test").getPort(), is(8081));
