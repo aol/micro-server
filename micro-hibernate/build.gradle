@@ -8,6 +8,9 @@ dependencies {
   compile 'javax.transaction:jta:' + jtaVersion
   compile(group: 'org.hibernate', name: 'hibernate-core', version: hibernateVersion)
   compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: hibernateVersion
+  compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: hibernateVersion
+  compile group: 'org.hibernate', name: 'hibernate-validator', version: '6.0.13.Final'
+  compile group: 'org.glassfish', name: 'javax.el', version: '3.0.0'
   compile group: 'org.springframework', name: 'spring-orm', version: "${springVersion}"
 
   compile project(':micro-jdbc')

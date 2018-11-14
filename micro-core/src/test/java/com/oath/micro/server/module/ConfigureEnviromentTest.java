@@ -20,13 +20,13 @@ public class ConfigureEnviromentTest {
 
 	@Test
 	public void testEnvironmentNoModules() {
-		Environment environment = configureEnviroment.environment(new Properties());
-		assertThat(environment.getModuleBean(() -> "simple") == null, is(true));
+		MicroserverEnvironment microserverEnvironment = configureEnviroment.microserverEnvironment(new Properties());
+		assertThat(microserverEnvironment.getModuleBean(() -> "simple") == null, is(true));
 	}
 
 	@Test
 	public void testEnvironment() {
-		Environment environment = configureEnviroment.environment(new Properties());
-		assertThat(environment.getModuleBean(() -> "simple") == null, is(true));
+		MicroserverEnvironment microserverEnvironment = configureEnviroment.microserverEnvironment(new Properties());
+		assertThat(microserverEnvironment.getModuleBean(() -> "simple") == null, is(true));
 	}
 }

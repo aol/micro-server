@@ -51,6 +51,7 @@ public class JerseyRestApplication extends ResourceConfig {
 					register(next.getClass());
 			}
 		}
+
 		register(new AsyncBinder());
 		
 		if (serverProperties.isEmpty()) {

@@ -23,7 +23,7 @@ import org.springframework.web.client.RestClientException;
 
 import com.oath.micro.server.rest.jackson.JacksonUtil;
 
-public class    NIORestClient {
+public class NIORestClient {
 
 	@Getter
 	private final AsyncRestTemplate template;

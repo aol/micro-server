@@ -39,6 +39,7 @@ public class MicroserverApp {
 
     @Getter
     private final ApplicationContext springContext;
+    public final Class[] classes;
 
     /**
      * This will construct a Spring context for this Microserver instance.
@@ -56,6 +57,7 @@ public class MicroserverApp {
         springContext = new SpringContextFactory(
                                                  new MicroserverConfigurer().buildConfig(c), extractClass(),
                                                  modules[0].getSpringConfigurationClasses()).createSpringContext();
+        classes=null;
 
     }
 
@@ -76,12 +78,24 @@ public class MicroserverApp {
         springContext = new SpringContextFactory(
                                                  new MicroserverConfigurer().buildConfig(c), c,
                                                  modules[0].getSpringConfigurationClasses()).createSpringContext();
+        classes=null;
+
+    }
+    MicroserverApp(boolean sb,Class c, Module... modules) {
+
+        this.modules = ListX.of(modules);
+        GlobalState.state.setModules(this.modules);
+        initSpringProperties(modules[0]);
+        springContext =  null;
+        classes = new SpringContextFactory(
+            new MicroserverConfigurer().buildConfig(c), c,
+            modules[0].getSpringConfigurationClasses()).classes();
 
     }
 
     private void initSpringProperties(Module m) {
 
-        System.setProperty("server.contextPath", "/" + m.getContext());
+        System.setProperty("server.servlet.context-path", "/" + m.getContext());
 
     }
 

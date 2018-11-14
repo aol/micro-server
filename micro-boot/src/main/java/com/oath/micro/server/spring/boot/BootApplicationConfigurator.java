@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cyclops.reactive.ReactiveSeq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -27,6 +28,14 @@ public class BootApplicationConfigurator implements SpringBuilder {
 		
 		return builder.application().run();
 	}
-	
+
+    @Override
+    public Class[] classes(Config config, Class... classes) {
+        List<Class> classList = new ArrayList<Class>();
+        classList.addAll(Arrays.asList(classes));
+        return ReactiveSeq.fromIterable(new JerseyApplication(classList).classes).appendAll(classList)
+                        .toArray(i->new Class[i]);
+    }
+
 
 }

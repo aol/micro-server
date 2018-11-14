@@ -22,6 +22,7 @@ class ScheduleAndAsyncConfigTest {
 		assert config.@executorThreadPoolSize==3
 	}
 
+
 	@Test
 	public void testSetSchedulerThreadPoolSize() {
 		

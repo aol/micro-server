@@ -48,6 +48,11 @@ public class SpringApplicationConfigurator implements SpringBuilder {
         return rootContext;
     }
 
+    @Override
+    public Class[] classes(Config config, Class... classes) {
+        return classes;
+    }
+
     private List<SpringDBConfig> getConfig(Config config, AnnotationConfigWebApplicationContext rootContext,
             ConfigurableListableBeanFactory beanFactory) {
         List<SpringDBConfig> result = ReactiveSeq.fromStream(PluginLoader.INSTANCE.plugins.get()

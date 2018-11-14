@@ -35,6 +35,7 @@ import com.oath.micro.server.servers.model.ServletData;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.beans.factory.BeanNotOfRequiredTypeException;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GrizzlyApplication implements ServerApplication {
@@ -81,10 +82,18 @@ public class GrizzlyApplication implements ServerApplication {
 	}
 	
 	private void addSSL(HttpServer httpServer) {
-		SSLProperties sslProperties = serverData.getRootContext().getBean(SSLProperties.class);
-		if (sslProperties != null) {
-			httpServer.addListener(this.createSSLListener(serverData.getPort(), sslProperties));
-		}
+
+	        try {
+
+                    SSLProperties sslProperties = serverData.getRootContext().getBean(SSLProperties.class);
+                    if (sslProperties != null) {
+                        httpServer.addListener(this.createSSLListener(serverData.getPort(), sslProperties));
+                    }
+
+            }catch(BeanNotOfRequiredTypeException e){
+
+            }
+
 	}
 
 	private void startServer(WebappContext webappContext, HttpServer httpServer, CompletableFuture start, CompletableFuture end) {

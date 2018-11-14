@@ -4,6 +4,7 @@ dependencies {
   compile 'org.springframework.boot:spring-boot:' + springBootVersion
   compile 'org.springframework.boot:spring-boot-autoconfigure:' + springBootVersion
   compile project(':micro-core')
+
   compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: "$jerseyVersion"
   compile(group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: "$jerseyVersion") {
     exclude(module: 'jackson-xc')
@@ -14,14 +15,14 @@ dependencies {
   compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: "$jerseyVersion"
 
   compile "org.glassfish.jersey.media:jersey-media-multipart:$jerseyVersion"
-  compile "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion"
+  compile "org.glassfish.jersey.ext:jersey-spring4:$jerseyVersion"
   compile "org.glassfish.jersey.ext:jersey-bean-validation:$jerseyVersion"
+
   compile project(':micro-jackson-configuration')
 
   testCompile 'org.springframework.boot:spring-boot-starter-test:' + springBootVersion
   testCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: "$jerseyVersion"
   testCompile 'org.apache.tomcat.embed:tomcat-embed-core:' + tomcatVersion
-  testCompile 'org.apache.tomcat.embed:tomcat-embed-logging-juli:' + tomcatVersion
 
   testCompile project(':micro-cors')
   testCompile project(':micro-swagger')
@@ -29,6 +30,7 @@ dependencies {
   testCompile project(':micro-events')
   testCompile project(':micro-metrics')
   testCompile project(':micro-guava')
+
   testCompile "com.oath.cyclops:cyclops-futurestream:$cyclopsVersion"
 }
 

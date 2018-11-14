@@ -2,6 +2,8 @@ package com.oath.micro.server.rest.jersey;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+import com.oath.micro.server.rest.jackson.JacksonUtil;
 import cyclops.reactive.collections.immutable.LinkedListX;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -15,6 +17,8 @@ import com.oath.micro.server.auto.discovery.RestResource;
 import com.oath.micro.server.module.JaxRsProvider;
 import com.oath.micro.server.module.Module;
 import com.oath.micro.server.module.ModuleDataExtractor;
+
+import javax.ws.rs.ext.Provider;
 
 public class SpringBootJerseyRestApplication extends ResourceConfig {
 
@@ -49,10 +53,13 @@ public class SpringBootJerseyRestApplication extends ResourceConfig {
 				property(entry.getKey(), entry.getValue());
 			}
 		}
+
 		
 		context.getBeansOfType(AbstractBinder.class).forEach((n,e)->register(e));
-		
-		
+
+        JacksonJaxbJsonProvider p = new JacksonJaxbJsonProvider();
+        p.setMapper(JacksonUtil.getMapper());
+		register(p);
 		module.getDefaultJaxRsPackages().stream().forEach( e -> packages(e));
 		module.getDefaultResources().stream().forEach( e -> register(e));
 		

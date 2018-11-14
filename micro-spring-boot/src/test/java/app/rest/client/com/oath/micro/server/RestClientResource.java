@@ -13,6 +13,8 @@ import com.oath.micro.server.auto.discovery.RestResource;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
+import java.util.Map;
+
 @Component
 @Path("/generics")
 public class RestClientResource implements RestResource {
@@ -29,7 +31,7 @@ public class RestClientResource implements RestResource {
 	@POST
 	@Produces("application/json")
 	@Path("/post")
-	public ImmutableList<MyEntity> post(ImmutableMap<Integer,String> map) {
+	public ImmutableList<MyEntity> post(Map<Integer,String> map) {
 		
 		return result;
 	}
@@ -37,14 +39,14 @@ public class RestClientResource implements RestResource {
 	@PUT
 	@Produces("application/json")
 	@Path("/put")
-	public ImmutableList<MyEntity> put(ImmutableMap<Integer,String> map) {
+	public ImmutableList<MyEntity> put(Map<Integer,String> map) {
 		
 		return result;
 	}
 	@DELETE
 	@Produces("application/json")
 	@Path("/delete")
-	public ImmutableList<MyEntity> delete(ImmutableMap<Integer,String> map) {
+	public ImmutableList<MyEntity> delete(Map<Integer,String> map) {
 		
 		return result;
 	}

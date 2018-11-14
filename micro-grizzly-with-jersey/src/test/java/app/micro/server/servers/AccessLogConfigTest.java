@@ -22,13 +22,15 @@ public class AccessLogConfigTest {
 	@Before
 	public void startServer() {
 
-		logFile = new File(System.getProperty("user.home") + "/access-log-app-access.log");
-		logFile.delete();
 
-		assertThat(logFile.exists(), is(false));
+            logFile = new File(System.getProperty("user.home") + "/access-log-app-access.log");
+            logFile.delete();
 
-		server = new MicroserverApp(() -> "access-log-app");
-		server.start();
+            assertThat(logFile.exists(), is(false));
+
+            server = new MicroserverApp(() -> "access-log-app");
+            server.start();
+
 
 	}
 

@@ -15,11 +15,11 @@ public class ConfigureEnviroment {
 	private Collection<ModuleBean> modules;
 
 	@Bean
-	public Environment environment(@Qualifier("propertyFactory") Properties props) {
+	public MicroserverEnvironment microserverEnvironment(@Qualifier("propertyFactory") Properties props) {
 		if (modules == null) {
-			return new Environment(props);
+			return new MicroserverEnvironment(props);
 		}
-		return new Environment(props, modules);
+		return new MicroserverEnvironment(props, modules);
 	}
 
 }

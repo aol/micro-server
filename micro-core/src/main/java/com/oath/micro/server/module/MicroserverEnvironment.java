@@ -13,19 +13,19 @@ import cyclops.control.Try;
 import static cyclops.data.tuple.Tuple.tuple;
 
 
-public class Environment {
+public class MicroserverEnvironment {
 
 	private volatile PersistentMap<String, ModuleBean> modulePort;
 	private final Properties properties;
 	private volatile int nextPort = 8080;
 
-	public Environment(Properties propertyFactory, Collection<ModuleBean> modules) {
+	public MicroserverEnvironment(Properties propertyFactory, Collection<ModuleBean> modules) {
 
 		modulePort = HashMap.fromStream(modules.stream().map(m-> tuple(m.getModule().getContext(),m)));
 		this.properties = propertyFactory;
 	}
 
-	public Environment(Properties propertyFactory) {
+	public MicroserverEnvironment(Properties propertyFactory) {
 		modulePort = HashMap.empty();
 		this.properties = propertyFactory;
 
