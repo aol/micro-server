@@ -7,7 +7,6 @@ import java.util.Set;
 import com.oath.micro.server.Plugin;
 import com.oath.micro.server.spring.datasource.JdbcConfig;
 import com.oath.micro.server.spring.datasource.hibernate.HibernateConfig;
-import com.oath.micro.server.spring.datasource.hibernate.SpringDataConfig;
 import com.oath.micro.server.spring.datasource.jdbc.SQL;
 import cyclops.reactive.collections.mutable.SetX;
 
@@ -29,7 +28,7 @@ public class HibernatePlugin implements Plugin {
 
 	@Override
 	public Set<Class> springClasses() {
-		return SetX.of(JdbcConfig.class, SQL.class, SpringDataConfig.class, HibernateConfig.class);
+		return SetX.of(JdbcConfig.class, SQL.class, HibernateConfig.class);
 	}
 
 	

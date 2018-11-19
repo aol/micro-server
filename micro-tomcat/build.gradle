@@ -43,6 +43,9 @@ modifyPom {
 
   }
 }
+test {
+  forkEvery = 1
+}
 
 extraArchive {
   sources = true

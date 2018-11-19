@@ -1,8 +1,8 @@
- # Hibernate & Spring Data plugin
+ # Hibernate plugin
  
  [micro-hibernate example apps](https://github.com/aol/micro-server/tree/master/micro-hibernate/src/test/java/app)
 
-Adds Spring Data, and Hibernate support. 
+Adds Hibernate support. 
 
 ## To use
 
@@ -167,54 +167,6 @@ Use the Microserver annotation to set the Hibernate entityScan
 	
   }
 
-## Spring Data Repositories 
-
-We can define a Spring Data Repository e.g. A Crud Repository for a simple Entity
-
-	public interface SpringDataRepository extends CrudRepository<SpringDataEntity, Long> {
-	
-	}
-
-## Using Spring Data Repositories 
-
-Simply inject the Repository into your Rest Resource
-
-    @Rest
-    @Path("/persistence")
-    public class PersistentResource  {
-
-	
-	  private final SpringDataRepository dao;
-	
-	  @Autowired
-	  public PersistentResource(SpringDataRepository dao) {
-	
-		  this.dao = dao;
-	 }
-	
-	  @GET
-	  @Produces("text/plain")
-	  @Path("/create")
-	  public String createEntity() {
-		
-		 SpringDataEntity saved =	dao.save(SpringDataEntity.builder()
-								.name("test")
-								.value("value").build());
-		
-		  return "ok";
-	 }
-	 
-	  @GET
-	  @Produces("application/json")
-	  @Path("/get")
-	  public Iterable<SpringDataEntity> get(){
-		
-		 return dao.findAll();
-
-	  }
-    }
- 
- 
  # Plain ol' JDBC
  
 [JDBC Template Exmaple App](https://github.com/aol/micro-server/tree/master/micro-data/src/test/java/app/jdbc/com/aol/micro/server)

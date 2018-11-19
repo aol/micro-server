@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutionException;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -24,6 +25,7 @@ import com.oath.micro.server.testing.RestAgent;
 	    "db.connection.dialect","org.hibernate.dialect.HSQLDialect",
 	    "db.connection.ddl.auto","create-drop"}, entityScan="app.spring.data.jpa.com.oath.micro.server")
 @EnableJpaRepositories
+@Ignore
 public class SpringDataTest {
 
   	private final AsyncRestClient<List<SpringDataEntity>> listClient = new AsyncRestClient(1000,1000).withGenericResponse(List.class, SpringDataEntity.class);
