@@ -61,12 +61,16 @@ public class ActiveResource<T> implements CommonRestResource, SingletonRestResou
     @Produces("application/json")
     @Path("/jobs")
     public void activeJobs(@Suspended AsyncResponse asyncResponse) {
+        try {
+            ReactiveSeq.of(this.activeJobs)
+                        .map(JobsBeingExecuted::toString)
+                        .foldFuture(WorkerThreads.ioExecutor.get(),
+                            s -> s.forEach(Long.MAX_VALUE, str -> asyncResponse.resume(str)));
 
-        ReactiveSeq.of(this.activeJobs)
-                   .map(JobsBeingExecuted::toString)
-                   .foldFuture(WorkerThreads.ioExecutor.get(),
-                   s->s.forEach(Long.MAX_VALUE,str -> asyncResponse.resume(str)));
+        } catch (Exception e) {
+            e.printStackTrace();
 
+        }
     }
 
 }

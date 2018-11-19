@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.locks.LockSupport;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +21,7 @@ import com.oath.micro.server.testing.RestAgent;
 public class EventRunnerTest {
 
 	RestAgent rest = new RestAgent();
-	private final AsyncRestClient<String> client = new AsyncRestClient<String>(100,100).withAccept("application/json");
+	private final AsyncRestClient<String> client = new AsyncRestClient<String>(200,200).withAccept("application/json");
 	MicroserverApp server;
 	
 	
@@ -43,13 +44,19 @@ public class EventRunnerTest {
 		
 
 		assertThat(rest.get("http://localhost:8080/event-app/status/ping"),is("ok"));
-		
+
+
+        System.out.println("Res  ****");//  + client.get("http://localhost:8080/event-app/active/jobs").get());
+		System.out.println(client.get("http://localhost:8080/event-app/active/jobs").get());
+		System.out.println("****");
+
 		assertThat(client.get("http://localhost:8080/event-app/active/jobs").get(),
 				containsString("startedAt"));
 		assertThat(client.get("http://localhost:8080/event-app/active/requests").get(),
 				containsString("startedAt"));
 		assertThat(client.get("http://localhost:8080/event-app/manifest").get(),
 				containsString("Manifest"));
+
 		
 	}
 	

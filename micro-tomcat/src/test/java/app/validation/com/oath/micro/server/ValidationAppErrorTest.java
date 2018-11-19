@@ -8,10 +8,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.ws.rs.BadRequestException;
 import java.util.concurrent.ExecutionException;
 
 //@Microserver(basePackages = { "app.guava.com.aol.micro.server" })
-public class ValidationAppTest {
+public class ValidationAppErrorTest {
 
 	RestAgent rest = new RestAgent();
 
@@ -41,19 +42,19 @@ public class ValidationAppTest {
 	}
 
 	
-
-	@Test
-	public void confirmNoError() throws InterruptedException,
+	@Test(expected=BadRequestException.class)
+	public void confirmError() throws InterruptedException,
 			ExecutionException {
 
+		
 		//stream.block();
+		
 		rest.post(
-				"http://localhost:8080/guava-app/status/ping", entity,
+				"http://localhost:8080/guava-app/status/ping", null,
 				ImmutableEntity.class);
 		
 
 	}
 
-	
 
 }

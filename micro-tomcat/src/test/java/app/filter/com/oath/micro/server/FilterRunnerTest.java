@@ -11,7 +11,9 @@ import java.util.concurrent.ExecutionException;
 import javax.servlet.Filter;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.oath.micro.server.MicroserverApp;
@@ -25,7 +27,7 @@ public class FilterRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicroserverApp server;
+	static MicroserverApp server;
 	@Before
 	public void startServer() throws InterruptedException{
 		Thread.sleep(500);
@@ -38,8 +40,8 @@ public class FilterRunnerTest {
 
 	}
 	
-	@After
-	public void stopServer(){
+	@AfterClass
+	public static void stopServer(){
 		server.stop();
 	}
 	

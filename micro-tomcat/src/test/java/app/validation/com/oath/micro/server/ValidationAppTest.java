@@ -47,19 +47,7 @@ public class ValidationAppTest {
 	}
 
 	
-	@Test(expected=BadRequestException.class)
-	public void confirmError() throws InterruptedException,
-			ExecutionException {
 
-		
-		//stream.block();
-		
-		rest.post(
-				"http://localhost:8080/guava-app/status/ping", null,
-				ImmutableEntity.class);
-		
-
-	}
 	@Test
 	public void confirmNoError() throws InterruptedException,
 			ExecutionException {

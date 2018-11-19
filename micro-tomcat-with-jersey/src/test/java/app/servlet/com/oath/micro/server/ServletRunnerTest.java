@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 import javax.servlet.Servlet;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class ServletRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicroserverApp server;
+	static MicroserverApp server;
 	@Before
 	public void startServer() throws InterruptedException{
 		Map<String, Servlet> servlets = new HashMap<>();
@@ -33,8 +34,8 @@ public class ServletRunnerTest {
 
 	}
 	
-	@After
-	public void stopServer(){
+	@AfterClass
+	public static void stopServer(){
 		server.stop();
 	}
 	

@@ -1,45 +1,42 @@
 package app.filter.com.oath.micro.server;
 
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-import java.util.Arrays;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-
-import javax.servlet.Filter;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.oath.micro.server.MicroserverApp;
 import com.oath.micro.server.module.ConfigurableModule;
 import com.oath.micro.server.testing.RestAgent;
 import com.oath.micro.server.utility.HashMapBuilder;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.Test;
 
+import javax.servlet.Filter;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 
 public class FilterRunnerTest {
 
 	RestAgent rest = new RestAgent();
 	
-	MicroserverApp server;
+	static MicroserverApp server;
 	@Before
 	public void startServer() throws InterruptedException{
+		Thread.sleep(500);
 		Map<String, Filter> filters = HashMapBuilder.<String, Filter>map("/filter-app/status/ping2",new ConfiguredFilter()).build();
 		server = new MicroserverApp(ConfigurableModule.builder()
 													.context("filter-app")
 													.filters(filters )
 													.requestListeners(Arrays.asList(new org.springframework.web.context.request.RequestContextListener())).build());
-		Thread.sleep(1000);
 		server.start();
 
 	}
 	
-	@After
-	public void stopServer(){
+	@AfterClass
+	public static void stopServer(){
 		server.stop();
 	}
 	
