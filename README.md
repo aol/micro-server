@@ -89,15 +89,17 @@ Microserver plugins are orthogonal to Microservices. They solve a common problem
 [Tutorial code](https://github.com/aol/micro-server/tree/master/micro-tutorial)
 
 ## Note on Fat Jars
+
 Microserver (& Cyclops) have a plugin architecture and make use of the Java Service Loader mechanism. Make sure your Fat Jar implementation is configured to aggregate services. With the Gradle Shadow Jar you do this with
  ```groovy
     shadowJar {
-      mergeServiceFiles()  
+      mergeServiceFiles()
     }
  ```
 
 
-###Quick start youtube video
+### Quick start youtube video
+
 [![Getting started video](https://cloud.githubusercontent.com/assets/9964792/6361863/9991c50c-bc7e-11e4-8d28-746b0b87b1da.png)](https://www.youtube.com/watch?v=McXy9oGRpfA&feature=youtu.be)
 
 
@@ -125,7 +127,7 @@ Microserver is a zero configuration, standards based, battle hardened library to
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-spring-boot/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.oath.microservices/micro-spring-boot)
 
 
-##Info
+## Info
 
 [wiki](https://github.com/aol/micro-server/wiki)
 
@@ -198,22 +200,22 @@ Example working application :-
 
 This will deploy a REST server on port 8080 (configurable by test-app.port in application.properties), it will also automagically capture any Rest end points (Spring & Jersey annotations) that implement the tag interface RestResource (see below for an example).
 
-###A rest end point 
+### A rest end point
 
- ```java
-    @Rest 
-    @Path("/status")
-    public class StatusResource {
+```java
+@Rest
+@Path("/status")
+public class StatusResource {
 
-	  @GET 
-	  @Produces("text/plain")
-	  @Path("/ping")
-	  public String ping() {
-		 return "ok";
-	  }
-
+    @GET
+    @Produces("text/plain")
+    @Path("/ping")
+    public String ping() {
+        return "ok";
     }
- ```
+
+}
+```
 ### Configuration Options
 
 If you find you need configuration options for your application you have two options.
@@ -236,7 +238,7 @@ Jersey REST Applications are configured by the Module interface (at least one of
 ![high level architecture](https://cloud.githubusercontent.com/assets/9964792/6375067/a6e4f65a-bd0c-11e4-85dc-82ae0d95d44b.png)
 
 
-####Rest configuration
+#### Rest configuration
 
 The configuration of your Rest endpoints can be managed via the Module interface. The Module interface has a number of Java 8 default methods and a single abstract method (getContext).  It behaves as a functional interface, and can be defined by a lambda expression. When used in this way the lambda represents the context the Microserver will create Rest end points on.
 
@@ -249,7 +251,7 @@ e.g.
 () -> "context"  is a Module!
 
 
-####Configurable Options
+#### Configurable Options
 
 Module provides the following default methods, that clients can override
 
@@ -307,7 +309,7 @@ Providers allows client code to change the Jersey Providers packages
 
 JaxWsRsApplication allows client code to completely override the Microserver jax.ws.rs.Application
 
-####Property file configuration
+#### Property file configuration
 
 Microserver supports auto-discovery of application.properties. Microserver will assume a default file name of 'application.properties'.  Microserver will check for a properties in the following order
 
@@ -323,7 +325,7 @@ The default file name application.properties can be configured by exception (use
 
 Microserver application properties loading is configured by the class PropertyFileConfig. You can replace this with your own Spring configuration file to load property files by a different set of rules (by passing in your class to the constructor of Microserver).
 
-##Embed and colocate Microservices
+## Embed and colocate Microservices
 
 Microserver supports the embedding of multiple microservices within a single Microserver, this is not the default mode of operation and involves a little more work to setup. All Microservices will share a single Spring context, so some care needs to be taken when authoring such Microservices to avoid conflicts. This does mean that they can share resources (such as database connections) where it makes sense to do so.
 
@@ -331,7 +333,7 @@ Embedded microservices should be collated at '''runtime only'''. There should be
 
 Embedding microservices is an optimisation that allows better performance, enhanced robustness and reliability and easier management  of microservices - while still maintaining the advantages of horizontal scalability offered by the microservices approach.
 
-###Embedded Microservices example
+### Embedded Microservices example
 
 This example will start two different Rest endpoints - one on context "test-app" and another on context "alternative-app".
 "test-app" will automagically wire in any Jersey endpoints that implement TestAppRestResource.
@@ -353,7 +355,7 @@ This example will start two different Rest endpoints - one on context "test-app"
  ```
 
 
-##Building a 'fat' Jar
+## Building a 'fat' Jar
 
 We recommend the Gradle plugin Shadow Jar. For Gradle 2.0 simply define it in your plugins section ->
  ```groovy
