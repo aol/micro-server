@@ -4,7 +4,7 @@
 
 This adds support for sending the metrics to Datadog if an api key is provided in the application.properties file. For more detailed info see [metrics-datadog](https://github.com/coursera/metrics-datadog/)
 
-This plugin in combination with the micro-event-metrics plugin will send some metrics to datadog by default. Refer here (https://github.com/aol/micro-server/tree/master/micro-event-metrics) and (https://github.com/aol/micro-server/blob/master/micro-event-metrics/src/main/java/com/aol/micro/server/event/metrics/MetricsCatcher.java)
+This plugin in combination with the micro-event-metrics plugin will send some metrics to datadog by default. Refer here (https://github.com/aol/micro-server/tree/master/micro-event-metrics) and (https://github.com/aol/micro-server/blob/master/micro-event-metrics/src/main/java/com/oath/micro/server/event/metrics/MetricsCatcher.java)
 
 ## To use
 
