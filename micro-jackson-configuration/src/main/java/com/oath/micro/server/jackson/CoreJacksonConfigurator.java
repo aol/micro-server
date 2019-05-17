@@ -2,6 +2,7 @@ package com.oath.micro.server.jackson;
 
 import java.util.Optional;
 
+import com.oath.cyclops.jackson.CyclopsModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,7 @@ public class CoreJacksonConfigurator implements JacksonMapperConfigurator {
 			.forEach(m -> mapper.registerModule(m));
 			
 		mapper.registerModule(new Jdk8Module());
+		mapper.registerModule(new CyclopsModule());
 	}
 
 }

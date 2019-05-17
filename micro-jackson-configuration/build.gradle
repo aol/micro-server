@@ -2,6 +2,7 @@ description = 'micro-jackson-configuration'
 
 dependencies {
   compile project(':micro-core')
+  compile("com.oath.cyclops:cyclops-jackson-integration:$cyclopsVersion")
 }
 
 modifyPom {
