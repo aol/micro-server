@@ -3,6 +3,7 @@ package app.embedded.com.oath.micro.server;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,7 +55,9 @@ public class EmbeddedAppTest {
 	
 	@Test
 	public void nonBlockingRestClientTest(){
-		assertThat(rest.get("http://localhost:8080/test-app/test-status/rest-calls"),is("-*test!-*test!"));
+
+            assertThat(rest.get("http://localhost:8080/test-app/test-status/rest-calls"), is("-*test!-*test!"));
+
 	}
 	
 	<T> CompletableFuture<T> toCompletableFuture(
