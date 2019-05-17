@@ -50,7 +50,7 @@ public class JacksonUtilTest {
                           .contains("blah"));
     }
 
-    @Test @Ignore
+    @Test
     public void serializeToPersistentList() {
 
         LinkedListX<Integer> list = LinkedListX.of(1, 2, 3, 4);
@@ -58,7 +58,7 @@ public class JacksonUtilTest {
 
         Seq<Integer> stack = JacksonUtil.convertFromJson(jsonString, Seq.class);
 
-        assertThat(stack, equalTo(list.reverse()));
+        assertThat(stack, equalTo(list));
     }
 
 }
