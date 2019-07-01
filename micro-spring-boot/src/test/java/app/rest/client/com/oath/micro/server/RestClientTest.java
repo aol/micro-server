@@ -12,14 +12,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-import app.boot.front.end.BootExample;
-import com.oath.micro.server.MicroserverPlugins;
 import com.oath.micro.server.module.Module;
 import cyclops.reactive.collections.mutable.SetX;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.boot.SpringApplication;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
