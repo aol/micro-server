@@ -56,10 +56,8 @@ public class Job {
             if (app.getApplication() != null && apiUrl != null) {
                 app.getApplication()
                     .forEach(moduleEntry -> sendPing(moduleEntry));
-                sent++;
             }
         } catch (Exception e) {
-            errors++;
             logger.error("Failed to register services due to exception {}", e.getMessage(), e);
         }
     }
