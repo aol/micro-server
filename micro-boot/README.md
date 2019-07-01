@@ -2,8 +2,9 @@
 
 [micro-boot example apps](https://github.com/aol/micro-server/tree/master/micro-boot/src/test/java/app)
 
-**micro-boot** allows Microserver front ends to use Spring Boot backends (in other words it adds Spring Boot as a plugin to Microserver). To use full-stack Spring Boot with Microserver (and Jersey) see the [micro-spring-boot plugin](https://github.com/aol/micro-server/tree/master/micro-spring-boot) (in other words to use Microserver as a plugin to Spring Boot use micro-sprint-boot rather than this plugin). 
-
+**micro-boot** allows Microserver front ends to use Microserver plugins with Spring Boot without configuring support for the micro-jersey plugin. Rest and Web end points in Microserver
+plugins may not be available (but the Spring beans will be and can be used to expose the same data in a different manner). 
+To use full-stack Spring Boot with Microserver (and. Jersey) see the [micro-spring-boot plugin](https://github.com/aol/micro-server/tree/master/micro-spring-boot).
 ## A simple example with one resource
 
 * Annotate your classes with @Microboot to let Spring Boot know the base package for auto-scanning Spring beans.
@@ -12,42 +13,40 @@
 
 * You can now use the @Microserver annotation for configuration (except for base auto-scan packages)
 
+[Spring Boot Hello World example](https://spring.io/guides/gs/spring-boot/) converted to a micro-boot test
 
 ```java
-@Microboot //configure this package as the base for autoscan
-//optionally use @Microserver here for more configuration options
-public class SimpleExample {
+@Microserver
+@MicroBoot
+public class Application {
 
-	RestClient rest = new RestClient(10_000,1_000);
-	
-	
-	public static void main (String[] args){
-		
-		new MicroserverApp(()-> "simple-app").start();
-		
-		assertThat(rest.get("http://localhost:8080/simple-app/status/ping"),equalTo("ok"));
-		
-	}
-	
 
-	
+    AsyncRestClient rest = new AsyncRestClient(1000,1000).withAccept("text/plain");
+
+    @Test
+    public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
+
+        new MicroserverApp( ()-> "spring-mvc");
+        Thread.sleep(2000);
+
+        assertThat(rest.get("http://localhost:8080/spring-mvc").get(),is("Greetings from Spring Boot with Microserver!"));
+
+    }
+
+
 }
-@Rest
-@Path("/status")
-public class SimpleResource{
 
-	
-	
-	@GET
-	@Produces("text/plain")
-	@Path("/ping")
-	public String ping() {
-		
-		return "ok";
-	}
 
-	
+@RestController
+public class HelloController {
+
+    @RequestMapping("/")
+    public String index() {
+        return "Greetings from Spring Boot with Microserver!";
+    }
+
 }
+
 ```
 
 ## To use

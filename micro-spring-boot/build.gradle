@@ -20,6 +20,7 @@ dependencies {
 
   compile project(':micro-jackson-configuration')
 
+  testCompile("org.springframework.boot:spring-boot-starter-web:"+ springBootVersion)
   testCompile 'org.springframework.boot:spring-boot-starter-test:' + springBootVersion
   testCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: "$jerseyVersion"
   testCompile 'org.apache.tomcat.embed:tomcat-embed-core:' + tomcatVersion

@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class Job {
     private final String resourcePath;
     private final RegistryHealthChecker checker;
     private final RegistryStatsChecker statsChecker;
+    @Getter
+    private int scheduled =0;
 
     @Autowired
     public Job(@Value("${service.registry.url:#{null}}") String apiUrl, ApplicationRegisterImpl app,
@@ -48,12 +51,15 @@ public class Job {
     @PostConstruct
     @Scheduled(fixedDelayString = "${service.registry.delay:1000}")
     public synchronized void schedule() {
+        scheduled++;
         try {
             if (app.getApplication() != null && apiUrl != null) {
                 app.getApplication()
                     .forEach(moduleEntry -> sendPing(moduleEntry));
+                sent++;
             }
         } catch (Exception e) {
+            errors++;
             logger.error("Failed to register services due to exception {}", e.getMessage(), e);
         }
     }
