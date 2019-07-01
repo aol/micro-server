@@ -33,10 +33,6 @@ public class Job {
     private final RegistryStatsChecker statsChecker;
     @Getter
     private int scheduled =0;
-    @Getter
-    private int sent =0;
-    @Getter
-    private int errors = 0;
 
     @Autowired
     public Job(@Value("${service.registry.url:#{null}}") String apiUrl, ApplicationRegisterImpl app,

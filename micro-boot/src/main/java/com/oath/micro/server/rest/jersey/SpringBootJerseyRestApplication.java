@@ -59,9 +59,13 @@ public class SpringBootJerseyRestApplication extends ResourceConfig {
 
         JacksonJaxbJsonProvider p = new JacksonJaxbJsonProvider();
         p.setMapper(JacksonUtil.getMapper());
-		register(p);
-		module.getDefaultJaxRsPackages().stream().forEach( e -> packages(e));
-		module.getDefaultResources().stream().forEach( e -> register(e));
+        register(p);
+        module.getDefaultJaxRsPackages()
+              .stream()
+              .forEach(e -> packages(e));
+        module.getDefaultResources()
+              .stream()
+              .forEach(e -> register(e));
 		
 		
 		module.getResourceConfigManager().accept(new JaxRsProvider<>(this));

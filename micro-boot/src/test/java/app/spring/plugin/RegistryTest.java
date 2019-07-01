@@ -25,10 +25,8 @@ public class RegistryTest {
     public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
 
         MicroserverApp app = new MicroserverApp( ()-> "spring-mvc");
-        Thread.sleep(2000);
+        Thread.sleep(3000);
 
-//        assertThat(rest.get("http://localhost:8080/spring-mvc/sent").get(),is("0"));
-        Thread.sleep(1000);
         assertThat(rest.get("http://localhost:8080/spring-mvc/scheduled").get(),is(not("0")));
 
         ((ConfigurableApplicationContext)app.getSpringContext()).close();

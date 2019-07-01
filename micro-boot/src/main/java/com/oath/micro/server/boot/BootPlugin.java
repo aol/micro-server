@@ -40,8 +40,5 @@ public class BootPlugin implements Plugin{
 	public Function<FeatureContext,Map<String,Object>> jacksonFeatureProperties(){
 		return context-> new HashMap<>();
 	}
-	
-	
-	
 
 }
