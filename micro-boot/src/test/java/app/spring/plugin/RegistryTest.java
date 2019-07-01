@@ -5,6 +5,7 @@ import com.oath.micro.server.boot.MicroBoot;
 import com.oath.micro.server.config.Microserver;
 import com.oath.micro.server.rest.client.nio.AsyncRestClient;
 import org.junit.Test;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.concurrent.ExecutionException;
 
@@ -23,12 +24,14 @@ public class RegistryTest {
     @Test
     public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
 
-        new MicroserverApp( ()-> "spring-mvc");
+        MicroserverApp app = new MicroserverApp( ()-> "spring-mvc");
         Thread.sleep(2000);
 
 //        assertThat(rest.get("http://localhost:8080/spring-mvc/sent").get(),is("0"));
         Thread.sleep(1000);
         assertThat(rest.get("http://localhost:8080/spring-mvc/scheduled").get(),is(not("0")));
+
+        ((ConfigurableApplicationContext)app.getSpringContext()).close();
 
     }
 

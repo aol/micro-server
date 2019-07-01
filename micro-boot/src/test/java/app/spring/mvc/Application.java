@@ -6,6 +6,7 @@ import com.oath.micro.server.config.Microserver;
 import com.oath.micro.server.rest.client.nio.AsyncRestClient;
 import com.oath.micro.server.boot.MicroBoot;
 import org.junit.Test;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -20,11 +21,11 @@ public class Application {
     @Test
     public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
 
-        new MicroserverApp( ()-> "spring-mvc");
+        MicroserverApp app = new MicroserverApp( ()-> "spring-mvc");
         Thread.sleep(2000);
 
         assertThat(rest.get("http://localhost:8080/spring-mvc").get(),is("Greetings from Spring Boot with Microserver!"));
-
+        ((ConfigurableApplicationContext)app.getSpringContext()).close();
     }
 
 
