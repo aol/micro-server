@@ -6,6 +6,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import com.codahale.metrics.Counter;
+import com.codahale.metrics.Meter;
 import cyclops.reactive.collections.mutable.MapX;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,11 +34,11 @@ public class EventStatusResource implements RestResource {
     @Produces("text/plain")
     @Path("/ping")
     public String ping() {
-        bus.post(RequestEvents.start("get", 1l));
+        bus.post(RequestEvents.start("get", "1"));
         try {
             return "ok";
         } finally {
-            bus.post(RequestEvents.finish("get", 1l));
+            bus.post(RequestEvents.finish("get", "1"));
         }
     }
 
@@ -44,16 +46,16 @@ public class EventStatusResource implements RestResource {
     @Produces("application/json")
     @Path("/counters")
     public Map<String, Long> counters() {
-        return (MapX) MapX.fromMap(metrics.getCounters())
-                          .bimap(k -> k, v -> v.getCount());
+        return MapX.fromMap(metrics.getCounters())
+                   .bimap(k -> k, Counter::getCount);
     }
 
     @GET
     @Produces("application/json")
     @Path("/meters")
     public Map<String, Long> meters() {
-        return (MapX) MapX.fromMap(metrics.getMeters())
-                          .bimap(k -> k, v -> v.getCount());
+        return MapX.fromMap(metrics.getMeters())
+                   .bimap(k -> k, Meter::getCount);
     }
 
 }

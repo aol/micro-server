@@ -79,9 +79,8 @@ public class JobsBeingExecuted {
         events.active(id, data);
 
         SystemData retVal = null;
-        long correlationId = r.nextLong();
-        eventBus.post(new JobStartEvent(
-                                        correlationId, type));
+        String correlationId = String.valueOf(r.nextLong());
+        eventBus.post(new JobStartEvent(correlationId, type));
         try {
 
             retVal = Optional.ofNullable(((SystemData) pjp.proceed()))
@@ -92,12 +91,11 @@ public class JobsBeingExecuted {
             logSystemEvent(pjp, type, data, retVal);
             retVal = Optional.ofNullable(retVal)
                              .orElse(SystemData.builder()
-                                               .correlationId("" + correlationId)
+                                               .correlationId(correlationId)
                                                .errors(0l)
                                                .processed(0l)
                                                .build());
-            eventBus.post(new JobCompleteEvent(
-                                               correlationId, type, retVal.getErrors(), retVal.getProcessed()));
+            eventBus.post(new JobCompleteEvent(correlationId, type, retVal.getErrors(), retVal.getProcessed()));
         }
     }
 
@@ -108,12 +106,7 @@ public class JobsBeingExecuted {
                                                     .getClass());
         loggingRateLimiter.capacityAvailable(pjp.getTarget()
                                                 .getClass(),
-                                             this.maxLoggingCapacity, new Runnable() {
-                                                 @Override
-                                                 public void run() {
-                                                     postEvent(pjp, type, data, active);
-                                                 }
-                                             });
+                                             this.maxLoggingCapacity, () -> postEvent(pjp, type, data, active));
     }
 
     private void postEvent(ProceedingJoinPoint pjp, String type, JobExecutingData data, SystemData retVal) {

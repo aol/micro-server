@@ -28,24 +28,18 @@ import com.oath.micro.server.auto.discovery.SingletonRestResource;
 @Component
 public class ManifestResource implements CommonRestResource, SingletonRestResource{
 
-	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	
 
 	@GET
 	@Produces("application/json")
 	public void mainfest(@Suspended AsyncResponse asyncResponse, @Context ServletContext context) {
-		
-		ReactiveSeq.of("/META-INF/MANIFEST.MF")
-					.map(url->context.getResourceAsStream(url))
-					.map(this::getManifest)
-				.foldFuture(WorkerThreads.ioExecutor.get(),
-					s->s.forEach(Long.MAX_VALUE,result->asyncResponse.resume(result)));
-					
-		
-	}
 
+        ReactiveSeq.of("/META-INF/MANIFEST.MF")
+                   .map(url -> context.getResourceAsStream(url))
+                   .map(this::getManifest)
+                   .foldFuture(WorkerThreads.ioExecutor.get(),
+                               s -> s.forEach(Long.MAX_VALUE, result -> asyncResponse.resume(result)));
+	}
 	
 	public Map<String, String> getManifest(final InputStream input) {
 		

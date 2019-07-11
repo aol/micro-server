@@ -29,11 +29,11 @@ public class EventStatusResource implements RestResource {
 	@Produces("text/plain")
 	@Path("/ping")
 	public String ping() {
-		bus.post(RequestEvents.start("get", 1l));
+		bus.post(RequestEvents.start("get", "1"));
 		try{
 			return "ok";
 		}finally{
-			bus.post(RequestEvents.finish("get",1l));
+			bus.post(RequestEvents.finish("get","1"));
 		}
 	}
 

@@ -48,7 +48,6 @@ public class EndPoint {
 	private final EventBus bus;
 	private final NIORestClient restClient;
 	private final String URL;
-	private final AtomicLong correlationId = new AtomicLong(0);
 	@Autowired
 	public EndPoint(NIORestClient restClient,EventBus bus, @Value("${url:}") String URL){
 	
@@ -67,7 +66,7 @@ public class EndPoint {
     public void async(RequestType query,@Suspended AsyncResponse asyncResponse){
 		
 		
-		 final long correlationId = this.correlationId.incrementAndGet();
+		 final String correlationId = UUID.randomUUID().toString();
 		 bus.post(RequestEvents.start(query, correlationId,"standard-query",HashMapBuilder.of("ip",QueryIPRetriever.getIpAddress())));
 	     builder.from(this.restClient.postForEntity(URL, new HttpEntity(JacksonUtil.serializeToJson(convertList(query)),headers),String.class))
 	     		.sync()

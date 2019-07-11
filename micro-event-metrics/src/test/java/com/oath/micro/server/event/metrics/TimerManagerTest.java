@@ -18,14 +18,14 @@ public class TimerManagerTest {
 
     @Test
     public void whenValueNotPresentNoError() {
-        manager.complete(1l);
+        manager.complete("1");
     }
 
     @Test
     public void whenValueAddedAndRemovedStopCalled() {
         Context c = Mockito.mock(Context.class);
-        manager.start(1l, c);
-        manager.complete(1l);
+        manager.start("1", c);
+        manager.complete("1");
         Mockito.verify(c, Mockito.times(1))
                .stop();
 

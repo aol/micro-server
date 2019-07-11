@@ -14,14 +14,14 @@ import static org.junit.Assert.assertThat;
 public class LabelledEventsTest {
 
     String query;
-    long corrId;
+    String corrId;
     String label;
     String addData;
 
     @Before
     public void setUp() {
         query = "query as string";
-        corrId = 1234;
+        corrId = "1234";
         label = "label";
         addData = "additional data";
     }

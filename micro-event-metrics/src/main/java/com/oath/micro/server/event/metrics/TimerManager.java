@@ -9,7 +9,7 @@ import cyclops.control.Maybe;
 
 public class TimerManager {
 
-    private final Cache<Long, Context> contexts;
+    private final Cache<String, Context> contexts;
 
     public TimerManager(long maxSize, int minutesUntilExpire) {
         contexts = CacheBuilder.newBuilder()
@@ -18,13 +18,13 @@ public class TimerManager {
                                .build();
     }
 
-    public void complete(long id) {
+    public void complete(String id) {
         Maybe.ofNullable(contexts.getIfPresent(id))
-             .forEach(c -> c.stop());
+             .forEach(Context::stop);
         contexts.invalidate(id);
     }
 
-    public void start(long id, Context context) {
+    public void start(String id, Context context) {
         contexts.put(id, context);
 
     }

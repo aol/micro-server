@@ -26,11 +26,11 @@ public class MultiEventStatusResource implements RestResource {
     @Produces("text/plain")
     @Path("/ping")
     public String ping() {
-        RequestEvents.start("get", 1l, bus, "typeA", "custom");
+        RequestEvents.start("get", "1", bus, "typeA", "custom");
         try {
             return "ok";
         } finally {
-            RequestEvents.finish("get", 1l, bus, "typeA", "custom");
+            RequestEvents.finish("get", "1", bus, "typeA", "custom");
         }
     }
 
@@ -38,11 +38,11 @@ public class MultiEventStatusResource implements RestResource {
     @Produces("text/plain")
     @Path("/ping-custom")
     public String pingCustom() {
-        RequestEvents.start("get", 1l, bus, "typeA", "custom");
+        RequestEvents.start("get", "1", bus, "typeA", "custom");
         try {
             return "ok";
         } finally {
-            RequestEvents.finish("get", 1l, bus, "typeA", "custom");
+            RequestEvents.finish("get", "1", bus, "typeA", "custom");
         }
     }
 
