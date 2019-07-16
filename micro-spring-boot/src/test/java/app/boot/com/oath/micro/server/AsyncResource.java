@@ -1,21 +1,17 @@
 package app.boot.com.oath.micro.server;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import com.google.common.collect.ImmutableList;
+import com.oath.micro.server.auto.discovery.RestResource;
+import com.oath.micro.server.rest.client.nio.AsyncRestClient;
+import cyclops.futurestream.SimpleReact;
+import org.springframework.stereotype.Component;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
-
-import cyclops.futurestream.SimpleReact;
-import org.springframework.stereotype.Component;
-
-
-import com.oath.micro.server.auto.discovery.RestResource;
-import com.oath.micro.server.rest.client.nio.AsyncRestClient;
-import com.google.common.collect.ImmutableList;
+import java.util.concurrent.CompletableFuture;
 
 @Path("/async")
 @Component
@@ -35,13 +31,13 @@ public class AsyncResource implements RestResource{
         public void expensive(@Suspended AsyncResponse asyncResponse){
         	
         	simpleReact.fromStream(urls.stream()
-					.<CompletableFuture<String>>map(it ->  client.get(it)))
+					.<CompletableFuture<String>>map(client::get))
 					.onFail(it -> "")
-					.peek(it -> 
-					System.out.println(it))
+					.peek(System.out::println)
 					.allOf(data -> {
 						System.out.println(data);
-							return asyncResponse.resume(String.join(";", (List<String>)data)); });
+						return asyncResponse.resume(String.join(";", data));
+					});
         	
         }
         

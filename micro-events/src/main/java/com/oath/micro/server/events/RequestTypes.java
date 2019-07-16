@@ -30,8 +30,7 @@ public class RequestTypes<T> {
 
     @Override
     public String toString() {
-        Map result = toMap();
-        return JacksonUtil.serializeToJson(result);
+        return JacksonUtil.serializeToJson(toMap());
     }
 
     public Map toMap() {
@@ -42,8 +41,7 @@ public class RequestTypes<T> {
     @Subscribe
     public void finished(RemoveQuery<T> data) {
         String key = data.getData().type;
-        map.computeIfAbsent(key, k -> new RequestsBeingExecuted<T>(
-                                                                   bus, k)).events.finished(buildId(data.getData()));
+        map.computeIfAbsent(key, k -> new RequestsBeingExecuted<T>(bus, k)).events.finished(buildId(data.getData()));
 
     }
 
@@ -51,21 +49,18 @@ public class RequestTypes<T> {
     public void processing(AddQuery<T> data) {
         String id = buildId(data.getData());
         String key = data.getData().type;
-        map.computeIfAbsent(key, k -> new RequestsBeingExecuted<T>(
-                                                                   bus, k)).events.active(id, data.getData());
+        map.computeIfAbsent(key, k -> new RequestsBeingExecuted<T>(bus, k)).events.active(id, data.getData());
 
     }
 
     private String buildId(RequestData data) {
-        String id = "" + data.correlationId;
-        return id;
+        return data.correlationId;
     }
 
     public static class AddQuery<T> extends AddEvent<RequestData<T>> {
 
         public AddQuery(RequestData<T> data) {
-            super(
-                  data);
+            super(data);
         }
 
     }
@@ -73,8 +68,7 @@ public class RequestTypes<T> {
     public static class RemoveQuery<T> extends RemoveEvent<RequestData<T>> {
 
         public RemoveQuery(RequestData data) {
-            super(
-                  data);
+            super(data);
         }
 
     }
@@ -82,8 +76,7 @@ public class RequestTypes<T> {
     public static class AddLabelledQuery<T> extends AddEvent<RequestData<T>> {
 
         public AddLabelledQuery(RequestData<T> data) {
-            super(
-                    data);
+            super(data);
         }
 
     }
@@ -91,8 +84,7 @@ public class RequestTypes<T> {
     public static class RemoveLabelledQuery<T> extends RemoveEvent<RequestData<T>> {
 
         public RemoveLabelledQuery(RequestData data) {
-            super(
-                    data);
+            super(data);
         }
 
     }
@@ -103,7 +95,7 @@ public class RequestTypes<T> {
     @Getter
     public static class RequestData<T> extends BaseEventInfo {
 
-        private final long correlationId;
+        private final String correlationId;
 
         private final T query;
 

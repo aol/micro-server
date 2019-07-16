@@ -39,7 +39,7 @@ public class MetricsCatcherTest {
 
         catcher.requestStart(new AddQuery(
                                           RequestData.builder()
-                                                     .correlationId(10l)
+                                                     .correlationId("10")
                                                      .type("test")
                                                      .build()));
         assertThat(registry.meter(this.config.getPrefix() + ".request-start-test-meter")
@@ -52,7 +52,7 @@ public class MetricsCatcherTest {
 
         catcher.requestComplete(new RemoveQuery(
                                                 RequestData.builder()
-                                                           .correlationId(10l)
+                                                           .correlationId("10")
                                                            .type("test")
                                                            .build()));
         assertThat(registry.meter(this.config.getPrefix() + ".request-end-test")
@@ -65,7 +65,7 @@ public class MetricsCatcherTest {
 
         catcher.requestStart(new AddQuery(
                                           RequestData.builder()
-                                                     .correlationId(10l)
+                                                     .correlationId("10")
                                                      .type("test")
                                                      .build()));
         assertThat(registry.counter(this.config.getPrefix() + ".requests-active-test-count")
@@ -78,7 +78,7 @@ public class MetricsCatcherTest {
 
         catcher.requestComplete(new RemoveQuery(
                                                 RequestData.builder()
-                                                           .correlationId(10l)
+                                                           .correlationId("10")
                                                            .type("test")
                                                            .build()));
         assertThat(registry.counter(this.config.getPrefix() + ".requests-active-test-count")
@@ -91,7 +91,7 @@ public class MetricsCatcherTest {
 
         catcher.requestStart(new AddQuery(
                 RequestData.builder()
-                        .correlationId(10l)
+                        .correlationId("10")
                         .type("test")
                         .build()));
         assertThat(registry.getGauges().size(), equalTo(2));
@@ -104,7 +104,7 @@ public class MetricsCatcherTest {
 
         catcher.requestComplete(new RemoveQuery(
                 RequestData.builder()
-                        .correlationId(10l)
+                        .correlationId("10")
                         .type("test")
                         .build()));
         assertThat(registry.getGauges().size(), equalTo(2));
@@ -118,8 +118,7 @@ public class MetricsCatcherTest {
     @Test
     public void jobsCounterDec() {
 
-        catcher.jobComplete(new JobCompleteEvent(
-                                                 10l, "test", 10l, 5l));
+        catcher.jobComplete(new JobCompleteEvent("10", "test", 10l, 5l));
         assertThat(registry.counter(this.config.getPrefix() + ".jobs-active-test-count")
                            .getCount(),
                    equalTo(-1l));
@@ -128,15 +127,13 @@ public class MetricsCatcherTest {
     @Test
     public void queriesTimer() {
 
-        catcher.requestStart(new AddQuery(
-                                          RequestData.builder()
-                                                     .correlationId(10l)
+        catcher.requestStart(new AddQuery(RequestData.builder()
+                                                     .correlationId("10")
                                                      .type("test")
                                                      .build()));
 
-        catcher.requestComplete(new RemoveQuery(
-                                                RequestData.builder()
-                                                           .correlationId(10l)
+        catcher.requestComplete(new RemoveQuery(RequestData.builder()
+                                                           .correlationId("10")
                                                            .type("test")
                                                            .build()));
         assertThat(registry.timer(this.config.getPrefix() + ".request-end-test-timer")
@@ -147,8 +144,7 @@ public class MetricsCatcherTest {
     @Test
     public void jobsMeterInc() {
 
-        catcher.jobStarted(new JobStartEvent(
-                                             10l, "test"));
+        catcher.jobStarted(new JobStartEvent("10", "test"));
         assertThat(registry.meter(this.config.getPrefix() + ".job-meter-test")
                            .getMeanRate(),
                    greaterThan(0.0));
@@ -157,8 +153,7 @@ public class MetricsCatcherTest {
     @Test
     public void jobsCounterInc() {
 
-        catcher.jobStarted(new JobStartEvent(
-                                             10l, "test"));
+        catcher.jobStarted(new JobStartEvent("10", "test"));
         assertThat(registry.counter(this.config.getPrefix() + ".jobs-active-test-count")
                            .getCount(),
                    equalTo(1l));

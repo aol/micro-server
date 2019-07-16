@@ -51,8 +51,8 @@ public class ActiveResourceTest {
 
     @Test
     public void testactiveRequests() {
-        bus.post(RequestEvents.start("query", 1l));
-        bus.post(RequestEvents.start("query", 2l, "partition", ImmutableMap.of()));
+        bus.post(RequestEvents.start("query", "1"));
+        bus.post(RequestEvents.start("query", "2", "partition", ImmutableMap.of()));
         MockAsyncResponse<String> response = new MockAsyncResponse<>();
         active.activeRequests(response, null);
         assertThat(convert(response.response()).get("events"), is(1));
@@ -62,8 +62,8 @@ public class ActiveResourceTest {
 
     @Test
     public void whenQueriesWithTheSameIdToDifferentTypesEventsIs1ForBoth() {
-        bus.post(RequestEvents.start("query", 1l));
-        bus.post(RequestEvents.start("query", 1l, "partition", ImmutableMap.of()));
+        bus.post(RequestEvents.start("query", "1"));
+        bus.post(RequestEvents.start("query", "1", "partition", ImmutableMap.of()));
         MockAsyncResponse<String> response = new MockAsyncResponse<>();
         active.activeRequests(response, null);
         assertThat(convert(response.response()).get("events"), is(1));
@@ -73,8 +73,8 @@ public class ActiveResourceTest {
 
     @Test
     public void whenQueriesWithTheSameIdButSameTypesEventsIs2ButSizeIs1() {
-        bus.post(RequestEvents.start("query", 1l));
-        bus.post(RequestEvents.start("query", 1l));
+        bus.post(RequestEvents.start("query", "1"));
+        bus.post(RequestEvents.start("query", "1"));
         MockAsyncResponse<String> response = new MockAsyncResponse<>();
         active.activeRequests(response, null);
         assertThat(convert(response.response()).get("events"), is(2));

@@ -28,7 +28,6 @@ public class SystemData<K, V> {
         this.processed = processed;
         this.errors = errors;
         this.dataMap = dataMap;
-        this.correlationId = "" + r.nextLong();
-
+        this.correlationId = String.valueOf(r.nextLong());
     }
 }

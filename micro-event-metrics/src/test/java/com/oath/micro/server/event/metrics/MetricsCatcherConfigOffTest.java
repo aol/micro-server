@@ -35,9 +35,8 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void queriesStartMeterInc() {
 
-        catcher.requestStart(new AddQuery(
-                                          RequestData.builder()
-                                                     .correlationId(10l)
+        catcher.requestStart(new AddQuery(RequestData.builder()
+                                                     .correlationId("10")
                                                      .type("test")
                                                      .build()));
         assertThat(registry.meter(this.config.getPrefix() + ".request-start-test")
@@ -48,9 +47,8 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void queriesEndMeterInc() {
 
-        catcher.requestComplete(new RemoveQuery(
-                                                RequestData.builder()
-                                                           .correlationId(10l)
+        catcher.requestComplete(new RemoveQuery(RequestData.builder()
+                                                           .correlationId("10")
                                                            .type("test")
                                                            .build()));
         assertThat(registry.meter(this.config.getPrefix() + ".request-end-test")
@@ -61,9 +59,8 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void queriesCounterInc() {
 
-        catcher.requestStart(new AddQuery(
-                                          RequestData.builder()
-                                                     .correlationId(10l)
+        catcher.requestStart(new AddQuery(RequestData.builder()
+                                                     .correlationId("10")
                                                      .type("test")
                                                      .build()));
         assertThat(registry.counter(this.config.getPrefix() + ".requests-active-test-count")
@@ -74,9 +71,8 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void queriesCounterDec() {
 
-        catcher.requestComplete(new RemoveQuery(
-                                                RequestData.builder()
-                                                           .correlationId(10l)
+        catcher.requestComplete(new RemoveQuery(RequestData.builder()
+                                                           .correlationId("10")
                                                            .type("test")
                                                            .build()));
         assertThat(registry.counter(this.config.getPrefix() + ".requests-active-test-count")
@@ -87,8 +83,7 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void jobsCounterDec() {
 
-        catcher.jobComplete(new JobCompleteEvent(
-                                                 10l, "test", 10l, 5l));
+        catcher.jobComplete(new JobCompleteEvent("10", "test", 10l, 5l));
         assertThat(registry.counter(this.config.getPrefix() + ".jobs-active-test-count")
                            .getCount(),
                    equalTo(0l));
@@ -97,15 +92,13 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void queriesTimer() {
 
-        catcher.requestStart(new AddQuery(
-                                          RequestData.builder()
-                                                     .correlationId(10l)
+        catcher.requestStart(new AddQuery(RequestData.builder()
+                                                     .correlationId("10")
                                                      .type("test")
                                                      .build()));
 
-        catcher.requestComplete(new RemoveQuery(
-                                                RequestData.builder()
-                                                           .correlationId(10l)
+        catcher.requestComplete(new RemoveQuery(RequestData.builder()
+                                                           .correlationId("10")
                                                            .type("test")
                                                            .build()));
         assertThat(registry.timer(this.config.getPrefix() + ".request-end-test-timer")
@@ -116,8 +109,7 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void jobsMeterInc() {
 
-        catcher.jobStarted(new JobStartEvent(
-                                             10l, "test"));
+        catcher.jobStarted(new JobStartEvent("10", "test"));
         assertThat(registry.meter(this.config.getPrefix() + ".job-meter-test")
                            .getMeanRate(),
                    equalTo(0.0));
@@ -126,8 +118,7 @@ public class MetricsCatcherConfigOffTest {
     @Test
     public void jobsCounterInc() {
 
-        catcher.jobStarted(new JobStartEvent(
-                                             10l, "test"));
+        catcher.jobStarted(new JobStartEvent("10", "test"));
         assertThat(registry.counter(this.config.getPrefix() + ".jobs-active-test-count")
                            .getCount(),
                    equalTo(0l));

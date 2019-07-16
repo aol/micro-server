@@ -15,9 +15,6 @@ import com.google.common.eventbus.EventBus;
 @Path("/status")
 public class EventStatusResource implements RestResource {
 
-
-	
-	
 	private final EventBus bus;
 	
 	@Autowired
@@ -29,12 +26,11 @@ public class EventStatusResource implements RestResource {
 	@Produces("text/plain")
 	@Path("/ping")
 	public String ping() {
-		bus.post(RequestEvents.start("get", 1l));
-		try{
+		bus.post(RequestEvents.start("get", "1"));
+		try {
 			return "ok";
-		}finally{
-			bus.post(RequestEvents.finish("get",1l));
+		} finally {
+			bus.post(RequestEvents.finish("get", "1"));
 		}
 	}
-
 }

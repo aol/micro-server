@@ -7,3 +7,6 @@ addons:
   apt:
     packages:
       - oracle-java8-installer
+
+script:
+  - ./gradlew check -i

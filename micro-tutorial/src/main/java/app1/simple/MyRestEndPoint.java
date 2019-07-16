@@ -48,7 +48,7 @@ public class MyRestEndPoint {
 	@Path("/hello")
 	@ApiOperation(value = "Hello world", response = String.class)
 	public String hello(){
-		long correlationId = correlationProvider.incrementAndGet();
+		String correlationId = String.valueOf(correlationProvider.incrementAndGet());
 		bus.post(RequestEvents.start(QueryIPRetriever.getIpAddress(),correlationId));
 		try{
 			return "world";
