@@ -1,24 +1,22 @@
 package com.oath.micro.server.s3.data;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.util.function.Supplier;
-
-import com.oath.cyclops.util.ExceptionSoftener;
-import org.apache.commons.io.FileUtils;
-
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.transfer.Download;
 import com.amazonaws.services.s3.transfer.TransferManager;
-
-
+import com.oath.cyclops.util.ExceptionSoftener;
 import lombok.AllArgsConstructor;
+import org.apache.commons.io.FileUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+import java.util.function.Supplier;
+
+import static java.nio.file.FileSystems.getDefault;
 
 @AllArgsConstructor
 public class ReadUtils {
@@ -54,12 +52,11 @@ public class ReadUtils {
     }
 
     /**
-     * Return the FileInputStream for an S3Object. This API download (via multi-part) S3 object to a local file and return a
-     * FileInputStream to that file.
+     * Return the InputStream for an S3Object. This API download (via multi-part) S3 object to a local file and return a
+     * InputStream to that file. The local file will be deleted when the close is called on the stream.
      *
      * @param bucketName S3 bucket name
      * @param key key for the S3Object
-     * @param localFileSupplier supplier for the local file
      *
      * @return FileInputStream input stream to the downloaded file
      *
@@ -67,12 +64,13 @@ public class ReadUtils {
      * @throws InterruptedException
      * @throws IOException
      */
-    public FileInputStream getFileInputStream(String bucketName, String key, Supplier<File> localFileSupplier)
+    public InputStream getFileInputStream(String bucketName, String key)
         throws AmazonClientException, InterruptedException, IOException {
-        File file = localFileSupplier.get();
+        File file = Files.createTempFile(getDefault().getPath(tmpDirectory), "micro-s3", "file").toFile();
+
         Download download = transferManager.download(bucketName, key, file);
         download.waitForCompletion();
-        return new FileInputStream(file);
+        return Files.newInputStream(file.toPath(), StandardOpenOption.DELETE_ON_CLOSE);
     }
 
     /**
@@ -89,7 +87,7 @@ public class ReadUtils {
      */
     public InputStream getInputStream(String bucketName, String key)
             throws AmazonServiceException, AmazonClientException, InterruptedException, IOException {
-        Supplier<File> tempFileSupplier = ExceptionSoftener.softenSupplier(() -> Files.createTempFile(FileSystems.getDefault()
+        Supplier<File> tempFileSupplier = ExceptionSoftener.softenSupplier(() -> Files.createTempFile(getDefault()
                                                                                                                  .getPath(tmpDirectory),
                                                                                                       "micro-s3",
                                                                                                       "file")

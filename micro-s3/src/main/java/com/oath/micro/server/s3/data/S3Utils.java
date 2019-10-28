@@ -11,6 +11,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import cyclops.reactive.ReactiveSeq;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +38,7 @@ public class S3Utils {
     private final String tmpDirectory;
     private final ExecutorService uploaderService;
     private final boolean aes256Encryption;
+    @Getter
     private final ReadUtils readUtils;
 
     @Autowired
@@ -49,8 +51,7 @@ public class S3Utils {
         this.tmpDirectory = tmpDirectory;
         this.uploaderService = uploaderService;
         this.aes256Encryption = aes256Encryption;
-        this.readUtils = new ReadUtils(
-                                       transferManager, tmpDirectory);
+        this.readUtils = new ReadUtils(transferManager, tmpDirectory);
     }
 
     public S3Utils(AmazonS3Client client, TransferManager transferManager, String tmpDirectory,
