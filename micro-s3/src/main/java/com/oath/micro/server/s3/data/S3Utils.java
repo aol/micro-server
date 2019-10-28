@@ -55,31 +55,25 @@ public class S3Utils {
 
     public S3Utils(AmazonS3Client client, TransferManager transferManager, String tmpDirectory,
             ExecutorService uploaderService) {
-        this(
-             client, transferManager, tmpDirectory, false, uploaderService);
+        this(client, transferManager, tmpDirectory, false, uploaderService);
     }
 
     public S3Reader reader(String bucket) {
 
-        return new S3Reader(
-                            readUtils, client, bucket);
+        return new S3Reader(readUtils, client, bucket);
     }
 
     public S3ObjectWriter writer(String bucket) {
-        return new S3ObjectWriter(
-                                  transferManager, bucket, new File(
-                                                                    tmpDirectory),
+        return new S3ObjectWriter(transferManager, bucket, new File(tmpDirectory),
                                   aes256Encryption);
     }
 
     public S3StringWriter stringWriter(String bucket) {
-        return new S3StringWriter(
-                                  client, bucket, uploaderService, aes256Encryption);
+        return new S3StringWriter(client, bucket, uploaderService, aes256Encryption);
     }
 
     public S3Deleter deleter(String bucket) {
-        return new S3Deleter(
-                             bucket, client);
+        return new S3Deleter(bucket, client);
     }
 
     /**
@@ -117,8 +111,7 @@ public class S3Utils {
      * @return ReactiveSeq of converted S3Object summary elements.
      */
     public <T> ReactiveSeq<T> getSummariesStream(ListObjectsRequest req, Function<S3ObjectSummary, T> processor) {
-        return ReactiveSeq.fromIterator(new S3ObjectSummaryIterator(
-                                                                    client, req))
+        return ReactiveSeq.fromIterator(new S3ObjectSummaryIterator(client, req))
                           .map(processor);
     }
 
@@ -133,8 +126,7 @@ public class S3Utils {
         ReactiveSeq.fromList(objects)
                    .grouped(1000)
                    .forEach(l -> {
-                       DeleteObjectsRequest req = new DeleteObjectsRequest(
-                                                                           bucketName);
+                       DeleteObjectsRequest req = new DeleteObjectsRequest(bucketName);
                        req.setKeys(l.toList());
                        client.deleteObjects(req);
                    });
@@ -204,8 +196,7 @@ public class S3Utils {
 
         @Override
         public int read() throws IOException {
-            throw new IOException(
-                                  "Nothing to read here");
+            throw new IOException("Nothing to read here");
         }
 
     }

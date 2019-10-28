@@ -2,6 +2,7 @@ package com.oath.micro.server.s3.data;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.FileSystems;
@@ -46,11 +47,32 @@ public class ReadUtils {
         try {
             Download download = transferManager.download(bucketName, key, file);
             download.waitForCompletion();
-            return new ByteArrayInputStream(
-                                            FileUtils.readFileToByteArray(file));
+            return new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
         } finally {
             file.delete();
         }
+    }
+
+    /**
+     * Return the FileInputStream for an S3Object. This API download (via multi-part) S3 object to a local file and return a
+     * FileInputStream to that file.
+     *
+     * @param bucketName S3 bucket name
+     * @param key key for the S3Object
+     * @param localFileSupplier supplier for the local file
+     *
+     * @return FileInputStream input stream to the downloaded file
+     *
+     * @throws AmazonClientException
+     * @throws InterruptedException
+     * @throws IOException
+     */
+    public FileInputStream getFileInputStream(String bucketName, String key, Supplier<File> localFileSupplier)
+        throws AmazonClientException, InterruptedException, IOException {
+        File file = localFileSupplier.get();
+        Download download = transferManager.download(bucketName, key, file);
+        download.waitForCompletion();
+        return new FileInputStream(file);
     }
 
     /**

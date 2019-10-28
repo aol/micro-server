@@ -23,8 +23,7 @@ public class S3ManifestComparatorProvider {
 
     @Bean
     public S3ManifestComparator s3ManifestComparator() throws IOException, URISyntaxException {
-        return new S3ManifestComparator(
-                                        s3Utils.reader(bucket), s3Utils.writer(bucket), s3Utils.deleter(bucket),
+        return new S3ManifestComparator(s3Utils.reader(bucket), s3Utils.writer(bucket), s3Utils.deleter(bucket),
                                         s3Utils.stringWriter(bucket)).withKey(key);
     }
 }
