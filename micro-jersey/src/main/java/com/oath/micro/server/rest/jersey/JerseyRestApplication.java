@@ -1,21 +1,21 @@
 package com.oath.micro.server.rest.jersey;
 
+import com.oath.micro.server.auto.discovery.Rest;
+import com.oath.micro.server.auto.discovery.RestResource;
+import com.oath.micro.server.module.JaxRsProvider;
+import com.oath.micro.server.servers.ServerThreadLocalVariables;
+import lombok.Getter;
+import org.glassfish.jersey.message.GZipEncoder;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.ServerProperties;
+import org.glassfish.jersey.server.filter.EncodingFilter;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Consumer;
-
-import lombok.Getter;
-
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.ServerProperties;
-
-import com.oath.micro.server.auto.discovery.Rest;
-import com.oath.micro.server.auto.discovery.RestResource;
-import com.oath.micro.server.module.JaxRsProvider;
-import com.oath.micro.server.servers.ServerThreadLocalVariables;
 
 public class JerseyRestApplication extends ResourceConfig {
 
@@ -51,6 +51,9 @@ public class JerseyRestApplication extends ResourceConfig {
 					register(next.getClass());
 			}
 		}
+
+		register(EncodingFilter.class); //Server encoding filter class
+		register(GZipEncoder.class);
 
 		register(new AsyncBinder());
 		

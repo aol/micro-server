@@ -27,12 +27,10 @@ public class DirectoryCleaner {
 
     @PostConstruct
     public void clean() throws IOException {
-        if (temporaryDirectory != null && new File(
-                                                   temporaryDirectory).exists()) {
+        if (temporaryDirectory != null && new File(temporaryDirectory).exists()) {
             Path directory = FileSystems.getDefault()
                                         .getPath(temporaryDirectory);
-            Files.walkFileTree(directory, new CleanupFileVisitor(
-                                                                 directory));
+            Files.walkFileTree(directory, new CleanupFileVisitor(directory));
         }
     }
 
