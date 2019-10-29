@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
+import org.glassfish.jersey.message.GZipEncoder;
+import org.glassfish.jersey.server.filter.EncodingFilter;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -54,8 +56,13 @@ public class JerseyRestApplicationTest {
 			assertThat(app.getApplication().getClasses().size(),is(1));
 			assertTrue(app.isRegistered(ServletStatusResource.class));
 		}
-		
-	
+
+    @Test
+    public void testGZipRegistration() {
+        JerseyRestApplication app = new JerseyRestApplication();
+        assertTrue(app.isRegistered(GZipEncoder.class));
+        assertTrue(app.isRegistered(EncodingFilter.class));
+    }
 
 	
 
