@@ -16,7 +16,7 @@ import com.oath.micro.server.config.Microserver;
 import com.oath.micro.server.module.ConfigurableModule;
 import com.oath.micro.server.testing.RestAgent;
 
-@Microserver(properties = { "machine.stats.deploy.dir", "/tmp" })
+@Microserver
 public class StatsRunnerTest {
 
     RestAgent rest = new RestAgent();
@@ -25,10 +25,7 @@ public class StatsRunnerTest {
 
     @Before
     public void startServer() {
-        new File(
-                 "/tmp/sigar-lib").delete();
-        server = new MicroserverApp(
-                                    ConfigurableModule.builder()
+        server = new MicroserverApp(ConfigurableModule.builder()
                                                       .context("simple-app")
                                                       .build());
 
@@ -42,11 +39,7 @@ public class StatsRunnerTest {
     }
 
     @Test
-    public void runAppAndBasicTest() throws InterruptedException, ExecutionException {
-
+    public void runAppAndBasicTest() {
         assertThat(rest.get("http://localhost:8080/simple-app/stats/machine"), containsString("cpu-stats"));
-        assertTrue(new File(
-                            "/tmp/sigar-lib").exists());
     }
-
 }

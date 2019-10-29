@@ -100,10 +100,10 @@ public class TomcatApplication implements ServerApplication {
 
 		try {
 			logger.info("Starting application {} on port {}", serverData.getModule().getContext(), serverData.getPort());
-			logger.info("Browse to http://localhost:{}/{}/application.wadl", serverData.getPort(), serverData.getModule().getContext());
+			logger.info("Browse to http://localhost:{}{}/application.wadl", serverData.getPort(), serverData.getNormalizedContextPath());
 			logger.info("Configured resource classes :-");
 			serverData.extractResources().forEach(
-					t -> logger.info(t._1() + " : " + "http://localhost:" + serverData.getPort() + "/" + serverData.getModule().getContext() + t._2()));
+					t -> logger.info(t._1() + " : " + "http://localhost:" + serverData.getPort() +  serverData.getNormalizedContextPath() + t._2()));
 			;
 
 				httpServer.start();

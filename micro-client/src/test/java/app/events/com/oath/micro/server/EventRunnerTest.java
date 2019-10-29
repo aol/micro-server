@@ -1,27 +1,25 @@
 package app.events.com.oath.micro.server;
 
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.locks.LockSupport;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.oath.micro.server.MicroserverApp;
 import com.oath.micro.server.config.Microserver;
 import com.oath.micro.server.rest.client.nio.AsyncRestClient;
 import com.oath.micro.server.testing.RestAgent;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.concurrent.ExecutionException;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @Microserver
 public class EventRunnerTest {
 
 	RestAgent rest = new RestAgent();
-	private final AsyncRestClient<String> client = new AsyncRestClient<String>(200,200).withAccept("application/json");
+	private final AsyncRestClient<String> client = new AsyncRestClient<String>(30000,30000).withAccept("application/json");
 	MicroserverApp server;
 	
 	

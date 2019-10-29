@@ -28,10 +28,8 @@ public class StatsServletContextListener implements ServletContextListener {
 
         System.setProperty("java.library.path", destination);
         logger.info("java.library.path is {}", destination);
-        if (!new File(
-                      System.getProperty("java.library.path")).exists()) {
-            final File location = new File(
-                                           System.getProperty("java.library.path"));
+        if (!new File(System.getProperty("java.library.path")).exists()) {
+            final File location = new File(System.getProperty("java.library.path"));
             try {
                 SigarProvisioner.provision(location);
             } catch (Exception e) {
