@@ -4,8 +4,8 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.transfer.Download;
 import com.amazonaws.services.s3.transfer.TransferManager;
-import com.oath.cyclops.util.ExceptionSoftener;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 
 import java.io.ByteArrayInputStream;
@@ -58,7 +58,7 @@ public class ReadUtils {
      * @param bucketName S3 bucket name
      * @param key key for the S3Object
      *
-     * @return FileInputStream input stream to the downloaded file
+     * @return input stream to the downloaded file
      *
      * @throws AmazonClientException
      * @throws InterruptedException
@@ -66,7 +66,7 @@ public class ReadUtils {
      */
     public InputStream getFileInputStream(String bucketName, String key)
         throws AmazonClientException, InterruptedException, IOException {
-        File file = Files.createTempFile(getDefault().getPath(tmpDirectory), "micro-s3", "file").toFile();
+        File file = createTmpFile();
 
         Download download = transferManager.download(bucketName, key, file);
         download.waitForCompletion();
@@ -87,11 +87,11 @@ public class ReadUtils {
      */
     public InputStream getInputStream(String bucketName, String key)
             throws AmazonServiceException, AmazonClientException, InterruptedException, IOException {
-        Supplier<File> tempFileSupplier = ExceptionSoftener.softenSupplier(() -> Files.createTempFile(getDefault()
-                                                                                                                 .getPath(tmpDirectory),
-                                                                                                      "micro-s3",
-                                                                                                      "file")
-                                                                                      .toFile());
-        return getInputStream(bucketName, key, tempFileSupplier);
+        return getInputStream(bucketName, key, this::createTmpFile);
+    }
+
+    @SneakyThrows
+    private File createTmpFile() {
+        return Files.createTempFile(getDefault().getPath(tmpDirectory), "micro-s3", "file").toFile();
     }
 }
