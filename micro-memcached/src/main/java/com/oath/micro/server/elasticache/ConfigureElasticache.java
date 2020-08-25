@@ -39,24 +39,24 @@ public class ConfigureElasticache {
 
 
     @Bean(name = "transientCache")
-    public DistributedCacheManager transientCache() throws IOException, URISyntaxException {
+    public DistributedCache transientCache() {
         try {
             log.info("Creating Memcached Data connection for elasticache cluster: {}", hostname);
-            return new TransientElasticacheDataConnection(createMemcachedClient(), retryAfterSecs, maxRetries);
+            return new ElasticacheConnection(createMemcachedClient(), retryAfterSecs, maxRetries);
         }
-     catch (Exception e) {
+        catch (Exception e) {
             log.error("Failed to create transient data connection", e);
             return null;
         }
     }
 
     @Bean(name = "memcachedClient")
-    public MemcachedClient createMemcachedClient() throws IOException {
+    public MemcachedClient createMemcachedClient() {
         try {
             log.info("Starting an instance of memcache client towards elasticache cluster");
             return new MemcachedClient(new InetSocketAddress(hostname, port));
         } catch (IOException e) {
-            log.error("Could not initilise connection to elasticache cluster", e);
+            log.error("Could not initialize connection to elasticache cluster", e);
             return null;
         }
 

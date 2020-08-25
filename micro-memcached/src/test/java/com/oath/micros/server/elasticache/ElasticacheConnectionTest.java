@@ -3,14 +3,14 @@ package com.oath.micros.server.elasticache;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.stub;
 import static org.junit.Assert.assertEquals;
-import com.oath.micro.server.elasticache.TransientElasticacheDataConnection;
+import com.oath.micro.server.elasticache.ElasticacheConnection;
 import net.spy.memcached.internal.OperationFuture;
 import org.junit.Before;
 import org.junit.Test;
 import net.spy.memcached.MemcachedClient;
 import java.util.Optional;
 
-public class TransientElasticacheDataConnectionTest {
+public class ElasticacheConnectionTest {
 
     MemcachedClient memcachedClient;
 
@@ -26,33 +26,33 @@ public class TransientElasticacheDataConnectionTest {
 
     @Test
     public void happyPathGetTest() {
-        TransientElasticacheDataConnection transientClient = new TransientElasticacheDataConnection(memcachedClient, 3, 1);
+        ElasticacheConnection transientClient = new ElasticacheConnection(memcachedClient, 3, 1);
         assertEquals(Optional.ofNullable("value1"), transientClient.get("key1"));
         assertEquals(Optional.ofNullable("value2"), transientClient.get("key2"));
     }
 
     @Test
     public void notExistingKeyGetTest() {
-        TransientElasticacheDataConnection transientClient = new TransientElasticacheDataConnection(memcachedClient, 3, 1);
+        ElasticacheConnection transientClient = new ElasticacheConnection(memcachedClient, 3, 1);
         assertEquals(Optional.empty(), transientClient.get("key3"));
     }
 
     @Test
     public void notExistingKeyPutTest() {
-        TransientElasticacheDataConnection transientClient = new TransientElasticacheDataConnection(memcachedClient, 3, 1);
+        ElasticacheConnection transientClient = new ElasticacheConnection(memcachedClient, 3, 1);
         assertEquals(false, transientClient.add("keyAdd", 3600, "valueadd"));
     }
 
     @Test
     public void testIsAvailableFalse() {
-        TransientElasticacheDataConnection transientClient = new TransientElasticacheDataConnection(memcachedClient, 3, 1);
+        ElasticacheConnection transientClient = new ElasticacheConnection(memcachedClient, 3, 1);
         transientClient.setConnectionTested(false);
         assertEquals(false, transientClient.isAvailable());
     }
 
     @Test
     public void testIsAvailableTrue() {
-        TransientElasticacheDataConnection transientClient = new TransientElasticacheDataConnection(memcachedClient, 3, 1);
+        ElasticacheConnection transientClient = new ElasticacheConnection(memcachedClient, 3, 1);
         transientClient.setConnectionTested(true);
         assertEquals(true, transientClient.isAvailable());
     }

@@ -1,4 +1,4 @@
-description = 'micro-elasticache'
+description = 'micro-memcached'
 
 apply plugin: 'groovy'
 apply plugin: 'java'
@@ -42,7 +42,7 @@ modifyPom {
     inceptionYear '2015'
 
     groupId 'com.oath.microservices'
-    artifactId 'micro-elasticache'
+    artifactId 'micro-memcached'
     version "$version"
 
 
@@ -70,6 +70,11 @@ modifyPom {
         id 'morrowgi'
         name 'Gordon Morrow'
         email 'gordon.morrow@teamaol.com'
+      }
+      developer {
+        id 'davidartplus'
+        name 'David Guzman'
+        email 'davidartplus@gmail.com'
       }
     }
 

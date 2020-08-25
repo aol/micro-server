@@ -1,6 +1,6 @@
 # Elasticache plugin for BASE microservices
 
-[micro-elasticache example apps](https://github.com/aol/micro-server/tree/master/micro-elasticache/src/test/java/app)
+[micro-memcached example apps](https://github.com/aol/micro-server/tree/master/micro-memcached/src/test/java/app)
 
 Basically Available Soft statE
 
@@ -24,11 +24,11 @@ elasticache.max.retries is the maximum number of retries before client throws er
 ```xml
      <dependency>
         <groupId>com.oath.microservices</groupId>
-        <artifactId>micro-elasticache</artifactId>
+        <artifactId>micro-memcached</artifactId>
         <version>x.yz</version>
      </dependency>
 ```
 ### Gradle
 ```groovy
-    compile 'com.oath.microservices:micro-elasticache:x.yz'
+    compile 'com.oath.microservices:micro-memcached:x.yz'
  ```
