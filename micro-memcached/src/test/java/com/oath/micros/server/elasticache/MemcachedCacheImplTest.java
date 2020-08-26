@@ -26,35 +26,35 @@ public class MemcachedCacheImplTest {
 
     @Test
     public void happyPathGetTest() {
-        MemcachedCacheImpl transientClient = new MemcachedCacheImpl(memcachedClient, 3, 1);
-        assertEquals(Optional.ofNullable("value1"), transientClient.get("key1"));
-        assertEquals(Optional.ofNullable("value2"), transientClient.get("key2"));
+        MemcachedCacheImpl cache = new MemcachedCacheImpl(memcachedClient, 3, 1);
+        assertEquals(Optional.ofNullable("value1"), cache.get("key1"));
+        assertEquals(Optional.ofNullable("value2"), cache.get("key2"));
     }
 
     @Test
     public void notExistingKeyGetTest() {
-        MemcachedCacheImpl transientClient = new MemcachedCacheImpl(memcachedClient, 3, 1);
-        assertEquals(Optional.empty(), transientClient.get("key3"));
+        MemcachedCacheImpl cache = new MemcachedCacheImpl(memcachedClient, 3, 1);
+        assertEquals(Optional.empty(), cache.get("key3"));
     }
 
     @Test
     public void notExistingKeyPutTest() {
-        MemcachedCacheImpl transientClient = new MemcachedCacheImpl(memcachedClient, 3, 1);
-        assertEquals(false, transientClient.add("keyAdd", 3600, "valueadd"));
+        MemcachedCacheImpl cache = new MemcachedCacheImpl(memcachedClient, 3, 1);
+        assertEquals(false, cache.add("keyAdd", 3600, "valueadd"));
     }
 
     @Test
     public void testIsAvailableFalse() {
-        MemcachedCacheImpl transientClient = new MemcachedCacheImpl(memcachedClient, 3, 1);
-        transientClient.setConnectionTested(false);
-        assertEquals(false, transientClient.isAvailable());
+        MemcachedCacheImpl cache = new MemcachedCacheImpl(memcachedClient, 3, 1);
+        cache.setConnectionTested(false);
+        assertEquals(false, cache.isAvailable());
     }
 
     @Test
     public void testIsAvailableTrue() {
-        MemcachedCacheImpl transientClient = new MemcachedCacheImpl(memcachedClient, 3, 1);
-        transientClient.setConnectionTested(true);
-        assertEquals(true, transientClient.isAvailable());
+        MemcachedCacheImpl cache = new MemcachedCacheImpl(memcachedClient, 3, 1);
+        cache.setConnectionTested(true);
+        assertEquals(true, cache.isAvailable());
     }
 
 
