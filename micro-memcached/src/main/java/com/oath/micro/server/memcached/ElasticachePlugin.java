@@ -1,4 +1,4 @@
-package com.oath.micro.server.elasticache;
+package com.oath.micro.server.memcached;
 
 import com.oath.micro.server.Plugin;
 import cyclops.reactive.collections.mutable.SetX;

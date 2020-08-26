@@ -1,11 +1,10 @@
-package com.oath.micro.server.elasticache;
+package com.oath.micro.server.memcached;
 
 
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 
 import net.spy.memcached.MemcachedClient;
@@ -39,10 +38,10 @@ public class ConfigureElasticache {
 
 
     @Bean(name = "transientCache")
-    public DistributedCache transientCache() {
+    public<K, V> DistributedCache<K, V> transientCache() {
         try {
             log.info("Creating Memcached Data connection for elasticache cluster: {}", hostname);
-            return new ElasticacheConnection(createMemcachedClient(), retryAfterSecs, maxRetries);
+            return new MemcachedCacheImpl(createMemcachedClient(), retryAfterSecs, maxRetries);
         }
         catch (Exception e) {
             log.error("Failed to create transient data connection", e);

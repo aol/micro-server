@@ -1,4 +1,4 @@
-package com.oath.micro.server.elasticache;
+package com.oath.micro.server.memcached;
 import java.util.Optional;
 
 public interface DistributedCache<K, V> {

@@ -1,22 +1,20 @@
-package com.oath.micro.server.elasticache;
+package com.oath.micro.server.memcached;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
 import net.spy.memcached.MemcachedClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 
 @Slf4j
-public class ElasticacheConnection<K, V> implements DistributedCache<K, V> {
+public class MemcachedCacheImpl<K, V> implements DistributedCache<K, V> {
 
         private volatile boolean available = false;
         private final MemcachedClient memcachedClient;
         private final int retryAfterSec;
         private final int maxTry;
 
-        public ElasticacheConnection(MemcachedClient memcachedClient, int retryAfterSec, int maxTry) {
+        public MemcachedCacheImpl(MemcachedClient memcachedClient, int retryAfterSec, int maxTry) {
             this.memcachedClient = memcachedClient;
             this.retryAfterSec = retryAfterSec;
             this.maxTry = maxTry;

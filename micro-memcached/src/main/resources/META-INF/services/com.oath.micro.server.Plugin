@@ -1,1 +1,1 @@
-com.oath.micro.server.elasticache.ElasticachePlugin
+com.oath.micro.server.memcached.ElasticachePlugin
