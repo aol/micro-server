@@ -30,7 +30,7 @@ public class DistributedCacheFactory {
         }
     }
 
-    public MemcachedClient createMemcachedClient() {
+    private MemcachedClient createMemcachedClient() {
         try {
             log.info("Starting an instance of memcache client towards elasticache cluster");
             return new MemcachedClient(new InetSocketAddress(config.getHostname(), config.getPort()));
