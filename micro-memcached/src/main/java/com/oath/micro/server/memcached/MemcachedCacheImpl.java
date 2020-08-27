@@ -1,4 +1,4 @@
-package com.oath.micro.server.elasticache;
+package com.oath.micro.server.memcached;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,21 +7,21 @@ import net.spy.memcached.MemcachedClient;
 
 
 @Slf4j
-public class TransientElasticacheDataConnection<V> implements DistributedCacheManager<V> {
+public class MemcachedCacheImpl<K, V> implements DistributedCache<K, V> {
 
         private volatile boolean available = false;
         private final MemcachedClient memcachedClient;
         private final int retryAfterSec;
         private final int maxTry;
 
-        public TransientElasticacheDataConnection(MemcachedClient memcachedClient,int retryAfterSec, int maxTry) {
+        public MemcachedCacheImpl(MemcachedClient memcachedClient, int retryAfterSec, int maxTry) {
             this.memcachedClient = memcachedClient;
             this.retryAfterSec = retryAfterSec;
             this.maxTry = maxTry;
         }
 
         @Override
-        public boolean add(final String key, int exp, final Object value) {
+        public boolean add(final K key, int exp, final V value) {
 
             log.trace("Memcached add operation on key '{}', with value:{}", key, value);
             boolean success = false;
@@ -31,13 +31,13 @@ public class TransientElasticacheDataConnection<V> implements DistributedCacheMa
                 try {
                     if (tryCount > 0) {
                         Thread.sleep(retryAfterSec * 1000);
-                        log.warn("retrying operation  #{}", tryCount);
+                        log.warn("Retrying operation  #{}", tryCount);
                     }
                     tryCount++;
-                    success = memcachedClient.add(key, exp, value)
+                    success = memcachedClient.add(asString(key), exp, value)
                             .get();
                 } catch (final Exception e) {
-                    log.warn("memcache set: {}", e.getMessage());
+                    log.warn("Memcache set: {}", e.getMessage());
                 }
             } while (!success && tryCount < maxTry);
 
@@ -53,8 +53,8 @@ public class TransientElasticacheDataConnection<V> implements DistributedCacheMa
         }
 
         @Override
-        public Optional<V> get(String key) {
-            return (Optional<V>) Optional.ofNullable(memcachedClient.get(key));
+        public Optional<V> get(K key) {
+            return (Optional<V>) Optional.ofNullable(memcachedClient.get(asString(key)));
         }
 
         @Override
@@ -65,5 +65,9 @@ public class TransientElasticacheDataConnection<V> implements DistributedCacheMa
         @Override
         public final void setConnectionTested(final boolean available) {
             this.available = available;
+        }
+
+        private String asString(K key){
+            return key.toString();
         }
 }

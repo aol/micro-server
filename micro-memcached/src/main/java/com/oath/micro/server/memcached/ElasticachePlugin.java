@@ -1,4 +1,4 @@
-package com.oath.micro.server.elasticache;
+package com.oath.micro.server.memcached;
 
 import com.oath.micro.server.Plugin;
 import cyclops.reactive.collections.mutable.SetX;
@@ -9,6 +9,6 @@ public class ElasticachePlugin implements Plugin {
 
     @Override
     public Set<Class> springClasses() {
-            return SetX.of(ConfigureElasticache.class);
+            return SetX.of(ElasticacheConfig.class, DistributedCacheFactory.class);
         }
 }
