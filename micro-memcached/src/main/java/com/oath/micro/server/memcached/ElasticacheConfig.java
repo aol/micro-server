@@ -2,6 +2,7 @@ package com.oath.micro.server.memcached;
 
 
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -16,51 +17,23 @@ import org.springframework.context.annotation.Configuration;
 import java.net.InetSocketAddress;
 
 @Slf4j
+@Getter
 @Configuration
-public class ConfigureElasticache {
-
-    private final DistributedCacheFactory factory;
+public class ElasticacheConfig {
     private final String hostname;
     private final int port;
     private final int retryAfterSecs;
     private final int maxRetries;
 
     @Autowired
-    public ConfigureElasticache( DistributedCacheFactory factory,
-                                 @Value("${elasticache.hostname:null}") String hostname,
-                                 @Value("${elasticache.port:6379}") int port,
-                                 @Value("${elasticache.retry.after.seconds:1}") int retryAfterSecs,
-                                 @Value("${elasticache.max.retries:3}") int maxRetries) {
-        this.factory = factory;
+    public ElasticacheConfig(@Value("${elasticache.hostname:null}") String hostname,
+                             @Value("${elasticache.port:6379}") int port,
+                             @Value("${elasticache.retry.after.seconds:1}") int retryAfterSecs,
+                             @Value("${elasticache.max.retries:3}") int maxRetries) {
         this.hostname = hostname;
         this.port = port;
         this.retryAfterSecs = retryAfterSecs;
         this.maxRetries = maxRetries;
-    }
-
-
-    @Bean(name = "transientCache")
-    public<K, V> DistributedCache<K, V> transientCache() {
-        try {
-            log.info("Creating Memcached Data connection for elasticache cluster: {}", hostname);
-            return new MemcachedCacheImpl(createMemcachedClient(), retryAfterSecs, maxRetries);
-        }
-        catch (Exception e) {
-            log.error("Failed to create transient data connection", e);
-            return null;
-        }
-    }
-
-    @Bean(name = "memcachedClient")
-    public MemcachedClient createMemcachedClient() {
-        try {
-            log.info("Starting an instance of memcache client towards elasticache cluster");
-            return new MemcachedClient(new InetSocketAddress(hostname, port));
-        } catch (IOException e) {
-            log.error("Could not initialize connection to elasticache cluster", e);
-            return null;
-        }
-
     }
 }
 

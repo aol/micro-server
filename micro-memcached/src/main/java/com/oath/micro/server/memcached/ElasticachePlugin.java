@@ -9,6 +9,6 @@ public class ElasticachePlugin implements Plugin {
 
     @Override
     public Set<Class> springClasses() {
-            return SetX.of(ConfigureElasticache.class);
+            return SetX.of(ElasticacheConfig.class);
         }
 }
