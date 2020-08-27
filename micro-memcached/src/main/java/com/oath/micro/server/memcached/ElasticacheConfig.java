@@ -19,17 +19,19 @@ import java.net.InetSocketAddress;
 @Configuration
 public class ConfigureElasticache {
 
-
+    private final DistributedCacheFactory factory;
     private final String hostname;
     private final int port;
     private final int retryAfterSecs;
     private final int maxRetries;
 
     @Autowired
-    public ConfigureElasticache( @Value("${elasticache.hostname:null}") String hostname,
+    public ConfigureElasticache( DistributedCacheFactory factory,
+                                 @Value("${elasticache.hostname:null}") String hostname,
                                  @Value("${elasticache.port:6379}") int port,
                                  @Value("${elasticache.retry.after.seconds:1}") int retryAfterSecs,
                                  @Value("${elasticache.max.retries:3}") int maxRetries) {
+        this.factory = factory;
         this.hostname = hostname;
         this.port = port;
         this.retryAfterSecs = retryAfterSecs;
