@@ -31,6 +31,11 @@ public class MemcachedCacheImplTest {
 
         stub(memcachedClient.get("key1")).toReturn("value1");
         stub(memcachedClient.get("key2")).toReturn("value2");
+        stub(memcachedClient.get("key 1")).toThrow(new IllegalArgumentException());
+        stub(memcachedClient.get("  key1")).toThrow(new IllegalArgumentException());
+        stub(memcachedClient.get("ke y2")).toReturn(new IllegalArgumentException());
+        stub(memcachedClient.get("ke y2  ")).toReturn(new IllegalArgumentException());
+        stub(memcachedClient.get("  ke y2  ")).toReturn(new IllegalArgumentException());
         stub(memcachedClient.getStats()).toReturn(getStatsMap());
         mockedFuture = mock(OperationFuture.class);
         stub(memcachedClient.add("keyAdd", 3600, "valueadd")).toReturn(mockedFuture);
@@ -50,6 +55,11 @@ public class MemcachedCacheImplTest {
     public void happyPathGetTest() {
         MemcachedCacheImpl cache = new MemcachedCacheImpl(memcachedClient, 3, 1);
         assertEquals(Optional.ofNullable("value1"), cache.get("key1"));
+        assertEquals(Optional.ofNullable("value1"), cache.get("  key1"));
+        assertEquals(Optional.ofNullable("value1"), cache.get("key 1"));
+        assertEquals(Optional.ofNullable("value2"), cache.get("ke y2"));
+        assertEquals(Optional.ofNullable("value2"), cache.get("ke y2  "));
+        assertEquals(Optional.ofNullable("value2"), cache.get("  ke y2  "));
         assertEquals(Optional.ofNullable("value2"), cache.get("key2"));
     }
 

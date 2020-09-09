@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.concurrent.Future;
 
 import net.spy.memcached.MemcachedClient;
-import net.spy.memcached.internal.OperationFuture;
 
 
 @Slf4j
@@ -83,6 +82,6 @@ public class MemcachedCacheImpl<K, V> implements DistributedCache<K, V> {
     }
 
     private String asString(K key) {
-        return key.toString();
+        return key.toString().replaceAll("\\s+","");
     }
 }
