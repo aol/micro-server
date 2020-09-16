@@ -48,8 +48,8 @@ public class ServiceRegistryResource {
                     cleaner.clean();
                     response.resume(finder.find(UriInfoParser.toRegisterEntry(uriInfo)));
                 } catch (Exception e) {
-                    logger.error(e.getMessage(), e);
-                    response.resume(Arrays.asList("Bad Request: " + e.getMessage()));
+                    logger.error("list failed with error: {}", e.getMessage(), e);
+                    response.resume(e);
                 }
             }));
     }
@@ -65,7 +65,7 @@ public class ServiceRegistryResource {
                     job.schedule();
                     response.resume(HashMapBuilder.of("status", "success"));
                 } catch (Exception e) {
-                    logger.error(e.getMessage(), e);
+                    logger.error("schedule failed with error: {}", e.getMessage(), e);
                     response.resume(HashMapBuilder.of("status", "failure"));
                 }
             }));
@@ -83,10 +83,9 @@ public class ServiceRegistryResource {
                     register.register(entry);
                     response.resume(HashMapBuilder.of("status", "complete"));
                 } catch (Exception e) {
-                    logger.error(e.getMessage(), e);
+                    logger.error("register failed with error: {}", e.getMessage(), e);
                     response.resume(HashMapBuilder.of("status", "failure"));
                 }
             }));
     }
-
 }
