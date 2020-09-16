@@ -12,7 +12,7 @@ sourceSets {
 }
 
 task integTest(type: Test) {
-  testClassesDir = sourceSets.integTest.output.classesDir
+  testClassesDirs = sourceSets.integTest.output.classesDirs
   classpath = sourceSets.integTest.runtimeClasspath
 }
 
