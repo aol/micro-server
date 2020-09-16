@@ -49,7 +49,7 @@ public class ServiceRegistryResource {
                     response.resume(finder.find(UriInfoParser.toRegisterEntry(uriInfo)));
                 } catch (Exception e) {
                     logger.error("list failed with error: {}", e.getMessage(), e);
-                    response.resume(e);
+                    response.resume(Arrays.asList("Bad Request: " + e.getMessage()));
                 }
             }));
     }
