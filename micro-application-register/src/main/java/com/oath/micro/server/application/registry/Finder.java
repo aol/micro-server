@@ -1,7 +1,10 @@
 package com.oath.micro.server.application.registry;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,13 +32,17 @@ public class Finder {
     }
 
     public List<RegisterEntry> find(final Optional<RegisterEntry> re) {
-
-        List<RegisterEntry> entries = findDir(new File(config.getOutputDir()));
-        if (re.isPresent()) {
-            entries = entries.stream().filter(e -> e.matches(re.get()))
-                .collect(Collectors.toList());
+        try {
+            List<RegisterEntry> entries = findDir(new File(config.getOutputDir()));
+            if (re.isPresent()) {
+                entries = entries.stream().filter(e -> e.matches(re.get()))
+                                 .collect(Collectors.toList());
+            }
+            return entries;
+        } catch (Exception e) {
+            logger.error("Failed to find entries. Error: {}", e.getMessage(), e);
+            return Collections.emptyList();
         }
-        return entries;
     }
 
     private List<RegisterEntry> findDir(File dir) {
@@ -49,12 +56,10 @@ public class Finder {
                 }
                 if (next.isFile()) {
                     try {
-                        String fileString = FileUtils.readFileToString(next);
+                        String fileString = FileUtils.readFileToString(next, Charset.defaultCharset());
                         result.add(JacksonUtil.convertFromJson(fileString, RegisterEntry.class));
                     } catch (Exception e) {
-                        logger.error("Error loading service entry from disk {}", e,
-                            next.getAbsolutePath());
-
+                        logger.error("Error loading service entry from disk {}, Error: {}", next.getAbsolutePath(), e.getMessage(), e);
                     }
                 }
             });

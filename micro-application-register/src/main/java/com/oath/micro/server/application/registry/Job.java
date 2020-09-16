@@ -22,12 +22,10 @@ import com.oath.micro.server.rest.jackson.JacksonUtil;
 public class Job {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final AsyncRestClient rest = new AsyncRestClient(
-        100, 2000);
+    private final AsyncRestClient rest = new AsyncRestClient(100, 2000);
     private final String apiUrl;
     private final ApplicationRegisterImpl app;
-    private final String uuid = UUID.randomUUID()
-        .toString();
+    private final String uuid = UUID.randomUUID().toString();
     private final String resourcePath;
     private final RegistryHealthChecker checker;
     private final RegistryStatsChecker statsChecker;
@@ -55,7 +53,7 @@ public class Job {
         try {
             if (app.getApplication() != null && apiUrl != null) {
                 app.getApplication()
-                    .forEach(moduleEntry -> sendPing(moduleEntry));
+                    .forEach(this::sendPing);
             }
         } catch (Exception e) {
             logger.error("Failed to register services due to exception {}", e.getMessage(), e);
@@ -67,17 +65,14 @@ public class Job {
             .withUuid(uuid)
             .withHealth(checker.isOk() ? Health.OK : Health.ERROR)
             .withStats(nonEmptyOrNull(statsChecker.stats()));
+
+        String payload = JacksonUtil.serializeToJson(entry);
+
         try {
-
-            logger.debug("Posting {} to " + apiUrl + resourcePath,
-                JacksonUtil.serializeToJson(entry));
-            rest.post(apiUrl + resourcePath, JacksonUtil.serializeToJson(entry))
-                .join();
+            logger.debug("Posting {} to {}{}", payload, apiUrl, resourcePath);
+            rest.post(apiUrl + resourcePath, payload).join();
         } catch (Exception e) {
-            logger
-                .warn("Failed posting {} to {}" + resourcePath, JacksonUtil.serializeToJson(entry),
-                    apiUrl);
-
+            logger.warn("Failed posting {} to {}{}, Error: {}", payload, apiUrl, resourcePath, e.getMessage(), e);
         }
     }
 
